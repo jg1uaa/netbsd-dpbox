@@ -1,0 +1,732 @@
+# This file contains important configuration parameters
+# for the DPBOX mailbox and bulletin board system.
+#
+#
+# text (max. 30 chars) to be inserted in the ctext of the bbs
+# Text (max. 30 Zeichen), der in den ctext der Box integriert wird
+CONNECTTEXT  dpbox test
+#
+#
+# define your own hierarchical path (DB0GR.#BLN.DEU.EU etc.)
+# eigenen hierarchischen Pfad definieren (DB0GR.#BLN.DEU.EU z.B.)
+OWNHIERNAME AN0NYM.#XYZ.DEU.EU
+#
+#
+# define a SHORT station info for the routing header. Not longer
+# than 16 characters
+FHEADER Nowhere-City
+#
+#
+# Undefined boards should be transferred to:
+# you may omit this parameter, then, undefined boards guard their name.
+# undefinierte Bretter sollen transferiert werden nach:
+# dieser Parameter kann ausgelassen werden, dann wird der Brettname beibehalten
+UNDEFBOARD DIVERSES
+#
+#
+# Forward of remote-erase / MyBBS-infos to @:
+# Forward von remote-erases / MyBBS-Infos an @mbx:
+SYSFORWARD THEBOX
+#
+#
+# Lifetime for s&f fragments (resume):
+# Lifetime fuer s&f-Resume-Fragmente:
+# in days / in Tagen
+RESUMELT 2
+#
+#
+# Lifetime for system messages in Y
+# Lifetime fuer Systemmeldungen in Y
+YLT 5
+#
+#
+# send once a day an automatic mail to any s&f partner where DPBOX detected
+# improper forward settings (rejects on private mails)?
+# set it OFF for user-sf, ON for full mailbox operation
+# einmal am Tag eine automatische Mitteilung an die s&f-Partner senden,
+# bei denen forward-Probleme (rejects auf private mails) auftraten?
+# auf OFF stellen fuer user-sf, auf ON bei offiziellen Boxen.
+FORWARDERRORS ON
+#
+#
+# regard received broadcasts as if received in s&f? Usually NO!
+# im Broadcast empfangenes wie im S&F empfangenes behandeln? Normalerweise NEIN!
+BCASTFORWARD OFF
+#
+#
+# create a logfile of all sysop status operations?
+# ein Logfile mit allen Sysop-Aktionen anlegen?
+SYSLOG ON
+#
+#
+# create a logfile of all user operations?
+# ein Logfile mit allen User-Aktionen anlegen?
+USERLOG OFF
+#
+#
+# create a logfile of all incoming mails in user-sf?
+# ein Logfile ueber alle im User-SF eintreffende mails anlegen?
+USERSFLOG ON
+#
+#
+# create a logfile of all READ operations?
+# ein Logfile ueber alle READ-Befehle anlegen?
+READLOG OFF
+#
+#
+# create a logfile of all s&f-commands?
+# ein Logfile ueber alle s&f-Kommandos anlegen?
+SFLOG OFF
+#
+#
+# create a logfile of all status changes forced by CONVTIT.BOX and CONVLT.BOX?
+# ein Logfile ueber alle durch CONVTIT.BOX und CONVLT.BOX verursachten Status-
+# aenderungen anlegen?
+CONVLOG ON
+#
+#
+# remote erase enabled (rx and tx)?
+# remote erase moeglich (rx und tx)?
+REMOTE_ERASE ON
+#
+#
+# only accept remote erases if sent out by the same bbs that was the
+# originator of the original file? Usually ON!
+# remote-erase nur akzeptieren wenn die Absenderbox auch der Ursprung der
+# zu loeschenden Mail war? Normalerweise ON!
+REMOTEERASECHECK ON
+#
+#
+# allow multiple sf sending (via different paths) of private mails? Usually NO!
+# mehrfaches s&f-senden privater mails erlauben? Normalerweise NEIN!
+MULTIPRIVATE OFF
+#
+#
+# keep a backup of mails with console-call = sender-call after forwarding?
+# Usually OFF, but useful for a user terminal.
+# Sollen mails mit Absender = console-call nach dem forward als backup
+# gehalten werden? Normalerweise OFF, nur im User-Terminal-Betrieb sinnvoll ON
+HOLDOWNFILES OFF
+#
+#
+# how should DPBOX react when someone sends S&F without authorization (CALL.SF)
+# AKA User-SF
+# wie soll DPBOX sich bei unangemeldetem S&F verhalten?
+# 0 = defer all
+# 1 = accept only private mails, if sender is the forwarder
+# 2 = accept private mails and bulletins, if sender is the forwarder
+# 3 = accept all by all
+# default is 2
+SFINPUT 2
+#
+#
+# default after startup of the debugging profiler.
+# values between 0 and 5. 0 = OFF. Take care, the higher the value, the
+# more verbose is the debug profile (file DEBUG.BOX in BOX\SYSTEM\ )
+# Defaultwert nach dem Starten fuer den debug-profiler.
+# Werte zwischen 0 und 5, 0 schaltet aus (Normalwert!!!). Vorsicht!
+# Der Profiler erzeugt eine ganze Menge Text, je hoeher der Level, umso mehr.
+# Zu Testzwecken sind 1 oder 2 angeraten, 4 oder 5 sind nur in Ausnahme-
+# faellen sinnvoll. Ausgabe erfolgt in das File BOX\SYSTEM\DEBUG.BOX.
+DEBUGLEVEL 0
+#
+#
+# how long should the debug.box-file grow before it is renamed to debug.bak and
+# a new debug.box is created (in bytes)?
+# wie lang darf das debug.box-file werden bevor es in debug.bak umbenannt wird
+# und ein neues debug.box erzeugt wird (in Bytes)?
+DEBUGSIZE 50000
+#
+#
+# timeout for users
+# timeout fuer User
+# (default:20 min)
+USERTIMEOUT 15
+#
+#
+# timeout for s&f
+# (default:5 min)
+SFTIMEOUT 15
+#
+#
+# up to which value should the lifetime of a mail become increased by user
+# readouts (every read increases by one day)? 0 = off.
+# bis auf welchen Wert soll die Lifetime einer Nachricht durch User-Auslesung
+# erhoeht werden (jeder Lesevorgang erhoeht um einen Tag)? 0 = aus.
+MAXLTINC 0
+#
+#
+# how many simultaneous connections may a user establish with the bbs?
+# (sysops: infinite)
+# wie viele gleichzeitige Verbindungen darf ein User mit der bbs haben?
+# (sysops: unbegrenzt)
+MAXUSERCONNECTS 1
+#
+#
+# hide user files (only visible for sender and receiver)?
+# lesesperre auf user-files fuer andere als Absender und Empfaenger?
+# (default: OFF)
+UFILHIDE OFF
+#
+#
+# scan ALL incoming WP mails (regardless of the sender bbs)? Usually OFF
+# alle eingehenden WP-mails auswerten, egal von welcher bbs)? Normalerweise OFF
+WPSCANALL OFF
+#
+#
+# in what intervall (hours) should WP mails be sent out to your neighbours?
+# in welchem Intervall (Stunden) sollen WP-Mails an die Nachbarn gesendet
+# werden?
+WPCREATEINTERVAL 8
+#
+#
+# after how many days should logically erased mails be physically deleted?
+# nach wievielen Tagen sollen logisch geloeschte Mails physikalisch entfernt
+# werden?
+ERASEDELAY 3
+#
+#
+# lifetime of undefined boards?
+# Lifetime undefinierter Bretter?
+UNDEFBOARDSLT 7
+#
+#
+# how many hours of hold-delay for mails defined in reject.box with H or P?
+# (if not released earlier by a sysop (command RELEASE))
+# wieviele Stunden sollen Nachrichten, deren Status durch reject.box auf
+# H oder P gesetzt wurde, nicht in den forward gehen? (wenn nicht vorher durch
+# den Sysop mit RELEASE 'befreit')
+HOLDDELAY 48
+#
+#
+# define the size of the BID-Buffer of your BBS. 50000 should be a
+# good compromise between execution time and mail throughput even in
+# high speed networks. Do not lower this value after it is filled up
+# to its maximum size (after some weeks of operation). You may increase the
+# value whenever you want.
+# Groessse des BID-Puffers in der BBS. 50000 sollte ein guter Kompromiss
+# zwischen Suchzeit und Nachrichtendurchsatz selbst fuer High-Speed-Netze
+# mit hohem Mailaufkommen sein. Niemals diesen Wert verringern nachdem
+# der Puffer einmal bis zur Maximalgroesse (nach einigen Wochen Betrieb)
+# gefuellt wurde. Vergroessern ist problemlos moeglich.
+MAXBULLIDS 50000
+#
+#
+# send the own routing header in outgoing forward? Usually ON!
+# eigenen routing header im sf senden? Normalerweise ON!
+WITH_RLINE ON
+#
+#
+# analyse incoming routing headers? ON!!! This feeds the auto router and
+# the call expansion to hierarchical names.
+# Eingehende routing header analysieren? ON!!!
+ANA_HPATH ON
+#
+#
+# start once a day the house keeping routine automatically? ON...
+# einmal am Tag die Box automatisch aufraeumen lassen? ON...
+AUTO_GARBAGE ON
+#
+#
+# start the house keeping routine at which time (utc)?
+# Aufraeumen um wieviel Uhr (utc) starten?
+GARBAGETIME 3
+#
+#
+# compress stored mails after how many days? (0 = at once...)
+# nach wievielen Tagen sollen gespeicherte Mails gepackt werden?
+# (0 = sofort)
+PACKDELAY 0
+#
+#
+# send/erase GENERALLY only possible after password authentication?
+# send/erase GENERELL nur moeglich nach password-Login?
+BOX_PW OFF
+#
+#
+# Lifetime of private mails?
+# Lifetime von usermails?
+USERLIFETIME 90
+#
+#
+# enable compressed forward if possible? of course ON!
+# komprimierter forward wenn moeglich? Natuerlich ON!
+PACKED_SF ON
+#
+#
+# send a mail beacon as defined by beacon.box-file?
+# Mail-Bake wie in beacon.box definiert aussenden?
+MAIL_BEACON OFF
+#
+#
+# Insert a line "X-Info: Upload without password authentication" in bulletins
+# sent by users without password protection?
+# Eine Zeile "X-Info: Einspielung ohne Passwortschutz" in Bulletins einfuegen,
+# die von Usern ohne Passwordschutz eingespielt wurden?
+AUTHENTIFICATION ON
+#
+#
+# How many milliseconds may one task (user) use the system before the
+# next one is scheduled? range: 5 - 2000
+# note that low values are less effective, 100 should be a good
+# compromise. Anyway, if you use a fast pentium, try lower values.
+# Wie viele Millisekunden darf ein Task (user) das System beanspruchen,
+# bevor der naechste an die Reihe kommt? Bereich 5 - 2000
+# Kleine Werte sind nicht besonders effizient wegen des Verwaltungs-
+# aufwandes, 100 ist ein guter Kompromiss. Auf schnellen Rechnern
+# (Pentium) koennte man aber auch mit kleineren Werten experimentieren.
+TTASK 100
+#
+#
+# switches the display of the lifetimes from normal mode to TimeToLive-Mode
+# (= remaining lifetime... TTL = Lifetime - (Today-RxDate) )
+# if active, the SETLT - command will use this notation, too!
+# wechselt die Anzeige der Lifetimes vom Normalmodus zur TimeToLive-Anzeige
+# (= verbleibende Lifetime, vom Tagesdatum aus gezaehlt)
+# wenn aktiviert, dann wird auch beim SETLT/LT-Kommando die Angabe ab dem
+# Tagesdatum interpretiert.
+TTL OFF
+#
+#
+# Add a line with '/EX' after every mail a user reads?
+# Eine Zeile mit '/EX' an jede ausgelesene Nachricht anhaengen?
+ADDEX OFF
+#
+#
+# Create an acknowledgement when detecting /ACK as the last line of a
+# private mail adressed to users of your bbs? Normally ON
+# Eine Empfangsbestaetigung schicken, wenn in der letzten Zeile einer
+# empfangenen Usermail /ACK steht? Normalerweise ON
+CREATE_ACKS ON
+#
+#
+# Return undeliverable private mails (routing errors, bad links)
+# after how many days? Only the first 1500 bytes are returned.
+# Nach wievielen Tagen unzustellbare Usermails zurueckschicken?
+# Nur die ersten 1500 Bytes werden zurueckgeschickt.
+RETURNTIME 7
+#
+#
+# Try to forward general bulletins for how many days? If you don't
+# limit it, your forward list will collapse after some weeks of
+# broken link to one of your forward partners.
+# Wieviele Tage soll versucht werden, Bulletins (also allgemeine Nachrichten)
+# zu forwarden?
+# Wenn man diesen Wert nicht setzt, wird die Forward-Liste nach einigen
+# Wochen unterbrochener Verbindung zu einem der eigenen Forwardpartner
+# ueberlaufen!
+BULLSFWAIT 5
+#
+#
+# How many bytes may users read out at each day? In addition to this
+# general setting, you may set a limit for each single user in the bbs
+# with the MAXREAD <CALL> <Bytes> - command
+# Wieviele Bytes darf ein User pro Tag auslesen? Zusaetzlich zu dieser
+# generellen Angabe kann man auch noch fuer jeden Benutzer einen eigenen
+# Wert eingeben mit dem MAXREAD <CALL> <Bytes> - Kommando
+MAXPERDAY 999999999
+#
+#
+# May users send TELL requests in the user-sf-mode ?
+# 0 = No
+# 1 = Yes, but only to this mery bbs
+# 2 = Yes, to all bbs' (not useful, unless the target bbs is a dpbox)
+# Duerfen Benutzer im User-SF TELL - Anfragen schicken?
+# 0 = Nein
+# 1 = Ja, aber nur an diese bbs
+# 2 = Ja, an alle Boxen (unsinnig, es sei denn, das Ziel ist auch eine dpbox)
+USERSFTELLMODE 1
+#
+#
+# Send smaller messages first (outgoing forward sorted by size)
+# highly recommended!
+# Kurze Nachrichten zuerst senden (ausgehender Forward nach Groesse sortiert)
+# sehr zu empfehlen!
+SMALL_FIRST ON
+#
+#
+# Instead of fixed forward settings (sysop-defined), use auto routing first?
+# Results are not too good in networks with different routing softwares.
+# Better you let it switched off unless you really know what you do.
+# Anstelle der vorgegebenen Forward-Definitionen (in den .sf - Dateien)
+# zuerst den Autorouter verwenden?
+# Fuehrt zu Schleifen in Netzen mit unterschiedlichen Router-Softwares,
+# also besser auslassen, es sei denn, man weiss genau, was man tut.
+SMART_ROUTING OFF
+#
+#
+# On restart and RELOAD, start PACSAT broadcast transmission automatically?
+# bei Neustart und RELOAD PACSAT Broadcast automatisch starten?
+SEND_BBSBCAST OFF
+#
+#
+# Define the maximum age (in days) of an
+# incoming mail (in forward) to be accepted
+# Maximalalter (in Tagen) einer im Forward eingehenden Nachricht,
+# die noch nicht als OLD markiert wird
+BULLSFMAXAGE 30
+#
+#
+# If a local user writes a mail to a bulletin board, request him for a
+# lifetime if he/she forgot to define one?
+# Von einem lokalen Benutzer eine Lifetime anfordern, wenn er ein Bulletin
+# schreibt und im SEND-Befehl keine angegeben hatte?
+REQUEST_LT ON
+#
+#
+# Definintion of the REDIST server at your bbs:
+# ---------------------------------------------
+# The REDIST server readdresses (or redistributes) private mails sent to one
+# of its four addresses to bulletins that are distributed in a certain area
+# around your bbs
+#
+# The REDIST server has these four different addresses:
+# 1) the LOCBBS server:
+#     redists from LOCBBS@CONSOLE_CALL to <redist_defboard>@CONSOLE_CALL
+# 2) the LOCAL  server:
+#     redists from LOCAL@CONSOLE_CALL  to <redist_defboard>@<redist_local>
+# 3) the REGION server:
+#     redists from REGION@CONSOLE_CALL to <redist_defboard>@<redist_region>
+# 4) the NATION server:
+#     redists from NATION@CONSOLE_CALL to <redist_defboard>@<redist_nation>
+#
+# short example: at db0gr we use the following settings:
+## redist_local  BB  (Berlin-Brandenburg area)
+## redist_region OST (the eastern part of germany)
+## redist_nation DL  (whole germany)
+#
+# now define your own ones for your location:
+REDIST_LOCAL
+REDIST_REGION
+REDIST_NATION
+#
+# define the default board for a redistributed message:
+REDIST_DEFBOARD ALL
+#
+# finally, define the lifetime of a redistributed message:
+REDIST_LIFETIME 30
+#
+#
+#
+# new with v5.00 (18.9.96):
+#
+#
+# if you desire to do so, you can alter the standard system prompt
+# refer to the description of the PROMPT command for valid macro definitions.
+# A users PROMPT macro will override the standard prompt.
+DEFAULTPROMPT (%b) %c de %m>
+#
+#
+# better you let this parameter undefined... The callsign defined with
+# SFCONNECTCALL is used for outgoing forward connections. Only under very
+# special circumstances it is to set to a special callsign. Per default,
+# it is (and should be) always the bbs' callsign. If you define a Call with
+# SSID, the SSID is thrown away.
+#SFCONNECTCALL callsign
+#
+#
+# the incoming lifetime (counting in days) is used for auto deletion of
+# files in the fileservers folders /incoming/, /newbin/ and /temp7pl/.
+# A value of 7 days is a good compromise.
+INCOMING_LIFETIME 7
+#
+#
+# automatically export 7plus bulletins into the file server?
+AUTO7PLUSEXTRACT ON
+#
+#
+# automatically export autobin bulletins into the file server?
+AUTOBINEXTRACT ON
+#
+#
+# setting reduceextractlt to ON results in a reduction of lifetime setting
+# of an incoming mail that was exported into the file server area. New
+# lifetime will be <UNDEFBOARDSLT>.
+REDUCEEXTRACTLT OFF
+#
+#
+# the PACSRV parameter is existing since version v4.10 of dpbox. It was
+# never documented cause it seemed to be useless. Anyway: Whenever a sysop
+# erases bulletins in the dpbox AND PACSRV is defined with a valid routing
+# address, remote erases are issued to the defined address. It was thought
+# to be useful for stand alone PACSAT broadcast servers that thiswise could
+# be maintained by one master bbs.
+#PACSRV mbx
+#
+#
+# Running different/multiple BBS with the same callsign at one location, you
+# have to set the following three parameters. Note that every bbs has to use
+# a different SSID.
+#
+# Are you running multiple bbs with the same callsign?
+MULTI_BBS OFF
+#
+#
+# is this bbs the "master" bbs of the multiple bbs'?
+# let this parameter switched to "ON" or "TRUE" if you are _not_
+# running multiple bbs with the same call but only one bbs.
+# But beware: only ONE bbs in a set of multiple bbs' may be switched to
+# MULTI_MASTER TRUE ...
+MULTI_MASTER TRUE
+#
+#
+# If running different bbs with the same callsign, you have to define
+# each one of them with a different "sub_bid". Range is from 0 to 6,
+# default is 0.
+SUB_BID 0
+#
+#
+# to enable unproto message list broadcast as defined in system/unproto.box,
+# set UNPROTO to ON
+UNPROTO OFF
+#
+#
+# may every user request a resync of the unproto message list or only those
+# ones defined with a user setting of UNPROTO ON ?
+ALL_UNPROTO OFF
+#
+#
+# new with v5.03 (19.10.96):
+#
+# do we want to guess unknown users HomeBBS? Will be extracted during
+# incoming forward. a user set HomeBBS will override the guessed value.
+GUESS_MYBBS ON
+#
+#
+# new with v5.04 (04.12.96):
+#
+# force new users to enter name and homebbs first?
+LOGINCHECK ON
+#
+#
+# prompt only with numbers when responding to a MD2-password-request?
+# this lowers security, but TSTHOST expects only numbers...
+LAZY_MD2 OFF
+#
+#
+# scan also private mails for badwords?
+PRIVATE_BADWORDFILTER OFF
+#
+#
+#
+# new with v5.05 (12.02.97):
+#
+#
+# import daily logfiles into board Y (userlog, sflog, syslog, usrsflog,
+# readlog, convlog) or leave them in box/proto/ ?
+IMPORT_LOGS ON
+#
+#
+# how many user-infos to cache? Range is from 25-250, each user-info
+# has about 5kB. The more, the faster is dpbox. 
+MAXUFCACHE 100
+#
+#
+# mailing list servers: cancel display of subscriber list in header
+# if count of subscribers is greater than MAXSUBSCRIBERDISP
+MAXSUBSCRIBERDISP 50
+#
+#
+# return mailer: return only first RETMAILSIZE bytes
+# (in former versions of this config file, the parameter was
+#  errouneously called RETMAILMAXSIZE ...)
+RETMAILSIZE 1500
+#
+#
+# new with v5.08 (29.07.99):
+#
+# bulletin boards that are not excludable of the checklist by
+# NOTBOARD commands of a user
+MUSTCHECK INFO ANNOUNCE
+#
+#
+# display to each reader the list of readers of a bulletin?
+# (when applying the option ":" with the READ command,
+#  example: "READ ICOM 123 :")
+SHOW_READERS OFF
+#
+#
+# new with v5.08.09 (27.10.99):
+#
+# If you are using the bbs in a non-amateur radio environment (e.g. CB),
+# you can define additional syntax definitions for callsigns. Please note
+# that we need something like a syntax, because the bbs has to distinguish
+# between user callsigns and board names - and it does so by analyzing the
+# 'syntax' of callsigns. You may define different syntaxes here, separated
+# by a space or comma, but note that the general amateur radio callsign
+# syntax remains valid, too. You only enlarge the syntax definition.
+# Syntax is defined by the keys N and A - N means any number from 0-9,
+# A means any character from A-Z.
+#CALLSYNTAX AAANNN NNNAAA
+#
+#
+# define FSERVEXPAND, if dpbox should create subdirectories in the file server
+# for extracted binary/7plus-messages. For example, if you receive a binary
+# message in board UNIX, and FSERVEXPAND is set to "newbin/boxextract", the
+# message is stored in the file server path "/newbin/boxextract/unix/".
+FSERVEXPAND newbin
+#
+#
+# FSERVEXPANDLT sets the lifetime in days for all files stored in
+# subdirectories of "FSERVEXPAND". 0 = infinite.
+FSERVEXPANDLT 30
+#
+#
+# new with v5.08.14 (02.12.99):
+#
+# The following "STOP_" parameters control the check of forward headers
+# (those lines starting with "R:" at the top of the messages)
+# of incoming bulletins. They do not affect private mails.
+# If a bulletin gets stopped, it is stored in board "D", and you get a
+# notice in profile.box.
+#
+# Should broken (invalid) R: lines stop a bulletin ?
+# They ALWAYS indicate a distorted message. Switch this parameter ON.
+STOP_BAD_RLINES ON
+#
+# Should invalid callsigns in the forward header (=non amateur radio mailboxes)
+# stop a bulletin ? Unfortunately, even some ham bbs use invalid callsigns.
+STOP_BAD_RCALLS ON
+#
+# Add some invalid callsigns that are "valid" callsigns with a bad syntax
+ACCEPTED_BAD_RCALLS LWBBBS BBSLWB
+#
+# Should invalid date stamps in the forward header stop a bulletin ?
+# This is not that serious, but is a good indicator for buggy software.
+STOP_BAD_RDATES ON
+#
+# Should changed BIDs stop a bulletin ?
+STOP_CHANGED_BIDS ON
+#
+# Should changed sender of a bulletin stop it?
+STOP_CHANGED_SENDERS ON
+#
+# Should changed boards stop a bulletin ?
+# This change is not that harmful as the other possible "swappings",
+# switch it "OFF" if you don't care much about. 
+STOP_CHANGED_BOARDS OFF
+#
+# Should changed @distributions (@DL -> @WW etc.) stop a bulletin ?
+# (This is what usually is refered to as "swapping". You best switch it "ON".)
+STOP_CHANGED_DIST ON
+#
+#
+# new with v5.08.15 (05.12.99):
+#
+# Enter name and display configuration for an X editor, leave it blank if
+# you don't use X in your local network. If defined, the maintaining sysop
+# may use this editor for composing messages and editing configuration
+# files. Please remind that X uses access restrictions. Normally, only the
+# user starting the X server is allowed to open a display. If dpbox is
+# running non-root (the usual case!), even on a local machine you have
+# to allow "localhost" to connect to the X server. Use the following
+# command: "xhost +localhost" on a root account of the machine, this allows
+# all users on the local machine (including dpbox) to open an X display on
+# that machine.
+# Check your setting with the command "EDITOR test.txt" in DPBOX. If your
+# editor opens a window, you're done.
+#XEDITOR /usr/X11R6/bin/nedit -display localhost:0
+#
+# If you are using dpbox at home for private use, enter the BBS callsign
+# of your homebbs. Otherwise, don't use this parameter. You do not need to
+# append a hierarchical path to the callsign, it is appended (and replaced)
+# automatically by dpbox.
+#HOMEBBS DB0GR
+#
+#
+# new with v5.08.17 (06.01.00):
+#
+# Operation of PING server? Why not, switch it on...
+# The Ping server replys on Messages sent to PING@console_call
+# or P1NG@console_call
+# Reply shows the path of the message to this bbs and is sent to sender of
+# ping request. Pings should be sent as private messages, but DPBOX also
+# accepts them as bulletins.
+PING ON
+#
+# Logging of ping requests in profile.box? (v5.08.46)
+LOG_PING OFF
+#
+# new with v5.08.20 (23.01.00):
+#
+# add profile messages to syslog (usually in /var/log/messages) ?
+PROFILE_TO_SYSLOG ON
+#
+#
+# MINIMUM lifetime for incoming messages. If <> 1, and incoming
+# messages have a shorter lifetime, the lifetime is increased to this
+# value. A value of 0 means infinite lifetime (this is bigger than 1 ;)
+# This is a default value for all boards. You may specify distinct
+# values for specific boards in system/rubriken.box. For example, at this
+# place, you may increase the general minimum lifetime to 365 days, but for
+# the boards NEED and SEARCH, you may set a distinct minimum lifetime
+# of 30 days in rubriken.box. The value in rubriken.box for special boards
+# overrides the general setting at this place.
+MIN_LIFETIME 1
+#
+#
+# new with v5.08.21 (04.02.00):
+#
+# DPBOX now scans forward paths of private mails and general bulletins
+# separately. The following parameter defines if auto routing should
+# only be generated by forward paths of private mails. The background is
+# as follows: Normally, auto routing measurements work best with
+# flood distributed bulletins, as these distribute in the network
+# among the fastest connections. Unfortunately, with increasing use of
+# internet forwarding, the paths are no longer reliable for private
+# messages sent back to a bbs, as most internet forwarders only exchange
+# bulletins, not private mails. They represent dead ends for private mails.
+# If you switch PRIV_ROUTER ON, only forward paths of private mails are
+# used for routing. But: This implies another drawback. Routing of private
+# mails is sysop-dependant. Usually, private mails are not distributed
+# among the fastest paths, instead, they often follow amazing sysop
+# routing settings. An auto router based on distribution paths of private
+# mails will follow these paths, too. As you can see, there is no perfect
+# solution for this dilemma. Let us remember that all problems started with
+# the internet forward mess (and those internet gates only forwarding
+# bulletins, not private mails).
+PRIV_ROUTER OFF
+#
+#
+# new with v5.08.29 (16.02.00):
+#
+#
+# ACTIVE ROUTING is a new auto routing protocol with active link checks
+# and parameter exchange between supporting BBS. It needs a fully implemented
+# WPROT exchange between the direct link neighbours. Currently, only DPBOX
+# is supporting it, but Baybox will implement it soon (or not, after OE3DZW
+# resigned developing Baybox any further). Anyway, switch it ON, it gets
+# configured automatically, and it always offers the best available route,
+# without drawbacks.
+ACTIVE_ROUTING ON
+#
+#
+# If active routing is active, and routing messages are received, these are
+# written in the file stat/routstat.box for later analysis (only for human
+# interest, dpbox doesn't need these statistics).
+ROUTING_STATS ON
+#
+#
+# DIRECT SF is a new forward mode proposed by Dietmar, OE3DZW. It allows
+# direct connects to any destination bbs for a private message. To initialize
+# this direct connection, the destination bbs has to be known in the "B" status
+# messages of the WPROT protocol, and its "status" parameter in these messages
+# has to be > 0. At the destination (connected) bbs, the message is only
+# accepted if the destination callsign really has its homebbs at that bbs, and
+# if the connecting (forwarding) bbs is known in the "B" status messages of the
+# WPROT protocol with a status > 0. Otherwise, a REJECT is sent, and the
+# message has to be sent in normal store and forward via several neighbours.
+# If a NO is sent, the message is already known and can get deleted at the
+# forwarding bbs.
+# At the time being, DPBOX will never _send_ messages in direct forward, but,
+# depending on this parameter, accept them.
+DIRECT_SF ON
+#
+#
+# Should all those WP and W messages be deleted immediately after reception
+# and scan, or do you want to hold them for some days for sysop review?
+KILL_WP_IMMEDIATELY ON
+#
+#
+# last updated 26.03.2000 for dpbox v5.08.46 by DL8HBS
+#

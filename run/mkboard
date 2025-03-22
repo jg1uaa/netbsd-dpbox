@@ -1,0 +1,144 @@
+#! /bin/sh
+
+# 30.11.96 J.Schurig
+# modifying system/rubriken.box online
+# 24.01.2000 J.Schurig:
+# extended for minimum lifetimes and better check of input parms (-d * )
+
+if [ ! "$1" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  echo 'Usage: MKBOARD -s <board> : show definition of <board>'
+  if [ $DPBOXSYSOP = 1 ]; then
+    echo '       MKBOARD -a <board1> <LT> [<level>] [<min_LT>] : add new board definition'
+    echo '       MKBOARD -d <board> : delete definition of <board>'
+  fi
+  echo
+  echo 'Wildcards * and ? may be used'
+  exit
+fi
+
+tfile="$PWD/../system/rubriken.box"
+tmpfile=$tfile.$DPBOXUSERNUMBER.$RANDOM
+altered=0
+was_add=0
+title1='Board      #LT Level Min_LT'
+title2='==========================='
+arg1=$(echo "$1" | tr a-z A-Z)
+arg2=$(echo "$2" | tr a-z A-Z)
+arg3=$(echo "$3" | tr a-z A-Z)
+arg4=$(echo "$4" | tr a-z A-Z)
+arg5=$(echo "$5" | tr a-z A-Z)
+
+# if occasionally a sysop changed linebreaks
+tr -s '[\r]' '[\n*]' <$tfile >$tmpfile
+mv $tmpfile $tfile
+
+if [ "$arg1" = "-A" ]; then
+  if [ $DPBOXSYSOP = 0 ]; then
+    echo "invalid option: $arg1"
+    exit
+  fi
+  if [ ! "$arg3" ]; then
+    echo 'not enough parameters'
+    exit
+  fi
+  was_add=1
+  arg1='-D'
+fi
+
+if [ "$arg1" = "-D" ]; then
+  if [ $DPBOXSYSOP = 0 ]; then
+    exit
+  fi
+  if [ ! "arg2" ]; then
+    echo 'not enough parameters'
+    exit
+  fi
+  if [ "$arg2" = "*" ]; then
+    echo 'this would result in a deletion of all boards. mkboard stopped, nothing deleted.'
+    exit 
+  fi
+
+  if [ $was_add = 0 ]; then
+    targ2=$(echo "$arg2" | sed -e s,'*','.*',g -e s,'?','.?',g)
+    expression='(^|[^0-9A-Za-z_-]+)'"$targ2"'([^0-9A-Za-z_-]+|$)'
+  else
+    expression='^'"$arg2"'[^0-9A-Za-z_-]+'
+  fi
+
+  deleted=$(grep -i -E -e "$expression" $tfile | tr a-z A-Z)
+  if [ "$deleted" ]; then
+    echo 'deleted board definitions:'
+    echo
+    echo "$title1"
+    echo "$title2"
+    echo "$deleted"
+  fi
+
+  grep -v -i -E -e "$expression" $tfile >$tmpfile
+  mv $tmpfile $tfile
+
+  if [ "$deleted" ]; then
+    if [ $was_add = 1 ]; then
+      echo
+    else
+      echo
+      echo 'type RELOAD to make the change effective'
+      exit
+    fi
+  else
+    if [ $was_add = 0 ]; then
+      echo "board definition not found: $arg2"
+      exit
+    fi
+  fi
+fi
+
+if [ $was_add = 1 ]; then
+  arg1='-A'
+fi
+
+if [ "$arg1" = "-A" ]; then
+  altered=1
+  addparm=$(printf '%-10s %3s %3s %3s\n' "$arg2" "$arg3" "$arg4" "$arg5")
+  echo 'added board definition:'
+  echo
+  echo "$title1"
+  echo "$title2"
+  echo "$addparm"
+  echo
+  echo "$addparm" | cat >>$tfile
+  sort -o $tmpfile -f $tfile
+  mv $tmpfile $tfile
+  arg1='-S'
+fi
+
+if [ "$arg1" = "-S" ]; then
+  echo "board definition for $arg2 :"
+  echo
+  echo "$title1"
+  echo "$title2"
+  if [ "$arg2" ]; then
+    targ2=$(echo "$arg2" | sed -e s,'*','.*',g -e s,'?','.?',g)
+    expression='(^|[^0-9A-Za-z_-]+)'"$targ2"'([^0-9A-Za-z_-]+|$)'
+  else
+    expression='.+'
+  fi
+  grep -v -E -e '^#|^\W*$' $tfile \
+        | grep -i -E -e "$expression" \
+        | sort -f \
+        | tr a-z A-Z
+
+  if [ "$targ2" = "$arg2" ]; then
+    echo
+    $PWD/mktrans -s "$targ2"
+  fi
+
+  if [ $altered = 1 ]; then
+    echo
+    echo 'type RELOAD to make the change effective'
+  fi
+  exit
+fi
+
+echo "invalid option: $1"
+echo 'try -h or --help for help'

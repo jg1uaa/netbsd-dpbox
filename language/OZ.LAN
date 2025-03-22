@@ -1,0 +1,190 @@
+# OZ1CBQ 06/97
+# dk2go 2.5.98: 11 22 65 84 95 105 151 155-157
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 Forkert parameter
+03 Forkert kaldesignal
+04 Filen eksisterer ikke
+05 Filen er for stor
+06 Teksten er gemt
+07 Adgang afvist
+08 Boksen er tom
+09 Fejl: Denne fil indeholder ingen tekst
+10 OBS: Der er ny mail til dig !
+11 Mail er ikke godkendt. Forbindelse afslut eller mail afbrudt
+12 *** sysop-mode automatisk startet ***
+13 Ingen information fundet om dette BBS
+14 Der er ingen nye mail til
+15 Info-file:
+16  Nr. Fra    Dato     UTC    Bytes  Angående
+17     # Afsender Rubrik   Nr. Dato     @BBS   Bytes #LT Titel
+18 Mail er slettet
+19 Statistik:
+20 Rubrik    MSGs slettet   Bytes   pakket   til% #LT Level
+21 Indtast venligst dit navn med NAME - kommandoen
+22 Indtast venligst din hjemme-BBS med MYBBS - kommandoen (MYBBS %m)
+23 ### Tryk på en tast ###
+24 kender systemet ikke.
+25 Ingen nye fundet. Sidste er:
+26  Nr. Fra    @BBS   #LT Dato      Bytes Pack  Angående
+27  Nr. Fra    Rubrik   @BBS   #LT #TL RxFrom Lev Dato   Bytes Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Afsend Rubrik   @BBS   BID/MID      #LT  Bytes T
+30 Ingen hjælpetekst fundet
+31 Ingen hjælpefil for sysop fundet
+32 Opretter checkliste
+33 Der ryddes op i boksen, vent venligst
+34 @BBS ugyldig for usermail
+35 @BBS er:
+36 OK, ny @BBS er:
+37 Ingen message i specificeret område
+38 OK, ny lifetime er:
+39 Forkert lifetime-angivelse
+40 funktion ikke emplementeret endnu
+41 CHECK afbrudt
+42 Total
+43 Fri hukommelse
+44 Fri på harddisk
+45 Ingen information fundet
+46 Kan ikke oprette eksport-fil
+47 Indtast tekst for
+48 Afslut med ***END, /EX eller CTRL-Z, afbryd med CTRL-X:
+49 ¥jeblikkelige transporttid til
+50 Overskrift ? >
+51 Modtager ? >
+52 Velkommen
+53 Velkommen
+54 Sidste login:
+55 Aktuelle login:
+56 Tak, din hjemme-BBS er
+57 Level ændret
+58 Tak
+59 , dit navn er nu registreret
+60 Indtast venligst dit navn >
+61 Valgte sprog er:
+62 Forkert sprogvalg
+63 Sidste login er sat til:
+64 Kun muligt fra tastaturet
+65 Send/Erase kun mulig efter korrekt password %r(kommando SYS, PRIV, MD2 eller MD5)
+66 Underst¢ttede sprog:
+67 Mandag
+68 Tirsdag
+69 Onsdag
+70 Torsdag
+71 Fredag
+72 L¢rdag
+73 S¢ndag
+74 *** Daglig begrænsning overskredet! Max. kBytes pr. dag:
+75 *** afbrudt:
+76 Fjern-sletning iværksat
+77 Frigivet
+78 Sletning anulleret
+79 Userinfo. MÅ IKKE SLETTES !!!
+80 *** fejl i header checksum:%r*** slettes ved næste oprydning%r*** eller straks med KILL
+81 sidst vist:
+82 Overf¢rsel ok:
+83 Indtast kommentar:
+84 Resultatet for langt, max. 997 karakterer
+85 Indstillinger for WantBoard og NotBoard slettet
+86 Afbrudt. Disken er fuld
+87 *** SID mangler
+88 Aktuelle connect highscore :
+89 slettet
+90 *** password forkert
+91 *** password mangler
+92 *** beklager, ingen S&F i ¢jeblikket. Pr¢v senere.
+93 Du benytter en forkert konfigureret GP, definer
+94 i NAMES.GP som bbs !
+95 Fil-server aktiveret. Tast H, FHELP for HELP, afslut med EXIT eller QUIT
+96 Upload ikke tilladt til dette directory. Benyt /incoming/
+97 Filen eksisterer allerede
+98 Fejl: Filen kan ikke oprettes
+99 Skriv teksten, afslut med '.' i starten af en ny linie
+100 Forkert filnavn
+101 Skriv en kort fil-beskrivelse, afslut med '.' i starten af en ny linie
+102 --- videre med <RETURN>, afslut med <C> ---
+103 Directory eksisterer ikke
+104 Fil-server afsluttet, returnerer til BBS mode
+105 Forkert kommando. Hjælp med H og FHELP
+106 Fejl: Filen kan ikke åbnes
+107 Brugere i udvalg
+108 Brugere
+109 Ingen password. Forward kan være forsinket op til (timer):
+110 Lokal forward til
+111 Lifetime for denne message (1..999 dage, 0 = uendelig):
+112 Modtagerens hjemme-BBS er ukendt !
+113 Indtast venligst manuelt en modtager-BBS (S DL1XY @ DB0XY)
+114 BID kendt i forvejen. Vælg et andet!
+115 Abonnenter i Mailing List Server
+116 Opretter ny Mailing List Server
+117 Tilf¢jer ny abonnent
+118 i Mailing List Server
+119 Mailing List Server kan ikke oprettes. File error.
+120 Sletter abonnent
+121 Sletter Mailing List Server
+122 Liste over installerede Mailing List Servers:
+123 Info fra
+124 Der opstod en fejl under forward til din BBS:
+125 Routing k¢rer allerede
+126 *** DP-Box converse kommandoer:
+127 /help     : Denne tekst
+128 /chan <n> : Skift til kanal <n>
+129 /who      : Stationer og kanaler
+130 /quit     : Afslut Converse 
+131 *** Kommandoer kan afkortes
+132 *** BBS kommandoer kan udf¢res med et indledende '!'
+133 Aktiv på denne kanal:
+134 Usercall kanal
+135 *** Converse afsluttet
+136 *** nu på kanal
+137 *** forkert kanalnummer
+138 converse startet. /H for hjælp. Du er på kanal
+139 Password slettet
+140 Syntax: PASSWORD <DitPassword>
+141 Angivne password er for langt
+142 Password-beskyttelse er aktiv, længde:
+143 HOLD slutter
+144 Password f¢rst aktiv fra længder på 21, aktuel længde:
+145 Afslut connect med CTRL-Z. BBS-kommandoer udf¢res med indledende '!'
+146 Start venligst AutoBIN transfer
+147 Brugeren har spærret for adgang til sine personlige filer
+148 Yderligere hjælp fås med
+149 Fejl ved læsning af filen
+150 Fil-server kommandoer:
+151 ? og HELP            - Denne hjælpetekst%rFHELP                - Viser extern kommandoer 
+152 DIR og LS og LS -l   - Viser indhold i directory
+153 LIST                 - Viser indhold i directory med beskrivelser
+154 CD                   - Skift directory 
+155 READ, GET, TYPE      - Modtag ASCII fil (TYPE: med stop for hver side)
+156 WRITE og PUT         - Send ASCII fil til BBS
+157 7GET og BSGET        - Modtag en binær fil med 7Plus / BS protokol
+158 BGET og BPUT         - Modtag/send en binær fil med AutoBIN protokol
+159 YGET og YPUT         - Modtag/send en binær fil med Yapp protokol
+160 EXIT, BYE og QUIT    - Retur til BBS mode
+161 Exempler:
+162 CD /linux/packet     - Skift til directory /linux/packet
+163 CD ..                - Skift et directory tilbage
+164 DIR *.zip -DATE      - Viser DIR-listen af *.zip sorteret efter dato
+165 DIR -NAME            - Viser DIR-listen sorteret efter navn (standard)
+166 LS -SIZE             - Viser kort DIR-liste sorteret efter st¢rrelse
+167 LIST                 - Viser fillisten med filbeskrivelser
+168 YGET test.zip        - Hent test.zip i YAPP-mode fra BBS
+169 BGET 4               - Hent fil nummer 4 i AutoBIN-mode fra BBS
+170 BPUT test.lzh        - Send test.lzh i AutoBIN-mode til BBS
+171 BEMÆRK: Unix skelner mellem store og små bogstaver i filnavne !!!
+172 BEMÆRK: Directory separator er '/', og IKKE '\' som i DOS o.s.v. !!!
+173 Navne kan være længere end 8+3 chars, f.eks. "dpbox-4.17-source.tar.gz"
+174 Alle server kommandoer kan afkortes, f.eks YG for YGET, L for LIST.
+175 Sysop kommandoer:
+176 MD og MKDIR          - Opret nyt directory
+177 CP og COPY           - Kopier en fil
+178 MV og MOVE           - Flyt/Ændre_navn på en fil
+179 RM og DEL            - Slet en fil
+180 RD og RMDIR          - Slet et (tomt) directory
+181 INDEX                - Skriv en ny directory Info
+182 Start venligst YAPP filoverf¢rsel
+183 #MSG   T Bytes Til     @BBS    Fra    Dato      Titel
+184 OBS: Din MyBBS er måske ændret af uvedkommende
+185 MyBBS er sat til:
+186  - her ligger stadig mail til dig !
+187 YAPP filoverf¢rsel startet
+188 Sidste MyBBS
+189 opdateret

@@ -1,0 +1,275 @@
+Release Notes DPBOX v5.00
+
+Berlin, 20.09.96
+
+Release Notes dpbox v5.00.00 / 20.9.96
+
+Changes since v4.17.00 / 14.4.96
+
+* dpbox now directly maintained on C source code base, no more in Pascal.
+
+* code should be much faster because of changed calling conventions of
+  subroutines.
+
+* message list ("Checklist") now in one single database instead of the
+  previous two lists for user mails and bulletins.
+
+* lots of previously hard coded system status messages now variably defined
+  in language files.
+
+* added unproto message list output (as FBB does).
+
+* added TPK-Unproto-Request-Mode (what a word). Is still untested, hope it
+  works. Needs a TNT version > 0.9r to be effective.
+
+* Added TPK file request mode in user S&F. Still untested, protocol may be
+  erroneous due to the poor documentation available.
+
+* To support the above TPK request modes, message indexing was completely
+  recoded. When starting dpbox v5.00 for the first time on an older message
+  base, automatic data conversion is done. This takes some time, just up to 5
+  minutes. Keep patient and wait until the "successfully started" - prompt
+  appears. BEWARE: YOU ARE NOT ABLE TO CHANGE BACK TO OLDER DPBOX VERSIONS!
+
+* added "FBBMODDE" command: if "ON", checklist output includes FBB style
+  message number output. Just for testing, not a real design decision.
+
+* now sorting the checklist in background operation when applying the "CS"
+  command. Sorted checklist output therefore no longer is limited to 2000
+  lines.
+
+* now displaying the resulting file name of a binary "EXPORT", if differing
+  from the initial user export command.
+
+* now supporting RSA(c) MD2 password authentication in user login and S&F.
+
+* SFLEVEL 2 no more implemented (the THEBOX emulation). SF works anyway.
+
+* german THEBOX system changed passwort prompting in SF login. Now detecting
+  both kinds of prompts, the old and the new one.
+
+* new path name check to prevent unauthorized file access.
+
+* all user settable configuration parameters are now available for sysops
+  too. Example: TTL DL8HBS ON
+
+* new commands MD2, MD2SF, FBBMODE, UNPROTO, SHELL, TSHELL, FILESERVER
+  -MD2 starts MD2 protected password login
+  -MD2SF ON or (in user mode) MD2SF ON activates MD2-protection in S&F
+  -FBBMODE ON enables FBB message list output for the CHECK command.
+  -UNPROTO ON enables unproto request mode of a user. Sysop only.
+  -SHELL starts a shell login. sysop only.
+  -TSHELL starts a transparent shell login. No linefeed conversion. Sysop only
+  -FILESERVER starts file server mode.
+
+* added a "fileserver" mode (similar to that one implemented in FBB).
+
+* automatic 7plus collector. WILL NOT CREATE AUTOMATIC .COR REQUESTS :)
+  recombined files are moved into the file server area.
+
+* automatic AUTOBIN extractor. Files are moved into the file server area.
+
+* automatic binary to 7plus - converter. If a private mail contains binary
+  data and the forwarding connection is not supporting full binary mail
+  contents, the mail is converted automatically in 7plus.
+
+* external commands ("run pograms") now started in a separate task. They may
+  interact with the calling user and they are no more limited in execution
+  time. stdin and stdout are redirected to the users connection.
+
+* parameters for external commands now in environment variables.
+
+* shell login command SHELL for sysops. If you want to omit this, recompile
+  dpbox with -DNO_SHELL option activated in Makefile.
+
+* supporting YAPPC in file server mode and in sysop file access.
+
+* slightly modified auto routing algorithm. Results more reliable paths.
+
+* trying to restart an activated PACSAT broadcast transmission every 30
+  minutes in case of interface problems with TNT.
+
+* New command U PATH gives you the ax.25 from- and to - fields of every
+  user. Only supported with TNT > v0.9r!
+
+* On a SEND command for a private mail now the date of the last HomeBBS
+  update of the destination user is prompted.
+
+* To make HomeBBS - pirating a bit more difficult, user and sysop get a
+  warning if the HomeBBS was set from outside. Users mails are NOT redirected
+  to the new address if the following conditions apply:
+  - actual HomeBBS is THIS BBS
+  - HomeBBS was changed to another BBS via network command
+  - user has an activated password
+  - READLOCK of this user is > 0
+  Note that the HomeBBS IS changed. You are only warned and your yet arrived
+  mails are not redirected. Newly arriving mails will be redirected. If it was
+  a pirate action, you have to reset your HomeBBS with the MYBBS command.
+
+* changed parameter in U - command: deleting user settings is done with "U
+  -d" and no more "U -". Also "U @ -d". Should help to avoid typing errors.
+
+* DPBOX now can be mirrored to a bbs of the same callsign. Seems to be
+  interesting for sysops that want to install different bbs systems parallely
+  at their location. Note that every bbs has to use a unique SSID.
+
+* Fixing a little protocol problem with some NOS BBS. They seem to send the
+  fields of the forward SEND command in lowercase. In user forward mode, this
+  resulted in rejects. Should work now.
+  BEWARE: THE BULLETIN ID _IS_ CASE SENSITIVE!
+
+* Forgot in former versions the code fragment inhibiting the proposal of
+  bulletins to forward partners that proposed the same bulletin to us. Was
+  only implemented for fbb forward, now also in w0rli forward.
+
+  dpbox is, BTW, relativly effective in pre-proposal-checks of this kind: it
+  also checks the bbs' the bulletin passed through before and avoids proposals
+  to any of them, not only to the last forwarder.
+
+* And so many further code changes. DIFF between v4.17 and v5.00 is some
+  700kB Hope I described the most important changes.
+
+73 Joachim, DL8HBS@DB0GR.#BLN.DEU.EU
+
+----
+
+add to system/config.box:
+
+# new with v5.00 (18.9.96):
+#
+#
+# if you desire to do so, you can alter the standard system prompt
+# refer to the description of the PROMPT command for valid macro definitions.
+# A users PROMPT macro will override the standard prompt.
+DEFAULTPROMPT (%b) %c de %m>
+#
+#
+# better you let this parameter undefined... The callsign defined with
+# SFCONNECTCALL is used for outgoing forward connections. Only under very
+# special circumstances it is to set to a special callsign. Per default,
+# it is (and should be) always the bbs' callsign. 
+#SFCONNECTCALL callsign
+#
+#
+# the incoming lifetime (counting in days) is used for auto deletion of
+# files in the fileservers folders /incoming/, /newbin/ and /temp7pl/.
+# A value of 7 days is a good compromise.
+INCOMING_LIFETIME 7
+#
+#
+# automatically export 7plus bulletins into the file server?
+AUTO7PLUSEXTRACT ON
+#
+#
+# automatically export autobin bulletins into the file server?
+AUTOBINEXTRACT ON
+#
+#
+# setting reduceextractlt to ON results in a reduction of lifetime setting
+# of an incoming mail that was exported into the file server area. New
+# lifetime will be <UNDEFBOARDSLT>.
+REDUCEEXTRACTLT OFF
+#
+#
+# the PACSRV parameter is existing since version v4.10 of dpbox. It was
+# never documented cause it seemed to be useless. Anyway: Whenever a sysop
+# erases bulletins in the dpbox AND PACSRV is defined with a valid routing
+# address, remote erases are issued to the defined address. It was thought
+# to be useful for stand alone PACSAT broadcast servers that thiswise could
+# be maintained by one master bbs.
+#PACSRV mbx
+#
+#
+# Running different/multiple BBS with the same callsign at one location, you
+# have to set the following three parameters. Note that every bbs has to use
+# a different SSID.
+#
+# Are you running multiple bbs with the same callsign?
+MULTI_BBS OFF
+#
+#
+# is this bbs the "master" bbs of the multiple bbs^?
+# let this parameter switched to "ON" or "TRUE" if you are _not_
+# running multiple bbs with the same call but only one bbs.
+# But beware: only ONE bbs in a set of multiple bbs^ may be switched to
+# MULTI_MASTER TRUE ...
+MULTI_MASTER TRUE
+#
+#
+# If running different bbs with the same callsign, you have to define
+# each one of them with a different "sub_bid". Range is from 0 to 6,
+# default is 0.
+SUB_BID 0
+#
+#
+# to enable unproto message list broadcast as defined in system/unproto.box,
+# set UNPROTO to ON
+UNPROTO OFF
+#
+#
+# may every user request a resync of the unproto message list or only those
+# ones defined with a user setting of UNPROTO ON ?
+ALL_UNPROTO OFF
+
+# last updated 20.9.96 for dpbox v5.00.00 by DL8HBS
+
+---
+
+add to system/commands.box
+
+FILESERVER 116 0 1
+MD2 117 0 1
+MD2SF 118 0 1
+FBBMODE 119 0 1
+UNPROTO 120 1 1
+SHELL 121 1 1
+TSHELL 122 1 1
+
+--------------
+
+new file system/unproto.box
+
+#
+# how many lines in message list broadcast may a request scroll back?
+MAXBACK 100
+#
+# do we want to broadcast in F6FBB mode?
+FBB OFF
+#
+# do we want to broadcast in DPBOX mode?
+DPBOX ON
+#
+# broadcast via which path?
+QRG LINK DB0BLO
+QRG LINK DB0BLO DB0SPR
+
+--------
+
+add to system/whotalks.lan:
+
+SO SP
+SP SP
+SQ SP
+SR SP
+
+-------
+
+create new folders:
+
+box/fileserv/
+box/fileserv/incoming/
+box/fileserv/newbin/
+box/fileserv/temp7pl/
+box/privserv/
+box/privserv/temp7pl/
+
+-------
+
+install 7plus on your system. (may be located anywhere in a valid search path
+of the system)
+
+--------
+
+overwrite box/language completely with the new set of files.
+
+--------

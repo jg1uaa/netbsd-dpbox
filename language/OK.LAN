@@ -1,0 +1,74 @@
+# dk2go changed: 65
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme Logintime
+02 Neplatny parametr
+03 Neplatna znacka
+04 Neexistujici soubor.
+05 Soubor je prilis velky.
+06 Zprava zapsana.
+07 Nejsi opravnen...
+08 Mailbox je prazdny.
+09 Chyba: tento soubor neobsahuje text.
+10 Mas zde zpravu!
+11 Zprava nebyla prijata.
+12 *** automaticky spusten mod pro sysopa ***
+13 Nenalezeno zadne info o BBS
+14 Nejsou zde zpravy pro 
+15 Info-file:
+16   c. od     datum    UTC    bytu   nazev
+17     # znacka   rubrika   c. datum    @BBS    bytu #ziv nazev
+18 Zpravy jsou smazany.
+19 Statistika:
+20 rubrika   zprav smazano   bytu  komprimace na% ziv level
+21 Zadej prosim sve jmeno prikazem, napr.  NAME Milane
+22 Zadej prosim svoji domaci BBS, napr.   MYBBS OK0PRG
+23 ### stiskni klavesu ###
+24 se jeste nespojil
+25 Nebyla nalezena zadna nova polozka. Posledni je: 
+26   c. od     @BBS  #ziv datum      bytu kompr nazev
+27   c. od     rubrika  @BBS  #ziv #TL RX_od urov datum   bytu komp FCT FLG T
+29   c. FwdTo  RX_od   (QRG)  autor  rubrika  @BBS   BID/MID     #ziv  bytes T
+30 Neni nahrana zadna napoveda.
+31 Neni nahrana zadna napoveda pro sysopa.
+32 Vytvari se checklist...
+33 Uklid mailboxu, prosim pockej...
+34 @BBS neni platne pro soukromou zpravu.
+35 @BBS je:
+36 OK, novy @BBS je:
+37 V dane rubrice neni zadna zprava.
+38 OK, nova zivotnost je:
+39 Neplatna zivotnost.
+40 Tato funkce jeste neni zabudovana.
+41 CHECK prerusen.
+42 Celkem
+43 Volna pamet 
+44 Volny hard disk 
+45 Nebyly nalezeny zadne informace
+46 Nelze vytvorit soubor pro export
+47 Zadej text pro
+48 zakonci ***END nebo CTRL-Z :
+49 Dosavadni nejkratsi cas na 
+50 Nazev zpravy ?        > 
+51 Komu posilas zpravu ? > 
+52 Bud vitan
+53 Bud vitan
+54 Naposled jsi volal: 
+55 Nyni je (UTC)     : 
+56 OK, Tvoje mistni BBS je 
+57 Uroven zmenena.
+58 Dekuji
+59 , Tvoje jmeno jsem si zapamatoval.
+60 Napis prosim sve jmeno > 
+61 Zvoleny jazyk: 
+62 Jazyk neni platny.
+63 Posledni volani nastaveno na: 
+64 Toto je mozne pouze z konzoly.
+65 Send/Erase pouze s heslem (SYS, PRIV, MD2, MD5)
+66 Dostupne jazykove verze:
+67 pondeli
+68 utery
+69 streda
+70 ctvrtek
+71 patek
+72 sobota
+73 nedele

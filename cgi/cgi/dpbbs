@@ -1,0 +1,22 @@
+#! /bin/sh
+# 310597: Daniel Goetz, DL3NEU
+# dpbbs
+
+echo "Content-type: text/html"
+echo
+echo "<HTML><HEAD>"
+echo "<TITLE>DPBOX search engine</TITLE>"
+echo "</HEAD><BODY>"
+echo '<BODY BGCOLOR="#ffffff">'
+
+cat dptop.html
+
+echo "<PRE>"
+call=$(echo ${QUERY_STRING} | sed -e s,'^call=',,)
+/installdir/dphttp "BBS ${call}" | \
+  /installdir/dpcodeconv
+echo "</PRE>"
+
+cat dpbottom.html
+
+echo "</BODY></HTML>"

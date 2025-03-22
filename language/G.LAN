@@ -1,0 +1,200 @@
+# dk2go
+# 07.12.97
+# 22 65 84 155-157
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 invalid parameter
+03 invalid callsign
+04 unexisting file
+05 file too big
+06 text saved
+07 no permission
+08 box is empty
+09 error: this file contains no text
+10 you got a message!
+11 message not accepted
+12 *** sysop-mode automatically started ***
+13 no BBS-Info found
+14 there are no messages for
+15 info-file:
+16  Nr. from   date     UTC    bytes  subject
+17     # Call     Board    Nr. date     @BBS   bytes #LT title
+18 the messages are deleted!
+19 statistics:
+20 board     MSGs deleted   bytes    packed   to% #LT level
+21 Please enter your name using the NAME command
+22 Please enter your Home BBS using the MYBBS command, e.g. MYBBS %m %r(enter a BBS callsign but NOT your own callsign!)
+23 ### Press a key ###
+24 unknown
+25 No new entry found. Last entry:
+26  Nr. From   @BBS   #LT Date      Bytes Pack  Subject
+27  Nr. From   Board    @BBS   #LT #TL RxFrom Lev Date   Bytes Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Author Board    @BBS   BID/MID      #LT  Bytes T
+30 No helpfile found
+31 No helpfile for sysop found
+32 creating checklists
+33 garbaging the box, please wait
+34 @BBS invalid for usermail
+35 @BBS is:
+36 OK, new @BBS is:
+37 no message in the specified range
+38 OK, new lifetime is:
+39 invalid lifetime
+40 function not yet implemented
+41 CHECK aborted
+42 Total
+43 Free memory
+44 Free on harddisk
+45 no information found
+46 can't create export-file
+47 Enter text for
+48 end with *** END, /EX or CTRL-Z, abort with CTRL-X:
+49 shortest delivery yet from
+50 Title? >
+51 Recipient? >
+52 Welcome
+53 Welcome
+54 Last login  :
+55 Actual login:
+56 OK, your home BBS is
+57 Level altered
+58 thank you
+59 , your name is saved
+60 Please enter your name >
+61 Selected language:
+62 Invalid language
+63 Last login is set to:
+64 supported only at the console
+65 Send/Erase only after password validation (command SYS, PRIV, MD2 or MD5)
+66 supported languages:
+67 Monday
+68 Tuesday
+69 Wednesday
+70 Thursday
+71 Friday
+72 Saturday
+73 Sunday
+
+74 *** readout limitation exceeded! Max. kBytes per day:
+75 *** suspended read command:
+76 remote erase issued
+77 released
+78 Unerase OK
+79 Userinfo. DON'T DELETE!
+80 *** invalid header checksum:%r*** will be deleted at next garbage%r*** or immediately with KILL
+81 last displayed:
+82 Transfer OK:
+83 Enter a comment:
+84 result too long, max. 997 characters
+85 Settings for Wantboard and NotBoard deleted
+86 Abort. Disk is full.
+87 *** missing SID
+88 current connect hiscore :
+89 deleted
+90 *** incorrect password
+91 *** missing password
+92 *** sri, no s&f at the moment. Try later.
+93 You use a wrongly configured GP, define
+94 in NAMES.GP as a bbs!
+95 Entering file server. Type H and FHELP for HELP, exit with EXIT or QUIT
+96 Write access not permitted to this directory. Use /incoming/
+97 File already exists
+98 Error creating file
+99 enter text, end with '.' in a new line
+100 invalid file name
+101 enter a short file description, end with '.' in a new line
+102 --- press <RETURN> to continue, <C> to cancel ---
+103 no such directory
+104 file server left, back in bbs mode
+105 Invalid command. Help with H.
+106 Error opening file
+107 users in selection
+108 users
+109 No password. Delivery may be retarded up to (hours) :
+110 Local transfer to
+111 Lifetime of this message (1..999 days, 0 = infinite) :
+112 No HomeBBS known for recipient
+113 Please enter manually a destination bbs (S G1XYZ @ GB7XYZ)
+114 BID yet known. Select another.
+115 Subscribers of mailing list server
+116 Creating new mailing list server
+117 Adding subscriber
+118 of mailing list server
+119 Can't create mailing list server. File error.
+120 Deleting subscriber
+121 Deleting mailing list server
+122 List of installed mailing list servers:
+123 Info of
+124 A forward error occured while sending mails to your bbs:
+125 yet in routing
+126 *** DP-Box converse commands:
+127 /help     : this text
+128 /chan <n> : switch to channel <n>
+129 /who      : stations and channels
+130 /quit     : end converse
+131 *** commands may be abbreviated
+132 *** bbs command escape with !
+133 active on this channel:
+134 usercall channel
+135 *** converse terminated
+136 *** now on channel
+137 *** invalid channel number
+138 converse started. /H for help. You are on channel
+139 Password deleted
+140 Usage: PASSWORD <YourPassword>
+141 resulting password too long
+142 password active, length:
+143 HOLD becomes inactive at
+144 password will be activated after length of 21, current length:
+145 End connect with CTRL-Z. Command escape with !
+146 please start autobin transfer
+147 user restricted access on his personal files
+148 extended info available with
+149 Error reading file
+
+150 This is a brief listing of the file server commands:
+151 ? and HELP           - This help file
+152 DIR and LS and LS -l - Show directory listing
+153 LIST                 - Show directory listing with descriptive labels
+154 CD                   - Change Directory
+155 READ, GET, TYPE      - Download an ASCII file (TYPE: with paging)
+156 PUT and WRITE        - Transfer an ASCII file to the BBS
+157 7GET and BSGET       - Read a binary file, 7Plus-encoded or split
+158 BGET and BPUT        - Transfer a binary file in AutoBIN protocol
+159 YGET and YPUT        - Transfer a binary file with Yapp protocol
+160 EXIT, BYE and QUIT   - Return to BBS mode
+161 Examples:
+162 CD /linux/packet     - changes to directory /linux/packet
+163 CD .. or CD.         - goes back one directory
+164 DIR *.zip -DATE      - shows a directory listing of *.zip sorted by date
+165 DIR -NAME            - shows a directory listing sorted by name (default)
+166 LS -SIZE             - shows a short directory listing sorted by size
+167 LIST                 - shows a file list with description of file content
+168 YGET test.zip        - downloads test.zip in Yapp mode
+169 BGET 4               - downloads file number 4 in AutoBIN mode
+170 BPUT test.lzh        - uploads a file in AutoBIN, will be stored as test.lzh
+
+171 Note: Unix distinguishes between UPPER- and lowercase letters in file names!
+172 Directory separator is a '/', not a '\' as with DOS and similar.
+173 Names may be longer than 8+3 chars, e.g. "dpbox-4.17-source.tar.gz"
+174 All server commands may be abbreviated, e.g. YG for YGET, L for LIST.
+
+175 Sysop commands:
+176 MD and MKDIR         - Make Directory
+177 CP and COPY          - Copy a file
+178 MV and MOVE          - Move/Rename a file
+179 RM, DEL and Erase    - Delete a file
+180 RD and RMDIR         - Remove a Directory
+181 INDEX                - Write a new Directory Info
+
+182 Please start the YAPP transmission
+183 #MSG   T  Size To      @BBS    From   Date      Subject
+
+184 Attention: Your MyBBS might be pirated
+185 MyBBS was set to:
+186  - still retaining messages for you.
+
+187 YAPP transmission started
+
+188 Last MyBBS
+189 updated

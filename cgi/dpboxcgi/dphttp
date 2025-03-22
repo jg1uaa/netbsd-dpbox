@@ -1,0 +1,3 @@
+#! /bin/sh
+
+/installdir/dpgate -u h1ttp -s /var/run/dpbox -i -c "$*"

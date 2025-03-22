@@ -1,0 +1,14 @@
+Berlin, 12.09.1999
+
+How to install the cgi extensions in this archive:
+
+Copy the content of the "cgi" directory to your httpd's cgi directory. Use
+the "cp -a" directive, otherwise you will lose the access attributes of the
+cgi scripts contained therein.
+
+Example: cd cgi/
+         cp -a * /WWW/cgi/
+
+The other files should be installed by make install of the package.
+
+73 Joachim Schurig, DL8HBS

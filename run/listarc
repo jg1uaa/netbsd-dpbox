@@ -1,0 +1,129 @@
+#! /bin/sh
+
+# 27.11.96 J.Schurig
+# 21.07.97 Daniel Goetz DL3NEU
+# archive lister
+
+# called in DPBOX or interactive from shell ?
+if [ $DPBOXUSERNUMBER ]; then
+  if [ $DPBOXSERVERMODE = 0 ]; then
+    if [ $DPBOXSYSOP = 0 ]; then
+      echo 'Only valid in file server'
+      exit
+    fi
+    if [ $DPBOXPWOK = 0 ]; then
+      echo 'Only valid in file server or after PW validation'
+      exit
+    fi
+  fi
+fi
+
+file="$1"
+if [ ! "$1" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  echo "usage: listarc <filename | filenumber>"
+  echo '       shows content of archives'
+  exit
+fi
+
+
+if [ $DPBOXUSERNUMBER ]; then
+# the following is a hacking check:
+  fname=$(echo "$1" | sed -e s,'\.\./',, -e s,'/~',, \
+                          -e s,'~/',, -e s,'?',, -e s,'*',,)
+  if [ "$fname" != "$1" ]; then
+    echo "unknown file: $1"
+    exit
+  fi
+
+  if [ $DPBOXSERVERMODE = 0 ]; then
+    fname="$PWD/../$1"
+  else 
+    fname="$DPBOXSERVERROOT$DPBOXSERVERPATH$1"
+    if [ ! -e "$fname" ]; then
+      dummy=$(echo "$1" | tr -d '[:digit:]') 
+      fname="$DPBOXSERVERROOT$DPBOXSERVERPATH$DPBOXSELECTEDFILE"
+      if [ "$dummy" ] || [ ! "$DPBOXSELECTEDFILE" ] \
+                      || [ ! -e "$fname" ]; then
+        echo "unknown file: $1"
+        exit
+      else
+        file="$DPBOXSELECTEDFILE"
+      fi
+    fi
+  fi
+else
+# if invoked as a shell command
+  fname="$1"
+fi
+
+if [ ! -e "$fname" ]; then
+  echo "unknown file: $1"
+  exit
+fi
+
+echo "Content of archive $file:"
+echo
+
+larc=$(echo "$file" | tr A-Z a-z)
+
+check=$(echo "$larc" | sed -e s,'\.tgz$',, -e s,'\.tar\.gz$',,)
+if [ "$check" != "$larc" ]; then
+  tar -tvzf "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.tbz$',, -e s,'\.tar\.bz$',, -e s,'\.tbz2$',, -e s,'\.tar\.bz2$',,)
+if [ "$check" != "$larc" ]; then
+  tar --use-compress-program "bzip2" -tvf "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.tar$',,)
+if [ "$check" != "$larc" ]; then
+  tar -tvf "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.gz$',,)
+if [ "$check" != "$larc" ]; then
+  gzip -l "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.bz$',, -e s,'\.bz2$',,)
+if [ "$check" != "$larc" ]; then
+  bzip2 -l "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.lha$',, -e s,'\.lzh$',,)
+if [ "$check" != "$larc" ]; then
+  lha -v "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.arj$',,)
+if [ "$check" != "$larc" ]; then
+  unarj l "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.zip$',,)
+if [ "$check" != "$larc" ]; then
+  unzip -v "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.z$',,)
+if [ "$check" != "$larc" ]; then
+  zcat -lv "$fname"
+  exit
+fi
+
+check=$(echo "$larc" | sed -e s,'\.zoo$',,)
+if [ "$check" != "$larc" ]; then
+  zoo lv "$fname"
+  exit
+fi
+
+echo "unknown format of archive: $file"

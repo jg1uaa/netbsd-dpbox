@@ -1,0 +1,74 @@
+# PA3GLJ/DK2GO 2.5.98: 11 22 65
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 U heeft een verkeerde parameter ingegeven.
+03 Deze Call is onjuist, probeer het nog eens!
+04 Deze File bestaat niet.
+05 De File is te groot.
+06 De File word nu gesaved.
+07 Geen Bevoegdheid. (level te laag)
+08 Geen nieuwe berichten in de mailbox.
+09 ERROR: Dit bericht bevat geen tekst!
+10 OPGELET: Er is zojuist Post voor u gekomen!
+11 Uw bericht wordt niet geaccepteerd. Reden: User heeft de verbinding %ral verbroken, of uw bericht werd niet correct afgesloten.
+12 *** Sysop-Mode automatisch gestart ***
+13 Geen BBS-Info gevonden.
+14 Er zijn momenteel geen berichten voor
+15 Info-File:
+16  Nr. Van    Datum    UTC    Bytes  Onderw.
+17     # Call     Area     Nr. Datum    @BBS   Bytes #LT Onderw.
+18 OK, u berichten zijn gewist!
+19 Statistiek:
+20 Area      MSGs gewist    Bytes   gecompr.  op% #LT Level
+21 Geef aub. u eigen Naam in met het NAME 
+22 Geef a.u.b. de roepletters van uw HomeBBS in m.b.v. het commando MYBBS.%Bijvoorbeeld: MYBBS %m%. (Gebruik hiervoor NIET uw eigen roepletters.)
+23 ### Druk een toets AUB ###
+24 heeft tot op heden nog niet ingelogd.
+25 Geen nieuwe berichten gevonden, laatste bericht was:
+26  Nr. Van    @BBS   #LT Datum     Bytes Comp. Onderw.
+27  Nr. Van    Area     @BBS   #LT #TL RxFrom Lev Datum  Bytes Comp FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Auteur Area     @BBS   BID/MID      #LT  Bytes T
+30 Geen Helptekst geladen.
+31 Geen Helptekst voor Sysop geladen.
+32 Checklist wordt momenteel weggesaved.
+33 Mailbox wordt momenteel opgeruimt, momentje geduld aub...
+34 @BBS ongeldig voor User-Mails
+35 @BBS is:
+36 OK, nieuwe @BBS is :
+37 Geen berichten gevonden in aangegeven Area.
+38 OK, nieuwe Lifetime is:
+39 Sorry, lifetime onjuist ingegeven.
+40 Sorry, dit Commando bestaat nog niet!
+41 CHECK afgebroken.
+42 Totaal
+43 Vrij geheugen
+44 Vrij op Harddisk
+45 Geen informatie gevonden.
+46 Exportfile kan niet aangemaakt worden.
+47 Geef nu u tekst in voor
+48 Eindig met ***END, /EX of CTRL-Z, afbreken met CTRL-X:
+49 Kortst gevonden tijdsduur tot op heden naar
+50 Titel van bericht ? >
+51 Voor wie is het bericht bestemd ? >
+52 Welkom
+53 Welkom
+54 Laatste Login:
+55 Aktuele Login:
+56 OK, u HomeBBS is nu
+57 OK, u level is nu aangepast.
+58 Bedankt
+59 , je Naam is weggesaved.
+60 Wat is u Naam ? >
+61 De door u gekozen Taal is nu
+62 Deze Taal is niet aanwezig.
+63 Laatste Login is gevonden op :
+64 Alleen mogelijk vanuit Console.
+65 Send/Erase alleen met Passwoord (SYS, PRIV, MD2 of MD5)
+66 U kunt kiezen uit de volgende Talen:
+67 Maandag
+68 Dinsdag
+69 Woensdag
+70 Donderdag
+71 Vrijdag
+72 Zaterdag
+73 Zondag

@@ -1,0 +1,314 @@
+Berlin, Apr-27-2000
+
+Hi,
+
+this is a brief description of the router extension for the WPROT protocol.
+
+The router extension is set up by Joachim Schurig, DL8HBS, Feb. 2000.
+This is revision #1 of this protocol extension.
+
+You should have basic skills in WPROT as defined by OE3DZW.
+
+Preliminary:
+============
+
+Apart of reliability of operation and error protection in message exchange,
+the biggest challenge today for a bbs system operating in store & forward
+mode is still the routing of messages.
+
+Many different models of routing algorithms and methods were proposed and used
+in the past.
+
+Basically, there exist static and dynamic routing models.
+
+Static models use an administrator setup ("forward files") to determine routing
+of messages. Mostly, the setup consists of hierarchic definitions of forward
+zones, sub-zones and direct neighbours.
+
+Dynamic models try to compute a flexible route map by some kind of connection
+sampling and quality determination.
+
+Dynamic models may work passively (without router protocol) or actively (with
+use of a router protocol).
+
+Static models are broadly used. They are easy to implement, but their weak
+point is the required administrator brainwork and their inflexibility in case
+of changing interconnection of the involved stations. Also, they do not use the
+available ressources efficiently, as routed traffic always follows the main
+road, even in case of congestion. The setup by the administrator is a
+reasonable source of conflicts in routing. The ping pong and dead end problems
+are such conflicts.
+
+Passive dynamic models exist in three implementations:
+a) hop counting algorithms
+b) traffic time algorithms
+c) combination of a + b
+
+Implementation a) counts hops (stations) that messages took to reach the own
+station, implementation b) (tries to) measure time that messages needed to reach
+the own station. While method b) uses a promising approach, it lacks an exact
+measuring method for the traffic time. The only and very unreliable way to get
+an idea about how long the message travelled is the extraction of timestamps in
+the forward headers. We all know about the inaccuracy of those timestamps. And,
+beside of that, two more drawbacks exist: the algorithm can only check _used_
+routes, and it checks the wrong direction. Routing back to another station may
+result in totally different parameters.
+
+Nonetheless, there were and are implementations of these methods: a) is used
+by TheBox, results are far from being usable. But it was worth the try.
+c) is used by DPBOX, it works more or less acceptable in a closed network and
+with somewhat correct computer clocks. But it is far away from being perfect,
+and with fast networks with message transfer times of some seconds it does not
+work anymore, because the timestamps in routing headers suppress seconds.
+
+
+
+Basic idea for an active dynamic model:
+=======================================
+
+It is evident that real auto routing is only achievable with real throughput
+tests for connections in forward direction. The results of those tests have
+to be communicated to the other routers in the network, as all of them have
+to build routing tables.
+
+Tests have shown that throughput tests are easy to implement, even without
+any kind of router protocol: the own router only has to check constantly the
+transmission speed of forwarded messages sent to its own neighbours. With the
+exception of some special situations, no extra data is needed to collect these
+information.
+
+To implement a router model on this data, a simple communication protocol is
+needed to exchange the connection qualities between involved routers.
+
+WPROT offers the flexibility for this task.
+
+See the following network:
+
+     A --------------- B ----------------- C
+     |                 |                   |
+     |                 |                   |
+     D --------------- E                   F
+     |                 |                   |
+     |                 |                   |
+     G --------------- H ----------------- I
+
+Each station (A through I) checks the connections to its neighbours.
+
+Now, station A wants to make itself known in the network. It sends a status
+message with only three information: its id (callsign), a timestamp, and a
+quality. When station A sends the information, the quality is setup with 0.
+
+This status message now is sent to stations B and D. Both stations add the
+measured quality for their respective connection to A to the sent quality
+(0) of A's status message. Now, they consult their routing table: If the
+timestamp of this message is newer than the timestamp of the last
+received message, the new message is accepted. The old entry in the routing
+table is overwritten, it now contains the new quality, and the routing
+points directly to A. Now, stations B and D send the updated message to
+their remaining neighbours (not to A!), but at this time, the quality in the
+status message is filled up with the new value computed at stations B/D.
+
+This status message now travels along the network. Each station adds the
+measured quality of the forward connection at which it received the message.
+
+If the message is received another time via another forward connection, the
+timestamp of the message is equal to the timestamp in the routing table. Now,
+the stored routing quality is compared with the quality of the later received
+message. If this quality is better than that one already stored, the routing
+table is overwritten and the newly received message forwarded to the remaining
+neighbours. The routing table now points to the neighbour from which the later
+message was received. If the quality of the later received message is worser
+than the already known quality of a message with the same timestamp, the
+message is thrown away.
+
+To inhibit random switching of routing entries, two sets of routing entries
+are maintained: one for the currently received routing messages, and another
+one with the best measurement from the last broadcast interval. The latter
+one is actually used for routing of messages, and its timestamp typically
+counts 5 hours less than that one of the current broadcast interval.
+
+Constraints:
+============
+
+There is nothing amazingly new with this routing model. It follows the concepts
+used in many non-amateur radio networks, and even in amateur radio networks,
+TNN and Flexnet and possibly many more use it. The only difference is: Those
+implementations work very closely with the transport layer. The use of this
+concept for mailboxes results in an implementation of a second network layer.
+
+But stop complaining: nothing else is done (but much worser) by manual
+configuration of forward routing by system administrators.
+
+The most logical solution would require a paradigmatic change: It is the
+concept of store & forward that requires a second routing layer. Consequently,
+other networks gave up the store & forward concept and forward messages
+directly from station A to station I. Unfortunately, the amateur radio
+network is very heterogeneous, and unreliable. Forwarding on a radio connection
+from Berlin to Sydney is far from being reality, and even a connection from
+Berlin to Vienna is hard to do. The store & forward system easily accomplishes
+this task.
+
+It is out of the focus of this paper, but it shall be noted that there is
+another extension being developed for the WPROT protocol allowing direct
+forward connections between stations that easily can get connected, thus
+using the router of the underlying packet radio network and no more
+store & forward.
+
+The routing model described in this paper has the advantage that it is
+completely independent of the underlying connection network, and indeed even
+forward connections by physically transported floppy disks are thinkable :)
+
+
+Parameters:
+===========
+
+As with all other routing protocols, the usability of this protocol is
+depending on some chosen basic parameters. Among these are: update frequency
+of routing messages, forwarding priority of routing messages, and chosen
+throughput measurement method.
+
+These parameters determine the amount of network load created by the routing
+protocol, the reliability of routing tables and their ability to adapt to
+changed network loads and configuration, and its possible extension.
+
+The possible maximum extension is restricted by the MAXHOPS parameter of the
+used WPROT protocol itself. MAXHOPS is 50 (stations).
+
+Broadcast frequency of messages was chosen with 5 hours.
+
+Forward frequency of interchanged broadcast messages was chosen with
+30 minutes.
+
+As forward priority of WPROT messages is low, the network is updated in hours
+and not in minutes. This meets the reality of packet radio mailboxes.
+
+
+
+Implementation:
+===============
+
+The routing protocol is implemented as extension of WPROT. Please see the
+general description of WPROT at other place.
+
+Routing messages are single WPROT lines in a WPROT message. They use the
+following format:
+
+<checksum> <Flag R> <Callsign of originating station>
+                   <protocol version> <ansi timestamp> <hops> <quality>
+
+All fields are mandatory.
+
+Example:
+
+F3 R DB0SIF 10 950307915 2 16404
+
+F3        = checksum as usual with WPROT
+R         = flag for routing message
+DB0SIF    = call of originating station w/o hierarchical path
+10        = protocol version (see WPROT definition)
+950307915 = ANSII timestamp (11.02.2000 20:00:04)
+2         = Hop count (to be increased by one at every station)
+16404     = Quality (Seconds for transmission of 100 KBytes data) (this is an
+                ASCII representation of an unsigned long internal value)
+
+
+Connection quality measurement:
+===============================
+
+Quality is measured by observation of sent data to neighbours of one's station.
+The only data that reliably can be used without creating extra test data is
+sent messages of the running forward. The only forward condition in which no
+additional idle time may be added by the neighbour bbs is between start of
+message send (not start of proposal) and reception acknowledgement. The time
+between both events is counted, and normalized to the amount of needed seconds
+for 100 KBytes of data.
+
+To reflect the gained bandwith when using a compressed forward connection, not
+the amount of net data bytes is counted but the uncompressed size of sent
+messages. This makes compressed forward links better than a link of same net
+bandwith with uncompressed forward. This is desired.
+
+Small amounts of data lower than 512 bytes are not used for measurements,
+because the influence of other latency factors than bandwith gets reasonable.
+If the last measurement is more than 60 minutes ago, all blocks of data, even
+small ones, are used until the next block of data bigger than 512 bytes is
+sent.
+
+The quality for the forward connection is the mean value of all measurements
+during the last 5 hours. This smoothens quality changes.
+
+The last mean value is maintained, even when there were no new connections (and
+measurements) during that period of 5 hours.
+
+This value ages with 20 % of its initial value per hour, but at least with
+1 (one) per hour. After one day, it is reset to the default value for
+unchecked forward connections. This is SHORT_MAX.
+
+After three days, the quality is deleted from any table.
+
+Maximum quality is 1 (i.e. 1 seconds for transmission of 100 KBytes of data)
+Minimum quality is SHORT_MAX (i.e. 32767 seconds for transmission of 100 KBytes
+                              of data)
+(Remind that these qualities are subsequently added when status messages pass
+ the network, so, data has to be stored as unsigned long)
+
+If a link uses a non-interactive forward method, such as forward via import/
+export files, it gets a quality of SHORT_MAX/2. For these links, no real
+checking is possible.
+
+At each hop, an additional fixed aging of 100 and a percentual aging of
+10% is added to the quality.
+
+There has to be added another aging, depending on the size of the forward
+queue for private messages, but at the time being this is not yet implemented.
+
+As DPBOX priorizes short messages and messages from different senders, this
+ain't worse (and it renders it difficult to age a link due to the size of
+its forward queue...).
+
+
+Obligation:
+===========
+
+This protocol requires that a station participating in the exchange of
+routing messages will also use them for routing. That means: no forward of
+routing messages, if you do not auto route messages for targets in the
+bypassing routing messages. Otherwise, loops will occur.
+
+If you only want to participate silently, that means, analyzing all routing
+messages without being part of the router network, you strictly have to take
+care that no updated message will leave your system.
+
+
+Additional targets:
+===================
+
+As not all stations in a network will adapt this protocol, it would at
+least be desirable if direct neighbours to stations that use this protocol
+will create "phantom" messages. That means: if a station detects that
+some of its direct neighbours does not create routing messages by itself,
+it should create routing messages for this neighbour as if it had created
+them by itself. To reduce network load, it is absolutely necessary to truncate
+the timestamp of such messages to the basic broadcast interval chosen, so,
+to 5 hours UTC. Additionally, to prevent interfering erroneously sent phantom
+broadcasts for stations that send own broadcasts, the timestamp of phantom
+broadcasts is aged by another 3 * 5 hours (means 15 hours). 
+
+
+Conclusio:
+==========
+
+This protocol works really nice in praxi. If you decide to implement it
+in your own software product, please carefully check the reference
+implementation in this software (DPBOX). You have to use the same parameter
+set, as different parameters, especially for update frequency and aging,
+would heavily interfere with this implementation.
+
+The basic timing is defined in the source code file box_wp.h, and the basic
+processing in box_wp.c AND box_rout.c. Please check them all, I tried to
+insert comments at necessary places...
+
+73 Joachim, DL8HBS
+
+dl8hbs@db0sif.#hes.deu.eu
+jschurig@zedat.fu-berlin.de

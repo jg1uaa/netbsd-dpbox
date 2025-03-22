@@ -1,0 +1,93 @@
+Release Notes DPBOX v5.06.00
+
+Berlin, 07.03.97
+
+Release Notes dpbox v5.06.00 / 04.03.97
+
+Changes since v5.05.00 / 12.02.97
+
+
+
+Complete recoding of mail indexbase access. Now always look-ahead - buffered,
+  increases compute speed and lowers memory usage. Shortens code, increases
+  readability of code.
+
+Recoded some low-level functions (mainly in pastrix.c). Shorter, faster. Had a
+  real impact on DPBOX response times on slow computers.
+
+Recoded password prompt generation for NETROM style passwords (five chars of a
+  longer pw string). Avoids prompting for two same positions in a password.
+
+New command "U U" (Usage U). Displays a tiny grafic of current dpbox CPU usage
+  and user count.
+
+Deleted code for keeping the bulletin id buffer in ram. Was totaly useless
+  with linux, kept resources the system could better administer itself.
+  (RAMBID in config.box no more valid)
+
+Included a "disk full" check. Stops input operations to the bbs if free disk
+  space in box/indexes or box/infofiles is lower than 5MB. Is indicated
+  with a "disk full" prompt for sysops and a display in VERSION + output
+  (and of course an error message for users trying to send mails).
+
+DPBOX has a timer to keep forward connections alive for three minutes even
+  if there is currently no data to send (idle delay). Now you may switch
+  that delay off, either for single forward partners or for all partners.
+  This may be useful for THEBOX forward partners (they have a limited user
+  count and may be blocked if they have lots of forward partners) but also
+  for partners connected in compressed forward (FBB, DPBOX), as this delay
+  feature is most useful in temporary one-way forward connections (as pure
+  ASCII forward is).
+  In general, your decision should depend upon the speed a new connection to
+  that partner could be opened. If it runs over many digipeaters with slow
+  links, let it idle, if it is opened in a once, switch idling off.
+
+  Detailed information: DPBOX idles for up to three minutes if
+   a) more than one forward partner is logged in
+   b) in ASCII forward if no data to send and DPBOX would have to send an F>
+      (direction reversal)
+   c) in compressed forward if no data to send and DPBOX would have to send
+      an FQ (connection termination)
+
+  To switch off idling per default, set SFIDLEDEFAULT OFF in box/config.box.
+  To define idling for a specific forward partner, set SFIDLE ON/OFF in
+    its sf definition file (sf/<call>.sf)
+
+Fixed two errors in mailing list server. Should now work as announced in
+  release.505
+
+Mailing list majordomo now not only addressable with LSTSRV@Console_call
+  but also Console_call@Console_call. Should help to avoid problems in
+  networks with BBS systems altering the message flag from P to B if not
+  addressed to a callsign.
+
+Some time ago, Ulli, DL5HBF expanded the mailing list server functionality.
+  A server Console_call@Console_call is addressable by anyone (if existing),
+  so if you are maintaining your bbs through different sysops, it could be
+  a good idea to install a listserver with your bbs callsign and subscribed
+  by all of your sysops.
+
+No more sending a message with a non-callsign-style sender field to a
+  THEBOX forward partner. They mess up the sender field in that case
+  and insert your bbs call as the sender.
+
+Added one prompt macro (HELP PROMPT): "%w" is filled with read/sent kBytes
+  of that user (by view of the bbs). (special wish of Charly, OE3KLU)
+
+Now displaying not only system cpu load percentages in VERSION commands but
+  also dpbox cpu load percentages.
+
+In ACTIVITY command output now displaying user cpu time and percentage.
+  User CPU percentage is a total value over the users login time, on 586
+  CPUs usually you may expect a 0% display.
+
+In "BBS <calll>" command, an eventually existing digimap.stn file now is
+  scanned explicitely for a BBS entry ("MB") of the database file if several
+  entries (multiple SSIDs) are existing.
+
+If a sysop tries to alter the home bbs setting of a user and forgot to
+  authenticate with password, MYBBS command is exited. (special wish of
+  Dietmar, OE3DZW ;) Formerly, sysops home bbs was set to the users call.
+
+
+73 Joachim DL8HBS@DB0GR.#BLN.DEU.EU

@@ -1,0 +1,34 @@
+#! /bin/sh
+# 19.05.97  created: Joachim Schurig, DL8HBS
+# 22.06.97 modified: Burkhard John, DK5JG
+# 08.08.97 modified: Daniel Goetz, DL3NEU
+# dplist.neu
+
+echo "Content-type: text/html"
+echo
+echo "<HTML><HEAD>"
+echo "<TITLE>DPBOX message list</TITLE>"
+echo "</HEAD><BODY>"
+echo '<BODY BGCOLOR="#ffffff">'
+
+cat dptop.html
+
+echo "<PRE>"
+test1=$(echo $pattern | sed -s,' ',,)
+pattern=$(echo ${QUERY_STRING} | sed -e s,'number=',, | sed -e s/"&board="/" "/)
+number=$(echo $pattern | cut -d' ' -f1)
+board=$(echo $pattern | cut -d' ' -f2)
+test2=$(echo $number | tr -d 0-9)
+test3=$(echo $board | tr -d 'a-zA-Z0-9' '+-_')
+if [ ${test1} != ${pattern} ] || [ ${test2} ] || [ ${test3} ]; then
+  echo '<B> Eingabefehler!! </B>'
+else
+  /installdir/dphttp "L ${board} +${number}" | \
+    /installdir/dpcodeconv | \
+    /installdir/dpputlinks -list
+fi
+echo "</PRE>"
+
+cat dpbottom.html
+
+echo "</BODY></HTML>"

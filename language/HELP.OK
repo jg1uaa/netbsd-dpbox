@@ -1,0 +1,47 @@
+HELP
+----
+
+CESKY:    Pro komunikaci v cestine zadej prikaz "SPEAK OK".
+ENGLISH:  For english texts enter command "SPEAK G".
+DEUTSCH:  Zum Sprachwechsel auf Deutsch bitte Befehl "SPEAK D".
+FRANCAIS: Veuillez changer la langue avec la commande "SPEAK F".
+EXPERTD:  Um in den deutschen Expert-Modus zu gelangen "SP DLX" eingeben.
+
+Nasledujici prikazy se mohou zadat jen prvnim pismenem
+(s vyjimkou MYBBS - MY, SPEAK - SPE a TELL - TE).
+
+Podrobnejsi napovedu s uvedenim prikladu lze ziskat zapisem "HELP prikaz".
+
+ABORT   : Ukonci spojeni s mailboxem beze zmeny datumu posledniho volani.
+BYE     : Ukonci spojeni s mailboxem beze zmeny datumu posledniho volani.
+CHECK   : Vypise seznam novych zprav od posledniho volani. "C 1-10" vypise
+          nove zpravy v danem rozsahu.
+COMMENT : Podobne jako REPLY, ale pokud se jedna o rubriku, posle se odpoved
+          do dane rubriky.
+DIR     : Vypise seznam rubrik. "DIR USER" vypise uzivatele, kteri maji
+          nejakou zpravu. "DIR INFO" vypise i pocty zprav v rubrikach.
+ERASE   : Maze zpravy od nebo pro Tebe.
+FIND/BBS: Vypise data z pameti k dane BBS. Syntaxe je  BBS <znacka> .
+          Pokud se zada jen prefix, vypise se seznam BBS znamych tomuto
+          systemu pro dany prefix.
+HELP    : Zobrazi tuto napovedu. Podrobnejsi napovedu k danemu prikazu
+          ziskas zadanim prislusneho parametru, napr. "HELP CHECK".
+LIST    : Vypise seznam zprav (napr. "L OK1XYZ 2-3" nebo "L OKINFO -20").
+LOGINTIME:Vypise datum posledniho spojeni. Prikazem "LOG 17.04" nebo
+          "LOG 17.04.94" je mozne nastavit novy datum (zejmena pro CHECK).
+MYBBS   : Nastavi Tvoji domaci BBS pro forward zprav.
+NAME    : Zapamatuje si Tve jmeno (lepsi je zadat v 5. padu - "NAME Karle").
+QUIT    : Ukonci spojeni s mailboxem, aktualizuje se datum volani.
+READ    : Cte dane zpravy z rubriky nebo uzivatelskeho adresare ("R ALL 3-4").
+REPLY   : Okamzita odpoved na naposled prectenou zpravu. Jako nazev odpovedi
+          se automaticky vlozi  RE:<puvodni nazev>
+SEND    : Prikaz k zadani vlastni zpravy.
+SPEAK   : Zmena jazykove verze pro komunikaci s BBS.
+TELL    : Dalkovy dotaz na jinou BBS. Prikaz je nutno vypsat cely.
+TIME    : Ukaze aktualni cas systemu (UTC).
+TRANSFER: Zkopiruje vlastni zpravu jinemu adresatovi nebo do jine rubriky.
+USAGE   : Vypise poslednich 20 spojeni z deniku BBS.
+
+Vystup BBS je mozne kdykoli prerusit zapisem <mezera> <Enter>.
+Lze zadat vice prikazu na radce, v takovem pripade se oddeli strednikem.
+

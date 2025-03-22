@@ -1,0 +1,200 @@
+# EA.LAN for DP-Box 5.00.10 
+# Version 1.0 - 24/09/96
+# Modified by EA5SW - Jose S. Lopez
+# Packet: EA5SW @ EA5VDR.EAV.ESP.EU
+# E-mail: EA5SW @ AMSAT.ORG
+# Modified by DL8HBS (§84) 29.07.99
+#
+01 Manda H para la ayuda
+02 Parametro incorrecto
+03 Indicativo incorrecto
+04 Fichero inexistente
+05 Fichero demasiado grande
+06 Fichero grabado
+07 No tienes permiso
+08 Box esta vacio
+09 Error: este fichero no contiene texto
+10 Acabas de recibir un mensaje!
+11 Mensaje abortado.
+12 *** modo-sysop comenzando automaticamente ***
+13 No he encontrado BBS-Info
+14 No hay mensajes para
+15 Area:
+16  Nr. De     Dia      UTC    Bytes  Titulo
+17    Nr Indi     Area      Nr Dia      @BBS   Bytes Cad Titulo
+18 Mensaje(s) borrado(s).
+19 Estadistica DP-BOX
+20 Area      MSJs borrados  bytes   compres   to%  caducidad
+21 Por favor entra tu nombre usando el comando NAME
+22 Por favor entra tu HOMEBBS usando el comando MYBBS
+23 ### Pulsa una tecla ###
+24 Desconocido
+25 No hay nuevas entradas. Ultima entrada:
+26  Nr. De     @BBS   Cad Dia       Bytes Comp  Titulo
+27  Nr. De     Area     @BBS   Cad #TL RxFWD  Niv Fecha  Bytes Comp FCT Titulo
+29   Nr ->BBS  RxFrom  (QRG)  Autor  Area     @mbx   msgID        #LT  Size
+30 No hay ayuda para ese comando
+31 No hay ayuda para el sysop cargada
+32 Creando boxlog
+33 Limpiando la bbs, por favor, espere
+34 @MBX invalido para correo de usuario
+35 @MBX es:
+36 OK, su nuevo @MBX es:
+37 Mensaje inexistente en el area especificada
+38 OK, nueva caducidad es:
+39 Caducidad no valida
+40 Funcion no implementada
+41 CHECK abortado
+42 Total
+43 Memoria libre
+44 Libre en el disco duro
+45 No hay informacion
+46 No puedo crear un fichero export
+47 Entra texto para
+48 acaba con * * * END, /EX o CTRL-Z, aborta con CTRL-X:
+49 Pequeño mensaje enviado por
+50 Titulo? >
+51 Indicativo? >
+52 Bienvenido
+53 Bienvenido
+54 Ultima conexion  :
+55 Conexion actual :
+56 OK, tu home-bbs es
+57 Nivel modificado
+58 Gracias
+59 , tu nombre ha sido grabado.
+60 Por favor, entra tu nombre >
+61 Lenguaje seleccionado:
+62 Lenguaje no disponible
+63 Ultima conexion puesta a:
+64 Soportado solo en la consola
+65 Send/Erase solo con password
+66 Lenguajes disponibles:
+67 Lunes
+68 Martes
+69 Miercoles
+70 Jueves
+71 Viernes
+72 Sabado
+73 Domingo
+74 *** limite de lectura diario excedido ! Max. kBytes por dia:
+75 *** comando read suspendido:
+76 remote erase mandado
+77 released
+78 Unerase OK
+79 Informacion de usuario. NO BORRAR!
+80 *** header checksum invalido:%r*** se borrara en el proximo garbage%r*** o inmediatamente con KILL
+81 ultimo mostrado:
+82 Transferencia OK:
+83 Manda un comentario:
+84 resultado demasiado largo, max. 997 caracteres
+85 Parametros de Wantboard y NotBoard borrados
+86 Abortado. Disco lleno.
+87 *** SID perdido
+88 connect hiscore actual:
+89 borrado
+90 *** password erroneo
+91 *** password perdido
+92 *** perdon, no hay FWD en este momento. Prueba mas tarde.
+93 Usas un GP mal configurado, define
+94 en NAMES.GP como bbs!
+95 Entrando al servidor de ficheros. Manda H para la AYUDA,sal con EXIT o QUIT
+96 Acceso de escritura no permitido en este directorio. Usa /incoming/
+97 El fichero ya existe
+98 Error creando el fichero
+99 manda el texto, acaba con '.' en una nueva linea.
+100 Nombre de fichero invalido
+101 manda una descripcion corta del fichero, acaba con '.' en una nueva linea.
+102 --- pulsa <RETURN> para continuar, <C> para cancelar ---
+103 no existe el directorio
+104 Sales del servidor de ficheros,vuelves al modo bbs
+105 Comando erroneo. Ayuda con H.
+106 Error abriendo fichero
+107 usuarios en seleccion
+108 usuarios
+109 Sin password. Este mensaje no se enviara hasta dentro de (horas) :
+110 Transferencia local a
+111 Caducidad de este mensaje (1..999 dias, 0 = infinito) :
+112 No se conoce la HomeBBS de destino
+113 Por favor, entra manualmente una bbs de destino (S EA5SW @ EA5VDR)
+114 BID ya utilizado. Selecciona otro.
+115 Subscriptores del servidor de listas de correo
+116 Creando un nuevo servidor de listas de correo
+117 Añadiendo subscriptor
+118 del servidor de listas de correo
+119 No se puede crear el servidor de listas de correo.Error de fichero.
+120 Borrando subscriptor
+121 Borrando servidor de listas de correo
+122 Listado de servidores de listas de correo instalados:
+123 Informacion de
+124 Ha ocurrido un error de forward mientras se mandaba correo a tu bbs:
+125 ya esta en ruta
+126 *** DP-Box comandos de converse:
+127 /help     : este texto
+128 /chan <n> : cambiar al canal <n>
+129 /who      : estaciones y canales
+130 /quit     : acabar converse
+131 *** Los comandos se pueden abreviar
+132 *** Comando de escape a la bbs con !
+133 activos en este canal:
+134 indicativo canal
+135 *** converse terminado
+136 *** estas en el canal
+137 *** numero de canal incorrecto
+138 converse iniciado. /H para la ayuda. Estas en el canal
+139 Password borrado
+140 Uso: PASSWORD <TuPassword>
+141 password resultante demasiado largo
+142 password activo, tamaño:
+143 HOLD se inactiva:
+144 password se activa desde de una longitud de 21, tamaño actual:
+145 Acaba la conexion con CTRL-Z. Comando de escape con !
+146 por favor, comienza la transferencia autobin
+147 acceso restringido a usuarios en estos ficheros personales
+148 informacion extendida disponible con
+149 Error leyendo fichero
+
+150 Esta es una lista corta de los comandos del servidor de ficheros:
+151 ? y HELP            - Este fichero de ayuda
+152 DIR y LS y LS -l    - Muestra la lista del directorio
+153 LIST                - Muestra la lista del directorio con descripciones
+154 CD                  - Cambia directorio
+155 TYPE                - Envia un fichero ASCII con paginacion
+156 READ y WRITE        - Envia un fichero ASCII desde o a la bbs
+157 GET y PUT           - Envia un fichero ASCII desde o a la bbs
+158 BGET y BPUT         - Envia un fichero binario con el protocolo AutoBIN
+159 YGET y YPUT         - Envia un fichero binario con el protocolo Yapp
+160 EXIT, BYE y QUIT    - Vuelve al modo BBS
+161 Ejemplos:
+162 CD /linux/packet    - cambia al directorio /linux/packet
+163 CD ..               - vuelve un directorio atras
+164 DIR *.zip -DATE     - muestra una lista de ficheros *.zip ordenados por fecha
+165 DIR -NAME           - muestra una lista de ficheros ordenados por nombre (por defecto)
+166 LS -SIZE            - muestra una lista de ficheros ordenados por tamaño
+167 LIST                - muestra una lista de ficheros con una descripcion del contenido
+168 YGET test.zip       - envia test.zip en modo Yapp
+169 BGET 4              - envia el fichero numero 4 en modo AutoBIN
+170 BPUT test.lzh       - recibe un fichero en AutoBIN, se archiva como test.lzh
+171 Nota: Unix distinge entre MAYUSCULAS y minusculas en los nombres de fichero!
+172 El separador de directorio es '/', no '\' como en DOS y similares.
+173 Los nombres pueden ser mas largos de 8+3 caracteres, ej. "dpbox-4.17-src.tar.gz"
+174 Los comandos del servidor se pueden abreviar, ej. YG para YGET, L para LIST.
+175 Comandos de Sysop:
+176 MD y MKDIR          - Crea Directorio
+177 CP y COPY           - Copia un fichero
+178 MV y MOVE           - Mover/Renombrar un fichero
+179 RM y DEL            - Borrar un fichero
+180 RD y RMDIR          - Borrar un directorio
+181 INDEX               - Escribir una nueva informacion de directorio
+
+182 Por favor, comienze la transmision YAPP
+183 #MSJ   T  Tam. Para    @BBS    De     Fech      Titulo 
+
+184 Atencion: Tu MyBBS puede haber sido pirateada
+185 MyBBS estaba como:
+186  - todavia se retienen los mensajes para ti.
+
+187 transmision YAPP comenzada
+
+188 Ultima MyBBS
+189 actualizada

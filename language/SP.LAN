@@ -1,0 +1,195 @@
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 niewlasciwy parametr
+03 niewlasciwy znak
+04 taki plik nie istnieje
+05 plik za duzy
+06 tekst przyjety
+07 odm¢wiono
+08 box jest pusty
+09 blad:ten plik nie zawiera tekstu
+10 masz wiadomosc!
+11 wiadomosc nie zostala przyjeta
+12 *** sysop-mode automatycznie rozpoczety ***
+13 nie znaleziono informacji o tym BBS
+14 nie ma wiadomosci dla
+15 info-file:
+16  Nr. od     data     UTC    bajt¢w temat  
+17     # Znak     Katalog  Nr. data     @BBS  bajt¢w #LT tytul
+18 wiadomosci skasowano!
+19 statystyka:
+20 katalog   MSGs usunietych bajt¢w    packed   to% #LT poziom
+21 Prosze wpisac swoje imie uzywajac komende NAME
+22 Prosze wpisac sw¢j Home BBS uzywajac komende MYBBS
+23 ### Nacisnij klawisz ###
+24 nieznany
+25 Nic nowego nie znaleziono. Ostatnia wiadomosc:
+26  Nr. Od     @BBS   #LT Data     Bajt¢w Pack  Temat
+27  Nr. Od     Katalog  @BBS   #LT #TL RxFrom Lev Data   Bajt¢w Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Autor  Katalog  @BBS   BID/MID      #LT  Bajt¢w T
+30 Nie znaleziono plik¢w help
+31 Nie znaleziono plik¢w help dla sysopa
+32 tworzenie check-listy
+33 porzadkowanie BOX-u, prosze poczekac
+34 @BBS niewlasciwy dla usermail
+35 @BBS jest:
+36 OK, nowy @BBS jest:
+37 brak wiadomosci w tym zakresie
+38 OK, nowy czas istnienia jest:
+39 niewlasciwy czas istnienia
+40 funkcja jeszcze nie wprowadzona
+41 CHECK odrzucony
+42 Calkowicie
+43 Wolnej pamieci
+44 Wolnego na twardym dysku
+45 nie znaleziono informacji
+46 nie mozna utworzyc export-file
+47 Wprowadz tekst dla
+48 zakoncz przez ***END, /EX lub CTRL-Z, odrzuc przez CTRL-X:
+49 najszybsze dostarcznie juz od
+50 Tytul? >
+51 Odbiorca? >
+52 Witaj
+53 Witaj
+54 Ostatnio podlaczony  :
+55 Aktualnie podlaczonych:
+56 OK, Tw¢j home BBS jest
+57 Poziom zmieniony
+58 dziekuje Tobie
+59 , Twoje imie zostalo zapamietane
+60 Prosze wpisac swoje imie >
+61 Wybrany jezyk:
+62 Niewlasciwy jezyk
+63 Ostatnie podlaczenie jest ustawione na:
+64 mozliwe tylko na konsoli
+65 Send/Erase tylko po wprowadzeniu hasla (komenda-SYS)
+66 istniejace jezyki:
+67 Poniedzialek
+68 Wtorek
+69 Sroda
+70 Czwartek
+71 Piatek
+72 Sobota
+73 Niedziela
+
+74 *** limit odczytu przekroczony! Max. kBajt¢w na dzien:
+75 *** komenda odczytu zawieszona:
+76 zdalne kasowanie udostepnione
+77 uwolniono
+78 Unerase OK
+79 Userinfo. NIE KASOWAC!
+80 *** niewlasciwy nagl¢wek checksum:%r*** zostanie skasowane nastepnym razem%r*** lub natychmiast przez KILL
+81 ostatnio pokazany:
+82 Transfer OK:
+83 Wprowadz komentarz:
+84 wynik za dlugi, max. 997 znak¢w
+85 Ustawienia dla Wantboard i NotBoard skasowane
+86 Odmowa. Dysk jest pelny.
+87 *** brakujacy SID
+88 obecny hiscore polaczenia :
+89 skasowano
+90 *** niewlasciwe haslo
+91 *** brakuje hasla
+92 *** niestety, brak s&f w obecnej chwili. Pr¢buj p¢zniej.
+93 Uzywasz zle skonfigurowany GP, wpisz
+94 w NAMES.GP jako bbs!
+95 Jestes obecnie w file server. Napisz H dla HELP, wyjscie : EXIT lub QUIT
+96 Wgrywanie do tego katalogu niedozwolone. Uzyj /incoming/
+97 Ten plik juz istnieje
+98 Blad w tworzeniu pliku
+99 wprowadz tekst, zakoncz z '.' w nowej linii
+100 niewlasciwa nazwa pliku
+101 wprowadz kr¢tki opis pliku, zakoncz z '.' w nowej linii
+102 --- nacisnij <RETURN> dla kontynuacji, <C> dla skasowania ---
+103 brak takiego katalogu
+104 wyszedles z file servera, jestes z powrotem w bbs mode
+105 Niewlasciwa komenda. Help z H.
+106 Blad w otwieraniu pliku
+107 uzytkownicy w wyborze
+108 uzytkownicy
+109 Brak hasla. Dostarczenie moze byc op¢znione o (godzin) :
+110 Lokalny transfer do
+111 Czas istnienia tej wiadomosci (1..999 dni, 0 = nieskonczenie dlugi) :
+112 Nieznany HomeBBS adresata 
+113 Prosze wprowadz recznie bbs przeznaczenia (S DL1XY @ DB0XY)
+114 BID juz znany. Wybierz inny.
+115 Subskrynenci mailing list servera
+116 Tworzenie nowego mailing list servera
+117 Dodawanie subskrynenta
+118 mailing list servera
+119 Nie mozna utworzyc mailing list servera. Blad w pliku.
+120 Skreslanie subskrynenta
+121 Skreslanie mailing list servera
+122 Lista zainstalowanych mailing list server¢w:
+123 Info 
+124 Wystapil blad forwardu podczas wysylania poczty do Twojego bbs:
+125 jeszcze w drodze
+126 *** komendy DP-Box convers :
+127 /help     : ten tekst
+128 /chan <n> : przejscie na kanal <n>
+129 /who      : stacje i kanaly
+130 /quit     : koniec convers
+131 *** komendy moga byc skr¢cone
+132 *** bbs komenda escape z !
+133 podlaczeni na tym kanale:
+134 znak      kanal
+135 *** convers zakonczony
+136 *** teraz na kanale
+137 *** niewlasciwy numer kanalu
+138 convers rozpoczety. /H dla help. Jestes na kanale
+139 Haslo skasowane
+140 Przyklad: PASSWORD <YourPassword>
+141 wprowadzone haslo za dlugie
+142 haslo aktywne, dlugosc:
+143 HOLD zostanie wstrzymany
+144 haslo zostanie uruchomione po osiagnieciu dlugosci 21,obecna dlugosc:
+145 Zakoncz polaczenie przez CTRL-Z. Komenda escape przez !
+146 prosze rozpoczac autobin transfer
+147 uzytkownik zastrzegl dostep do swojego osobistego katalogu
+148 rozszerzone info dostepne z
+149 Blad podczas odczytu pliku
+
+150 Skr¢cona lista komend file servera :
+151 ? lub HELP           - Ten tekst
+152 DIR lub LS lub LS -l - Pokazanie listy katalog¢w
+153 LIST                 - Pokazanie listy katalog¢w z opisanymi labels
+154 CD                   - Zmiana Katalogu
+155 TYPE                 - Odczyt pliku ASCII ze stronicowaniem
+156 READ oraz WRITE      - Transfer pliku ASCII z lub do BBS
+157 GET oraz PUT         - Transfer pliku ASCII z lub do BBS
+158 BGET oraz BPUT       - Transfer pliku binarnego protokolem AutoBIN 
+159 YGET oraz YPUT       - Transfer pliku binarnego protokolem Yapp 
+160 EXIT, BYE oraz QUIT  - Powr¢t do BBS mode
+161 Przyklady:
+162 CD /linux/packet     - przejscie do katalogu /linux/packet
+163 CD ..                - powr¢t o jeden katalog
+164 DIR *.zip -DATE      - pokazanie listy katalog¢w  *.zip wedlug daty
+165 DIR -NAME            - pokazanie listy katalog¢w wedlug nazwy (default)
+166 LS -SIZE             - pokazanie kr¢tkiej listy katalog¢w wedlug wielkosci
+167 LIST                 - pokazanie listy pliku z opisem zawartosci pliku
+168 YGET test.zip        - odczyt test.zip w Yapp mode
+169 BGET 4               - odczyt pliku nr 4 w AutoBIN mode
+170 BPUT test.lzh        - wgranie pliku w AutoBIN, zostanie zapisany test.lzh
+171 Uwaga: Unix odr¢znia  DUZE- i male litery w nazwach plik¢w!
+172 Oddzieleniem katalog¢w jest '/', a nie '\' jak w DOS itp.
+173 Nazwy moga byc dluzsze jak 8+3 znak¢w, np. "dpbox-4.17-source.tar.gz"
+174 Wszystkie komendy serwera moga byc skr¢cone, np. YG dla YGET, L dla LIST.
+
+175 Komendy sysopa:
+176 MD oraz MKDIR        - Tworzenie katalogu
+177 CP oraz COPY         - Kopiowanie pliku
+178 MV oraz MOVE         - Przesuniecie/zmiana nazwy pliku
+179 RM and DEL           - Kasowanie pliku
+180 RD and RMDIR         - Usuniecie katalogu
+181 INDEX                - Wpisanie nowego info katalogu
+
+182 Prosze rozpoczac transmisje YAPP
+183 #MSG   T  Size Do      @BBS    Od     Data      Temat
+
+184 Ostrzezenie: Tw¢j MyBBS m¢gl byc naduzyty
+185 MyBBS zostal ustawiony na:
+186  - nadal sa wiadomosci dla Ciebie.
+
+187 Transmisja YAPP rozpoczeta
+
+188 Ostatnio MyBBS
+189 ustawione

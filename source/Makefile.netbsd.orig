@@ -1,0 +1,196 @@
+###############################################################################
+#                                                                             #
+# This is the Makefile of dpbox-5.08 for NetBSD                               #
+#                                                                             #
+# Version:     1.0.0                                                          #
+# Date   :     16 September 1999                                              #
+# Author :     Berndt Josef Wulf, VK5ABN                                      #
+#                                                                             #
+###############################################################################
+
+#
+# uncomment for no shell access from within dpbox
+#
+NOSHELL		= -DNO_SHELL
+
+INSTALL		= /usr/bin/install -c
+INSTALL_PROGRAM	= ${INSTALL} -s 
+INSTALL_DATA	= ${INSTALL} -m 444
+INSTALL_CONF	= ${INSTALL} -m 440
+MKDIR		= mkdir -p
+LN		= ln -sf
+
+prefix		= /usr/pkg
+bindir		= $(prefix)/bin
+sbindir		= $(prefix)/sbin
+confdir		= $(prefix)/share/dpbox/conf
+docdir		= $(prefix)/share/doc/dpbox
+landir		= $(prefix)/share/dpbox/language
+spooldir	= /var/spool/dpbox
+
+cgidir		= $(prefix)/libexec/cgi-bin
+httpdir		= $(prefix)/share/httpd/htdocs
+
+DEFS		= $(SYSTEM) $(NOSHELL)
+CC		= gcc
+CPP		= $(CC) -E
+CFLAGS		= -Wall -O2 -funsigned-char -fomit-frame-pointer -fno-strength-reduce
+CRAWLERCFLAGS	= -Wall -O3 -funsigned-char -fomit-frame-pointer -fno-strength-reduce
+LD		= $(CC)
+LDFLAGS		= -s
+LIBS		= -lm
+
+HDRS		= filesys.h box.h box_file.h box_mem.h box_send.h box_sf.h \
+                  box_sub.h box_sys.h boxdbox.h boxbcm.h box_tim.h box_init.h \
+		  boxglobl.h boxlocal.h box_inou.h box_serv.h boxbcast.h \
+		  boxfserv.h yapp.h crc.h huffman.h pastrix.h sort.h tools.h \
+                  init.h dpbox.h ifacedef.h status.h linpack.h shell.h main.h \
+		  box_garb.h box_logs.h box_wp.h box_rout.h box_scan.h md2md5.h
+
+OBJS		= filesys.o box.o box_mem.o box_send.o box_sf.o box_sub.o \
+                  box_sys.o boxdbox.o boxbcm.o box_tim.o boxglobl.o boxlocal.o \
+		  box_inou.o box_serv.o boxbcast.o boxfserv.o yapp.o crc.o \
+		  huffman.o pastrix.o sort.o box_file.o tools.o status.o \
+		  shell.o init.o linpack.o main.o box_init.o box_garb.o \
+		  box_logs.o box_wp.o box_rout.o box_scan.o md2md5.o
+
+SRCS		= filesys.c box.c box_file.c box_mem.c box_send.c box_sf.c \
+      	      	  box_sub.c box_sys.c boxdbox.c boxbcm.c box_tim.c boxglobl.c \
+		  boxlocal.c box_inou.c box_serv.c boxbcast.c boxfserv.c \
+		  yapp.c crc.c huffman.c pastrix.c sort.c tools.c status.c \
+		  shell.c init.c linpack.c main.c box_init.c box_garb.c \
+		  box_logs.c box_wp.c box_rout.c box_scan.c md2md5.c
+
+OTHER_SRCS	= dpputlinks.c dpcodeconv.c dpgate.c crawler.c dpmybbs.c
+
+SUBDIRS		= indexes infofiles newmail import save crawler \
+		  fileserv fileserv/incoming fileserv/temp7pl fileserv/newbin \
+		  privserv privserv/temp7pl proto server stat stat/extusers
+
+all:	dpbox crawler cgi toolbox
+
+tgz:
+	@echo Creating dpboxsrc.tgz
+	@tar -cvzf dpboxsrc.tgz $(SRCS) $(HDRS) $(OTHERS)
+
+csource: $(SRCS)
+
+.c.o:
+	$(CC) $(CFLAGS) $(DEFS) -c $<
+
+.c:
+	$(CC) $(CFLAGS) $*.c -o $*
+
+dpbox:	$(OBJS)
+	$(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o dpbox
+
+crawler:	crawler.c
+	$(CC) crawler.c $(CRAWLERCFLAGS) -o crawler
+
+toolbox:  dpmybbs
+
+cgi:	dpputlinks dpcodeconv dpgate
+
+install: all
+	$(MKDIR) $(sbindir)
+	$(INSTALL_PROGRAM) dpbox $(sbindir)
+
+	$(MKDIR) $(bindir)
+	$(INSTALL_PROGRAM) -m u+s,a+x dpgate $(bindir)
+	$(INSTALL_PROGRAM) dpputlinks $(bindir)
+	$(INSTALL_PROGRAM) dpcodeconv $(bindir)
+	$(INSTALL_PROGRAM) dpmybbs $(bindir)
+	$(INSTALL) -m 555 ../cgi/dpboxcgi/dphttp $(bindir)
+
+	$(MKDIR) $(docdir)
+	$(INSTALL_DATA) ../document/* $(docdir)
+
+	$(MKDIR) $(landir)
+	$(INSTALL_DATA) ../language/* $(landir)
+	$(LN) DL.ALL $(landir)/BS.ALL
+	$(LN) DL.ALL $(landir)/DLX.ALL
+	$(LN) DL.ALL $(landir)/EY.ALL
+	$(LN) DL.ALL $(landir)/HB.ALL
+	$(LN) DL.ALL $(landir)/OE1.ALL
+	$(LN) HELP.DL $(landir)/HELP.BS
+	$(LN) HELP.DL $(landir)/HELP.DLX
+	$(LN) HELP.DL $(landir)/HELP.EY
+	$(LN) HELP.DL $(landir)/HELP.HB
+	$(LN) HELP.DL $(landir)/HELP.OE1
+	$(LN) HELP_SYS.DL $(landir)/HELP_SYS.BS
+	$(LN) HELP_SYS.DL $(landir)/HELP_SYS.DLX
+	$(LN) HELP_SYS.DL $(landir)/HELP_SYS.EY
+	$(LN) HELP_SYS.DL $(landir)/HELP_SYS.HB
+	$(LN) HELP_SYS.DL $(landir)/HELP_SYS.OE1
+
+	for i in $(SUBDIRS); \
+	do \
+		$(MKDIR) $(spooldir)/$$i; \
+	done;
+
+	$(MKDIR) $(prefix)/libexec/dpbox
+	$(INSTALL) -m 555 ../run/* $(prefix)/libexec/dpbox
+	$(INSTALL_PROGRAM) crawler $(prefix)/libexec/dpbox
+	$(INSTALL_DATA) ../crawler/stopwords $(spooldir)/crawler
+
+	@if [ -f ${confdir}/dpbox.ini ]; then \
+	  echo "***********************************************************"; \
+	  echo "*                                                         *"; \
+	  echo "*                      W A R N I N G                      *"; \
+	  echo "*                      =============                      *"; \
+	  echo "*                                                         *"; \
+	  echo "*  A previously installed version of DPBOX was dected     *"; \
+	  echo "*  on this system. The installation of the configuration  *"; \
+	  echo "*  files was suspended in order to preserve the           *"; \
+	  echo "*  old configuration.                                     *"; \
+	  echo "*                                                         *"; \
+	  echo "*  Please refer to the documentation and CHANGE logfile   *"; \
+	  echo "*  and manually adjust the configuration files where      *"; \
+	  echo "*  necessary.                                             *"; \
+	  echo "*                                                         *"; \
+	  echo "***********************************************************"; \
+	else \
+	  $(MKDIR) $(confdir); \
+	  $(INSTALL_CONF) ../dpbox.ini $(confdir)/dpbox.ini; \
+	  $(MKDIR) $(confdir)/system; \
+	  $(INSTALL_CONF) ../system/* $(confdir)/system ; \
+	  $(MKDIR) $(confdir)/sf ; \
+	  $(INSTALL_CONF) ../sf/* $(confdir)/sf; \
+	fi
+
+	@if [ -e ${cgidir} ]; then \
+	  echo "installing cgi-scripts"; \
+	  $(INSTALL) -m 755 ../cgi/cgi/* $(cgidir); \
+	  $(INSTALL_DATA) ../cgi/dpboxcgi/*.html $(cgidir); \
+	fi
+
+	@if [ -e ${httpdir} ]; then \
+	  echo "installing html pages"; \
+	  $(MKDIR) $(httpdir)/dpbox/pic; \
+	  $(INSTALL_DATA) ../cgi/dpbox/*.html $(httpdir)/dpbox; \
+	  $(INSTALL_DATA) ../cgi/dpbox/pic/* $(httpdir)/dpbox/pic; \
+	fi
+
+	@echo 
+	@echo dpbox installation complete
+	@echo 
+	@echo Now edit the configuration files in $(confdir) and 
+	@echo $(confdir)/dpbox.ini!!!
+
+clean:
+	$(RM)  *.o *~ .*~ *.orig *.bak *.s *.core  
+	$(RM)  fdpbox crawler dpgate dpputlinks dpcodeconv .depend tags
+
+depend:	dep
+
+dep:
+	$(CPP) -M $(DEFS) $(SRCS) $(OTHER_SRCS) > .depend
+#	@ctags $(SRCS) $(HDRS) $(OTHER_SRCS)
+
+#
+# include a dependency file if one exists
+#
+ifeq (.depend,$(wildcard .depend))
+include .depend
+endif
+

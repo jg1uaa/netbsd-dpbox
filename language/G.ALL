@@ -1,0 +1,2771 @@
+AKTUELL
+
+hb9xbo 15.05.97
+dk2go  19.05.97 Adapted for dpbox 5.07
+                CRAWL FREAD FTR IMPORT
+       08.12.97 Changes of DL.ALL
+                BATCH BBS CRAWL GARBAGE HEADER HIDDEN HOLD IMPORT LIST
+                NAME NOTBOARD PASSWORD QUIT
+       03.01.98 RELOAD SERVER
+       10.01.98 FILESERVER
+       03.05.98 MD2/MD5 SERVER
+       07.03.99 v5.07.11 changes implemented:
+                NOTBOARD WANTBOARD (symbolic board TEMP)
+dl8hbs 29.07.99 minor changes
+dk2go  10.10.99 QUIT CONVERSE FILESERVER CONFIG SYSTEM
+dk2go  23.04.00 adaptations for v6.00:
+                NOTBOARD/WANTBOARD(@,&) KILL CRAWL SFSTAT CS
+                ACTIVITY BATCH BBS FREAD
+                PING ROUTES
+
+----------------------------------------------------------------------------
+
+ABORT or BYE
+
+Ends the connection with the BBS. The logindate is not updated. The same is
+performed with a simple disconnect.
+
+Example:
+
+ABORT
+
+----------------------------------------------------------------------------
+
+ACTIVITY
+
+Sysop only. Displays the last entered command lines of every box user.
+Forward channels are displayed lowercase, with a direction indicator
+following the call sign.
+
+Example:
+
+ACT
+
+Special flags:  MDM - User is connected via a modem and dpgate
+                TRM - User has logged in through a Linux console
+
+----------------------------------------------------------------------------
+
+BATCH
+
+Sysop only. You can start a batch file. This file contains text lines that
+will be typed as if you would type them manually. Please take care to use 
+correct syntax in a batch file, it is not aborted when errors are detected.
+When called without parameters, the command prompts for the batch file name.
+
+Example:
+
+BATCH /var/spool/dpbox/system/cleanup.bat
+
+Batch files are processed in sysop mode.
+
+----------------------------------------------------------------------------
+
+BBS or FIND
+
+Outputs information about other BBS'. Possible options:
+
+BBS DB0XYZ
+
+displays information about the BBS db0xyz and shows you the path the mail
+router of DPBOX would take to send a mail to that station.
+
+BBS DB
+
+displays a list of all BBS having 'DB' as first letters in their call sign.
+
+BBS < Berlin
+
+searches for the BBS that has the string 'Berlin' in its mail header.
+
+BBS *.FL.USA.NOAM
+
+outputs all BBS in Florida, USA.
+
+BBS < FBB7.
+
+displays all bbs using WinFBB software.
+
+You may use the wild card '*' in any combination.
+
+Depending on the available information, not all of the following output
+may be displayed:
+
+Call     : BBS callsign (complete hierarchical address)
+Last WP  : Date and time of the last WP line received for this BBS
+Sysop    : Sysop (retrieved from WPROT messages)
+SF-Call  : BBS callsign wirh SSID for direct connect
+ActivRout: BBS with Active Routing: routing, quality, number of SF hops,
+           date and time of the current routing information
+LastDirUp: BBS partner with Active Routing: last WPROT router message received
+Count(r)y: Country with WAZ and ITU zones (from the prefix)
+Distance : Distance and azimuth (viewed from this BBS)
+QTH      : Location (*)
+QTHLOC   : QTH locator (*)
+Latitude : geographical latitude (*)
+Longitude: geographical longitude (*)
+Sysop    : Sysop (*)
+Remarks  : Further remarks (*)
+Info     : Information from the BBS's R: line
+Last Tx  : Date and time of the last message received
+MinTimeB : Bulletins: minimum forwarding time to this BBS
+AverTimeB: Bulletins: average forwarding time to this BBS
+MinTimeP : P-mails: minimum forwarding time to this BBS
+AverTimeP: P-mails: average forwarding time to this BBS
+MsgCtB   : Number of received bulletins
+MsgCtP   : Number of received personal messages
+Rx Bytes : Received bytes
+Routing  : Neighbour BBS currently used for routing
+Best path: Smart router: suggested best path for bulletins
+best Path: Smart router: suggested best path for personal messages
+SmartRout: Routing suggestion by smart router
+
+If a file digimap.stn (Hammap format) has been installed, it is searched
+for BBS entries (type MB), and additional information (*) about
+the mailbox is displayed.
+
+With the parameter '-config', forward definitions for a specific nighbour
+or for all partner BBSs may be retrieved:
+
+ BBS -config HB9EAS
+ BBS -config all
+
+This is a useful feature for other sysops who are trying to track down
+forward loops or other problems with message forwarding.
+
+----------------------------------------------------------------------------
+
+BEACON
+
+Sysop only. Starts transmission of a mailbeacon manually. Useful for
+checking the definition of its parameters (file system/beacon.box).
+
+----------------------------------------------------------------------------
+
+BOXLOG
+
+Sysop only. Recreates the file boxlog.dp (the base of the checklist output).
+Normally, you won't have to use this command as GARBAGE includes this
+operation. Might be a useful command if you have the impression that the
+checklist is disordered.
+
+Example:
+
+BOXLOG
+
+----------------------------------------------------------------------------
+
+BROADCAST
+
+Sysop only. Starting with v4.00, DPBOX is able to generate a PACSAT BBS
+Broadcast. Further information is given elsewhere in this document.
+With the BROADCAST command, the sysop can immediately switch the
+BBS transmissions on or off.
+
+BROADCAST ON
+BROADCAST OFF
+
+----------------------------------------------------------------------------
+
+BULLID
+
+Sysop only. You can check the state of the BID pool. Without parameters you
+get some information about size, maximum size and the seek pointer. If the
+seek pointer is lower than the size, the pool is completely filled and will
+be overwritten from the beginning. This is normal. If you add a BID as
+parameter, the BID is searched for and the position in the BID pool is
+displayed. The added option '-' deletes the BID in the pool, the option '+'
+appends the BID to the pool.
+Examples:
+
+BULLID
+BULLID 12635_F6ABJ
+BULLID 12635_F6ABJ -
+BULLID 12635_F6ABJ +
+
+For normal BBS operation you should not delete BIDs.
+
+----------------------------------------------------------------------------
+
+CHECK and CS
+
+The CHECK command is similar to L in F6FBB BBS. It shows you either
+
+* all new bulletins in the BBS (C without parameters)
+
+* all bulletins of a special subject (C < string, where 'string' is searched
+for in the title and sender fields of all existing mails)
+
+* all new bulletins of a board (C ATARI)
+
+* a subset of all bulletins (C 200-300, this shows you the last 200 to 300
+bulletins; or C 50, this shows you the last 50 bulletins).
+
+Examples:
+
+C
+C 50
+C 1000-1200
+C < DL8HBS
+C < FT-757
+C < WP Update
+C ATARI
+
+The CHECK command has the optional parameter '+'. If this is added to the
+command, instead of bulletins only private mails are examined. A nonsysop
+has access only to mails he wrote or received, a sysop has access to all
+private mails. Examples:
+
+C +
+C < DL8HBS +
+C DL8HBS +
+
+Additionally, you may add the parameter '$', this means that instead of the
+date of the mail you get a display of its bulletin ID. When using the
+search- and the bulletin-ID in combination, you get an output of the
+searched Mail(s) having this BID(s). Examples:
+
+C $
+C 50 $
+C 1000-1200 $
+C < $DB0GR
+C < $12345_DB0GR
+C ATARI $
+
+Of course, you are free to combine the options any way you need them, 
+for example:
+
+C 500 < DL8HBS
+C 1000-20000 < $DB0GR
+C + 100-300 < $DB0GR
+
+and so on...
+
+The search keyword may include wild cards (*):
+
+C < FT*757
+
+will look for FT-757, FT 757 FT757 etc.
+
+Fuzzy search: Typing
+
+C %50 search
+
+will lower matching threshold of found words in subject lines to 50%, so
+only 50% of the searched string has to exist. Be careful, fuzzy search
+may produce huge checklists!
+
+
+see also CS
+----------------------------------------------------------------------------
+
+CD
+
+Just for compatibility with BaycomBox. Changes the current board selection
+(the part of the standard prompt that appears in brackets).
+
+Example:
+
+CD FAX
+
+----------------------------------------------------------------------------
+
+COMMENT
+
+is very similar to REPLY, the difference is that no private mail is
+generated but a message with the same destination and @mbx field as those
+of the read mail.
+
+Example:
+
+COMMENT BBS 34
+
+----------------------------------------------------------------------------
+
+COMP or //COMP
+
+COMP ON activates the huffman compression of the BBS. It will send a //COMP
+1 answer and start compression. COMP OFF switches the
+compression off, the answer is //COMP 0.
+
+----------------------------------------------------------------------------
+
+CONFIG
+
+Allows a sysop to configure the config files of DPBOX on-line.
+
+Examples:
+
+CONFIG config.box REMOTE_ERASE
+
+Returns the setting of the parameter REMOTE_ERASE in system/config.box
+
+CONFIG config.box REMOTE_ERASE ON
+
+Sets the parameter REMOTE_ERASE in system/config.box to ON
+
+CONFIG config REMOTE_ERASE ON
+
+Same as above. If the file is not found under the given name, DPBOX appends
+'.box' and '.sf' to the filename to check for existence. Search path for the
+file is box/, box/system/, box/sf/ (in that order).
+
+CONFIG beacon DUMMY 1234
+
+Appends the parameter DUMMY 1234 to the file system/beacon.box (if a
+parameter is not found in the given file, it will be appended at the end of
+the file).
+
+CONFIG rubriken.box APPLE -
+
+Removes the APPLE board from the file rubriken.box.
+
+CONFIG
+
+returns a short syntax description of the command.
+
+If you changed system settings with the config command, you have to enter
+RELOAD to make them effective.
+
+----------------------------------------------------------------------------
+
+CONNECT
+
+Sysop only. This lets you connect a call via a given TNT interface. Syntax:
+
+CONNECT <Call> [<QRG>] [<Timeout>]
+
+Example:
+
+CONNECT DL1XYZ BERLINK
+
+If no interface QRG was added, the interface the user came in will be used.
+Check for valid interface QRGs with the QRG command.
+
+----------------------------------------------------------------------------
+
+CONVERSE
+
+The BBS offers a built-in converse mode. It is local only, you cannot
+connect it to the Ping-Pong converse of TheNetNode, Wampes or other TCP/IP
+based network nodes. In converse mode, standard BBS commands can be
+entered with a preceding '!'.
+
+Examples:
+
+CONVERSE
+
+starts converse, selected channel is 0.
+
+CONVERSE 1234
+
+starts converse, selected channel is 1234.
+
+When in converse mode, enter /HELP for further help.
+
+Converse is ended with /Q
+
+Users may use channel numbers from 0 to 100'000, board sysops up to 200'000
+and sysops up to 2'000'000'000.
+
+----------------------------------------------------------------------------
+
+CRAWL
+
+CRAWL is a DPBOX sysop command, it controls the crawler operations:
+
+CRAWL      : starts scanning of all messages, deletes old database.
+CRAWL -q   : stops scanning, database is not deleted
+CRAWL -p   : starts scanning, including user messages
+             (do not use this parameter for public BBSs)
+
+A restart of DPBOX during initial creation of the database will lead to an
+abort of the indexing. After creating databases, the crawl state is stored
+internally and will not be affected by restarts of the bbs software.
+
+After an abnormal shutdown of the PC (power failure, harddisk error),
+a delayed response of DPBOX may be observed. In this case, terminate
+crawling and kill any remaining crawl processes in a Linux command shell.
+
+----------------------------------------------------------------------------
+
+CS
+
+uses the same syntax as CHECK, but the output of the command is sorted by
+its destination. This makes a long checklist much easier to handle. See
+also HELP CHECK.
+
+----------------------------------------------------------------------------
+
+CTEXT
+
+Sysop only. You can enter a logon text that is displayed to all users. Any
+previous CTEXT is displayed and then replaced by the new text.
+
+----------------------------------------------------------------------------
+
+DEBUG
+
+Sysop only. Requests or sets the current debug level of the bbs (until next
+RELOAD or restart).
+
+Examples:
+
+DEBUG
+
+Requests actual debug level
+
+DEBUG 5
+
+sets actual debug level to 5
+
+DEBUG 0
+
+switches debugging off
+
+On RELOAD or restart the debug level is read out of system/config.box.
+Default is 0, range is from 0 - 5.
+
+----------------------------------------------------------------------------
+
+DIRECTORY
+
+The DIRECTORY command displays a board list of the BBS. It has four
+different options:
+
+D
+
+displays the bulletin boards, the number after the name is the maximum
+lifetime for this board as set in RUBRIKEN.BOX (see below).
+
+D I
+
+also displays the bulletin boards, but the number is the number of the last
+message in this board (which is, due to erased files, not necessarily the 
+total number of messages).
+
+D U
+
+displays the user boards, the number is the number of the last message in
+each user's board.
+
+D A
+
+displays the bulletin boards as 'D' would do it AND all user boards without
+message count.
+
+D L
+
+displays all user boards whose holders have a MyBBS different to this one.
+
+I is an abbreviation for INFO, U for USER, A for ALL and L for LOST.
+
+Only those boards are displayed that have an access level the same as or 
+lower than the user who typed the command.
+
+----------------------------------------------------------------------------
+
+DISCONNECT
+
+Sysop only. You can disconnect either one or all users of your BBS. The
+options:
+
+DISC ALL
+
+disconnects all users
+
+DISC DL9XYZ
+
+disconnects DL9XYZ
+
+DISC 6
+
+disconnects the user on box port 6
+
+DISC SF
+
+disconnects all forward connects
+
+DISC USER
+
+disconnects all non-forward connects
+
+A text may be added that will be displayed before disconnecting. Example:
+
+DISC ALL sri, system maintenance work.
+
+----------------------------------------------------------------------------
+
+ERASE
+
+Erases the selected files of a board.
+
+Note: the ERASE command of DPBOX does not work immediately. It only sets an
+erase flag in the file header of the file and makes it invisible. As a
+sysop, you can un-erase erased files up to the next GARBAGE or, depending on
+a configuration parameter up to several days. Refer to the commands HIDDEN
+and GARBAGE and to the setup of system/config.box.
+
+Of course, a non-sysop can only erase files to or from himself.
+
+To find out the corresponding message numbers, you need to use the LIST or
+CHECK command prior to the ERASE command.
+
+Examples:
+
+E DL9XYZ 7-10
+
+erases messages 7-10 of DL9XYZ
+
+E 9
+
+erases msg. 9 of the current board
+
+E ATARI 12
+
+erases message 12 of ATARI
+
+E DP < DL8HBS
+
+erases all msgs of DL8HBS in DP
+
+E DP < $DB0GR
+
+erases all msgs with BID from DB0GR in DP
+
+ERASE without parameters erases all new messages of a user's board (if it is
+the selected one). This does not work on bulletin boards, not even for the
+sysop.
+
+A user may unerase mails to his own board with the UNERASE command. See
+UNERASE.
+
+A non-sysop erase will create a remote erase message that is then forwarded
+to the network. Sysop erases need to append '+' to the command to perform
+this (to be used only for blatantly illicit material).
+
+BBS systems with compatible mechanism (DieBox, BaycomBox) will then erase
+the marked bulletins, too. Note that due to heavy misuse of this feature by
+pirates, most BBS' now only accept the erase when performed in the
+originator-BBS of the original mail. As this doesn't stop all cases of
+misuse, DPBOX has the additional restriction that if a HOLD-DELAY is defined
+(in system/config.box), NO remote erase is sent out if the user didn't log
+in with a password. As you may see, the HOLDDELAY in this case indicates that
+the sysop of this BBS takes the security problem seriously, and so doesn't
+need to allow unregistered users to delete mails in all of Europe.
+
+----------------------------------------------------------------------------
+
+EXPORT
+
+Sysop only. Exports a specified message (or a number of messages) on disk.
+Syntax as READ, EXP ATARI 7-10 for example.
+
+You are prompted for an output file name. If the command is sent via packet,
+the output file name is export.box in the folder box/save/ . The suffix .box
+may be substituted by an up counting number. Additionally, you may extend the
+command by an output file name:
+
+EXPORT BBS 17 save/test.dat
+
+If the exported file contains binary data (marked with (BIN) in the LIST and
+CHECK output), only the binary portion of the file is exported. Preceding
+text lines are cut. Also, the file name is expanded from the one in the
+binary header. However, you have to append a file name to the EXPORT command
+as for ASCII files, just in case that an original file name is found in the
+binary header. Just an example:
+
+EXPORT UPLOAD 4 save/dddd
+
+will be saved as save/dpbox.tgz if the original file name in the binary
+header was dpbox.tgz.
+
+Note that with Linux, every, yes, EVERY file system oriented remote sysop
+command will be expanded with the path of the BBS-root-directory. This
+means, that even a BBS sysop cannot access the non-proprietary files of the
+Linux file system. Should the bbs be running with root permissions,
+file access via the BBS software will have root permissions, too. As it is
+possible to run multiple services on the same computer, e.g. FTP servers
+with Internet access or TCP/IP ham software, including a variety of
+purposes, it may be that a sysop should only be a sysop for the DPBOX... If
+you want to get access to parts of the Linux file system through the BBS you
+have to put symbolic links in the BBS directory.
+
+To gain Linux supervisor rights, the usual way is to log in via the TNT
+packet driver (assuming that you defined a special SSID for terminal login),
+privileging with a password and then starting a root shell with the //rootsh
+command. This is what we do at DB0GR in Berlin.
+
+----------------------------------------------------------------------------
+
+FBBMODE
+
+The FBBMODE command switches between two types of CHECK list output. Setting
+FBBMODE to ON will produce a list output of F6FBB format, including the
+overall message numbers of the mail.
+
+While in FBBMODE, you can read the mails with R <message_number>. Normal
+READ syntax is ok, too: R <BOARD> <Number>.
+
+Note: FBBMODE ON does not change the command syntax of DPBOX (except for the
+READ command). It is _not_ planned to implement the whole syntax of F6FBB
+commands. FBBMODE only was implemented for testing message list broadcast
+functions.
+
+Example:
+
+FBBMODE ON
+FBBMODE OFF
+
+----------------------------------------------------------------------------
+
+FCOPY and FMOVE
+
+Sysop only. Copies or moves a file in the file system.
+
+Example:
+
+FCOPY proto/debug.box save/debug.001
+FMOVE save/debug.001 /run/test.dat
+
+----------------------------------------------------------------------------
+
+FDELETE
+
+Sysop only. Deletes a file or a list of files specified with wild cards.
+Examples:
+
+FDELETE save/test.txt
+FDELETE save/test*.*
+
+and so on.
+
+----------------------------------------------------------------------------
+
+FDIR
+
+Sysop only. Displays a sorted directory list of the file system.
+
+Examples:
+
+FDIR proto/
+FDIR system/conv*.box
+FDIR
+
+A slash at the end of the path is converted to /*.*
+
+----------------------------------------------------------------------------
+
+FEXECUTE or OSSHELL or DOS (sorry...)
+
+Sysop only. Executes a file (an external program). If no path is given, it
+will be looked up in the box/run/ folder.
+
+Examples:
+
+FEX date
+OS df
+DOS ps -u
+FEXECUTE save/test/ownprog
+
+The command is started as a parallel task. In/Outputs are redirected.
+
+Several environment variables are set to offer information about the calling
+user. Refer to the description of the External Commands for more information
+about this.
+
+----------------------------------------------------------------------------
+
+FILESERVER
+
+The FILESERVER command starts the built in file server of DPBOX.
+
+The file server has its own set of commands, and you have to leave it with
+QUIT or EXIT to use the normal mailbox commands again. In fileserver mode,
+standard BBS commands can be entered with a preceding '!'.
+
+Typing HELP in file server mode gives this command help:
+
+This is a brief listing of the file server commands:
+? and HELP           - This help file
+DIR and LS and LS -l - Show directory listing
+LIST                 - Show directory listing with descriptive labels
+CD                   - Change Directory
+TYPE                 - Download an ASCII file with pagination
+READ and WRITE       - Transfer an ASCII file to or from the BBS
+GET and PUT          - Transfer an ASCII file to or from the BBS
+BGET and BPUT        - Transfer a binary file in AutoBIN protocol
+YGET and YPUT        - Transfer a binary file with Yapp protocol
+EXIT, BYE and QUIT   - Return to BBS mode
+
+Examples:
+CD /linux/packet     - changes to directory /linux/packet
+CD ..                - goes back one directory
+DIR *.zip -DATE      - shows a directory listing of *.zip sorted by date
+DIR -NAME            - shows a directory listing sorted by name (default)
+LS -SIZE             - shows a short directory listing sorted by size
+LIST                 - shows a file list with description of file content
+YGET test.zip        - downloads test.zip in Yapp mode
+BGET 4               - downloads file number 4 in AutoBIN mode
+BPUT test.lzh        - uploads a file in AutoBIN, will be stored as test.lzh
+
+Information on additional fileserver commands may be obtained with FHELP.
+Downloads in the 7plus mode are possible with the external command
+7GET if it has been installed at this BBS.
+
+Note: Unix distinguishes between UPPER- and lowercase letters in file names!
+Directory separator is a '/', not a '\' as with DOS and similar.
+Names may be longer than 8+3 chars, e.g. "dpbox-4.17-source.tar.gz"
+All server commands may be abbreviated, e.g. YG for YGET, L for LIST.
+
+Sysop commands:
+MD and MKDIR         - Make Directory
+CP and COPY          - Copy a file
+MV and MOVE          - Move/Rename a file
+RM and DEL           - Delete a file
+RD and RMDIR         - Remove a Directory
+INDEX                - Write new Directory Info
+
+If enabled by the sysop, the file servers /newbin/ folder is filled with
+collected and decoded 7plus files of normal mailbox store and forward.
+
+Users are allowed to upload files in the /incoming/ directory. Please send a
+short personal mail to the sysop after an upload so it can be moved to
+another place.
+
+Note: Using the LIST command instead of DIR or LS gives you extra
+information about file contents (a short content description, if available).
+
+The file server is local only. Files are not forwarded to other mailboxes.
+
+Whenever you can, you should use the YGET command to download files
+instead of BGET. YGET selects YAPPC transmission protocol, BGET selects
+AutoBIN protocol. The great advantage of the YAPPC protocol is its crash
+recovery (resume) mode, and its block checksum.
+
+YAPPC is _not_ supported by packet programs like GP, DP, SP, TOP, WinGT, but
+many other programs support it.
+
+----------------------------------------------------------------------------
+
+FMAIL or MKFMAIL
+
+Sysop only. Make F-Mail. Works like the REPLY command, but generates a sysop
+attention message to F@THEBOX (or another @mbx field, depending on the
+one defined in system/config.box). Lifetime is set to 14 days.
+
+Examples:
+
+MKF ATARI 78
+MKF
+
+You are prompted for a comment to be appended to the generated mail.
+
+----------------------------------------------------------------------------
+
+FORWARD
+
+Sysop only. The FORWARD command allows you to mark manually messages in the
+forward list (the forward list is held in board X).
+
+Syntax is as with LIST, READ etc.
+
+If for example a new neighbour has started operation and wishes to
+receive all messages of the ATARI board from you, you can type
+
+FOR ATARI 1- DB0XYZ
+
+(where DB0XYZ is your new neighbour). The @mbx field is set to @DB0XYZ, but
+this is in effect the only change compared with the automatic forwarding.
+
+If you want to avoid this change, add a '+' to the command (but think about
+what you are doing!, this could cause re-forwarding of old messages if the
+BID pools of the BBS' in your area are too small). Usually, omit the '+'.
+
+The + option is useful if you have a routing error of private mails. Then,
+you can forward mail manually to any neighbour BBS you consider to be a 
+useful receiver, thus keeping the original hierarchical address intact.
+
+Example:
+
+FOR DL8HBS 16 DB0XYZ +
+
+Routing errors are displayed in the profile.box system file and are usually
+an indicator of wrong routing setups in your or in neighbouring systems. 
+Usually they appear as loop detection of private mails, another reason may 
+be that you didn't define all hierarchical regions of the world or that a 
+new country appeared on the map and you forgot to put it in your forward
+definitions.
+
+----------------------------------------------------------------------------
+
+FREAD or READBIN
+
+Sysop only. Reads a file on the file system in AutoBIN mode (#BIN#...). As
+usual, all path names are expanded in the main box folder.
+
+The command has the options
+
+-a
+
+output is plain ASCII, no BIN
+
+-y
+
+output is with YAPPC protocol instead of AutoBIN
+
+-p
+
+output will be BIN, but compressed with LZH before (compressed forward
+algorithm, but sent as a #BIN# - file)
+
+-f
+
+fully transparent; output in BIN, but no header sent.
+
+-t nnnn
+
+tail. The last nnnn bytes of the file are sent. Also in conjunction with -a.
+
+-tn nnnn
+
+tail, additionally looking for a line break to start with.
+
+-Z
+
+output will be BIN, but compressed with gzip before
+
+Examples:
+
+FREAD system/reject.box
+FREAD system/commands.box -p
+FREAD system/config.box -a
+FREAD proto/debug.box -a -t 2000
+FREAD proto/userlog.box -Z
+
+----------------------------------------------------------------------------
+
+FTR
+
+Full Text Retrieval.
+
+The user command FTR allows database requests: simply add one or more words to
+the command, documents containing all appended words are displayed.
+
+Example: "FTR dpbox update"
+
+Will find all documents containing the words "dpbox" and "update". Request is
+case-insensitive.
+
+Each word appended to the command is searched in the database which is
+created and maintained the "crawler" programme (sysop command CRAWL).
+Multiple words are combined in an AND expression, Warning: prefixing a word
+with "-" will result in a NOT expression, but the algorithm is not correctly
+coded, so will output garbage.
+
+Output format of FTR is a Checklist (see DPBOX CHECK output) showing up all
+messages containing all requested words.
+
+Note the following:
+
+7plus and binary messages are NOT scanned by the crawler, so they are not
+indexed and not found by FTR.
+
+----------------------------------------------------------------------------
+
+FWRITE or SENDBIN
+
+Sysop only. Writes a file on the file system in autobin mode (#BIN#...). As
+usual, all path names are expanded in the main box folder.
+
+Examples:
+
+FWRITE system/config.box
+
+After typing the above command, you get a send request of the BBS. Now, you
+manually have to start the autobin transmission at your terminal program.
+
+----------------------------------------------------------------------------
+
+GARBAGE
+
+Sysop only. This starts the house keeping routine of the BBS.
+
+All users and mailboxes are disconnected during GARBAGE.
+
+It is a very complex routine that checks all entries in the BBS and deletes
+physically the erased messages and those whose lifetime has expired. Then,
+the checklist is recreated (the base of the CHECK output). Then the stored
+BBS route information (file hpath.box in folder box/stat/) is checked,
+entries with a 'lasttx' of older than half a year are deleted.
+
+Whenever you have an inconsistency in any kind of data in the BBS, call
+this routine. 
+
+The routine is started once a day at a defined time to delete the erased
+bulletins. You should set this time to local 0300 or 0400 (this is done in
+box/system/config.box). The routine takes between 1 and 20 minutes.
+
+Of course, if you are using DPBOX as a personal message system, it will not
+be running 24 hours per day. In that case, call the GARBAGE command manually
+every few days to clean up the BBS. THIS IS IMPORTANT, SO DO IT!
+
+The command has the option -i, = immediate physical deletion of erased
+mails. This option should be used, if a CRC error is detected during
+normal GARBAGE. Otherwise the housekeeping routine would always be
+terminated when the CRC error has been reached.
+
+Options:
+
+       -i immediate  ; Check for CRC errors; all messages in the
+                       hidden area will be erased.
+
+        + xgarbage   ; Clean up the forward list (board X) only.
+                       The standard garbage routine wil not
+                       be executed; users are not disconnected.
+
+
+
+----------------------------------------------------------------------------
+
+HEADER
+
+Header is very similar to READ, but only displays the HEADER of a mail, not
+the content. This is fine for having a quick look at the forward path or
+similar. With the option '+', all R: lines are displayed completely.
+
+All options of the READ command are effective.
+
+----------------------------------------------------------------------------
+
+HELP
+
+The HELP command gives online help.
+
+HELP
+
+without further parameters gives a brief overview of the bbs commands,
+
+HELP <Command>
+
+gives detailed help about the desired <Command>.
+
+----------------------------------------------------------------------------
+
+HIDDEN
+
+This is a switch (sysop only). Normally, only undeleted messages are
+displayed.
+
+Typing
+
+HID ON
+
+causes all message operations to work with erased messages. The LIST command
+shows only erased messages, as does the CHECK command and so on.
+
+A [H] in the prompt indicates this mode.
+
+When in hidden mode, you can un-erase erased messages by erasing them (all
+erase logic is inverted hi).
+
+Note that this only works until the next GARBAGE or maybe some days later
+if the appropriate parameter in CONFIG.BOX (ERASEDELAY) is set to a higher
+physical erase delay.
+
+HID OFF
+
+switches back to normal mode.
+
+----------------------------------------------------------------------------
+
+HOLD
+
+Displays all messages currently in HOLD. Internally, this is a combination
+of the commands SELECTION SFHOLD OWNHOLD and CHECK + 1-;CHECK 1-
+
+Example:
+
+HOLD
+
+A sysop may release held messages with the RELEASE command.
+
+You may add the same parameters as for CHECK to the command. In that case,
+the CHECK 1- is replaced with CHECK <parameters>.
+
+Example:
+
+HOLD SOFTWARE 1-
+
+----------------------------------------------------------------------------
+
+IFUSAGE
+
+Sysop only. Displays the interface names and numbers of each user of the
+bbs.
+
+----------------------------------------------------------------------------
+
+IMPORT
+
+Imports a file into the BBS. This could either be a binary file (this is
+detected automatically) or a text/7plus file. You are requested for the file
+name, the destination and title. This should be a sysop only command.
+
+EXAMPLE:
+
+IMP
+
+If entered as a remote command, you have to append a full and valid path
+name. EXAMPLE:
+
+IMP save/test.txt
+
+Note that the Linux version in case of remote access references all path
+names starting with the defined box working directory... you have absolutely
+no access to any file to be found outside.
+
+From the local BBS console, the complete file system can be accessed.
+Therefore the complete file path has to be enetered:
+
+IMP /work/box/save/test.txt
+
+Daniel, DL3NEU added a password import procedure: IMPORT PW <pathname> reads a
+file <pathname> with password definitions for one or multiple users. Syntax of
+the file is:
+<CALL1> <PASSWORD1>
+<CALL2> <PASSWORD2>
+...
+
+----------------------------------------------------------------------------
+
+KILL
+
+Sysop only. The same as ERASE, but additionally the Bulletin ID of the
+erased message is deleted in the BID pool. The BBS will not defer a re-send
+of that message in S&F. In most cases, this is NOT useful. Use the ERASE
+command instead.
+
+The KILL command physically fills in zeroes in the message file, thus
+erasing its contents irretrievably.
+
+Additionally, this is your only possibility to get rid of messages whose
+headers are detected to be corrupted (DPBOX checks all file structures with
+checksums to prevent itself from file system errors, user manipulations,
+outdated index versions and so on). Normally, such erroneous files will be
+deleted at the next GARBAGE, the KILL command lets you do this manually.
+
+A word about file systems: we never experienced any file errors on Linux
+and Mac OS systems. On the Atari, depending on the type of hard disk, they
+were about to be called usual. Anyway, the check doesn't takes much time and
+gives you the secure feeling of having uncorrupted BBS contents, even on more
+modern file systems. According to my user correspondence, some sysops tried 
+to re-edit index structures with text editors. Those manipulations (which 
+only led to incorrect lists and a lot of complaints directed to me) are 
+perfectly detected, too, with this check.
+
+----------------------------------------------------------------------------
+
+LANGUAGES
+
+Displays all available languages of the BBS.
+
+----------------------------------------------------------------------------
+
+LEVEL
+
+Sysop only. Sets the user level of a user. Example:
+
+LEV DL9XYZ 2
+
+The default user level of every new user is 1. Valid levels are 0 to 127. A
+level of 0 inhibits this user from logging in the BBS.
+
+The levels CAN be used to define special board areas where not everyone has
+access. But beware: in Germany, at least, this is illegal.
+
+We use it, too, for special boards, e.g. UPLOAD, where we input new BBS
+system versions in S&F to export them shortly after upload and then
+installing them.
+
+A maybe more useful application of the level command is to define special
+BBS commands (as SEND, ERASE) with higher levels than the standard 1, so a
+new user is unable to SEND and ERASE mails until the sysop gives him a 
+higher user level. This is legal.
+
+----------------------------------------------------------------------------
+
+LIFETIME or LT or SETL
+
+Sysop only. You can correct the lifetime of a message. This does not effect
+the outgoing S&F but only the administration in your own BBS. Example:
+
+LT ATARI 1- 0
+
+sets all messages in board ATARI to lifetime 0 (= infinite)
+
+LT ATARI 5 #365
+
+sets message 5 in board ATARI to lifetime 365 (= 365 days)
+
+----------------------------------------------------------------------------
+
+LIST
+
+Lists the content of a board. Examples:
+
+L ATARI 1-4
+L < DL8HBS
+
+
+An option '+' is available. This displays more information about the listed
+files, such as compression rate, lifetime, @mbx. Example:
+
+L ATARI 1- +
+
+
+An option ':' is available. This displays even more information about the
+listed files, such as read counters, readers calls (only sysop), erase
+source (only sysop and of course only in HIDDEN mode). See HELP SELECTION
+for explanations of the message flags. Example:
+
+L ATARI 1- :
+
+
+As for the CHECK command, the $ option may be used. Then the BID instead
+of the date be displayed or searched for. Example:
+
+L ATARI 50 $
+L ATARI 1- $
+L ATARI < $DB0GR
+
+
+Listing of mails that match a search item: As an optional argument, a search
+item may be specified. In this case only those mails are listed which contain
+the search item in the sender's call or the title. Also a fuzzy search is
+possible. Examples:
+
+L IBM < cpu               Lists IBM mails with 'cpu' in the title or call
+LIST PROPAG %60 sporadic  Listet all mails in the PROPAG board that contain a
+                          word like "sporadic" in the title
+                          (at least 60% match)
+
+
+For sysops only: The forward lists for user mails and bulletins are displayed
+if + or : are inserted as a first argument. Examples:
+
+L X + < DK0MNL   lists user mails in the forward queue that contain DK0MNL
+L X : 1-         lists all bulletins in the forward queue
+
+----------------------------------------------------------------------------
+
+LOGINTIME
+
+Displays or sets the last login date/time. An altered date is not saved when
+leaving the bbs, it's only used while logged in. Examples:
+
+LOG displays last logintime
+LOG 1.10. sets last login on the 1.10. of the current year, 00:00 UTC
+LOG 1.10.92 sets last login on the 1.10.92 00:00 UTC
+
+----------------------------------------------------------------------------
+
+MAILBEACON
+
+Using this command, one can determine if the own call will be displayed in
+the mail beacon of the DPBOX or not (if new mails arrive).
+
+MAILBEACON ON
+
+enables display in the unproto mail beacon
+
+MAILBEACON OFF
+
+disables display in the unproto mail beacon.
+
+MAILBEACON
+
+without parameter displays the current setting.
+
+A sysop may set this parameter for other users:
+
+MAILBEACON DL1XYZ OFF
+
+----------------------------------------------------------------------------
+
+MAXREAD
+
+Sysop only. Using this command, you can limit the maximum read account of a
+user per day.
+
+Example:
+
+MAXREAD DL1XYZ 80000
+
+limits read operations of DL1XYZ to a maximum of 80000 bytes per day.
+
+----------------------------------------------------------------------------
+
+MBX
+
+Sysop only. If a user sent a mail with a wrong @mbx field, you can correct
+it with this command. The forward list is updated with the new setting. If
+the new @mbx field is a call sign, the hierarchical definition is looked up
+and added. You may add it manually, too. Syntax:
+
+MBX VK4XYZ 1-3 VK3BBS
+MBX DL8HBS 1 DB0GR.#BLN.DEU.EU
+MBX ATARI 8 EU
+MBX ATARI 1-3 ALL
+
+----------------------------------------------------------------------------
+
+MD2 and MD5
+
+MD2 starts password login with MD2 encryption.
+
+It uses the RSA Data Security, Inc. MD2 Message Digest Algorithm.
+
+Assuming that you entered a password with the PASSWORD command, typing MD2
+command results in a random prompt of the DPBOX. The prompt then looks like:
+
+DB0XYZ> [12345abcdef]
+
+Your terminal has to answer with 16 hexadecimal values (32 characters total)
+calculated by applying the MD2 algorithm on the 10 prompted random characters 
+and your full password string.
+
+MD5 is similar to MD2, but uses the RSA Data Security, Inc.
+MD5 Message Digest Algorithm.
+
+MD2 and MD5 password protection are the most secure of the four methods
+available in DPBOX (PRIV, SYS, MD2, MD5), but only very few terminal programs
+support it.
+
+If in doubt, use the SYS command for password login or use an external
+programme like DPMD5 for password generation.
+
+For password-protected user S&F, please read HELP MD2SF and HELP MD5SF.
+
+----------------------------------------------------------------------------
+
+MD2SF and MD5SF
+
+MD2SF command enables MD2 password protection for S&F connections.
+
+It uses the RSA Data Security, Inc. MD2 Message Digest Algorithm.
+
+If a user wants to use MD2 password login in user forward instead of the
+other methods available, typing
+
+MD2SF ON
+
+will change to MD2.
+
+A sysop may change the MD2SF flag for every station:
+
+MD2SF DB0XYZ ON
+
+Login prompt of DPBOX in S&F is changed to:
+
+[DP-5.00-AB1D1FHMR$] [12345abcdef]
+
+Algorithm is as discussed in MD2 command description, the logon answer of
+the connecting forward partner has to be:
+
+[XYZ-1.00-XYZ$] 1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d
+
+(the result of the MD2 encryption).
+
+In order to change to MD5 password protection, use MD5SF instead of MD2SF.
+
+----------------------------------------------------------------------------
+
+MSG
+
+The MSG command transfers a single text line to another user of the BBS.
+Examples:
+
+MSG DL9XYZ Hi Peter Sends the line 'Hi Peter' to DL9XYZ (if logged on).
+
+MSG 6 Hi Peter Sends the line 'Hi Peter' to the user on port 6 (if
+connected).
+
+Of course, it is impossible to send a MSG to a forwarding BBS.
+
+If you send a MSG to a user currently writing a message or reading out a
+huge amount of data, the prompt of the message command will be "DELAYED
+MSG OK FOR ...." instead of the usual "MSG OK FOR ..." to indicate to you 
+that the user can't respond to your MSG immediately.
+
+You can send yourself a message, this seems to be necessary for some batch
+generators of other programs. If the self-sent text starts with a '&', no
+prompt is echoed, but only the pure text (without '&').
+
+A sysop may send a text to all users, example:
+
+MSG ALL system will shut down in 5 minutes
+
+----------------------------------------------------------------------------
+
+MYBBS or SETUSR
+
+With this command a user enters his home BBS. This information is forwarded
+to M@THEBOX (THEBOX may be changed in the CONFIG.BOX file to any of your
+preferred addresses). Additionally, when White Pages exchange is configured,
+it will be imported in the WP format and sent to your defined WP neighbours.
+The THEBOX forwarding is currently used in german speaking countries, the WP
+format is preferred elsewhere (for good reasons...). Example:
+
+MY DB0XYZ
+
+A user will be prompted every three months to re-enter his HomeBBS.
+
+If the user adds the option '-', the information is NOT forwarded to other
+BBS. This may be of use for some special user forward intentions. Example:
+
+MY DB0XYZ -
+
+ *****************************************************************
+ ***                                                           ***
+ *** IMPORTANT!! Some users enter their own callsigns as a     ***
+ *** MyBBS. This is NOT correct. Unless you are a registered   ***
+ *** BBS that is known network-wide, personal mails for you    ***
+ *** will be undeliverable. Therefore enter mailbox calls only.***
+ ***                                                           ***
+ *****************************************************************
+
+A sysop can set a user's MyBBS, in this case, the information is not
+forwarded but only used locally. Syntax:
+
+MY DL9XYZ DB0XYZ
+MY DL9XYZ DB0XYZ 2  This additionally sets the user level of DL9XYZ to 2
+(default 1).
+
+----------------------------------------------------------------------------
+
+NAME
+
+Required parameter: the user's name. Example:
+
+N Joachim
+
+If called without an argument, the user is prompted for his name.
+
+In sysop mode, the sysop can enter data for other users, example:
+
+N DL9XYZ Peter
+
+Length of the name is limited to 80 characters, it may consist of several
+words.
+
+----------------------------------------------------------------------------
+
+NEXT
+
+The NEXT command is used to read the next message of a board.
+
+----------------------------------------------------------------------------
+
+NOTBOARD
+
+This command forces the BBS to suppress specific boards, distributions or
+sender's callsigns in the CHECK output. Syntax:
+
+NOTBOARD <board>
+NOTBOARD @<distribution>
+NOTBOARD &<callsign>
+
+For example, you may be bored by messages to WINDOWS and SOFTWARE, then you
+enter
+
+NOTBOARD WINDOWS,SOFTWARE
+
+In order to suppress all "inofficial" boards (i.e. those in small letters),
+enter the symblic board name TEMP as a NOTBOARD parameter.
+
+In addition, bulletin distributions (e.g. @DL or @EU) can be suppressed in
+the check list (logical 'AND' with any board names). In order to
+suppress bulletins from a specific sender, enter the callsign after a '&'
+character (e.g. NOTBOARD &P1RAT).
+
+If you want to delete this selection, you type
+
+NOTBOARD
+
+without parameters.
+
+You can enter several consecutive NOTBOARD selections until a total of 997
+characters is reached.
+
+The current setting may be checked using the U command.
+
+U <YOURCALL>
+
+shows you all your current user settings.
+
+Important: If you select more than one board to be suppressed, separate them
+by commas, and do not put a space between them.
+
+See WANTBOARD for a positive selection of wanted boards. Your Sysop may have
+specified certain board names (e.g. local info boards) that cannot be
+suppressed with NOTBOARD.
+
+----------------------------------------------------------------------------
+
+PASSWORD
+
+You can define a password to be used for the SYSTEM command. A sysop may
+also set the password of a specific user. The password has to be longer than
+20 signs, use long passwords with random signs to avoid logins by hackers.
+
+Example:
+
+PASS DJGseut7k4088904fbvvjughrfw6kjjjjhKJHd3jg
+
+A sysop may set the password of another user:
+
+PASS DL8HBS Ljfi8uHJkfhwfhKfjj776Gjhdwtdfgh75jk
+
+Callsign misuse has lead to an extended implementation of this command: 
+each user may enter a password to authenticate himself when sending a mail. 
+To prevent making the life of hackers too easy, the generation process may 
+take several steps. Every string following the PASSWORD command is added to 
+any already existing fragment. So, you can set up your password in several 
+portions over several days or via several digipeaters.
+Note that the password must not exceed 80 characters and that it begins to be
+active after reaching 21 characters - even the PASSWORD command (for adding 
+more characters) is then no longer accessible unless you carry out a valid 
+SYSTEM login, based on the existing password fragment). When activated 
+(after 21 received characters), the PWMODE (see below) is set to 2.
+
+PASSWORD
+
+without parameters deletes the actual password and restores the PWMODE (see
+below) to 0. (PASSWORD <Call> for sysops when deleting user settings).
+
+Please note that if the BBS is provided with a HOLD-DELAY for locally
+entered bulletins without password protection, the HOLD for a user setting
+himself a password will end after the defined delay time. In the meantime a
+sysop can check the accuracy of the setup and prevent self-setting of
+passwords by pirates. The entering or deletion of a password is protocolled
+in the profile.box file (you're about to see that this is a really important
+file, which the sysop should regularly look at, aren't you?).
+
+Sysop only: With the user name as a first argument, passwords for other users
+can be set or deleted. Use the IMPORT PW command to import several user
+passwords from a text file. Setting and deleting of passwords is registered
+in the file PROFILE.BOX.
+
+For generation of the proper user response on a password prompt see
+HELP SYSTEM, HELP MD2 and HELP MD5.
+
+---------------------------------------------------------------------------
+
+PING
+
+The PING command generates a short dummy message to another BBS in order
+to check the forward route. The message will have the format
+
+SP PING @ <BBS-Rufzeichen>
+
+and contains the /ack string (request for a confirmation) at the end.
+
+   Syntax:   PING <target BBS>
+
+   Example:  PING IK2HDG
+
+The command only works if the target BBS is already known to the
+internal router of DPBOX (see BBS command).
+
+Depending on the configuration of the target BBS, a confirmation messge
+and/or a message with the forward header of the PING mail is sent in return.
+
+---------------------------------------------------------------------------
+
+PREFIX
+
+Retrieve prefix areas, distance calulations, direction of calls/prefixes,
+information on automatically operated stations that are stored
+in the file DIGIMAP.STN.
+
+   Syntax: PREFIX <CALL|PREFIX> [<own WWLOC>]
+
+ If the callsign entered is found in the file DIGIMAP.STN,
+ additional information on this station is displayed (similar to
+ the external commands DIGIINFO and STNINFO which rely on the  
+ same database.
+
+  e.g.  pref hb9eas   : displays all retrievable information about
+                        the digipeater HB9EAS.
+        pref oe9      : displays prefix area, continent, WAZ zone, ITU
+
+----------------------------------------------------------------------------
+
+PRIV
+
+Password login command. A password, as generated by PWGEN (1620 random
+chars) is checked with the 4 letters following the PRIV command. The
+complete password has to be stored in a file sf/<CALL>.pwd
+
+The appropriate login letters are computed by your user terminal, based on
+your current login date. This information is extracted from the connect text
+of the BBS and requires specific terminal programs to scan the login text.
+The algorithm to compute the correct answer is the same as for TheBox-BBS,
+and the terminal programs usable for this feature are the same as developed
+for use with TheBox (DP, TNT, GP?, THP, WinGT, SP ...).
+
+After correct login, your further status depends on the setting of your
+PWMODE.
+
+The command may be applied several times, including false answers to prevent
+hacking parts of your password.
+
+If you have problems generating this type of password login, you may want to
+use the SYSTEM command (and the associated password set with PASSWORD).
+There is no difference in the privilege level between these login modes.
+
+In general, the PRIV login is a little bit easier and faster than the SYS
+login (as it is not interactive, as the SYS command is), but the SYS login
+is a little bit more secure (because you can put the correct answer in a
+random string).
+
+User passwords normally should be generated with the PASSWORD command, as
+this is much less work for the sysop.
+
+----------------------------------------------------------------------------
+
+PROFILE
+
+Sysop only. Outputs the proto/profile.box file in ASCII format. profile.box
+contains important system information and critical error messages.
+A sysop should read it at least once a day. When running the housekeeping
+routine, the daily profile.box is imported to board Y for further access.
+
+We have found that the profile.box file is a good means of communication
+between multiple sysops checking the BBS. Any text added to the PROFILE
+statement is written in the profile.box file, appended with date and call
+sign of the writer.
+
+Examples:
+
+PROFILE
+PRO I solved the routing problem with db0xyz
+
+----------------------------------------------------------------------------
+
+PROMPT
+
+You may change your system prompt. The standard prompt looks like this:
+
+(ATARI) DL8HBS de DB0GR>
+
+To set a new prompt, type
+
+PROMPT Hi Joachim>
+
+and your prompt is changed to
+
+Hi Joachim>
+
+(not that useful).
+
+PROMPT
+
+without parameters deletes the user defined prompt and switches back to the
+standard system prompt.
+
+OK, to make this command more useful, you may use macros in the 
+prompt definition. You have the following choice:
+
+%7 CTRL-G (bell)
+%8 TAB
+%a actual system load of the BBS
+%b active board
+%c your own call sign
+%d date
+%e CPU type
+%f bogomips (speed index)
+%h convert the following two hex chars into one ASCII char
+%i logintime
+%l last login
+%m the BBS call sign
+%n your name
+%o count of current users
+%p used CPU time since login
+%r line break (return)
+%s box runtime (days, hours, minutes)
+%t current time (with seconds)
+%u current time (without seconds)
+%v software version number
+%w transmitted/received kBytes during session
+%x box runtime (only days)
+%z last command
+%% the character %
+
+So, defining the standard prompt would be
+
+PROMPT (%b) %c de %m>
+
+Please consider that a changed prompt causes conflicts with "mail
+catching" programs such as DP, TNT and WinGT. Normally, the standard prompt
+is used to determine the end of a mail. To avoid conflicts, only ADD
+parameters to the standard setting, for example
+
+PROMPT (%b) %c de %m> (%o/%a)
+
+----------------------------------------------------------------------------
+
+PROTO
+
+Sysop only. The proto command opens a protocol-file recording all actions
+performed by a specified user. The file is stored in proto/<call>.pro. It is
+imported into the BBS (in board Y) while running the housekeeping routine.
+
+Examples:
+
+PROTO + DL1XYZ
+
+activates proto file for DL1XYZ
+
+PROTO - DL1XYZ
+
+deactivates proto file for DL1XYZ
+
+PROTO
+
+displays list of protocolled calls
+
+PROTO OFF
+
+deactivates all proto files. PROTO settings are stored permanently, also
+after a restart of the BBS.
+
+----------------------------------------------------------------------------
+
+PWGEN
+
+generates a 1620 characters sized password file for the PRIV command. These
+kinds of passwords are widely used in Germany for password protection of
+forward links. They are also used by sysops to protect access with their
+call. For user protection, the PASSWORD command offers an easier way (not
+that much work for sysops hi).
+
+Examples:
+
+PWGEN DB0XYZ +
+
+creates a password for DB0XYZ with the path name box/db0xyz.pwd. The file is
+imported in binary mode into the BBS and forwarded to DB0XYZ. After
+reception of the file at DB0XYZ, simply move the file box/db0xyz.pwd to
+box/sf/db0xyz.pwd and from that moment the S&F is password protected. Of
+course, DB0XYZ has to do the same in his configuration (with the received
+password). The algorithm follows the one used by TheBox and BaycomBox for
+protected S&F.
+
+To omit importing and forwarding of the password, type the command without
+the '+' option:
+
+PWGEN DB0XYZ
+
+only creates a file box/db0xyz.pwd.
+
+How does the password calculation work? The BBS prompts the current login
+date/time after the welcoming SID in S&F. The calling station then has to
+answer with its SID (as usual), and append a string of 4 characters,
+computed by a special algorithm.
+
+To use this kind of password login as a user, your terminal program has to
+be especially designed for this aim (as DP, TNT, THP, WinGT, SP and others
+are). They scan for the connect text of the mailbox, extract the logindate
+and send out the computed password when you type PRIV or a special control
+code.
+
+As DPBOX offers un-configured user-S&F, there is a second way to start
+protected S&F. If the user has defined a password with the PASSWORD command, 
+a subsequent S&F login gets prompted with the SID and the 5 random numbers 
+as described under the SYSTEM command. Then, he answers with his SID and the
+appended correct password response.
+
+----------------------------------------------------------------------------
+
+PWMODE
+
+Sysop only. This command defines the privilege level a user has after
+responding to the password request.
+
+Levels are: 0,1,2,8,9,10,11
+
+Where
+
+0 means that the user may connect via the telephone modem port, no write
+access (this is the default). (special modem driver not yet available for
+the Linux version)
+
+1 means that the user may connect via the telephone modem port, with write
+access. Also, this enables write access via a radio port if the global
+parameter 'SEND/ERASE with PW' is selected.
+
+2 this is as 1, except that the user is always required to enter the password
+for write access, independent of the global switch. If a user entered a
+password by himself using the PASSWORD command, this level is set, too.
+
+8 enables "board sysop mode" - this was invented to maintain large BBS with
+a lot of mail throughput and users. Board sysops are not literally sysops
+(in fact they only may execute user commands, but extended to those bulletin
+boards of which they were defined to be a local supervisor). A board sysop 
+defined for MAC may for example delete all mails in that board or TRANSFER 
+them to anywhere else, and, as the only non-user command, may set up a new 
+lifetime for mails in "his" board. The boards to be maintained by a "board 
+sysop" are defined in box/system/prvcalls.box (to be described later on).
+
+9 same as 8, additionally, the "board sysop" is protected against call sign
+misuse by forcing a privileging for every (even non-"board sysop")
+write/erase operation.
+
+10 enables full sysop mode, either via radio or modem.
+
+11 enables full sysop mode, combined with PWMODE 2, the sysop first has to
+privilege himself even for non-sysop write/erase operations. Note that the
+QUIT command is a write operation, too (on the last login time), so it is
+converted to an ABORT command when entered in unprivileged state (only for
+pwmodes 9 and 11).
+
+Example: PWM DL9XYZ 9
+
+----------------------------------------------------------------------------
+
+QRG
+
+Sysop only. The QRG command displays all defined TNT interface QRGs. These
+may be of use for the CONNECT command.
+
+---------------------------------------------------------------------------
+
+QTHLOC
+
+Computes position, distance between two locators and direction of
+the WW locators.
+
+ QTHLOC <WW-LOC1> [<WW-LOC2>]
+
+Example:  QTH jn48fb jn49fb
+
+----------------------------------------------------------------------------
+
+QUIT or EXIT
+
+Ends the connection with the BBS. The last login date is updated to the
+login date of this connection. Use the BYE or ABORT command to avoid
+updating of the last login date.
+
+Normally, a user should end a connection with QUIT.
+
+When 'QUIT R' is entered, the last login date is stored, but connection
+to the BBS is maintained.
+
+----------------------------------------------------------------------------
+
+READ
+
+Reads the content of a board. Examples:
+
+R 4
+R ATARI 1-4
+R ATARI < DL8HBS
+R ATARI < $DB0CZ
+
+Within the search string, a '*' may be used as a joker character.
+It is expanded to any sequence of characters. Example:
+
+'R YAESU < FT*757'
+
+reads all entries in the YAESU board with (for instance)
+FT757, FT-757 FT 757 in their titles.
+
+If no board name is entered, the last board name will be used.
+
+An option '+' is available. This displays the full file header (S&F-header)
+of a file. Example:
+
+R ATARI 9 +
+
+Sysops may use the option ':' , this displays all readers' call signs in the
+mail header.
+
+----------------------------------------------------------------------------
+
+READLOCK
+
+The READLOCK command has five possible options:
+
+READLOCK 0
+
+All users may read the private mails in the user board of the user applying
+this command.
+
+READLOCK 1
+
+Other users may only read mails to or from the user applying this command 
+after he has read them himself at least once (without deleting them).
+The originator and recipient are of course exempted from this restriction.
+
+READLOCK 2
+
+Only originator and recipient may read the private mails of the user
+applying this command.
+
+READLOCK 3
+
+Same as READLOCK 1, but only users with successful password login may
+read the message.
+
+READLOCK 4
+
+Same as READLOCK 2, but only users with successful password login may
+read the message.
+
+----------------------------------------------------------------------------
+
+REBUILD
+
+Sysop only. This deletes the BID pool of your BBS. Then, it is refilled with
+all BIDs currently active in your BBS. Normally, the BID pool contains
+information about messages that have been erased but were received by your
+BBS once. Using the REBUILD command lets you re-receive erased mails. 
+For normal BBS operation this is not useful.
+
+----------------------------------------------------------------------------
+
+RELEASE or FREE
+
+Sysop only. A mail or bulletin that was stopped by the HOLD feature of the
+BBS will be released for forward. The same is done by the expire timer of the
+hold feature, but if long hold delays are programmed, it is useful for the
+sysop to check the currently held messages daily and release them manually.
+
+The syntax of the command is according to READ.
+
+Examples:
+
+RELEASE ALL 17
+REL DIGI 12-14
+FREE ATARI 9
+
+Held messages are displayed with the HOLD command.
+
+----------------------------------------------------------------------------
+
+RELOAD
+
+Sysop only. RELOAD reloads all configuration files concerning the BBS.
+
+After editing the config files of the BBS, you have to apply this command to
+make the changes effective. In addition, this command reorganises the system
+memory. This may be useful in order to recover fragmented memory segments.
+
+Example:
+
+RELOAD
+
+----------------------------------------------------------------------------
+
+REPLY
+
+The REPLY command will create a private mail to the sender of the last 
+message read with the READ command. Additionally, you may specify
+the mail you wish to reply to, e.g.
+
+REP BBS 43
+
+The title of the reply mail is the original title with a leading RE: , the
+@bbs is first looked up in the internal HomeBBS storage files. If no
+definition for the destination can be found, the read mail will be scanned 
+and the last BBS found in the mail header used as @bbs field.
+
+---------------------------------------------------------------------------
+
+ROUTES
+
+With the ROUTES command, information from the DPBOX Active Router can be
+retrieved. If activated by the sysop, the Active Router determines the
+most appropriate routes for the forwarding of personal messages from
+quality measurements with the S&F partners and from broadcast information
+received from other BBSs with Active Routing.
+
+   Syntax:   ROUTES
+             ROUTES <BBScallsign>
+             ROUTES TABLE
+
+   Example:  ROUTES DB0SIF
+
+Without parameters, the complete Active Routing table will be displayed.
+For each BBS, the cumulated quality (sec/100 kBytes) and the corresponding
+neighbour BBS is shown. The qualities have been determined 5 to 10 hours
+earlier.
+
+With a BBS callsign as a parameter, a graphics with the forward qualities
+versus time will be shown.
+
+With the parameter TABLE, an overview of recent quality measurements from
+the last 5 hours is shown. Abbreviations:
+
+ r: SF partner BBS, that is using Active Routing and broadcasts 
+    routing information as messages in the board W.
+ p: Phantom BBS. This BBS does not support Active Routing, but is
+    included in the routing table as a direct neighbour. So-called
+    phantom broadcasts are generated from quality measurements with this
+    BBS and are forwarded to other systems with Active Routing.
+
+----------------------------------------------------------------------------
+
+SELECTION
+
+This is a command for advanced users or sysops hi.
+
+SELECTION temporary sets an internal variable of your user setting the way
+that you get only specific mails displayed when applying the LIST or CHECK
+command. Available options are:
+
+SFWAIT       waits for forward
+PROPOSED     proposed but not yet acknowledged
+SFRX         received in forward
+SFTX         sent in forward
+SFERR        problem while sending in forward
+SFNOFOUND    no route found
+CUT          received by monitor scan
+MINE         locally created
+BROADCAST    sent in broadcast
+BROADCAST_RX received in broadcast
+OWNHOLD      local copy held after forward
+LOCALHOLD    is in HOLD, sent by a local user
+SFHOLD       is in HOLD, received in forward
+REJECTED     was rejected by the forward bbs
+DOUBLE       was marked as already received by the fwd bbs
+OUTDATED     older than the max. age of incoming mails
+UNDEF        designated to an undefined bulletin board
+HIDDEN       marked as erased
+
+SELECTION SFWAIT
+
+selects only waiting messages in forward to be displayed in CHECK and LIST,
+
+SELECT SFWAIT,SFERR
+
+selects waiting messages and those where a forward error has been detected
+
+and so on.
+
+SELECTION
+
+without parameters disables the selection feature.
+
+----------------------------------------------------------------------------
+
+SEND
+
+Creates a new file. You will be asked for all missing parameters. The
+parameters for the SEND command are numerous:
+
+S DL9XYZ @DB0ZZZ <Sender $BID #Lifetime Title
+
+The $BID, #Lifetime, <Sender and @mbx-field is optional. Per default, DPBOX
+sets the @mbx to your own BBS call (the mail will not be forwarded), the
+$BID (= Bulletin / Message ID) is generated automatically, the #Lifetime is
+set to 0 (= infinite) and the <Sender is set to the call sign of the user
+that typed the SEND command (only sysops and boardsysops may apply that
+option).
+
+If the destination is a call sign, DPBOX looks up the @mbx field (if
+omitted) of the forwarded mybbs information or sysop/user-set local mybbs
+infos.
+
+The lifetime determines how many days will elapse before the message is
+automatically deleted. Only supported by DPBOX / TheBox / BaycomBox.
+Depending on the mailbox configuration, a lifetime setting must
+be entered for bulletin mails.
+
+Even if the <Sender field is present, the call sign of the user sending the
+SEND command is always visible in the mail itself. The first two lines of a
+mail sent with DPBOX always contain the following info: (example)
+
+From: DL8HBS @ DL8HBS.#BLN.DEU.EU
+To: ATARI @ EU
+
+The call in the first line is not corruptible. You may ask yourself why this
+feature is implemented. Well, with the '<' option you can locally re-send
+msgs with the correct sender's call. And, of course, it exists for
+compatibility with TheBox. Starting with v4.04, only Sysops and "Board-
+Sysops" can apply the '<Sender' - option.
+
+Note that for usual application there is no separate command for private
+mails and bulletins. The distinction is made by the destination. If it is a
+call sign, it is a private mail. The message is completed by entering 'CTRL-Z',
+'***END' or 'NNNN' at any position in the text or by '/EX' at the beginning of
+a line. The message will we discarded if 'CTRL-X' is entered before the message
+has been completed regularly.
+
+Examples:
+
+S
+S DL8HBS how are you?
+S DL8HBS@DB0GR
+S DL8HBS@DB0GR.#BLN.DEU.EU how are you?
+S ATARI @ EU problems with hard disk
+S SYSOP @DL
+S ATARI @WW $123456DL9XYZ #30 new comp.
+
+Although normally the distinction between private mail and bulletins is made
+automatically, from time to time you may want to force DPBOX to override the
+internal detection. So for example when addressing a server of F6FBB BBS.
+Those server names mostly are non-call signs, but they have to be addressed
+with private mails. According to the syntax of F6FBB, DPBOX offers you the
+two commands SB / SP (Send Bulletin / Send Private), to let you choose
+the appropriate type of mail yourself.
+
+Please note that DPBOX is completely transparent concerning the mail type.
+In S&F it will even accept a type 'Z' (or anything else) and pass it through
+unchanged to the next BBS. You, as a terminal user, are limited to the types
+'B' and 'P', as all others (except 'T' in NTS messages) are not currently
+defined.
+
+Please note, too, that the TheBox BBS system is NOT transparent regarding the
+mail types. This means that it will change forwarded mail types to the standard
+set 'B' and 'P', and in most cases it will set server requests to type 'B',
+which results in an incorrect address.
+
+With a line '/ACK' at the end of the message text, a confirmation will be
+sent by the destination BBS when the message has been received. The title
+of the confirmation message consists of 'ACK:' and the title of the original
+mail. This feature works for personal messages only and might not be supported
+by the destination BBS.
+
+N.B.:
+Depending on the BBS configuration by the sysop, uploads to DPBOX and
+Baycombox without password login are labeled as follows:
+
+ 'X-Info: Einspielung ohne Passwortschutz'
+or:
+ 'X-Info: Upload without password authentication'
+or:
+ 'X-Info: no login password'
+
+Uploads that were accepted via user S&F are labeled as follows:
+
+ 'X-Info: User S&F received from <sender> at <bbs>'
+
+----------------------------------------------------------------------------
+
+SERVER
+
+DPBOX offers a built-in mailing list server. For those not familiar to the
+Internet: this is about a programmable XEROX for registered users. Every
+installed server holds a list of addresses, and every mail sent to this
+specific server is copied and forwarded as a private mail to every subscriber.
+This is a good means of keeping in touch with a group of OMs spread over a
+wide area. Only registered subscribers may address the server. Self-
+subscription may be allowed. Apart from the BBS sysops, one or more
+"server sysops" may be defined who may maintain the address lists, too.
+
+These are the listserver commands:
+
+   SERVER               => Sysop: shows all listserver
+                        => User : shows all public listservers                
+   SERVER ?             => All  : shows all listservers one is subscribed to
+   SERVER !             => All  : shows all public listservers
+   SERVER !+ sname      => Sysop: makes the server sname a public listserver
+   SERVER !- sname      => Sysop: deletes the public flag
+   SERVER != sname      => Sysop: shows infotext of public server
+   SERVER != sname text => Sysop: sets infotext of public server
+   
+Only sysop/server-sysop:
+
+   SERVER sname + call  => adds call to the subscriber list of sname
+   SERVER sname + !call => adds call to the subscriber list of sname and
+                           makes <call> a server sysop for sname
+   SERVER sname + #call => disables <call> to subscribe to sname
+   SERVER sname - call  => deletes call from the subscriber list
+   SERVER sname =       => shows subscriber list
+
+Mail commands:
+Sending a mail to LSTSRV, the subject of the mail causes some actions.
+The mail body may contain dummy text. Commands may be upper- or lowercase.
+
+   Syntax: SEND LSTSRV [<lifetime>] <command>
+
+
+   SUBSCRIBE SNAME    => subscribes the sender to public server SNAME
+   UNSUBSCRIBE SNAME  => unsubscribes from SNAME
+   SUBSCRIBERS SNAME
+   or
+   LISTABONNEES SNAME => returns subscriber list of server SNAME (if
+                         sender is subscribed himself)
+   LISTSERV           => returns all public servers (seems as if it
+                         doesn't work at the moment)
+
+Mails to LSTSRV that contain one of these commands in their subject line
+are interpreted by DPBox within a minute. A personal mail with the result
+of the command is returned.
+
+When subscribing a public listserver by mail, a text file named
+server/SNAME.INF is returned. Typically it is intended to inform about
+list policies. Subscription/unsubscription in any case generates an
+acknowledge.
+
+Important: If an @BBS field should be added, it must not contain any blanks.
+For example, as a server sysop you may write:
+
+       serv easbbs + hb9atu@hb9eas
+ 
+If no @BBS is mentioned, the MyBBS information in the mailbox is used.
+
+Certain rules apply to list names:
+
+a) length 1..6 characters
+b) name must not be defined as a bulletin board at the BBS
+c) name must not be an entry in badnames.box
+d) if users of other mailboxes should be reached, the server name
+   should contain a number (similar to a valid callsign).
+   Otherwise mails from other BBSs might not reach the server box.
+
+   e.g. SERVER CZ2BUG + DL2GRD
+      
+----------------------------------------------------------------------------
+
+SETREPLY
+
+With the SETREPLY command you can mark messages in your own user board as
+"replied". Normally, this is done automatically when using the REPLY command
+to answer them, but when using the SEND command instead, the bbs cannot set
+this mark by itself.
+
+Syntax as with REPLY. Examples:
+
+SETREPLY DL1XYZ 3
+
+marks message number 3 to DL1XYZ as replied.
+
+SETREPLY
+
+marks the last read message as replied.
+
+----------------------------------------------------------------------------
+
+SETSF
+
+Sysop only. The SETSF command manipulates the forward list (that is, by the
+way, held in the pseudo - board 'X'). The command has three options:
+
+SETSF DB0XYZ type DB0ZZZ
+All entries in the forward list of the type 'type' intended to be forwarded
+to DB0XYZ will be sent to DB0ZZZ.
+
+SETSF 3-6 DB0ZZZ
+The entries 3 to 6 of the forward list will be sent to DB0ZZZ.
+
+SETSF type 1- DB0ZZZ
+All entries in the forward list of type 'type' will be sent to DB0ZZZ.
+
+Where 'type' is one of the following:
+
+A = all
+B = bulletin
+P = private
+S = system (erase and mybbs)
+
+Note that this command does not change the forwarded mail itself. Only the
+neighbour BBS used for routing is changed.
+
+There is one special destination call: NIL. When applying this, all selected
+forwarding entries are erased. Example:
+
+SETSF DB0ZZZ B NIL
+
+will erase all bulletin entries in the forward list for DB0ZZZ.
+
+----------------------------------------------------------------------------
+
+SF
+
+Sysop only. Starts manually the S&F to another BBS. Examples:
+
+SF DB0XYZ
+
+starts the S&F to db0xyz
+
+This will only work if there is an S&F definition file in the folder box/sf/
+for DB0XYZ (db0xyz.sf).
+
+The command has three other options:
+
+SF OFF
+
+stops the S&F timer. No outgoing S&F connects are established, incoming S&F
+connections are deferred.
+
+SF ON
+
+allows automatic S&F operations.
+
+SF KILL
+
+same as SF OFF, additionally disconnecting all S&F connects.
+
+The default is SF ON. This switch is NOT saved. When restarting DPBOX, it is
+always set to SF ON. The SF OFF case is indicated by a [no S&F] - prompt.
+
+----------------------------------------------------------------------------
+
+SFLEVEL
+
+Sysop only. Setting SFLEVEL to 0 results in the verbose user welcome menu of
+the bbs, setting it to 1 results in the short forward login prompt, but this
+is the only difference. For defined forward partners, sflevel will be
+switched automatically to 1.
+
+OK, here are the facts. An SFLEVEL of
+
+-1 disables login in forward mode for this user.
+
+0 results in the normal logon screen of the BBS. Note that the SID is sent,
+but this is the normal (and verbose) user login (and thus every user has by
+default this "SFLEVEL").
+
+1 SID is sent, directly followed by the S&F prompt in a new line ('>').
+
+Examples:
+
+SFLEVEL DL9XYZ -1
+SFLEVEL DB0YYY 1
+
+----------------------------------------------------------------------------
+
+SFPARMS
+
+Sysop only. Displays all SFPARMS - definitions of all defined forwarding
+neighbours (this is done in the files of the folder box/sf/). The last
+position marks the time in UTC when your BBS will start S&F to the neighbour
+BBS. An asterisk (*) displayed after the last column states that a routing 
+to that BBS is currently in progress.
+
+The command has different options:
+
+SFP
+
+shows all SFPARMS.
+
+SFP DB0XYZ 3 1
+
+sets the third parameter of the SFPARMS of DB0XYZ to 1.
+
+SFP DB0XYZ _all_parms_
+
+sets all SFPARMS for DB0XYZ (_all_parms_ has to be replaced with ALL 9
+parameters!).
+
+----------------------------------------------------------------------------
+
+SFSTAT
+
+displays information about the forwarded files.
+
+SFS
+
+without parameters displays the number of files currently waiting in
+forward, specified by their type
+
+SFS +
+
+displays additionally the count of files forwarded since the start of the 
+day and the start of the month
+
+SFS !
+
+additionally displays information of the throughput of the BBS since it was
+installed
+
+On the first of every month, SFS ! is called by the BBS itself during the
+garbage routine, the output is stored in the board STATISTI (this should
+imply that you define this board in your rubriken.box file...). Registered
+user S&F callsigns (with the USERSF flag will also be shown in the
+statistics tables.
+
+----------------------------------------------------------------------------
+
+SFTEST
+
+Checks the routing definitions. A user can request the forwarding paths for
+a specific SEND command. SFTEST accepts all parameters as SEND would do, of
+course no message is created. The result is a list of BBS' the message would
+be forwarded to or an error message.
+Example:
+
+SFT DP @ ALL
+
+----------------------------------------------------------------------------
+
+SHELL and TSHELL
+
+Sysop only. The SHELL and TSHELL command opens a Linux shell.
+
+TSHELL handles all passed datas transparently, in particular, no linefeed
+conversion is done.
+
+The shell is immediately started, user is the one running the DPBOX
+process.
+
+If you see security problems, disable the code completely by recompiling the
+DPBOX with directive -DNO_SHELL.
+
+----------------------------------------------------------------------------
+
+SPEAK
+
+sets a user language.
+
+Example:
+
+SPE DL
+
+SPEAK without parameters shows all languages. In sysop mode, you can set a
+language for another user, example:
+
+SPE DL9XYZ DL
+
+The following languages are available (may differ locally):
+
+ Baaseldyytsch.....: ' SPEAK BS  '
+ Deutsch...........: ' SPEAK DL  '
+ Experten-DL.......: ' SPEAK DLX '
+ Espanol...........: ' SPEAK EA  '
+ Manta-Slang.......: ' SPEAK EY  '
+ Francais..........: ' SPEAK F   '
+ Englisch..........: ' SPEAK G   '
+ Schwiizerdyytsch..: ' SPEAK HB  '
+ Italiano..........: ' SPEAK I   '
+ Nederland.........: ' SPEAK NL  '
+ Expert-Nederland..: ' SPEAK NLX '
+ Wienerrisch.......: ' SPEAK OE1 '
+ Cesky.............: ' SPEAK OK  '
+ Dansk.............: ' SPEAK OZ  '
+ Polsku............: ' SPEAK SP  '
+ Hitch-Hiker.......: ' SPEAK SPC '
+ Schwaebisch.......: ' SPEAK SW  '
+
+Per default, a users language is defined according to the entries in
+box/system/whotalks.lan.
+
+----------------------------------------------------------------------------
+
+STARTUP
+
+You may define one or more startup commands (they will be executed when you
+connect the BBS). The default startup is a LIST on the users board.
+
+STARTUP L,U,C UNIX
+
+will perform a LIST on the users board, a USAGE and a CHECK for all new
+mails of the board UNIX.
+
+Subsequent commands are separated with commas, not with semicolons as in
+normal command input, as this would break the command input, too.
+
+STARTUP
+
+without parameters deletes the setting and restores the standard system
+startup.
+
+Do not put a CHECK without parameters in the STARTUP sequence. Usually, the
+generated output is a bit too high to get it returned every time you log in,
+especially when you had a link failure due to bad radio hi.
+
+----------------------------------------------------------------------------
+
+STATISTIK
+
+Sysop only command. Called without parameters, a list with extended
+information about every board is displayed. If the parameter is a board
+name, only information about the selected board is displayed. Also, the
+parameters -s , -u, -b are known, they force a 'quick display mode', only
+summary information are displayed for either user boards (-u), bulletin
+boards (-b) or both (-s). Examples:
+
+STAT
+STAT ATARI
+STAT -s
+STAT -b
+STAT -u
+
+----------------------------------------------------------------------------
+
+STRIPCR
+
+STRIPCR <filename> changes MSDOS - line breaks to Unix - line breaks. DPBOX
+makes no distinction between the two, but most Unix editors do.
+
+----------------------------------------------------------------------------
+
+SYSTEM and PW
+
+Starts the password login procedure. If you have a defined password (setup
+with the PASSWORD command), the BBS prompts you with 5 numbers. These 
+numbers correspond to the position of characters in your password string. You
+have to answer the numbers with the 5 corresponding characters. To prevent
+hacking or pirating of your password, you may repeat the command several
+times, with incorrect answers. You may also hide the correct answer in a
+longer random string.
+
+An example:
+Your password is abcdefghijklmnopqrstuvwxyz
+You type SYSTEM
+The BBS prompts you: DB0GR> 1 2 3 4 5
+The correct answer would be abcde
+Instead you type ghsuwbxgdlf825shfabcdeskfhwnh
+You are accepted...
+
+Depending on your personal PWMODE, you now are privileged to write mails, to
+be a board-sysop or a sysop.
+
+----------------------------------------------------------------------------
+
+SYSCHK
+
+Responds with 'OK' if you are sysop, if not, an error message appears.
+At the console, the sysop status is indicated by [S] after the prompt.
+
+----------------------------------------------------------------------------
+
+TALK
+
+Starts a connect to another logged in user. The connect is not fully
+transparent, binary data transfer will fail. It is text oriented. The
+connection is ended with a CTRL-Z.
+
+Example:
+
+TALK DL1XYZ
+TALK 4
+
+While in TALK mode, a user can enter BBS commands with a prefixed '!', !L
+ATARI for example. If calling an interactive command, talk mode is ended.
+
+----------------------------------------------------------------------------
+
+TIME
+
+Displays current date and time (in UTC).
+
+----------------------------------------------------------------------------
+
+TELL
+
+Generates a command that is forwarded to another BBS.
+
+The destination BBS executes the command and sends back the resulting
+answer.
+
+Only TheBox and DPBOX understand that syntax, also some BaycomBBS with a
+special server utility, it has no effect with others.
+
+As arguments of the TELL command, you can add all BBS commands that do not
+require interactive answers (as NAME, MYBBS do).
+
+Examples:
+
+TE DB0XYZ L ATARI 1-
+TE DB0XYZ R ATARI < DL8HBS
+
+where DB0XYZ is the BBS where the command shall be executed.
+
+Sysop information: the TELL command is forwarded in the board 'T'. It is a
+file generated with 'S T @ DB0XYZ < sender_callsign title', where title is
+the requested command plus '@ sender_bbs'. If the resulting output of
+a TELL command is bigger than 300k, it is discarded and an error message is
+sent to the requester.
+
+----------------------------------------------------------------------------
+
+TNTCOMM
+
+Sysop only. The TNTCOMM command allows you to send any TNT terminal command
+to any channel of any of the connected TNT.
+
+Examples:
+
+TNT <QRG> 0 CS
+
+shows all current connections of the selected TNT
+
+TNT <QRG> 1 D
+
+disconnects channel 1 of the selected TNT
+
+To find out the <QRG>, use the QRG command. <QRG> is case-sensitive.
+
+----------------------------------------------------------------------------
+
+TRACE and FULLTRACE
+
+Sysop only. Starts an input/output tracing of connections of the BBS. This
+helps in analysing forward problems or supervising "critical" users. Every
+sysop may trace as many connections as wished, but two sysops cannot trace
+the same call. The trace setting is not stored after disconnection of the
+supervising sysop.
+
+Examples:
+
+TRACE + DB0XYZ
+
+starts tracing all connections with db0xyz. While tracing a station, the
+sysop may continue to enter further commands, the trace output is included 
+in his running connection. This may look confusing but remains without side
+effects.
+
+TRACE - DB0XYZ
+
+ends tracing of db0xyz.
+
+TRACE OFF
+
+ends immediately all open traces of this sysop.
+
+TRACE
+
+shows list of open traces.
+
+TRACE ALL
+
+traces ALL connections of the BBS (a little confusing hi).
+
+The output of the traced connection is tagged with time stamps and channel
+numbers and an internal "action" flag (this one is only a help for the
+programmer hi). When outputting a text buffer to a traced connection (such
+as a mail, a help text etc.), the buffer is only indicated by its size, its
+content is suppressed from tracing.
+
+If you want to get a "full-screen display" of one user's actions, try the
+
+FULLTRACE + DB0XYZ
+
+command. FULLTRACE is used as TRACE, but no preceding tags are included, nor
+buffer suppression nor line breaking. You get an "as is" copy of a user's
+channel. Note that internally, FULLTRACE is the same as TRACE, you only
+switch a global flag of YOUR user setting ("yes, I wanna get all bytes
+without limitations"), thus it is not possible to TRACE one user and
+FULLTRACE another. You see what is meant? Try it, its easier than
+documenting it in 500 words.
+
+----------------------------------------------------------------------------
+
+TRANSFER or CP
+
+Moves a bulletin from one board to another or copies a user mail from one
+user board to another. If not in sysop mode, only bulletins directed to or
+written by the current user are transferred. Examples:
+
+T DL8HBS 12-13 > DL9XYZ (the '>' is not necessary)
+T DL8HBS 12 > DL9XYZ @ DB0XYZ
+T ATARI 7 SOFTWARE
+T IBM 9-10 > SOFTWARE
+
+If possible, a remark about the transfer action is appended to the mail.
+This only works if the mail still is in full ASCII mode. After packing or
+with binary files, this doesn't work.
+
+A Sysop may add a new lifetime to the command, syntax:
+
+T ATARI 7 ALL #7 (new lifetime: 7 days)
+
+Otherwise, the lifetime is simply the one of the destination board (if
+not set lower than that by the sender of the mail).
+
+----------------------------------------------------------------------------
+
+TTL
+
+The TTL command lets a user choose the format of the lifetime display of
+messages in LIST and CHECK output.
+
+TTL ON
+
+displays the remaining lifetime of a message
+
+TTL OFF
+
+displays the overall lifetime of a message.
+
+If TTL is switched ON, the LIFETIME command (sysop only) is based on the
+current date, too. Entering TTL without option returns the current setting.
+
+----------------------------------------------------------------------------
+
+UNERASE
+
+The DPBOX uses a retarded physical erase of mails. The sysop may define a
+number of days (in system/config.box) before logical erased mails are 
+physically deleted. A user may apply the UNERASE command to make his 
+previously erased private mails visible again. This is a necessity as 
+call sign pirates like the game of deleting other users' mails.
+
+Example:
+
+UNERASE
+
+This behaviour is, by the way, the reason for the ongoing mail number in
+user- and bulletin-boards. Even after deletion of mails 1 to 4, a newly
+incoming mail gets stored as number 5 because numbers 1 to 4 physically
+still exist. Contrary to TheBox systems, mail count is only reset after 
+real physical deletion. - With UNERASE users can only retrieve messages
+that have been removed by user erase.
+
+----------------------------------------------------------------------------
+
+UNPROTO
+
+Sysop only.
+
+With the UNPROTO command, the sysop can enable UNPROTO message list requests
+for specific users, if not free for all (parameter UNPROTO_ALL in
+system/config.box).
+
+Unproto requests are used by programs such as TPK and TSTHOST to request
+a resend of some lines of the unproto message list broadcast.
+
+See the section about unproto lists in this documentation.
+
+Example:
+
+UNPROTO DL1XYZ ON
+
+----------------------------------------------------------------------------
+
+USAGE or USER
+
+Without optional parameters, this command displays all current users of the
+BBS.
+
+With a call sign as option, all known information about a user (as HomeBBS,
+name, language) are displayed.
+
+When in sysop mode, more information such as level and SF-level are 
+displayed. If the user is currently logged in, the sysop gets a display of 
+received and sent bytes, used CPU time and overall logintime.
+
+Examples:
+
+U
+
+displays current on-line users. Forward connections are displayed lowercase.
+
+U DL8HBS
+
+displays all user settings of DL8HBS
+
+U @DB0XYZ
+
+shows a list of all users with HomeBBS at @DB0XYZ
+
+U @DB0XYZ -c
+
+only COUNTS the users with a HomeBBS at @DB0XYZ
+
+U @D* -a
+
+sysop only. counts the users of all BBS with the prefix D*
+
+U ALL
+
+same as U, but the last few lines of the BBS' logfile are sent, too.
+
+U PATH
+
+same as U, additionally displaying ax.25 from- and to- field of every user's
+connection.
+
+U U
+
+same as U, additionally a graphics of BBS load is displayed.
+
+
+U DL8HBS -d
+
+sysop only. Deletes the entry for DL8HBS
+
+U @DB0GR -d
+
+sysop only. Deletes all user entries whose MyBBS is set to DB0GR
+
+U PW
+
+sysop only. Displays all local users with password
+
+U HISCORE
+
+Displays current connect hiscore
+
+U HISCORE -d
+
+sysop only. Resets the hiscore counter
+
+U ON/OFF
+
+turns user logins ON or OFF; the latter is indicated by [no user] after
+the prompt. Sysops may log in anyway.
+
+----------------------------------------------------------------------------
+
+VERSION
+
+Displays the version number of the software. Also, the free space in RAM is
+displayed. The option '+' shows more detailed information about the system
+setup.
+
+Examples:
+
+VERSION
+VERSION +
+
+----------------------------------------------------------------------------
+
+WANTBOARD
+
+The WANTBOARD command selects boards of the bbs to be displayed in the CHECK
+output. It has the opposite effect of NOTBOARD. Syntax:
+
+WANTBOARD <board>
+WANTBOARD @<distribution>
+
+For example, you may only want to see messages to WINDOWS and SOFTWARE, then
+you enter
+
+WANTBOARD WINDOWS,SOFTWARE
+
+In order to select all "inofficial" boards (i.e. those in small letters),
+enter the symbolic board name TEMP as a WANTBOARD parameter.
+
+By entering a bulletin distribution (e.g. @DL or @EU) as a WANTBOARD
+parameter, only messages with specific distribution will be displayed in
+the check list (logical 'AND' with any board names).
+
+If you want to delete your selection, type
+
+WANTBOARD
+
+without parameters.
+
+You can enter several consecutive WANTBOARD selections until a total of
+997 characters is reached.
+
+The current setting may be checked using the U command.
+
+U <YOURCALL>
+
+shows you all your current user settings.
+
+Important: If you select more than one board to be selected, separate them
+by commas, and do not put a space between them.
+
+See NOTBOARD for a negative selection of wanted boards. NOTBOARD and
+WANTBOARD exclude each other.
+
+---------------------------------------------------------------------------

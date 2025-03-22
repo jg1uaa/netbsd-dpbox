@@ -1,0 +1,3103 @@
+AKTUELL
+
+ dg2ggp 29.9.96 - FBB dazu (uebersetzt)
+                  FEX um Beispiele ergaenzt
+                  FORWARD verschoben
+                  READBIN bei FREAD eingetragen
+                  Bei GARBAGE option -i dazu                  
+                  SETUSR bei MYBBS eingetragen
+                  USER bei USAGE eingertagen
+                  UNPROTO versucht zu uebersetzen. Orig. siehe G.ALL
+        09.10.96  MD2 und MD2SF noch in englisch
+        25.10.96  U PATH eingetragen
+        25.11.96  Übersetzung von MD2 angefangen, nicht komplett!
+                  MD2SF ist fertig
+        10.02.97  U ON/OFF dazu (bei Usage)
+        13.02.97  FILESERVER um CD. und Erase ergaenzt
+        15.02.97  Update 5.05 -> READLOCK 3/4,LIFTIME,WANTB/NOTBOARD,MD5,
+                  PREFIX,QTH,BBS,SERVER
+        16.02.97  SERVER hoffentlich korrekt uebersetzt
+        08.03.97  U U dazu, Prompt %w dazu
+        16.03.97  CHECK verbessert -> Hinweis WANT/NOTBOARD
+        18.03.97  SERV Beispiel @BBS wieder dazu
+        07.04.97  MD2/5 um SYS-Text ergaenzt.
+                  SETLT verbessert (SETL.)
+                  VERSION erweitert
+        23.04.97  um "MyBBS nur auf Boxcalls setzen" ergaenzt
+ dk2go  06.04.97  Updates 5.03 bis 5.06 eingearbeitet
+        18.05.97  Anpassungen GARBAGE, HEADER, MD2, UNERASE
+        19.05.97  CRAWL, FTR neu
+        20.05.97  CHECK, ergaenzt
+        30.06.97  bei Beispiel-Listen '' entfernt
+        16.09.97  ACTIVITY BBS COMP CONFIG ERASE FBBMODE FWRITE FDIR
+                  FEXECUTE FILESERVER IMPORT LIST MSG NOTBOARD PASSWORD
+                  PREFIX PRIV PWMODE READ RELEASE REPLY SELECT SEND SERVER
+                  TNTCOMM TTL TRANSFER UNPROTO VERSION
+                  leicht ueberarbeitet
+ dg2ggp 20.09.97  GARBAGE um CRC Fehler ergaenzt. Bei HEADER ein "die"
+                  zuviel. Tippfehler bei MD5
+ dk2go  20.09.97  Kleine stilistische Korrekturen GARBAGE, HEADER, MD5.
+                  FILESERVER: Hinweis auf BSGET
+ dg2ggp 21.09.97  FTR um den Parameter "-" ergaenzt (hallo HJ DL5DI ;) )
+ dk2go  09.10.97  PROMPT geringfuegig korr.
+        08.12.97  CRAWL KILL MYBBS NAME PASSWORD SELECTION erweitert
+        02.01.98  SETSF
+        04.01.98  MYBBS
+ dg2ggp 23.03.98  SERVER
+ dk2go  03.05.98  MD2/MD5
+ dg2ggp 26.11.98  GARBAGE weitere Optionen dazu
+                  LIST, diverse Dinge dazu (Optionen, SF-Flags..)
+                  READ, 'Beispiele' dazu geschrieben. Optionen
+                  aufgefuehrt. Schreibfehler im letzter Satz (koenen).
+        24.12.98  LIST verbessert (Flags von SELECTON kopiert)
+        09.02.99  SUB_BID bei VERSION + dazu
+        26.02.99  --Update auf 5.07.11--
+                  NOTBOARD/WANTBOARD TEMP dazu. Bei NOTBOARD
+                  Hinweis auf MUSTCHECK-Rubrik(en)
+                  VERSION um Crawler ergaenzt, Linpack Bench dazu
+        07.03.99  Ergaenzung zu GARBAGE (Option +), Text bei -A/F entfernt
+ dk2go  07.03.99  Kleinigkeiten in GARBAGE LIST
+ dl8hbs 29.07.99  Kleinere Ungenauigkeiten korrigiert
+ dg2ggp 25.09.99  FILESERVER/CONVERSE erweitert (Hinweis auf "!")
+                  CONFIG verbessert ("-"), Bei CS Leerzeile vor die Strichlinie,
+                  MYBBS - Beispiel geaendert, READ - Schreibfehler,
+                  REPLY - Beispiel, SYSTEm - PW dazu, "Beispiele"
+                  Einheitlich Formatiert.
+ dk2go  10.10.99  QUIT mit Parameter R
+ dg2ggp 01.11.99  Version 5.08.09, Wantboard/Notboard - @DL,
+                  VERSION + - Um FSERVExxx erweitert, ERASE - Option +L,
+                  KILL - Neue Funktion, CRAWL - Option -p, SFSTAT - User-SF,
+                  CS - Leerzeile entfernt.
+        16.11.99  ACTIVITY neu - MDM TRM dazu
+ dg2ggp 09.01.00  BATCH erweitert
+ dk2go  22.03.00  PING, ROUTES neu
+        17.04.00  BBS, FREAD erweitert
+        23.04.00  NOTBOARD
+ dl8hbs 27.04.00  Kleinere Korrekturen
+
+                                             
+---------------------------------------------------------------------------
+
+ACTIVITY
+
+Zeigt die letzte Eingabezeile jedes Box-Users.
+
+
+Call   BCh     TxBuff Idle     CPU Board    Command
+hb9eas>  1          0 02:28   0.01 HB9EAS   FF
+DL2UR    2          0 00:09   0.00 DL2UR    e 35-38
+DG3IAM   3      24210 99:59   0.30 (files)  bget xmlog211.zip
+hb9pd<   4          0 01:06   0.00 HB9PD    >
+DL5VZ    6      92449 08:00   0.34          cs
+DK7TT    7          0 00:10   0.00 (files)  cd packet-radio 
+db0ge<   8          0 14:46   0.00 DB0GE    ***login
+DC2GC    9          0 01:17   0.00 DC2GC    r dc2gc 7
+DB7TD   10          0 02:52   0.24 Y        comp on
+db0frb< 11          0 01:15   0.00 DB0FRB   >
+DK5TB   12      22515 01:58   0.21 DARC     r darc 294-
+DG2GKM  13          0 00:10   0.00 (files)  bput w32v252.ZIP
+DH2IW   14      23960 09:16   0.50 (files)  bget incoming/dg2gkm/w32v252.ZIP
+db0ge>  15          0 01:18   0.00 DB0GE    F> 54AC
+DG2GKM  16          0 02:21   0.00 (files)  d
+f6kfg>  17          0 00:02   0.07 M        ^Z
+DG2GGP  18        162 00:00   0.22 WINGT    a
+DG2GGP  19 MDM      0 03:31   0.00 DG2GGP   talk db7td
+DF4UD   20          0 00:09   0.82 DB0CI    l db0ci
+DH0GHU  21          0 03:32   0.07 WINGT    R WINGT 170
+db0gv<  23          0 01:13   0.00 DB0GV    >
+DG2GGP  24          0 00:53   0.05 DG2GGP   ^Z
+oe9xpi> 25          0 01:19   0.02 M        FF
+DB7TD   26          0 04:27   0.05 DB7TD    sh
+db0kfb> 27          0 01:21   0.23 DB0CI    FF
+DG3SAJ  28 TRM      0 99:99   0.00 DG3SAJ   a
+
+ Desweiteren werden noch einge Flags ausgegeben:
+ 
+ - MDM ; Der angezeigte User steigt ueber das DPGATE ein
+ - TRM ; Das Call hat sich an der Konsole eingeloggt 
+ 
+Fuer gewoehnlich nur als Sysop.
+
+---------------------------------------------------------------------------
+
+BATCH
+
+Mit BATCH <filename> kann ein bestimmtes BATCHFILE gestartet werden. Wird
+kein Filename angegeben, dann oeffnet sich ein Auswahlfenster.
+
+Das BATCHFILE besteht aus reinem ASCII-Text und wird der Reihe nach vom
+Boxinterpreter abgearbeitet.
+
+ BATCH /var/spool/dpbox/system/cleanup.bat
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+BBS oder FIND
+
+Ausgabe der Daten des internen Mailbox-Routers und der Digimap/Prefix
+Datenbank.
+
+Syntax:  BBS <CALL>
+         BBS -config <BBS-Partner-Call | ALL>
+
+Gibt  man nur einen Prefix ein, so erscheint eine Liste aller dem
+System bekannten Mailboxen mit diesem Prefix.
+
+Wenn  man  wissen moechte, welche Mailboxen mit den Buchstaben VK
+im Praefix der Mailbox DB0GR bekannt sind, gibt man ein:
+
+ BBS VK  oder  FIND VK
+ 
+Antwort der Box:
+
+VK1KCM VK1ZAO VK2AAB VK2BXQ VK2CZR VK2CZZ VK2DAA VK2DYX VK2EO
+VK2GDM VK2ICE VK2KLW VK2OP  VK2TAO VK2TGB VK2TLH VK2XY  VK3ARL
+VK3BBS VK3COL VK3FBB VK3GWB VK3IRW VK3KSD VK3RMV VK3SSS VK4CEB
+VK4CJO VK4CXX VK4DGQ VK4FIL VK4JON VK4KEL VK4RAT VK4WAT VK4WIA
+VK4XRB VK5ATB VK5BBS VK5EB  VK5HB  VK5LZ  VK5RQ  VK5SR  VK5TTY
+VK5WI  VK6AJJ VK6ANC VK6BA  VK6BBS VK6RWR VK6WFH VK6YA  VK6ZSE
+VK7AX  VK7BBS VK8BBS
+
+oder man fragt nach Boxen in VK6: 'BBS VK6'     Antwort:
+
+VK6AJJ VK6ANC VK6BA  VK6BBR VK6FN VK6JZA VK6RAW VK6SR VK6TN
+VK6WFH VK6YBP VK6ZRT VK6ZSE
+
+Will  man jetzt naehere Angaben zur Box VK6BBR haben, so gibt man
+ein:
+
+ BBS VK6BBR
+
+Wenn eine Datei digimap.stn (Hammap-Format) installiert ist, dann
+wird sie nach Mailboxeintraegen (Typ MB) durchsucht, und zusaetz-
+liche Informationen ueber die Box werden ausgegeben. Im einzelnen
+haben die Felder folgende Bedeutung:
+
+Call     : BBS-Rufzeichen (komplette hierarchische Adresse)
+Last WP  : Datum und Uhrzeit der letzten WP-Zeile dieses BBS
+Sysop    : Sysop (aus WPROT-Mails entnommen)
+SF-Call  : BBS-Rufzeichen mit SSID fuer den direkten Connect
+ActivRout: BBS mit Active Routing: Routing, Qualitaet, Anzahl SF-Hops,
+           Datum und Uhrzeit der aktuell verwendeten Routing-Information
+LastDirUp: BBS-Partner mit Active Routing: letzte WPROT-Mail mit Routerinfo
+Count(r)y: Land mit WAZ- und ITU-Zone (aus dem Praefix)
+Distance : Abstand und Azimut (vom eigenen BBS aus)
+QTH      : Standort (*)
+QTHLOC   : QTH-Locator (*)
+Latitude : geografische Breite (*)
+Longitude: geografische Laenge (*)
+Sysop    : Sysop (*)
+Remarks  : Anmerkungen (*)
+Info     : Informationen aus der R:-Zeile dieses BBS
+Last Tx  : Datum und Uhrzeit der letzten empfangenen Mail
+MinTimeB : Bulletins: minimale Laufzeit zum eigenen BBS
+AverTimeB: Bulletins: mittlere Laufzeit zum eigenen BBS
+MinTimeP : P-Mails: minimale Laufzeit zum eigenen BBS
+AverTimeP: P-Mails: mittlere Laufzeit zum eigenen BBS
+MsgCtB   : Zahl der bisher empfangenen Bulletins
+MsgCtP   : Zahl der bisher empfangenen P-Mails
+Rx Bytes : empfangene Bytes
+Routing  : aktuell fuer das Routing benutzte Nachbar-BBS 
+Best path: Smart-Router: Vermuteter bester Weg fuer Bulletins
+best Path: Smart-Router: Vermuteter bester Weg fuer P-Mails
+SmartRout: Vom Smart-Router vorgeschlagenes Routing
+
+Einige zusaetzliche Informationen (*) sind nur verfuegbar, wenn eine Datei
+digimap.stn (Hammap-Format) im box/system installiert ist. Sie wird nach
+Mailboxeintraegen (Typ MB) und nach anderen Stationen mit dem BBS-
+Rufzeichen durchsucht.
+
+Es  ist ebenfalls moeglich, nach Teilen der hierarchischen Adres-
+sen  suchen zu lassen. Als Beispiel wollen wir saemtliche bekann-
+ten Mailboxen in Florida, USA suchen:
+
+ BBS *.FL.USA.*      Antwort:
+
+KB4VOL KC4HAZ KD4AMS KD4GR  KE4CRB KF4OJ  KI4ZJ  KN4YT  KP4EDL
+N0ZO   N1OUT  N4HHP  N4XEO  W4DPH  WB4MOZ WB4TEM WB5LMJ WX3K
+
+Man kann auch nach Standorten (Staedten usw.) suchen lassen, aber
+nur  wenn  der  SysOp der Box diese in dem Header seiner Box ver-
+merkt  hat.  Will  man  wissen,  welche Mailboxen es in der Stadt
+Perth/Australien gibt, so gebe man ein:
+
+ BBS < PERTH    Antwort:     VK6ANC VK6BBS VK6WFH VK6ZSE
+
+Es  gibt  also  in Perth zumindest diese 4 Mailboxen.  Und weil's
+so schoen war, das ganze noch mal mit BARCELONA:
+
+ BBS < BARCELONA        Antwort:       EA3CWZ EA3MM  EB3EHJ EB3NC
+
+also nicht nur in Perth gibt es 4 Boxen, hi.
+
+Wen es jetzt noch interessiert, welche User sich mit MyBBS in ei-
+ner  der 4 Boxen angemeldet haben, probiert es mal mit dem USAGE-
+Befehl. Das klappt aber nur, wenn die MyBBS-Eingabe im weltweiten
+S&F hier angekommen ist:
+
+ U @EB3EHJ     Antwort:
+
+Total 20216 user.      bei DB0GR  ist von  20.216 User (weltweit)
+                       das MyBBS bekannt.
+EA3BHR EA3GFM          davon haben diese beiden das homebbs EB3EBJ
+@EB3EHJ: 2 user.
+
+Man  kann  natuerlich  auch an hier nicht aufgefuehrte Boxen eine
+Nachricht schicken.
+
+Mit dem Parameter -config lassen sich die Forward-Einstellungen fuer
+einen einzelnen S&F-Partner abfragen oder fuer alle Partner gleichzeitig:
+
+ BBS -config HB9EAS
+ BBS -config all
+
+Dies kann fuer Sysops von Nachbarboxen nuetzlich sein, um Fehlleitungen
+von Mails auf die Spur zu kommen.
+
+---------------------------------------------------------------------------
+
+BEACON
+
+Startet die Aussendung der Mailbake manuell (z.B. zum Testen der
+Einstellungen).
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+BOXLOG
+
+Erzeugt die Checkliste neu. Wird auch bei GARBAGE erledigt.
+Sollte normalerweise nicht benoetigt werden, kann aber nuetzlich sein,
+wenn einem die Checkliste fehlerhaft vorkommt.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+BROADCAST
+
+Mit diesem Befehl wird der BBS-PACSAT-BROADCAST ein- oder ausgeschaltet
+
+ Beispiel: BROADCAST ON
+           BROADCAST OFF
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+BULLID
+
+Mit BULLID kann geprueft werden, ob im Speicher der Bulletin-IDs bereits
+die angegebene ID enthalten ist. Das bedeutet, dass die Box beim S&F eine
+Nachricht mit eben dieser ID nicht mehr annehmen wuerde.
+
+ Beispiel: BULLID 307348DL9ABH
+
+Haengt man an den Befehl ein '-' an, so wird die angegebene ID aus dem
+Speicher geloescht (nicht die zugehoerige Nachricht).
+
+ Beispiel: BULLID 307348DL9ABH -
+
+Mit der Option + kann eine BULLID angefuegt werden.
+
+Gibt man nur BULLID ein, erhaelt man einige Angaben ueber den Fuellstand des
+Bulletin-ID-Speichers.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+BYE oder ABORT oder ABBRUCH
+
+Mit 'ABBRUCH', 'ABORT' oder 'BYE' kann man die Mailboxsitzung ab-
+brechen.
+
+Im  Gegensatz zu 'EXIT' oder 'QUIT' wird mit 'ABBRUCH' die LOGIN-
+Zeit nicht neu gesetzt.
+
+---------------------------------------------------------------------------
+
+CHECK
+
+Der  Befehl  'CHECK'  erlaubt  es, die Neueintraege in Info-Files
+nach Datum sortiert anzuzeigen.
+
+Ohne  Argument  zeigt  'CHECK' alle Neueintraege nach dem letzten
+Login-Datum an. Ist kein Neueintrag an diesem Datum vorhanden, so
+wird der letzte Neueintrag ausgegeben.
+
+ Mit WANTBOARD und NOTBOARD kann die Check-Ausgabe beeinflusst
+ werden. Siehe dazu auch  HELP WANTBOARD, HELP NOTBOARD.
+
+ Beispiele:
+
+ C                Zeigt die Neueintraege nach dem letzten Login
+ C 10             Zeigt die letzten  10  Neueintraege unter Info-
+                  Files
+ C 2-             Zeigt Neueintraege beginnend mit dem Vorletzten
+ C -5             Zeigt die letzten 5 Neueintraege
+ C 3-7            Zeigt den 3., 4., 5., 6. und 7. Eintrag
+ C < DK0MAV       Zeigt alle Eintraege, die von  DK0MAV  verfasst
+                  wurden
+ C 2-30 < DK0MAV  Zeigt die Eintraege, die  von  DK0MAV  verfasst
+                  wurden
+ C < Argument     Zeigt alle Eintraege,  in  denen  das  Argument
+                  vorkommt. Argument kann auch ein CALL sein
+
+Das Suchwort kann auch mit '*' kombiniert werden.
+
+ C < FT*757       findet: FT-757, FT 757, FT757 usw.
+
+Mit der Option '$' wird anstatt des Datums die BULLID ausgegeben.
+
+ C $ 
+ C 50 $ 
+ C < $DB0GR 
+ C Atari $ 
+
+
+Mit der Option '+' bei CHECK werden Usermails aufgelistet. Beispiel:
+
+ C + 100          zeigt die letzten hundert Usermails, die man selbst
+                  geschrieben oder erhalten hat.
+                  Als Sysop bekommt man alle Usermails angezeigt.
+
+Unscharfe Suche: Mit
+
+ C %50 antennen 
+
+werden Mails gesucht, die in der Titelzeile zu mindestens 50% mit dem
+Suchwort uebereinstimmen. Vorsicht, so koennen sehr lange Checklisten
+entstehen!
+
+
+siehe auch CS
+
+---------------------------------------------------------------------------
+
+CD
+
+Wechselt das Board. Nur aus Kompatibilitaetsgruenden zur BayBox vorhanden.
+
+ Beispiel:
+
+ CD ATARI        : Wechselt zu ATARI.
+
+---------------------------------------------------------------------------
+
+COMMENT
+
+Diese  Funktion ist aehnlich 'REPLY', aber es wird eine Nachricht
+an die RUBRIK der zuletzt gelesenen Nachricht gesandt. Handelt es
+sich um eine Userrubrik, so arbeitet diese Funktion wie 'REPLY'.
+
+---------------------------------------------------------------------------
+
+COMP oder //COMP
+
+Die HUFFMAN-Kompression wird ein- oder ausgeschaltet.
+
+ Beispiel: COMP ON      Antwort: //COMP 1
+           COMP OFF     Antwort: //COMP 0
+ oder      //COMP ON    Antwort: //COMP 1
+           //COMP OFF   Antwort: //COMP 0
+
+---------------------------------------------------------------------------
+
+CONFIG
+
+Hiermit koennen System-Dateien konfiguriert werden.
+
+ Beispiele:
+
+ CONFIG config.box REMOTE_ERASE        liefert die aktuelle Einstellung
+                                       von REMOTE_ERASE in config.box
+
+ CONFIG config.box REMOTE_ERASE ON     setzt REMOTE_ERASE auf ON in
+                                       config.box
+
+ CONFIG config REMOTE_ERASE ON         wie oben. Wird die Datei nicht
+                                       gefunden, haengt dpbox testweise
+                                       erst .box und dann .sf an den
+                                       Namen an. Der Suchpfad ist nachein-
+                                       ander box/ box/system/ box/sf/
+
+ CONFIG beacon BLABLABLA ON            haengt die Zeile BLABLABLA ON
+                                       an die Datei system/beacon.box an
+                                       (unbekannte Parameter werden also
+                                       automatisch addiert).
+
+ CONFIG rubriken.box APPLE -           Loescht in der Datei rubriken.box
+                                       den Eintrag APPLE.
+
+ CONFIG                                liefert eine kurze Syntaxbeschreibung
+
+
+Wurden Systemdateien veraendert, so sind diese Aenderungen erst nach
+Anwendung des Befehls RELOAD wirksam.
+
+Nur als Sysop
+
+---------------------------------------------------------------------------
+
+CONNECT
+
+ Hier kann von der Box aus ein <call> ueber [<qrg>] mit [<timeout>]
+ connected werden,
+
+  CONNECT <call> [<qrg>] [<timeout>]
+
+  z.B.  connect hb9eas-7 BRHOLZ
+
+ Wird keine QRG angegeben, erfolgt der Connect-Versuch auf demselben
+ Funkkanal, ueber den man eingeloggt ist.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+CONVERSE
+
+Startet  den Converse-Mode der Mailbox. Dieser Converse ist lokal
+und verbindet nicht mit z.B. TNN-Converse!
+
+Waehrend des CONVERS-Modes kann ein User Mailboxkommandos eingeben,
+indem er ein "!" voranstellt.
+
+ Beispiele: 
+
+ CONVERSE       Startet Converse auf Kanal 0
+ CONVERSE 1234  Startet Converse auf Kanal 1234
+
+Mit  '/HELP'  im Converse werden weitere Kommandos angegeben. Mit
+'/Q' wird der Converse verlassen.
+User  koennen  Kanaele von 0 bis 100.000 belegen, BoardSysOps bis
+200.000, SysOps bis ...
+
+----------------------------------------------------------------------------
+
+CRAWL
+
+CRAWL steuert die Aktionen des 'Crawlers' an (Anlegen einer Datenbank mit
+Suchwort-Index fuer die Volltextsuche mit FTR):
+
+ CRAWL     : Beginnt mit dem Durchsuchen aller Bulletins, die alte Datenbank
+             wird geloescht. Wenn die Datenbank aufgebaut ist, wird sie
+             staendig mit neu eintreffenden Nachrichten aktualisiert.
+ CRAWL -q  : Stoppt die Suche, die Datenbank wird nicht geloescht
+ 
+ CRAWL -p  : Durchsucht auch Usermails. Sollte nur bei Privaten Systemen
+             verwendung finden!
+             
+Ein Neustart der DPBOX beim erstmaligen Erzeugen der Datenbank unterbricht
+die Indizierung. Nach Erzeugen der Datenbank wird der Status von crawl intern
+abgespeichert und nicht mehr durch Restarts der BBS-Software beeinflusst.
+
+Nach einem Absturz des Box-PC (Stromausfall, Festplattenfehler) kann es sein,
+dass DPBOX nur stark verzoegert antwortet. In diesem Fall sollte der Crawler
+gestoppt und alle verbliebenen Crawl-Prozesse in einer Linux-Shell mit 'kill'
+beendet werden.
+
+Nur als Sysop.
+
+----------------------------------------------------------------------------
+
+CS
+
+'CS'  arbeitet  wie  'CHECK', aber die Ausgabe wird nach Rubriken
+sortiert (daher der Name <C>heck <S>ortiert). Die Uebersichtlich-
+keit einer langen Checkliste steigert sich dadurch betraechtlich.
+
+Es sind alle Parameter wie auch bei 'CHECK' erlaubt.
+
+---------------------------------------------------------------------------
+
+CTEXT
+
+Mit CTEXT kann ein Begruessungstext fuer die User der Box eingegeben werden.
+Ein alter Text wird angezeigt und dann durch den neuen ueberschrieben.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+DEBUG
+
+Setzt den Debug-Level temporaer neu (bis zum naechsten Neustart).
+
+ Beispiele:
+
+ DEBUG            gibt aktuellen Debug-Level aus
+ DEBUG 5          setzt Debug-Level auf 5
+ DEBUG 0          schaltet Debug-Modus ab
+
+Bei RELOAD oder Neustart wird der Debug-Level aus config.box uebernommen.
+Default ist 0, Wertebereich 0 - 5.
+
+---------------------------------------------------------------------------
+
+DIRECTORY
+
+Der Befehl 'DIR' zeigt ein Verzeichnis der in der Mailbox vorhandenen
+Rubriken (= Info-Files) bzw. Rufzeichen, fuer die Nachrichten
+gespeichert sind (= User-Files).
+
+ Syntax: 'DIR <argument>'
+
+Eingaben o h n e Hochkomma / Klammern, jedoch m i t Leerzeichen!
+
+
+Wird 'DIR' ohne Argument verwendet, so wird nur das Verzeichnis der Info-
+Files ausgegeben.
+
+
+ Beispiele:
+
+ DIR   ....:  Das  Verzeichnis der Info-Files und die Maximale-Lifetime
+              wird ausgegeben;
+ DIR USER  :  Das Verzeichnis der User-Files  wird  ausgegeben;
+ DIR INFO  :  Wie 'DIR' aber anstatt der LIFETIME steht die Anzahl
+              der Files in der jeweiligen Rubrik.
+ DIR ALL   :  Wie DIR. Zusaetzlich werden die vorhandenen User-Files
+              aufgelistet.
+ DIR LOST  :  Zeigt die Userfiles, deren MyBBS nicht auf dem
+              eigenen Boxcall steht. Das bedeutet allerdings nicht, dass
+              diese Files wirklich liegengeblieben sind, es kann ja sein,
+              dass sie nur noch  nicht geforwardet worden sind.
+
+---------------------------------------------------------------------------
+
+DISCONNECT
+
+Mit DISC koennen ein oder mehrere User disconnectet werden.
+
+ DISC ALL ..:  disconnectet alle User
+ DISC DL8HBS:  disconnectet DL8HBS
+ DISC 1 ....:  disconnectet den User auf Box-Kanal 1
+ DISC SF....:  disconnectet alle Forward-Connects
+ DISC USER..:  disconnectet alle nicht-Forward-Connects
+
+Zusaetzlich kann ein Text angefuegt werden, der dann dem/n User/n vor dem
+Disconnect geschickt wird.
+
+ DISC ALL sorry, jetzt ist aber Schluss.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+ERASE
+
+Der  Befehl  'ERASE'  dient  zum Loeschen von Nachrichten. Grund-
+saetzlich  koennen  nur  Nachrichten geloescht werden, die an das
+eigene  Call  gerichtet sind oder die man selbst geschrieben hat.
+Um die Nachrichten-Nummern zu erhalten, sollte man vorher den Be-
+fehl 'LIST' benutzt haben.
+
+ E DF3AV        Loescht alle Nachrichten, die  seit  dem  letzten
+                eigenen Login fuer DF3AV eingegangen sind.
+ E DF3AV 4      Loescht Nachricht Nr. 4, die  man  an  DF3AV  ge-
+                schrieben hat.
+ E DF3AV 4-     Loescht ab Nachricht Nr. 4 alle MSGs an DF3AV
+ E DF3AV -3     Loescht alle MSGs an DF3AV bis einschl. Nr. 3
+ E DF3AV 3-5    Loescht MSGs 3 bis 5
+ E DP < DF3AV   Loescht alle Nachrichten in DP von DF3AV
+ E DP < $GB7    Loescht alle  Nachrichten in  DP,  die in der BID
+                GB7 enthalten
+ E +L           Loescht eine gelesene Mail ohne direkte Angabe des
+                Brettes und Nr 
+
+WICHTIG: Der Loeschbefehl wird an alle anderen Mailboxen (DP/DIE-
+BOX/BCM) weitergeschickt, und das gleiche Bulletin wird in diesen
+Mailboxen automatisch auch geloescht,  wenn dort das Fernloeschen
+eingeschaltet ist.
+
+Bei  aktiviertem  Passwort&Hold  der  Box  wird Fernloeschung nur
+nach Einloggen mit Passwort ausgefuehrt.
+
+Gibt  man  keine  Rubrik  an, so wird der Loeschbefehl in der zu-
+letzt angegebenen Rubrik ausgefuehrt.
+
+Die  geloeschten  Nachrichten werden erst nach einigen Tagen end-
+gueltig  geloescht.  Geloeschte  persoenliche Nachrichten koennen
+waehrend dieser Zeit mit 'UNERASE' wieder gerettet werden.
+Fuer Informationen siehe 'UNERASE'.
+
+Der Sysop kann selbstverstaendlich alle Nachrichten seiner Box loeschen.
+Diese Loeschungen werden dann allerdings nicht an andere Boxen
+weitergegeben, es sei denn, es wird der Parameter '+' an den Befehl
+angehaengt: 'E MEINUNG 39 +'. Fuer gewoehnlich dies bitte unterlassen,
+es sei denn, es handelt sich um strafbewehrte Einspielungen.
+
+---------------------------------------------------------------------------
+
+EXPORT
+
+Export ist das Gegenstueck zu IMPORT. Wenn nicht von der Console aus
+aufgerufen, wird die Datei im Ordner DP\SAVE mit dem Namen EXPORT.001
+(oder einer aufsteigenden laufenden Nummer) angelegt.
+
+ EXPORT BBS 17 save/test.dat  : Der Name ist dann test.dat in box/save/
+
+Parameter ansonsten wie bei READ: EXPORT ATARI 5-8. Handelt es sich um
+ein Binaerfile, so werden nur die Binaerdaten gespeichert, eventuelle
+voranstehende Hinweiszeilen werden abgeschnitten, der Dateiname wird aus
+dem Binaerheader zurueckgewonnen (man muss aber bei EXPORT einen Blanko-
+Namen angeben, also z.B. 'EXPORT SOFTWARE 17 save/dddd' - das 'dddd' wird
+dann gegen den im Binaerheader gespeicherten Namen ausgetauscht).
+
+Bitte beachten, dass sich unter Linux JEDER Remotesysop-Befehl auf das
+Mailbox-Verzeichnis /work/box bezieht. Auch fuer den Sysop besteht daher kein
+Zugriff auf Dateien ausserhalb dieses Verzeichnisses. Ein solcher Zugang
+kann ueber TNT mit einer besonderen ssid zum Terminal-Login erfolgen.
+Nach Passwort-Eingabe gelangt man mit //rootsh zur Linux-Shell.
+
+Seit v5.00 bietet auch die DPBOX dem Sysop einen direkten Zugriff auf
+die Linux-Shell. Siehe HELP SHELL. Das Einrichten eines gesonderten
+Zugangs ueber TNT bietet aber den Vorteil, dass auch bei Absturz oder
+Fehlfunktion der DPBOX noch eine Hintertuer in das System offen steht.
+
+Nur als Sysop.
+
+----------------------------------------------------------------------------
+
+FBBMODE
+
+Das Kommando FBBMODE schaltet zwischen zwei Check-List-Ausgaben um. Die 
+Eingabe von FBBMODE ON erzeugt eine Listen-Ausgabe im F6FBB-Format, 
+inklusive der Mail-Nummer.
+
+Im FBBMODE kann die Mail nun mit: R <message_number> gelesen werden.
+Die normale READ-Syntax funktioniert ebenfalls mit: R <BOARD> <Number>.
+
+Hinweis: FBBMODE ON aendert nicht die moeglichen Befehle der DPBOX (ausser
+dem READ-Befehl). Es ist _nicht_ geplant, den gesamten Befehlssatz der 
+F6FBB-Box zu uebernehmen. FBBMODE wurde nur implementiert, um die Message-
+List-Broadcast Funktion zu testen.
+
+ Beispiel:
+
+ FBBMODE ON
+ FBBMODE OFF
+
+---------------------------------------------------------------------------
+
+FCOPY
+
+Kopiert ein File auf der Platte des Rechners.
+
+ FCOPY proto/debug.box save/debug.001
+
+Nur als Sysop.
+
+----------------------------------------------------------------------------
+
+FDELETE
+
+Loescht eines oder mehrere Files im Verzeichnis /work/box.
+
+VORSICHT - ist nicht rueckgaengig zu machen !!!
+
+ Beispiel: FDELETE save/test.dat
+           FDELETE proto/debug.*
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+FDIR
+
+Directoryanzeige.
+
+ Beispiel:
+
+ FDIR proto/
+ FDIR proto/debug.*
+
+ Steht ein '/' am Ende des Suchstrings, so wird automatisch '*.*' angehaengt.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+FEXECUTE oder DOS oder OSSHELL
+
+Startet ein externes Programm im Ordner box/run/
+
+ Beispiel:
+
+ FEX testscript
+ OS ds
+ DOS ps -u
+ FEXECUTE save/test/ownprog
+ 
+ Das Programm wird als parallele Anwendung gestartet und haelt nicht die
+ Mailbox an.
+ Ein- und Ausgaben werden uebergeben.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+FHEADER
+
+Sie koennen hiermit den Text in den eckigen Klammern im Forward-Header  in
+bestimmten Grenzen edieren.
+
+Nur als Sysop.
+
+Das Kommando ist veraltet. Der FHEADER wird nun in CONFIG.BOX angegeben,
+durch den Befehl FHEADER kann nur noch die aktuelle Einstellung abgerufen
+werden.
+
+---------------------------------------------------------------------------
+
+FILESERVER
+
+Das Kommando FILESERVER startet den eingebauten Fileserver von DPBOX.
+
+Der Fileserver hat seinen eigenen Kommando-Satz. Er muss mit QUIT oder
+EXIT verlassen werden, um wieder die normalen Mailbox-Kommandos anwenden
+zu koennen.
+
+Waehrend des Fileserver-Modes kann ein User Mailboxkommandos eingeben,
+indem er ein "!" voranstellt.
+
+Mit HELP im Fileserver-Modus bekommt man diese Befehlserlaeuterung:
+
+Die File-Server - Kommandos:
+? und HELP           - dieser Text
+DIR und LS und LS -l - zeigt Inhaltsverzeichnis
+LIST                 - zeigt Inhaltsverzeichnis mit Beschreibung
+CD                   - Verzeichnis wechseln
+TYPE                 - Textdatei lesen (mit Seitenstops)
+READ und WRITE       - Textdatei lesen oder schreiben
+GET und PUT          - Textdatei lesen oder schreiben
+BGET und BPUT        - Binaerdatei im AutoBIN - Modus lesen oder schreiben
+YGET und YPUT        - Binaerdatei im Yapp - Modus lesen oder schreiben
+EXIT, BYE und QUIT   - zurueck zum Mailbox-Modus
+
+Beispiele:
+CD /linux/packet     - wechselt zum Verzeichnis /linux/packet
+CD .. / CD.          - geht ein Verzeichnis zurueck
+DIR *.zip -DATE      - zeigt alle Dateien mit *.zip nach Datum sortiert
+DIR -NAME            - zeigt das Verzeichnis nach Namen sortiert (default)
+LS -SIZE             - Kurzanzeige des Verzeichnisses, nach Groesse sortiert
+LIST                 - zeigt das Inhaltsverzeichnis mit Inhaltsbeschreibung
+YGET test.zip        - liest test.zip im YAPP-Modus aus
+BGET 4               - liest Datei 4 im aktuellen Verzeichnis als AutoBIN aus
+BPUT test.lzh        - schreibt eine neue Datei test.lzh in AutoBIN - Modus
+
+Abhaengig von den Einstellungen der Mailbox koennen Dateien auch
+7Plus-codiert (externer Befehl 7GET) oder aufteteilt in Binaerteile
+(externer Befehl BSGET) ausgelesen werden.
+
+Beachte: Unix unterscheidet zwischen GROSS- und Kleinschreibung in Dateinamen!
+Verzeichnisse werden mit '/' getrennt, nicht mit '\' wie bei DOS etc.
+Namen duerfen laenger als 8+3 sein, z.B. "dpbox-4.17-source.tar.gz"
+Alle Kommandos koennen abgekuerzt werden, z.B. BG fuer BGET, L fuer LIST.
+
+Sysop - Kommandos:
+MD und MKDIR         - neues Verzeichnis anlegen
+CP und COPY          - Datei(en) kopieren
+MV und MOVE          - Datei(en) verschieben/umbenennen
+RM und DEL, E        - Datei(en) loeschen
+RD und RMDIR         - (leeres) Verzeichnis entfernen
+INDEX                - neue Verzeichnis-Info schreiben
+
+
+
+Falls vom Sysop dieser Box so vorgesehen, wird das /newbin/ - Verzeichnis
+des Servers mit automatisch zusammengesammelten und dekodierten 7plus-
+Files aus dem normalen S&F der Box gefuellt.
+
+Benutzer koennen Dateien in das /incoming/ - Verzeichnis ablegen. Bitte
+senden Sie nach einem Upload eine kurze Nachricht an den Sysop, damit ihre
+Einspielung an einen geeigneten Platz kopiert werden kann.
+
+Beachte: Wenn man das LIST - Kommando anstelle von DIR oder LS benutzt,
+bekommt man eine kurze Dateibeschreibung zu jedem Eintrag (falls vorhanden).
+
+Dateien im Fileserver werden nicht geforwardet.
+
+---------------------------------------------------------------------------
+
+FMAIL oder MKFMAIL
+
+Dieser Befehl wirkt wie REPLY. Allerdings wird eine Nachricht an die
+Rubrik F@THEBOX (oder ein anderes @MBX-Feld entsprechend der Angabe in
+CONFIG.BOX) gesendet. Die Lifetime betraegt 14 Tage.
+
+ Beispiel:
+
+ MKF ATARI 78
+ MKF                (zuletzt gelesene Mail wird als Basis gewaehlt)
+
+ Die Box fragt nach einem Kommentar, der an diese Nachricht angehaengt
+ werden soll.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+FMOVE
+
+Verschiebt ein File auf der Platte des Rechners oder benennt es um.
+
+ FMOVE save/debug.001 save/test.dat
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+FORWARD
+
+Mit diesem Befehl koennen Nachrichten manuell in die S&F-Liste (welche
+sich in Rubrik 'X' befindet) eingetragen werden. Syntax wie bei LIST,
+READ usw., also z.B. FOR ATARI 1-2 DB0ZZ.
+
+Der @MBX-Kenner der Nachricht wird immer auf das Call der Ziel-Mailbox
+gesetzt. Dies ist eine zusaetzliche Sicherung gegen Schleifen und
+aehnliches. Sie koennen diese Sicherung ausschalten, wenn Sie ein '+' an
+den Befehl anhaengen. Dann wird die Mail an die angegebene (Nachbar-)
+Box geschickt, aber der @MBX-Kenner bleibt unveraendert (ausser fuer
+umzuleitende Userfiles nach Routingfehlern nicht zu empfehlen!).
+
+ Beispiel:
+
+ FOR DL8HBS 16 DB0XYZ +
+
+Routingfehler werden im profile.box angezeigt und weisen normalerweise
+auf fehlende oder falsche Angaben in den Routing-Files der eigenen oder
+der Nachbarboxen hin. Sie machen sich als 'Loops' oder 'Rejects' bei
+persoenlichen Mails bemerkbar. Andere Ursachen koennen sein, dass eine
+hierarchische Region in den eigenen Forward-Definitionen fehlt oder dass
+ein neuer Staat auf der Landkarte aufgetaucht ist.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+FREAD oder READBIN
+
+BIN-Lesen von Files auf Festplatte. Auch READBIN.
+
+Folgende Optionen koennen verwendet werden:
+
+ -a      reiner ASCII-Text wird ausgegeben (nicht binaer).
+ -p      Binaerausgabe mit LHA komprimiert (nur sinnvoll mit DP/Atari).
+ -y      Binaerausgabe mit YAPPC-Protokoll.
+ -f      Binaerausgabe, voll transparent ohne Header.
+ -t nnn  die letzten nnn Bytes werden ausgegeben. Auch in Verbindung
+         mit -a.
+ -tn nnn zusaetzlich wird erst nach dem naechsten gefundenen Zeilenende
+         ausgegeben.
+ -Z      Binaerausgabe mit gzip komprimiert.
+
+ Beispiel:
+
+ FREAD save/test.dat
+ FREAD system/commands.box -p
+ FREAD proto/debug.box -a -t 2000
+ FREAD proto/userlog.box -Z
+
+
+Nur als Sysop.
+
+----------------------------------------------------------------------------
+
+FTR
+
+Volltextsuche (Full Text Retrieval).
+
+Dieser Userbefehl erlaubt Datenbankanfragen: einfach eines oder mehrere Such-
+woerter an den Befehl anhaengen. Mails, die alle gesuchten Woerter enthalten,
+werden angezeigt.
+
+ Beispiel:  FTR dpbox update
+
+Es werden alle Mails herausgesucht, die die Woerter "dpbox" and "update"
+enthalten. Gross- und Kleinschreibung werden nicht unterschieden, Umlaute
+automatisch gewandelt (Schreibweise ae, oe, ue).
+
+Jedes angehaengte Wort wird in einer Datenbank gesucht, die der sog. Crawler
+(Sysop-Befehl CRAWL) anlegt und im Hintergrund staendig aktualisiert.
+Mehrere angehaengte Begriffe werden bei der Suche mit UND verknuepft.
+
+Das Suchergebnis von FTR wird im Check-Format ausgegeben. Die Checkliste
+enthaelt dann alle Mails, die die gesuchten Woerter enthalten.
+
+Achtung:
+
+7plus- und Binaermails werden NICHT indiziert und daher bei der
+Suche mit FTR nicht beruecksichtigt.
+
+Ein "-" vor dem Begriff bewirkt, dass nur Mails angegeben werden,
+in welchem die anderen Begriffe, jedoch nicht dieser enthalten ist.
+Leider ist diese Funktion fehlerhaft programmiert, die Ausgabe ist
+dadurch in den meisten Faellen unbrauchbar.
+
+---------------------------------------------------------------------------
+
+FWRITE oder SENDBIN
+
+BIN-Schreiben von Files auf die Box-Festplatte.
+
+ Beispiel: FWRITE save/test.dat
+
+           Nach Aufforderung der Box die Uebertragung starten.
+           Ist die Uebertragung noch nicht gestartet worden, so
+           kann sie durch fuenfmalige Eingabe einer Leerzeile
+           abgebrochen werden.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+GARBAGE
+
+Neuerstellung der Verzeichnisse. Geloeschte Files werden nun auch
+physikalisch geloescht, korrupte Files (Diskfehler?) werden nach
+Moeglichkeit aussortiert. Bitte alle paar Tage aufrufen bzw. automatisch
+zeitgesteuert jeden Tag.
+
+ DIES IST DIE KERNROUTINE DER BOXVERWALTUNG!
+
+Zusaetzlich wird der Inhalt der Dateien PROFILE.BOX sowie R_ERASE.BOX
+als Nachricht an das Brett Y geschickt. In R_ERASE.BOX sind die per S&F
+geloeschten Nachrichten  aufgefuehrt. In PROFILE.BOX befinden sich Hinweise
+ueber Routing-Errors (unvermittelbares MyBBS usw.), Sysop-Einlogversuche
+und aehnliches.
+
+Die gespeicherten Routing-Informationen aus HPATH.BOX werden geprueft.
+Alle Eintraege mit lasttx aelter als 12 Monate werden entfernt.
+
+Bei Garbage werden alle User und Boxen disconnected!
+
+Das Kommando kann mit der Option -i benutzt werden, d.h. sofortiges
+physikalisches Entfernen aller geloeschten Mails. Ohne diese Option werden
+Mails mit abgelaufener Lifetime erst nach Ablauf von ERASEDELAY physikalisch
+geloescht.
+
+Die Option -i sollte auch dann verwendet werden, wenn bei einem
+normalen Garbage das System einen CRC-Fehler feststellt. Der Garbage
+wuerde ansonsten an dieser Stelle immer wieder abbrechen. Das Problem
+an sich wird dadurch allerdings nicht behoben. CRC-Fehler werden nicht
+durch die DPBOX erzeugt, sondern meist durch die Festplatte, seltener
+durch das RAM des Rechners. DPBOX bemerkt nur die Datenverfaelschung
+und weigert sich im Gegensatz zu vielen anderen Systemen, damit weiter
+zu arbeiten.
+
+Weitere Optionen:
+
+       -I immediate  ; CRC-Fehler werden soweit moeglich beseitigt,
+                       Daten im Hidden werden komplett geloescht
+
+        + xgarbage   ; Es wird nur die Forwardliste (Rubrik X)
+                       aufgeraeumt. Garbage wird nicht gestartet und
+                       User werden nicht disconnected
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+HEADER
+
+Dieser Befehl ist aehnlich dem READ-Befehl. Der Kopf einer Nachricht wird
+ausgegeben, aber nicht ihr Inhalt. Mit der Option + werden
+alle R:-Zeilen vollstaendig angezeigt.
+
+Alle Optionen des READ-Befehls koennen angewendet werden.
+
+---------------------------------------------------------------------------
+
+HELP
+
+Mit dem Befehl 'HELP' werden entsprechend der eingestellten Spra-
+che  Hilfen  ausgegeben. Mit 'HELP' bekommt man einen allgemeinen
+Hilfstext,  mit 'HELP <Befehl>' gibt es eine Erlaeuterung zu <Be-
+fehl>.
+
+Beispiel: 'H DIR' gibt eine Erklaerung des Befehls 'DIRECTORY'.
+
+---------------------------------------------------------------------------
+
+HIDDEN
+
+Mit HIDDEN ON schaltet man eine 'negative Logik' ein. Fortan bekommt
+man mit LIST, READ usw. nur noch die geloeschten (also zum  Loeschen
+vorgemerkten) Files angezeigt. Wenn man ein solches File nun mit ERASE
+loescht, ist es in Wirklichkeit wieder 'entloescht'. Achtung: das
+funktioniert nur bis zum Ablauf des eingestellten ERASEDELAYs.
+
+HIDDEN ON wird im Prompt mit [H] angezeigt.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+HOLD
+
+Gibt alle Nachrichten aus, die intern angehalten wurden. Dies ist eine
+Kombination der Befehle SELECTION SFHOLD OWNHOLD und CHECK + 1-;CHECK 1-
+
+Ein Sysop kann die angehaltenen Nachrichten mit RELEASE freigeben.
+
+HOLD kann mit allen Parametern des CHECK-Befehls kombiniert werden.
+
+Nur als Sysop. Kann auch fuer Benutzer freigeschaltet sein.
+
+---------------------------------------------------------------------------
+
+HNAME
+
+Nur als Sysop.
+
+Dieses Kommando ist veraltet. Der HNAME wird nun in CONFIG.BOX eingestellt.
+
+---------------------------------------------------------------------------
+
+IFUSAGE
+
+ Zeigt, ueber welches TNT auf welchen Boxkanal welcher User gelegt wird.
+
+ Beispiel:
+
+ IFU
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+IMPORT
+
+Mit IMPORT kann man Nachrichten in die Mailbox
+importieren. Binaerfiles werden automatisch erkannt.
+
+ Beispiel:
+
+ IMPORT save/test.dat
+
+ Die Box fragt nach dem Empfaenger und dem Titel der Nachricht.
+
+ Von der lokalen Konsole aus hat man Zugriff auf das gesamte Filesystem,
+ nicht nur auf den box/ - Ordner. Es muss dann also der komplette Pfad
+ angegeben werden:
+
+ IMPORT /work/box/save/test.dat
+
+Mit IMPORT PW <Pfadname> kann man ein oder mehrere Passwoerter aus
+einer Datei Importieren. Damit ist es moeglich, ohne Umwege ein 
+Passwort fuer User und/oder Boxen zu setzen.
+
+Das File muss wie folgt aufgebaut sein:
+
+  <CALL1> <PASSWORT1>
+  <CALL2> <PASSWORT2>
+  ..........
+
+ Beispiel:
+
+ IMPORT PW /work/box/hb9fm.pw
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+KILL
+
+Die angegebene Nachricht und das Absender-Call wird mit Nullen aufgefuellt,
+die BID wird geloescht. Der Vorgang ist nicht rueckgaengig zu machen!
+
+Die Nachricht wird beim naechsten Garbage geloescht.
+
+Dieser Befehl sollte nur im aeussersten Notfall Verwendung finden.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+LANGUAGES
+
+Alle verfuegbaren Sprachen der Mailbox werden aufgelistet.
+
+---------------------------------------------------------------------------
+
+LEVEL
+
+Als Sysop kann man mit 'LE DL8HBS 10' fuer den Benutzer DL8HBS den
+Userlevel fuer die DP-Box auf 10 setzen. Default ist 1, gueltige Level
+sind 0 - 127. Dies ist im Zusammenspiel mit Rubriken wichtig, die nicht
+den Default-Level 1 besitzen (begrenzter Zugriff). Der User bekommt nur
+solche Nachrichten angezeigt, deren Wertigkeit <= seinem Level ist.
+
+User mit einem Level 0 koennen nicht in die Box connecten.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+LIFETIME oder LT oder SETL
+
+Die Lifetime einer Nachricht gibt deren Lebenszeit in der Box an. Wird
+nach Ablauf der Lifetime GARBAGE gemacht, dann werden ueberalterte
+Nachrichten geloescht.
+
+ Syntax: 'LIFETIME <rubrik> <argument> <Lebenszeit> [< argument]'
+
+ Beispiele:
+
+ SETL ATARI 1 10             : Setzt die Lifetime von ATARI 1 auf 10
+ SETL ATARI 1- 10            : Setzt die Lifetime von ATARI 1- auf 10
+ SETL ATARI -10 10           : Setzt die Lifetime von ATARI 1-10 auf 10
+ SETL ATARI 1- #10 < DG2GGP  : Setzt die Lifetime der Mails von DG2GGP
+                               in ATARI auf LT 10
+
+Der Befehl beeinflusst nicht die Lifetime im S&F, sondern nur in der
+eigenen Box.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+LIST
+
+Der Befehl 'LIST' listet alle in einer Rubrik gespeicherten Nach-
+richten  auf. Ausgegeben werden Absender, Datum, Laenge und Titel
+der Nachricht.
+
+Syntax: 'LIST <rubrik> [<argument>] [<option>]'
+
+Optionen: '$+:'
+
+So erscheint z.B. nach der Eingabe von 'L DL1BHO' folgende Liste:
+
+Nr Call   Datum    Zeit   Bytes  Titel
+
+ 1 DL8BBO 26.10.86 17:25    123  *HALLO REINER
+ 2 DL8SS  27.10.86 08:55   1240  .BESUCH
+ 3 DF3AV  27.10.86 12:33   1750  +TESTFILE
+
+Hierbei wird angezeigt ob die Mails 'ungelesen  ' -> *
+                                    'gelesen    ' -> .
+                                    'beantwortet' -> +   sind.
+                                             
+Anhand  dieser  Liste  ist es dann leichter moeglich, gezielt mit
+z.B. 'R DL1BHO 1' die Meldung Nr.1 zu lesen oder mit 'E DL1BHO 2'
+die Meldung Nr. 2 zu loeschen.
+
+'LIST'  kann  auch mit einem Argument benutzt werden, um nur Aus-
+schnitte der gesamten Rubrik aufzulisten.
+
+ Beispiele:
+
+  L               listet alle neuen Nachrichten der aktuellen Rubrik
+  L DL1BHO        listet alle neuen Nachrichten an DL1BHO
+  L DL1BHO 4      listet Nachricht Nr. 4 an DL1BHO
+  L DL1BHO 4-     listet ab Nachricht Nr. 4 alle MSGs an DL1BHO
+  L DL1BHO -3     listet alle MSGs an DL1BHO bis einschl. Nr. 3
+  L DL1BHO 3-5    listet MSGs Nr. 3 bis Nr. 5 an DL1BHO
+  L DL1BHO +3     listet die neuesten drei Nachrichten an DL1BHO
+  L ATARI 1- +    listet ab Nachricht Nr. 1 alles aus ATARI mit An-
+                  gabe der Lifetime und Packrate des Files
+  L DG9FDA 30- :  listet ab Nachricht Nr.30 alle MSGs an DG9FDA mit
+                  Angabe des S&F-Status und, vielleicht interessan-
+                  ter, der Auslesecalls/anzahl eigener Mails
+  L ATARI 1- $    Gibt die Bulletin-ID aus
+
+
+ Beispiel:  L ATARI 1-5 +
+
+Info-File: ATARI
+  Nr. Von    @BBS   #LT Datum    Bytes Pack Betreff
+
+    1 DH4DAI ALLE    45 02.06.93  1324  63% Fehler bei Convdata
+    2 DH4DAI ALLE    42 02.06.93 10204  98% CONVDATA.P01/2
+    3 DH4DAI ALLE    42 02.06.93  5213  97% CONVDATA.P02/2
+    4 DH4DAI ALLE    41 02.06.93 13129 100% CONVDATA.LZH
+    5 DL8HBS ALLE    60 03.06.93  1947 100% DP: Tips zur v3.14
+
+
+Wie beim 'CHECK'-Befehl kann '$' als Option verwendet werden:
+
+ Beispiel:  L ATARI 1- $
+
+Anstatt des Datums wird dann die BULLID mit ausgegeben.
+
+
+Wird die Option ':' angegeben, bekommt man zusaetzliche Informationen
+zu den Mails:
+
+ Beispiel:  L ATARI 1-2 :
+
+Info-File: ATARI
+ Nr. Von    Rubrik   @BBS   #LT #TL RxFrom Lev Datum  Bytes Pack FCT  FLG T
+
+   1 DJ2TT  ATARI    DL     120   0 DB0CZ    1 02.08    504  74%   1   12 B
+     Portfolio
+     Read: 1
+     Flags: SFRX SFTX 
+
+Hier werden eine Vielzahl von Informationen ausgegeben darum werden
+diese hier kurz erklaert:
+
+   Von    ; Absendercall
+   Rubrik ; Rubrikenname
+   @BBS   ; Verteiler
+   #LT    ; Die gesetzte LT der Box
+   #TL    ; Die Original-LT
+   RxFrom ; Von welcher Box die Mail im Forward empfangen wurde
+   Lev    ; Zugriffslevel der Rubrik
+   Datum  ; Tag und Monat der Mail
+   Bytes  ; Groesse der Mail
+   Pack   ; Komprimierungsgrad der Mail (100% = noch nicht gepackt)
+   FCT    ; Forward Count (Anzahl Forwards)
+   FLG    ; Flags
+   T      ; (B)ulletin, (P)ersoenlich
+
+   Read   ; Anzahl der Auslesungen
+
+   Flags  ; Verschiedene Marker
+
+ Moegliche Flags
+ ---------------
+ SFWAIT         wartet auf Forward
+ PROPOSED       wurde vorgeschlagen, aber noch nicht bestaetigt
+ SFRX           wurde im Forward empfangen
+ SFTX           wurde mindestens einmal im Forward gesendet
+ SFERR          konnte nicht sauber geforwardet werden
+ SFNOFOUND      wegen fehlender Routing-Information nicht geforwardet
+ CUT            wurde im Monitormitschnitt empfangen
+ MINE           wurde lokal in der Box aufgegeben
+ BROADCAST      wurde bereits einmal im Broadcast gesendet
+ BROADCAST_RX   wurde im Broadcast empfangen
+ OWNHOLD        wird lokal als Kopie zurueckgehalten nach Forward
+ LOCALHOLD      steht im HOLD und stammt von einem lokalen User
+ SFHOLD         steht im HOLD, wurde im Forward empfangen
+ REJECTED       wurde durch die Forward-Box zurueckgewiesen
+ DOUBLE         wurde unlogischerweise als schon bekannt im Forward abgelehnt
+ OUTDATED       aelter als das max. Alter (Default 30 Tage) eingehender Mails
+ UNDEF          geht an eine undefinierte Zielrubrik
+ HIDDEN         ist geloescht
+
+
+Wird  keine Rubrik angegeben, dann wird die letzte verwendete Ru-
+brik benutzt.
+
+Stichwortsuche:
+
+An den Listbefehl kann ein Suchbegriff angehaengt werden. Es werden
+dann nur Mails gelistet, die im Absendercall oder Titel die gesuchten
+Zeichen enthalten. Dabei ist auch eine unscharfe Suche ("fuzzy search")
+moeglich.
+
+ Beispiele:
+
+ L IBM < cpu               Listet IBM-Mails mit 'cpu' im Titel oder Call
+ LIST PROPAG %60 sporadik  Listet alle Mails in PROPAG mit einem Begriff
+                           im Titel, der zu mindestens 60 % mit 'sporadik'
+                           uebereinstimmt.
+
+
+Nur als Sysop: 
+
+Die Forwardlisten fuer Usermails und Bulletins koennen mit den Zeichen
++ bzw. : vor den anderen Argumenten getrennt angezeigt werden. Beispiele:
+
+ L X + < DK0MNL   listet Usermails in der Forwardliste, die DK0MNL enthalten
+ L X : 1-         listet alle Bulletins in der Forwardliste
+
+---------------------------------------------------------------------------
+
+LOGINTIME
+
+Zeigt  das Datum der letzten Verbindung an. Mit 'LOG 17.04.' wird
+das Login-Datum auf den 17.04. des aktuellen Jahres 00:00 Uhr ge-
+setzt.  'LOG 17.04.93' setzt das Login-Datum auf diesen Tag 00:00
+Uhr.  Alle nach dem festgelegten Login-Datum eingetroffenen Nach-
+richten gelten als neue Nachrichten.
+
+---------------------------------------------------------------------------
+
+MAXREAD
+
+Hier kann fuer ein Call eine bestimmte Anzahl auszulesender Bytes
+pro Tag angegeben werden.
+
+ MAXREAD dl0xyz 10000    ; begrenzt das Auslesen auf 10kb/Tag
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+MBX
+
+Ist eine Nachricht mit einem falschen @mbx-Kenner versehen, kann man
+hiermit einen neuen vergeben: 'MBX ATARI 7-9 DB0ZZ'
+
+Wenn das @MBX ein Rufzeichen ist, wird der hierarchische Pfad aus
+den Informationen der Box hinzugefuegt. Dieser Pfad kann auch manuell
+hinzugefuegt werden:
+
+ MBX VK4XYZ 1-3 VK3BBS
+ MBX DL8HBS 1 DB0GR.#BLN.DEU.EU
+ MBX ATARI 1-4 ALL
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+MAILBEACON
+
+Mit diesem Kommando legt man fest, ob das eigene Rufzeichen in einer
+Mailbake der Mailbox erscheinen soll, wenn neue Nachrichten vorliegen.
+
+Beispiel:
+
+ MAILBEACON ON       eigenes Rufzeichen soll erscheinen
+ MAILBEACON OFF      eigenes Rufzeichen soll nicht erscheinen
+
+Voreinstellung ist MAILBEACON ON.
+
+Abfragen kann man die aktuelle Einstellung mit
+
+ MAILBEACON          es wird die momentane Einstellung angezeigt.
+ 
+Ein Sysop kann diesen Parameter auch fuer andere User einstellen:
+
+ MAILBEACON DL1XYZ ON
+
+----------------------------------------------------------------------------
+
+MD2 und MD5
+
+MD2 startet das Password-Login mit MD2-Verschluesselung.
+
+Es wird der "RSA Data Security, Inc. MD2 Message Digest Algorithm" verwendet.
+
+Wenn man ein Passwort mit dem PASSWORD-Befehl eingegeben hat, dann erzeugt
+der Befehl MD2 einen Zufalls-Prompt der DPBOX. Der Prompt wird etwa so
+aussehen:
+
+DB0XYZ> [12345abcdef]
+
+Das Terminal muss mit 16 Hex-Werten (max. 32 Zeichen) antworten, die durch
+Anwendung des MD2-Algorithmus auf die 10 zufaellig erzeugten Buchstaben
+und den Passwort-String berechnet werden.
+
+MD5 funktioniert analog zu MD2, aber es wird der "RSA Data Security, Inc. MD5
+Message Digest Algorithm" verwendet.
+
+Die Password-Verfahren MD2 und MD5 sind die sichersten der vier moeglichen
+Verfahren, welche in der DPbox verwendet werden (PRIV, SYS, MD2, MD5),
+sie werden aber von den wenigsten Terminal-Programmen unterstuetzt.
+
+Sollte Ihr Terminal-Programm dies nicht unterstuetzen, dann sollte das 
+SYS-Verfahren verwendet werden (siehe HELP SYS und HELP PASSWORD)
+oder ein externes Programm wie DPMD5 benutzt werden (siehe Rubrik DPTNT).
+
+Hinweise zum User-S&F hierzu siehe unter HELP MD2SF oder HELP MD5SF
+
+----------------------------------------------------------------------------
+
+MD2SF und MD5SF
+
+Der Befehl MD2SF aktiviert den MD2 Password-Schutz fuer S&F-Verbindungen.
+
+Es wird der "RSA Data Security, Inc. MD2 Message Digest Algorithm." verwendet.
+
+Will ein User das MD2-Verfahren fuer den User-SF verwenden und nicht
+eines der anderen, so gibt er folgendes ein:
+
+ MD2SF ON
+
+Es wird nun MD2 benutzt.
+
+Ein Sysop aendert den MD2SF-Eintrag fuer SF-Stationen mit:
+
+ MD2SF DB0XYZ ON
+
+Der Login-Prompt von DPBOX im S&F aendert sich nun in:
+
+[DP-5.00-AB1D1FHMRW$] [12345abcdef]
+
+Der Algorithmus wurde schon beim MD2-Befehl beschrieben.
+Die Logon-Antwort des connectenden Forward-Partners sieht so aus:
+
+[XYZ-1.00-XYZ$] 1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d
+
+(das Ergebnis der MD2-Verschluesselung).
+
+Zum Wechsel auf das MD5-Verfahren gibt man MD5SF statt MD2SF ein.
+
+---------------------------------------------------------------------------
+
+MSG
+
+Mit  'MSG  CALL  <Text>' kann man einen User einen Text uebermit-
+teln.
+
+Anstelle des Calls kann auch die aktuelle Portnummer des Users
+angegeben werden. Man erhaelt sie mit dem USAGE-Befehl und kann so
+etwas schneller eine MSG verschicken.
+
+ Beispiel:
+
+ MSG 20 Moin Joachim, DPbox 5.07 tut UFB!
+
+Hier besteht aber die "Gefahr", dass die Mail den gewuenschten User
+nicht mehr erreicht, weil dieser zwischenzeitlich ausgeloggt ist.
+
+Ist der User gerade am Senden eines Textes oder mit umfangreichem
+Auslesen beschaeftigt, dann wechselt die Bestaetigung fuer dieses
+Kommando von "MSG OK FOR ..." auf "DELAYED MSG OK FOR ...", um
+anzuzeigen, dass der Adressat nicht sofort antworten kann.
+
+Beginnt  der  Text mit einem '&', und geht der Text an das eigene
+Call,  dann  bekommt man keine Bestaetigung (brauchen wohl einige
+Mailboxmelker...).
+
+Ein Sysop kann auch eine Nachricht an alle senden:
+
+ MSG ALL Die Box wird in 5 Minuten abgeschaltet!
+
+---------------------------------------------------------------------------
+
+MYBBS oder SETUSR
+
+Mit  diesem Befehl wird der Mailbox diejenige Mailbox mitgeteilt,
+an die man die an das eigene Rufzeichen adressierten Nachrichten
+weitergeleitet wissen moechte.
+
+ Beispiel:
+
+ MY DK0MAV     das MyBBS-Call DK0MAV wird gespeichert.
+
+Werden  Nachrichten  an  das eigene  Call abgelegt, so werden sie
+automatisch  in  die Store & Forward-Liste eingetragen und an die
+per MYBBS gespeicherte Box geforwarded.
+
+Erst nach einmaliger Benutzung des MYBBS-Befehls wird die Auffor-
+derung  beim Login zur Benutzung dieses Befehls unterdrueckt, da-
+her  sollte  man  den  Befehl auch benutzen, wenn dies die lokale
+Mailbox ist.
+
+Die  dpbox  fordert den Benutzer alle drei Monate zu einer Neuan-
+gabe  der  Heimatmailbox auf. Dies ist notwendig, um die Informa-
+tionen im Netz auf demselben Stand zu halten.  Es kommen staendig
+neue  Mailboxen hinzu, die ansonsten Ihr MYBBS nicht kennen wuer-
+den.
+
+ACHTUNG!
+Das  eingegebene Rufzeichen der Heimatmailbox wird automatisch an
+alle anderen Mailboxen uebertragen (weltweit!). Der zeitlich neu-
+este Eintrag bleibt dann auf saemtlichen Mailboxen bestehen.
+
+Mit  der Option '-' kann das Weiterleiten an andere Boxen verhin-
+dert werden. Dies ist im Normalfall aber NICHT sinnvoll!
+
+ Beispiel:  MY DL8HBS -
+
+ *****************************************************************
+ ***                                                           ***
+ *** WICHTIG !! Es wird immer wieder das EIGENE Rufzeichen als ***
+ *** MyBBS angegeben. Dies ist NICHT richtig. Da Ihr keine     ***
+ *** Mailbox seid, die im Netz bekannt ist, sind Eure Mails    ***
+ *** unzustellbar. Daher nur Mailbox-Calls verwenden!! Danke!  ***
+ ***                                                           ***
+ *****************************************************************
+
+Als Sysop kann man mit 'MY DL8HBS DB0GR' fuer den Benutzer DL8HBS das
+MyBBS lokal setzen. Mit 'MY DL8HBS DB0GR 10' bekommt DL8HBS zusaetzlich den
+Level 10 in der Box. Mit 'MY DL8HBS DB0GR +' wird die Eingabe auch an
+andere Mailboxen weitergeleitet.
+
+---------------------------------------------------------------------------
+
+NAME
+
+Mit diesem Kommando kann der Mailbox der eigene Name mitgeteilt werden.
+
+Erst nach einmaliger Benutzung des NAME-Befehls wird die Aufforderung
+beim Login zur Benutzung dieses Befehls unterdrueckt.
+
+ Syntax:
+        N <CR>  : Der Name wird interaktiv angefordert und anschliessend
+                  gespeichert.
+
+        N Erwin : der Name Erwin wird sofort gespeichert.
+
+
+Die Laenge des einzugebenden Namens ist auf 80 Zeichen begrenzt, er kann
+auch aus mehreren Woertern bestehen.
+
+Als Sysop kann man mit 'NA DL8HBS Joachim' fuer den Benutzer DL8HBS den
+Namen auf 'Joachim' setzen.
+
+---------------------------------------------------------------------------
+
+NEXT
+
+Mit  NEXT  kann man den jeweils auf den letzten gelesenen Eintrag
+folgenden lesen.
+
+---------------------------------------------------------------------------
+
+NOTBOARD
+
+Dieser Befehl bewirkt, dass die Box beim 'CHECK'-Befehl die ange-
+gebenen  Rubriken  nicht  mit ausgibt. z.B. wollen Sie die Boards
+WINDOWS und SOFTWARE nicht sehen:
+
+'NOTBOARD WINDOWS,SOFTWARE'     (getrennt  mit Komma ohne Leer-
+                                zeichen!)
+
+Eine Besonderheit gilt dem "virtuellen" Brettnamen "TEMP". Wird
+dieser angegeben, koennen damit die undefinierten Rubriken
+(klein geschrieben) ausgeblendet werden!
+
+Durch  die  Angabe  eines  Verteilers (z.B. @DL oder @EU) koennen
+gezielt Mails mit den angegebenen Verteilern ausgeblendet werden
+(UND-Verknuepfung  mit eventl. angegebenen Brettern!).
+
+Um Mails bestimmter Absender nicht in der Checkliste angezeigt zu
+bekommen, gibt man deren Rufzeichen hinter einem '&' an
+(z.B. NOTBOARD &P1RAT).
+
+Durch  die  Eingabe  des Befehls ohne Angabe von Rubriknamen wird
+die Auswahl geloescht.
+
+Sollten  alle anzugebenen Bretter nicht in eine Eingabezeile pas-
+sen, kann man den Befehl mehrmals anwenden, jede neue Angabe wird
+den bereits bestehenden hinzugefuegt.
+
+Mit 'U <CALL>' kann man sich die aktuelle Einstellung zeigen las-
+sen.
+
+Das  Gegenteil zu diesem Befehl ist 'WANTBOARD' (siehe unter die-
+sem). Die maximale Anzahl der Zeichen ist auf 997 begrenzt.
+
+Vom Sysop koennen Rubriken angegeben werden, welche nicht
+ausgeblendet werden koennen! Z.B. lokale Inforubriken.
+
+---------------------------------------------------------------------------
+
+PASSWORD
+
+Mit  diesem  Befehl  vereinbart man ein Password, auf welches bei
+der SYSTEM-Routine zurueckgegriffen wird.
+
+ Beispiel:
+
+ PASS merg78239fckaklakasfEJHGh235jwegu23f4zogfwJHG
+
+Das Passwort muss allerdings mindestens 21  Buchstaben lang sein,
+um aktiviert zu werden.
+
+Mit  der  Eingabe von 'PASSWORD' ohne weitere Angaben loescht man
+sein Passwort, der Passwortschutz ist dann aufgehoben. Natuerlich
+kann man das Passwort erst loeschen, nachdem man sich unter Pass-
+wortschutz eingeloggt hat.
+
+Um  die Eingabe des Passwortes zu verschleiern, kann es in mehre-
+ren  Schritten  eingeben werden, z.B. an verschiedenen Tagen oder
+ueber  verschiedene  Digipeater. Jede auf 'PASS' folgende Eingabe
+wird  an  den bereits uebermittelten Teil angehaengt. Die Eingabe
+soll  nicht laenger als 80 Zeichen sein. Nach Empfang von 21 Zei-
+chen ist das Passwort aktiv.
+
+Nach  Aktivierung  besteht  fuer  das eigene Rufzeichen Passwort-
+schutz, Nachrichten koennen nun erst gesendet oder geloescht wer-
+den nach einem erfolgreichen Einloggen mit Passwortschutz.
+
+Beachten Sie bitte, dass Nachrichten, die von Usern ohne Passwort
+eingegeben werden, fuer die definierte Zeit HOLD-DELAY angehalten
+werden. In dieser Zeit hat der SysOp die  Moeglichkeit, die Nach-
+richten zu kontrollieren.
+
+
+Als Sysop kann man mit 'PASS DL8HBS merg78239fckaklakasf' das
+Passwort fuer andere Benutzer setzen. Zum Einlesen mehrerer Passwoerter
+aus einer Datei kann der Befehl IMPORT PW benutzt werden.
+
+Die Eingabe und das Loeschen von Passwoertern wird in der
+Datei PROFILE.BOX registriert.
+
+Zur Berechnung der Passwort-Antwort seitens des Benutzers siehe
+HELP SYSTEM, HELP MD2 und HELP MD5.
+
+---------------------------------------------------------------------------
+
+PING
+
+Mit PING wird eine Kurz-Nachricht an eine andere Mailbox erzeugt, um
+die Verfuegbarkeit von Forward-Routen zu testen. Die Mail hat das Format
+
+SP PING @ <BBS-Rufzeichen>
+
+und enthaelt am Schluss den String /ack (Abruf einer Empfangsbestaetigung)
+
+   Syntax:   PING <Ziel-BBS>
+
+   Beispiel: PING IK2HDG
+
+Der Befehl funktioniert nur, wenn als Argument eine andere Mailbox
+angegeben ist, die dem internen Router der DPBOX bekannt ist (siehe
+Befehl BBS).
+
+Als Antwort erhaelt von der Ziel-Mailbox je nach deren Konfiguration eine
+Empfangsbestaetigung und/oder den Forward-Header der eigenen Ping-Mail.
+
+---------------------------------------------------------------------------
+
+PREFIX
+
+Suche nach Prefix-Bereichen, Entfernungs-Berechnungen, Richtung eines
+Calls/Prefixes, Stations-Informationen zu automatisch arbeitenden
+Stationen, welche im File system/digimap.stn gefunden werden.
+
+   Syntax: PREFIX <CALL|PREFIX> [<own WWLOC>]
+
+ Wird ein Call in der Datei system/digimap.stn (sofern installiert)
+ gefunden, so erhaelt man zusaetzliche Informationen zu der Station
+ (aehnlich STNINFO). Es wird daher auf den gleichen Datenbestand
+ wie bei Digiinfo/STNINFO zugegriffen.
+
+  z.B.  pref hb9eas   : Gibt alle bekannten Informationen zum Digi
+                        HB9EAS aus.
+        pref oe9      : Ausgabe des Prefix-Area, Continent, WAZ-Zone, ITU
+
+---------------------------------------------------------------------------
+
+PRIV
+
+Password Login Kommando. Ein Passwort, das mit dem Befehl PWGEN erzeugt
+wurde (1620 Zufallszeichen), wird mit den 4 Zeichen verglichen, die
+dem Befehl PRIV folgen. Das komplette Passwort muss in box/sf/<call>.pwd
+gespeichert sein. Achtung: eine solche Einstellung kann nur der Sysop
+vornehmen.
+
+Die 4 Zeichen muessen von Ihrem User-Terminal aus dem aktuellen Login-
+Datum berechnet werden. Diese Information wird aus dem Connect-Text
+der Box entnommen und setzt spezielle Terminal-Programme voraus. Der
+Algorithmus zur Berechnung ist der gleiche wie beim DieBox-Passwort.
+Terminal-Programme wie DP, TNT, GP, THP, WINGT, SP, ... koennen
+verwendet werden.
+
+Nach einem korrekten Login erhaelt der Benutzer den Status, wie er
+mit der Einstellung in PWMODE festgelegt ist.
+
+Wenn Sie Probleme haben, diese Passwortroutine zu verwenden, dann koennen
+Sie auch das SYSTEM-Kommando benutzen. Das Passwort wird dort mit
+PASSWORD eingegeben. Die erreichbare Privilegierung ist die gleiche.
+
+Grundsaetzlich ist der PRIV-Login etwas einfacher und schneller als der
+SYS-Login, aber der SYS-Login ist etwas sicherer, da dort die Antwort
+in einem Zufalls-String versteckt werden kann.
+
+Benutzer sollten typischerweise diesen Passwortschutz nicht waeh-
+len, sondern die Befehle PASSWORD zusammen mit SYSTEM, MD2 oder MD5.
+
+---------------------------------------------------------------------------
+
+PROFILE
+
+Mit diesem Befehl wird die Datei PROFILE.BOX ausgegeben. In dieser Datei
+werden wichtige Systeminformationen gespeichert. Ein Sysop sollte
+diesen Befehl mindestens einmal pro Tag ausfuehren, um ueber den Zustand
+seiner Box informiert zu sein.
+
+Bei GARBAGE werden die Informationen in die Nachricht PROFILE in Rubrik Y
+uebernommen.
+
+Weiterhin ist die Datei Profile eine gute Moeglichkeit fuer die Sysops
+einer Box, miteinander zu kommunizieren:
+
+ PROFILE Habe die Mails an DL8HBS geloescht! (warum denn :)
+
+speichert den Text in der Datei PROFILE.BOX, so dass jeder Sysop diesen
+dann mit dem Befehl PROFILE lesen kann.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+PROMPT
+
+Mit diesem Befehl kann man den System-Prompt aendern. Der Standard-Prompt
+hat folgendes Format:
+
+ (ATARI) DL8HBS de DB0GR>
+
+Um einen neuen Prompt zu setzen, koennen Sie eingeben:
+
+ PROMPT Hi Joachim>
+
+und Ihr Prompt aendert sich in:
+
+ Hi Joachim>   (nicht sehr sinnvoll.. hi)
+
+ PROMPT ohne Eingabe setzt die Standardeinstellung.
+
+Um mit diesem Befehl sinnvolle Einstellungen vornehmen zu koennen,
+existieren folgende Makro-Befehle:
+
+ %7   CTRL-G (Klingel)
+ %8   TAB
+ %a   aktuelle Auslastung der Box
+ %b   aktive Rubrik
+ %c   Ihr eigenes Rufzeichen
+ %d   aktuelles Datum
+ %e   CPU-Typ
+ %f   bogomips (Geschwindigkeitsindex)
+ %h   zwei auf %h folgenden Hex-Zeichen werden in ASCII gewandelt
+ %i   Login-datum
+ %l   letztes Login-Datum
+ %m   das Box-Rufzeichen
+ %n   Ihr Name
+ %o   Anzahl der aktuellen Benutzer der Box
+ %p   benoetigte CPU-Zeit seit dem Login
+ %r   Zeilenumbruch
+ %s   Box-Runtime (Tage, Stunden, Minuten)
+ %t   aktuelle Zeit (mit Sekunden)
+ %u   aktuelle Zeit (ohne Sekunden)
+ %v   Versionsnummer der Box-Software
+ %w   gesendete/empfangene kBytes des Users
+ %x   Box-Runtime (nur Tage)
+ %z   letzter verwendeter Befehl
+ %%   das Zeichen %
+
+Um den Standard-Prompt zu definieren, lautet der Befehl also:
+
+ PROMPT (%b) %c de %m>
+
+Denken Sie daran, dass von vielen Terminal-Programmen der Standard-Prompt
+als Erkennung des Endes einer Nachricht benutzt wird. Erweitern Sie also
+nur den Standard-Prompt. Z.B.:
+
+ PROMPT (%b) %c de %m> (%o/%a)
+
+---------------------------------------------------------------------------
+
+PROTO
+
+Dieser Befehl oeffnet ein Protokoll-File, in dem alle Aktionen eines
+bestimmten Benutzers registriert werden. Dieses File wird dann bei
+GARBAGE in die Box (Rubrik Y) importiert.
+
+ PROTO + DL8HBS   aktiviert ein Protokoll-File ueber DL8HBS
+
+ PROTO - DL8HBS   deaktiviert das Protokollieren der Aktionen von DL8HBS
+
+ PROTO            gibt eine Liste der derzeit aktiven Proto-Calls
+
+ PROTO OFF        deaktiviert alle Protokoll-Files
+
+Die Einstellungen bleiben permanent gespeichert, also auch nach Neustart
+der Box.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+PWGEN
+
+Mit 'PWGEN DB0ZZZ +' wird ein 1620 Bytes grosses Password fuer
+den PRIV-Befehl erzeugt und in box/db0zzz.pwd abgelegt. Gleichzeitig wird
+dieses Password als MYCALL.PWD fuer DB0ZZZ in die Box importiert und
+geforwardet. Nachdem das PW bei DB0ZZZ angekommen ist, aktiviert man den
+PW-Schutz, indem man das db0zzz.pwd in den box/sf/ - Ordner verschiebt.
+DB0ZZZ muss das mit dem MYCALL.PWD natuerlich analog machen. Fortan laeuft
+der Login mit dem ueblichen DieBox-Schutzmechanismus.
+
+Ist DB0ZZZ nur im ASCII-S&F zu erreichen, so muss man sich einige Gedanken
+um die Abhoersicherheit bei der Passworduebertragung machen. Am besten
+verschickt man das File dann per Post. Um das Importieren und Forwarden zu
+unterbinden, laesst man einfach das '+' im PWGEN - Befehl aus.
+
+Uebrigens kann man auch einen kompletten Pfadnamen bei PWGEN angeben,
+das '+' wird in dem Fall komplett ignoriert.
+
+Da DP nichtkonfigurierten User-S&F zulaesst, existiert eine zweite
+Moeglichkeit, passwortgesicherten S&F zu ermoeglichen. Wenn der User
+ein Passwort mit Befehl PASSWORD eingegeben hat, dann arbeitet der
+User-S&F mit diesem Password genauso wie bei dem Befehl SYSTEM.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+PWMODE
+
+Dieser Befehl legt fest, welche Privilegien ein User hat, nachdem er
+die Passwort-Routine durchlaufen hat.
+
+ 0    Der User kann ueber den Modem-Port connecten, nicht schreiben.
+      Fuer Linux existiert noch kein spezieller Telefon-Modem-Treiber.
+
+ 1    Der User hat Lese- und Schreibrechte in der Box.
+      Schreibende Zugriffe (SEND, ERASE) ueber den Radio-Port sind nicht
+      moeglich, falls der Schalter BOX_PW ("Send/Erase nur mit PW")
+      in der Box auf 'ON' gesetzt ist.
+
+ 2    Wie 1, aber der User muss vor schreibenden Zugriffen immer sein
+      Passwort eingegeben haben, egal wie der Schalter BOX_PW steht.
+
+ 8    Gibt den Board-Sysop-Mode frei. Dieser PWMODE wurde eingefuehrt,
+      um bei Boxen mit grossem Datenbestand die Pflege auf mehrerer OM
+      verteilen zu koennen. Board-Sysops sind keine "echten" Sysops.
+      Sie koennen User-Befehle eingeben und sind zusaetzlich berechtigt,
+      in den in der Datei PRVCALLS.BOX angegebenen Rubriken die Sysop-
+      Befehle ERASE (fuer alle Mails), TRANSFER und LIFETIME (fuer alle
+      Mails) zu benutzen.
+
+ 9    Gleich wie 8, aber der Board-Sysop wird gegen Call-Missbrauch
+      durch die Notwendigkeit der Privilegierung bei write/erase-
+      Befehlen geschuetzt. (Kombination von PWMODE 2 und 8)
+
+ 10   Voller Sysopzugriff ueber Modem- oder HF-Port.
+
+ 11   Ein PWMODE von 11 bedeutet, dass der User nach Eingabe des richtigen
+      Passwortes Sysop ist. Vor Eingabe hat er keinen Schreib/Loeschzugriff,
+      auch nicht auf 'seine' Files. Dies ist also ein Schutz gegen
+      Missbrauch des Sysopcalls. (Kombination von PWMODE 2 und 10).
+
+Wenn ein User einen erhoehten Userlevel besitzt, so kann er von diesem erst
+nach Eingabe des richtigen Passwortes Gebrauch machen, vorher ist er ein
+normaler User mit Level 1. Ausnahme: der PWMODE steht auf 0.
+
+
+ Beispiel: PWM DL9XYZ 9
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+QRG
+
+Gibt die QRGs, die bei CONNECT eingesetzt werden koennen, aus
+(also die definierten und geoeffneten Interfaces zu einem oder mehreren
+TNTs).
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+QTHLOC
+
+Berechnet Position, Entfernung zweier Locators zueinander, Richtung
+des WW-Locators.
+
+ QTHLOC <WW-LOC1> [<WW-LOC2>]
+
+ Beispiel:  QTH jn48fb jn49fb
+
+---------------------------------------------------------------------------
+
+QUIT oder EXIT
+
+Mit QUIT oder EXIT kann die Verbindung zur Mailbox beendet werden.
+
+Das kann auch einfach mit dem Abbrechen der Verbindung geschehen,
+allerdings hat QUIT zwei Vorteile:
+
+ 1. bei QUIT erhaelt man noch eine Schlussnachricht
+
+ 2. bei QUIT wird das letzte Login-Datum gesetzt. Disconnected man
+    nur, erhaelt man als letztes Login-Datum das Datum der Sitzung,
+    bei der man zuletzt Quit eingegeben hat. Das kann besonders
+    sinnvoll fuer die Befehle sein, die sich auf das letzte Login-Datum
+    beziehen.
+
+
+Wuenscht man keine Aktualisierung des Login-Datums, ABBRUCH oder
+BYE eingeben. Benutzer  sollten  ueblicherweise  eine Mailboxsitzung
+mit 'QUIT' beenden.
+
+Bei Eingabe von 'QUIT R' wird das Login-Datum aktualisiert, aber die
+Verbindung zur Mailbox nicht abgebrochen.
+
+
+---------------------------------------------------------------------------
+
+READ
+
+Der  Befehl 'READ' dient zum Auslesen von Nachrichten. Es koennen
+auch  ganze Bloecke mehrerer aufeinanderfolgender Nachrichten ei-
+ner Rubrik ausgelesen werden. Die fuer das Auslesen als  Argument
+anzugebende   Nachrichtennummer  erhaelt  man  durch  den  Befehl
+'LIST'.
+
+Syntax: READ [<rubrik>] [<argument>] [<option>]
+
+Optionen: '+:'
+
+ Beispiele:
+
+ R DF3AV           Auslesen  aller neuen Eintraege fuer DF3AV
+ R ALLE 3          Auslesen des Eintrages Nr. 3, Rubrik ALLE
+ R DF3AV -3        Auslesen der Eintraege 1 - 3 fuer DF3AV
+ R TNC2 4-         Auslesen ab Eintrag Nr. 4 der Rubrik TNC2
+ R DF3AV 2-4       Auslesen der Eintraege 2 - 4 fuer DF3AV
+ R ATARI < DL8HBS  Auslesen aller Eintraege unter Atari, die von
+                   DL8HBS verfasst wurden;
+ R ATARI < DP      Auslesen aller Eintraege unter Atari, die im
+                   Titel das Stichwort "DP" haben;
+ R ATARI < $DB0GR  Auslesen  aller  Eintraege unter Atari, deren
+                   BID "DB0GR" enthaelt.
+
+Das  Stichwort  darf,  wie  auch beim 'CHECK'- und 'LIST'-Befehl,
+den Joker '*' enthalten. Ein '*' ersetzt eine beliebige Folge von
+Zeichen. Beispiel:
+
+ Beispiel:  R YAESU < FT*757
+
+liest  alle  Eintraege  der  Rubrik  YAESU,  in  deren Titel z.B.
+FT757, FT-757 FT 757 vorkommt.
+
+Wird  keine  Rubrik  angegeben, dann wird die  zuletzt angegebene
+Rubrik ausgelesen.
+
+Bei  diesen  Anwendungen des READ-Kommandos werden nur verkuerzte
+Store & Forward-Header ausgegeben. Um wieder die volle Laenge der
+Header zu erreichen, ist dem jeweiligen READ-Kommando ein '+' zu-
+zufuegen, z.B.
+
+ Beispiel:  READ DF3AV 2-11 +
+
+Sysops koennen die Option ':' verwenden. Damit werden im Mail-Header
+alle Rufzeichen angegeben, die diese Nachricht gelesen haben.
+
+---------------------------------------------------------------------------
+
+READLOCK
+
+
+READLOCK kennt fuenf unterschiedliche Parameter:
+
+ READLOCK 0  Jeder darf die Userfiles des Users, der dieses Kommando
+             angewendet hat, lesen.
+
+ READLOCK 1  Nur Absender oder Empfaenger duerfen die Files des Users lesen,
+             bis er selber das File einmal gelesen hat (und nicht geloescht
+             hat, denn das ist der tiefere Hintergrund des Kommandos)
+
+ READLOCK 2  Nur Absender oder Empfaenger duerfen die Files des Users lesen,
+             egal wie oft derselbe seine Mails schon gelesen hat.
+
+ READLOCK 3  Nur Absender oder Empfaenger duerfen die Files des Users lesen,
+             bis er selber das File einmal gelesen hat und der Ausleser
+             mit Passwort eingeloggt ist.
+
+ READLOCK 4  Nur Absender oder Empfaenger duerfen die Files des Users lesen,
+             egal wie oft derselbe seine Mails schon gelesen hat. Der
+             Ausleser muss mit Passwort eingeloggt sein.
+
+---------------------------------------------------------------------------
+
+REBUILD
+
+Mit dem Befehl wird eine neue BID - Datei aufgebaut. Bei diesem
+Vorgang werden alle BIDs (Bulletin-IDs) und MIDs (Message-IDs)
+geloescht und neu aus den aktuellen Datenbestaenden der Box
+eingelesen. Das hat zur Folge, dass vorher geloeschte
+Nachrichten wieder in die Mailbox kommen koennen, da das
+Bulletin nicht mehr als bereits empfangen markiert ist.
+
+Fuer normalen Mailboxbetrieb ist dieser Befehl nicht sehr sinnvoll.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+RELEASE oder FREE
+
+Eine Nachricht einer Rubrik, die durch den Hold-Mechanismus
+gestoppt wurde, wird mit diesem Befehl fuer den S&F freigegeben.
+Dies geschieht auch nach Ablauf des Timers fuer HOLD. Wenn eine
+lange HOLD-Zeit eingestellt wurde, dann sollte der Sysop taeglich
+die gestoppten Nachrichten begutachten und freigeben.
+
+ Beispiel:
+
+ RELEASE ALL 17
+ REL DIGI 12-14
+ FREE ATARI 9
+
+Gestoppte Nachrichten werden mit dem Befehl HOLD angezeigt.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+RELOAD
+
+Haben Sie waehrend des Programmlaufes Systemdateien der Box ediert, so sind
+die Aenderungen erst nach Eingabe von RELOAD wirksam. Zusaetzlich wird
+der Speicher des Systems reorganisiert. Dies kann sinnvoll sein, um
+die Fragmentierung des RAM aufzuheben.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+REPLY
+
+Hiermit  koennen  Sie  direkt  auf die zuletzt gelesene Nachricht
+antworten.  Der  Titel  ist dann RE:<Originaltitel>, Ziel ist der
+Absender der Nachricht.
+
+Alternativ kann auch eine Nachricht angegeben werden, auf die an-
+stelle der zuletzt gelesenen geantwortet werden soll.
+
+ Beispiel:
+
+ REPLY ATARI 17
+
+Die Zieladresse (@BBS) wird zuerst in dem DP-internen MYBBS-Spei-
+cher  gesucht. Erst wenn dort kein Eintrag fuer das Rufzeichen zu
+finden  ist,  wird der letzte Eintrag im Mailheader der gelesenen
+Nachricht verwendet.
+
+---------------------------------------------------------------------------
+
+ROUTES
+
+Mit dem ROUTES-Befehl werden Informationen des 'Active Routing' abgefragt.
+Wenn es vom Sysop eingeschaltet wurde, ermittelt es die guenstigsten Routen
+fuer die Weiterleitung von P-Mails aus Qualitaetsmessungen mit den SF-
+Partnern und aus Broadcast-Informationen anderer BBSs mit Active Routing.
+
+   Syntax:   ROUTES
+             ROUTES <BBS-Call>
+             ROUTES TABLE
+
+   Beispiel: ROUTES DB0SIF
+
+Ohne Angabe von Parametern wird die komplette Routing-Tabelle des Active
+Routings ausgegeben. Fuer jedes Ziel wird die Qualitaet (sec./100 kByte) und
+der SF-Partner ausgegeben, ueber den das Ziel geroutet wird. Die angegebenen
+Qualitaeten wurden 5 bis 10 Stunden frueher ermittelt.
+
+Mit Angabe eines BBS-Calls wird eine Graphik mit dem zeitlichen Verlauf
+der aktuellen Qualitaeten zu dieser Box ausgegeben.
+
+Mit dem Parameter TABLE erhaelt man eine Uebersicht ueber die Qualitaets-
+messungen zu den lokalen SF-Nachbarn waehrend der letzten 5 Stunden.
+Abkuerzungen:
+
+ r: SF-Partner, der das Active Routing benutzt und Broadcasts mit
+    Routinginformationen in der Rubrik W weiter gibt.
+ p: Phantom-Partner. Dieses BBS unterstuetzt kein Active Routing, wird
+    aber als direkter Nachbar in die Routingtabelle aufgenommen. Aus
+    den eigenen Qualitaetsmessungen werden "Phantom"-Broadcasts fuer
+    dieses BBS an andere Boxen mit Active Routing erzeugt.
+
+---------------------------------------------------------------------------
+
+SELECTION
+
+Dieser Befehl ist fuer geuebte User oder Sysops.. hi.
+
+SELECTION setzt voruebergehend eine interne Variable, die die Ausgabe
+bei den Befehlen LIST und CHECK steuert. Moegliche Optionen sind:
+
+ SFWAIT         wartet auf Forward
+ PROPOSED       wurde vorgeschlagen, aber noch nicht bestaetigt
+ SFRX           wurde im Forward empfangen
+ SFTX           wurde mindestens einmal im Forward gesendet
+ SFERR          konnte nicht sauber geforwardet werden
+ SFNOFOUND      wegen fehlender Routing-Information nicht geforwardet
+ CUT            wurde im Monitormitschnitt empfangen
+ MINE           wurde lokal in der Box aufgegeben
+ BROADCAST      wurde bereits einmal im Broadcast gesendet
+ BROADCAST_RX   wurde im Broadcast empfangen
+ OWNHOLD        wird lokal als Kopie zurueckgehalten nach Forward
+ LOCALHOLD      steht im HOLD und stammt von einem lokalen User
+ SFHOLD         steht im HOLD, wurde im Forward empfangen
+ REJECTED       wurde durch die Forward-Box zurueckgewiesen
+ DOUBLE         wurde unlogischerweise als schon bekannt im Forward abgelehnt
+ OUTDATED       aelter als das max. Alter (Default 30 Tage) eingehender Mails
+ UNDEF          geht an eine undefinierte Zielrubrik
+ HIDDEN         ist geloescht
+
+ SELECTION SFWAIT
+
+ gibt nur Nachrichten aus, die noch auf Vermittlung im SF warten.
+
+ SELECT SFWAIT,SFERR
+
+ gibt nur Nachrichten aus, die auf Vermittlung im SF warten und solche,
+ bei denen eine Forward-Fehler aufgetreten ist.
+
+ SELECT BROAD
+
+ waehlt BROADCAST und BROADCAST_RX (es sind also auch Namensabkuerzungen
+ erlaubt)
+
+ SELECT
+
+ ohne Parameter schaltet die Funktionen von SELECTION aus.
+
+---------------------------------------------------------------------------
+
+SEND
+
+Mit  dem  Befehl 'SEND' werden Nachrichten in der Mailbox gespei-
+chert  und  ggf. weitergeschickt. Die Mailbox erkennt automatisch
+den  Unterschied  zwischen  persoenlichen Nachrichten (USER-Teil)
+und Bulletins  in  Rubriken (INFO-Teil), und es ist deshalb keine
+zusaetzliche Eingabe notwendig. Man kann aber, wenn man will, die
+interne  Unterscheidung  durch die Box unterdruecken mit der aus-
+druecklichen  Angabe  durch  'SB' (send bulletin) oder 'SP' (send
+private) anstelle 'SEND'.
+
+Syntax: SEND [<Call|Rubrik>] [<@BBS>] [<$BID>] [<#Lifetime>] [<Titel>]
+
+Die  $BID-,  #Lifetime-,  <Sender- und @BBS-Felder sind optional.
+Bei fehlenden Angaben wird @BBS  wird  auf das Rufzeichen  dieser
+Mailbox  gesetzt  (die  Nachricht wird nicht geforwardet),  $BID
+(Bulletin/Message ID) wird automatisch erzeugt,  #Lifetime  wird
+auf 0  (unendlich)  gesetzt.  Ist der Empfaenger  ein Rufzeichen,
+dann schaut die Box in den MYBBS-Informationen nach, um die Ziel-
+Mailbox zu ermitteln.
+
+Nachrichten koennen an ein bestimmtes Rufzeichen oder an eine Ru-
+brik  der Mailbox gerichtet werden. Ferner kann angegeben werden,
+ob und wohin die Nachricht automatisch weitergeleitet werden soll
+(Verfahren  STORE & FORWARD). Jede Nachricht muss mit einem Titel
+gekennzeichnet  werden,  dessen Laenge  80 Zeichen  nicht  ueber-
+schreiten  darf.  Wird der Titel bei der Eingabe des SEND-Befehls
+nicht mit angegeben, so fordert ihn die Box anschliessend an. Die
+Nachricht  muss  mit 'CTRL-Z' oder der Zeichenkette '***END' oder
+'NNNN' abgeschlossen werden.  Diese Zeichen koennen an beliebiger
+Stelle  in  der Zeile stehen (aber alles was dahinter steht, wird
+ignoriert).  Ein  Abschluss  kann  auch mit '/EX' am Anfang einer
+Zeile erfolgen. Die Mailbox bestaetigt daraufhin die erfolgreiche
+Abspeicherung. Die Eingabe kann mit 'CTRL-X' abgebrochen werden.
+
+ Beispiele:
+
+ S DF3AV             Nachricht  an  DF3AV, der Titel wird automa-
+                     tisch angefordert.  Ist  das  Rufzeichen  im
+                     Userverzeichnis mit eine anderen Heimatmail-
+                     box  eingetragen,  erfolgt automatische Wei-
+                     terleitung an diese Box.
+                     Ist  keine  Heimatmailbox  bekannt, wird die
+                     Mailbox die Annahme der Nachricht verweigern.
+                     In  diesem  Fall  kann  man, sofern man eine
+                     gueltige  Heimatmailbox des Empfaengers  von
+                     diesem  mitgeteilt  bekommen  hat,  diese im
+                     SEND-Befehl mit angeben:
+
+ S DF3AV @ DK0MAV    Nachricht an DF3AV mit S&F-Weiterleitung  an
+                     die Box DK0MAV,  der Titel  wird automatisch
+                     angefordert.
+
+ S DF3AY MITTEILUNG  Nachricht an DF3AY mit dem Titel MITTEILUNG.
+
+ S AMSAT             Nachricht fuer die Rubrik AMSAT,  keine Wei-
+                     terleitung  an  andere  Mailboxen, der Titel
+                     wird automatisch angefordert.
+
+ S SOLAR BEDINGUNGEN Nachricht  fuer die  Rubrik  SOLAR  mit dem
+                     Titel BEDINGUNGEN
+
+ S DIGI @ DB0BQ      Nachricht fuer die Rubrik  DIGI,  Weiterlei-
+                     tung nur an DB0BQ,  der Titel wird automati-
+                     sch angefordert.
+
+ S BBS @ DL          Nachricht fuer die Rubrik  BBS,  S&F-Weiter-
+                     leitung nur  an alle deutschsprachigen Mail-
+                     boxen  (DL/HB9/OE),  der  Titel wird automa-
+                     tisch angefordert.
+
+ S IARU @ EU         Nachricht fuer die Rubrik IARU,  S&F-Weiter-
+                     leitung  an  alle  Mailboxen  in Europa, der
+                     Titel wird automatisch angefordert.
+                     Nachrichten mit dem Ziel  Europa  sollten in
+                     englischer Sprache abgefasst sein!
+
+ S AMSAT @ WW        Nachricht  fuer die Rubrik  AMSAT, weltweite
+                     S&F-Weiterleitung,  der  Titel  wird automa-
+                     tisch  angefordert. Nachrichten mit weltwei-
+                     ter  Weiterleitung  sollten  in   englischer
+                     Sprache abgefasst sein!
+
+Mit folgender Eingabe koennen gleichzeitig RUBRIK, ZIEL, LIFETIME
+(Lebenszeit) und TITEL erfasst werden:
+
+ S KARTEN @ DL #30 NEUE DL-DIGI-KARTE 
+
+Beachten  Sie  bitte,  dass lokale Nachrichten nicht mit z.B. @DL
+von Ihnen eingegeben werden, sondern lediglich mit dem @Rufzeichen
+der eigenen Mailbox.
+
+Bei allgemeinen Nachrichten (Bulletins) kann jeweils die Zeit an-
+gegeben  werden,  nach  der diese Nachricht automatisch geloescht
+werden soll (LIFETIME). Das geschieht beispielsweise so:
+
+ S DIGICOM @ DL #123 
+
+Nach dieser Eingabe wird man zur Titelvergabe aufgefordert. Diese
+Nachricht  wird,  wenn  sie erfolgreich abgespeichert wurde, nach
+123 Tagen in allen Boxen automatisch geloescht werden.
+
+Je nach Einstellung der Box durch den Sysop wird man bei allgemei-
+nen Nachrichten unbedingt zur Angabe einer Lifetime aufgefordert.
+
+Steht am Ende einer Nachricht eine Zeile
+'/ACK',  so  wird  bei  Erreichen der Zielmailbox dort eine kurze
+Rueckantwort  an  den  Absender  erzeugt.  Der  Titel beginnt mit
+'ACK',  darauf  folgt der Originaltitel. Der Text besteht nur aus
+dem  Datum  des  Eintreffens.  Es  werden  keine  S&F-Header beim
+Weiterleiten  einer solchen Nachricht erzeugt, sie bleibt dadurch
+extrem  kurz.  Leider  unterstuetzen  manche  Boxsysteme   dieses
+Verfahren  nicht,  ausserdem setzen sie ihren S&F-Header auch bei
+diesem  Nachrichtentyp ein. ACK-MSGs werden NUR bei Usermails er-
+zeugt!
+
+Zusatz:
+Je nach Einstellung der Box durch den Sysop werden Einspielungen
+in DPBOX und Baycombox, die OHNE Password erfolgt sind, wie folgt
+markiert:
+
+ 'X-Info: Einspielung ohne Passwortschutz'
+oder:
+ 'X-Info: Upload without password authentication'
+oder:
+ 'X-Info: no login password'
+
+Einspielungen,  welche  via User-SF angenommen wurden, werden wie
+folgt markiert:
+
+ 'X-Info: User S&F received from <sender> at <bbs>'
+
+---------------------------------------------------------------------------
+
+SERVER
+
+  Mit dem Kommando SERVER kann der Sysop eine sogenannte mailing list
+  erstellen. Setzt er z.B. DL1XX, DL2XX und DL3XX auf eine mailing list
+  namens 'OV', so kann jeder der drei OM Briefe an 'OV@DB0XY' senden, diese
+  werden dort an alle drei Calls kopiert und als persoenliche Mail zuge-
+  stellt. Briefe an 'OV@DL' oder aehnliches werden nicht ausgewertet und
+  normal in der BBS verarbeitet. Schreibt ein nicht in der Liste stehender
+  Benutzer einen Brief an 'OV@DB0XY', so wird die Nachricht nur nach
+  'Y@DB0XY' transferiert, so dass sie der Sysop zur Kenntnis nimmt.
+  Mailing lists sind in der Anzahl der Adressen nicht beschraenkt.
+
+
+  Kommandos:
+
+   SERVER          => Sysop: zeigt alle Listserver (mailing lists)
+                   => User : zeigt alle Public Listservers
+   SERVER ?        => Alle : zeigt alle Listservers an, die man bezogen hat
+   SERVER !        => Alle : zeigt alle Public Listservers
+   SERVER !+ sname => Sysop: Vergibt den Server <sname> als Public Listserver
+   SERVER !- sname => Sysop: Loescht das Public Flag des Servers <sname>
+   SERVER != sname => Sysop: Zeigt den Infotext des Public Servers <sname>
+   SERVER != sname text => Sysop: Setzt den Infotext des Public Servers
+
+
+  Nur Sysop/Server-Sysops:
+
+   SERVER sname + call  => setzt <call> auf die Subscriber-Liste von <sname>
+   SERVER sname + !call => setzt <call> auf die Subscriber-Liste von <sname> 
+                           und macht <call> zum Server-Sysop von <sname>
+   SERVER sname + #call => deaktiviert <call> von der Subscriber-Liste <sname>
+   SERVER sname - call  => loescht <call> von der Subscriber-Liste
+   SERVER sname =       => zeigt die Subscriber-Liste
+
+
+  Mail-Kommandos:
+
+   Wenn man eine Mail an LSTSRV schickt, dann wird der Titel als
+   Befehl interpretiert. Der Inhalt der Mail kann einen (beliebigen) Text 
+   enthalten. Befehle kann man gross oder klein schreiben.
+
+    Syntax: SEND LSTSRV [<lifetime>] <Kommando>
+
+
+   SUBSCRIBE sname    => traegt den Sender in den Public Server <sname> ein
+   UNSUBSCRIBE sname  => traegt den Sender aus dem Public Server <sname> aus
+
+   SUBSCRIBERS sname
+   LISTABONNEES sname => Schickt die Liste der Teilnehmer (subscriber)
+                         des Servers <sname> zurueck
+
+   LISTSERV           => Gibt eine Liste aller oeffentlichen Server zurueck.
+
+
+   Beispiele:
+
+    s lstsrv #1 subscribe fun8co     ; Traegt den Sender in den
+                                       Public Server "FUN8CO" ein
+    s lstsrv #1 unsubscribe fun8co   ; Traegt den Sender aus dem
+                                       Public Server "FUN8CO" aus
+    s lstsrv #1 listabonnees fun8co  ; Schickt die Liste der
+                                       Teilnehmer des Servers "FUN8CO" zurueck
+    s lstsrv #1 listserv             ; Gibt eine Liste aller
+                                       oeffentlicher (Public) Server zurueck
+
+   Werden die Anfragen an den Server in der entsprechenden Server-Box
+   eingespielt, so werden diese zu jeder vollen Minute bearbeitet.
+   Das Ergebnis wird als persoenliche Mail zugestellt!
+
+   Wenn man sich per Mail in den Listserver eingetragen hat, bekommt man als 
+   Bestaetigung den Inhalt eines Files namens server/SNAME.INF zurueck.
+   Damit kann man sich ueber die (verfuegbaren) Listen informieren. Eine
+   An-/Abmeldung (Subscription/Unsubscription) wird in jedem Fall bestaetigt.
+
+
+  Wichtig: Will man als Server-Sysop eine @BBS - Angabe an die Adresse
+  anfuegen, so darf KEIN Leerzeichen um das @ herum stehen. Also z.B. so:
+
+       serv easbbs + hb9atu@hb9eas
+ 
+  Gibt man keine @BBS an, wird in den MyBBS-Informationen der Box gesucht.
+
+  Listennamen unterliegen gewissen Regeln:
+
+  a) Laenge von 1..6 Zeichen
+  b) duerfen nicht schon als Rubrik in der BBS definiert sein
+  c) duerfen nicht in BADNAMES stehen.
+  d) sollen auch User anderer Boxen angesprochen werden, dann sollte
+     der Server-Name eine Ziffer wie bei einem Call enthalten!
+     Nur so kann diese Mail an die Server-Box geschickt werden.
+
+      z.B. SERVER CZ2BUG + DL2GRD
+
+---------------------------------------------------------------------------
+
+SETREPLY
+
+Markiert eine Nachricht im eigenen Userfach als "beantwortet". Wird normaler-
+weise durch Benutzung des REPLY-Befehles automatisch erledigt. Beantwortet
+man aber eine Nachricht durch Benutzung des SEND - Befehles, so kann es
+nuetzlich sein, hinterher mit SETREPLY die entsprechende Markierung manuell
+zu setzen - man weiss dann, auf welche Nachricht man schon geantwortet hat
+und auf welche nicht.
+
+Syntax wie bei REPLY.
+
+ Beispiel:
+
+ SETREPLY DL1XYZ 3       markiert Nachricht 3 fuer DL1XYZ als beantwortet
+ SETREPLY                markiert die zuletzt gelesene Nachricht als
+                         beantwortet
+
+---------------------------------------------------------------------------
+
+SETSF
+
+Mit SETSF koennen die Eintraege in der Rubrik X (sie enthaelt die Forward-
+Liste) manipuliert werden. 
+ 
+ Beispiele:
+
+ SETSF DB0HB Typ DK0MNL.: Alle Nachrichten des Types 'Typ', die an DB0HB
+                          zu forwarden sind, werden nun an DK0MNL
+                          geforwardet.
+ SETSF  3-6  DK0MNL.....: Die Eintraege 3-6 der S&F-Liste werden auf DK0MNL
+                          umgestellt. Ihr Typ wird nicht beachtet.
+ SETSF Typ 1- DK0MNL....: Alle Eintraege von 1-Ende, die vom Typ 'Typ'
+                          sind, werden nun auf DK0MNL umgestelt.
+ Wobei  'Typ'...........: 'A','B','P','S' = <A>ll, <B>ulletin,
+                            <P>rivate, <S>ystem.
+
+Beachten Sie, dass die Nachrichten selbst nicht veraendert werden,
+sondern nur die Nachbar-Box fuer den S&F aendert.
+
+Es existiert ein spezielles Zielrufzeichen: NIL. Bei Eingabe dieses
+Zielrufzeichens werden die entsprechenden Forward-Eintraege geloescht.
+
+ Beispiel:
+
+ SETSF DB0ZZZ B NIL
+
+ loescht alle Forwardeintraege fuer DB0ZZZ.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+SF
+
+Mit SF wird der Forward manuell gestartet.
+
+ Beispiele:
+
+ SF DL8HBS             Startet Forward zu DL8HBS
+
+Dieser Befehl arbeitet nur, wenn Ordner box/sf/ eine Datei dl8hbs.sf
+vorhanden ist.
+
+Weitere Moeglichkeiten fuer SF:
+
+ SF OFF                Weist eingehende Forward-Connects ab, baut
+                       keine neuen Verbindungen auf.
+ SF ON                 Schaltet Forward wieder frei.
+ SF KILL               Wie OFF und disconnected alle Forward-Verbindungen.
+
+Diese Schalter werden nicht gespeichert. Standardmaessig ist SF ON.
+SF OFF wird im Box-Prompt mit [no S&F] angezeigt.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+SFLEVEL
+
+Mit dem Befehl SFLEVEL legen Sie fest, wie der Begruessungstext der Box
+fuer ein jeweiliges Call aussehen soll und ob ein Call ueberhaupt SF mit
+der Box machen darf.
+
+Die einzelnen Level:
+
+  -1 = Dieser Benutzer darf keinen S&F machen.
+   0 = Die normale Einschaltmeldung der Box (CTEXT) wird gesendet.
+       Dies ist die Standardeinstellung fuer alle Benutzer.
+   1 = Nur der kurze S&F-Prompt wird gesendet.
+
+ Beispiel:
+
+ SFLEVEL DB0XYZ 1
+ 
+Mailboxen, fuer die eine SF-Definitionsdatei angelegt worden ist, werden
+automatisch in den SFLEVEL 1 geschaltet. 
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+SFPARMS
+
+Zeigt ihnen die geladenen Parameter fuer automatischen S&F an. Also nur
+fuer solche Partner, bei denen in der Datei CALL.SF eine Zeile
+beginnend  mit SFPARMS steht.
+
+ Mit SFP CALL 3 0  setzen Sie den  dritten Wert fuer CALL auf 0.
+
+ Mit SFP           werden alle SFPARMS gezeigt.
+
+ Mit SFP CALL <_alle_Parameter_>  setzen Sie alle 9 Parameter fuer CALL neu.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+SFSTAT
+
+Zeigt Informationen ueber die geforwardeten Nachrichten.
+
+ SFS    zeigt die Anzahl aller im S&F wartenden Nachrichten  sor-
+        tiert nach Typ
+ SFS +  zeigt das gleiche, zusaetzlich die Anzahl aller ausgetau-
+        schten Nachrichten seit 00:00 UTC sowie seit Beginn des Monats
+ SFS !  zeigt das gleiche wie SFS +, zusaetzlich die Anzahl aller ausgetau-
+        schten Informationen seit Installation der Box.
+
+Jeden  1.  eines  Monats werden die Informationen von SFSTAT ! in
+die Rubrik STATISTI geschrieben.
+
+Nur als Sysop
+
+Eingetragene  User-SF-Partner  mit dem  USERSF-Flag werden 
+zusaetzlich in der SF-Statistik ausgegeben.
+
+---------------------------------------------------------------------------
+
+SFTEST
+
+Mit diesem Befehl kann das Forwarding getestet werden. Alle Eingaben wie bei
+SEND moeglich, allerdings wird natuerlich keine Nachricht erzeugt.
+
+ Beispiel:   SFT DP @ ALL
+
+Es werden alle Mailboxen ausgegeben, an die eine Nachricht geschickt wuerde.
+
+----------------------------------------------------------------------------
+
+SHELL und TSHELL
+
+Die Befehle SHELL und TSHELL oeffnen eine Linux-Shell.
+
+TSHELL behandelt alle durchgereichten Daten transparent, insbesondere
+werden Linefeeds nicht umgewandelt.
+
+Die Shell wird sofort gestartet, wobei der Username des laufenden
+DPBOX-Prozesses benutzt wird.
+
+Um direkte Shell-Zugriffe ueber die Box in jedem Fall zu verhindern, kann
+DPBOX mit der Option -DNO_SHELL neu kompiliert werden.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+SPEAK
+
+SPEAK ohne Parameter gibt die moeglichen Benutzersprachen aus. SPEAK DL
+setzt die Benutzersprache auf Deutsch.
+
+ Derzeit sind folgende Sprachen verfuegbar (lokal unterschiedlich):
+
+ Baaseldyytsch.....: ' SPEAK BS  '
+ Deutsch...........: ' SPEAK DL  '
+ Experten-DL.......: ' SPEAK DLX '
+ Espanol...........: ' SPEAK EA  '
+ Manta-Slang.......: ' SPEAK EY  '
+ Francais..........: ' SPEAK F   '
+ Englisch..........: ' SPEAK G   '
+ Schwiizerdyytsch..: ' SPEAK HB  '
+ Italiano..........: ' SPEAK I   '
+ Nederland.........: ' SPEAK NL  '
+ Expert-Nederland..: ' SPEAK NLX '
+ Wienerrisch.......: ' SPEAK OE1 '
+ Cesky.............: ' SPEAK OK  '
+ Dansk.............: ' SPEAK OZ  '
+ Polsku............: ' SPEAK SP  '
+ Hitch-Hiker.......: ' SPEAK SPC '
+ Schwaebisch.......: ' SPEAK SW  '
+
+Standardmaessig wird die Sprache aus der Definition in der Datei
+box/system/whotalks.lan genommen.
+
+Als Sysop kann man mit 'SPE DL8HBS DL' fuer den Benutzer DL8HBS die
+Sprache auf 'DL' setzen.
+
+---------------------------------------------------------------------------
+
+STARTUP
+
+Mit diesem Befehl koennen einer oder mehrere Befehle definiert werden,
+die beim Connect mit der Box ausgefuert werden. Als Standard ist LIST auf
+das eigene Rufzeichen eingetragen.
+
+ Beispiele:
+
+ STARTUP L,U,C UNIX
+
+ Es wird einen LIST-Befehl fuer Ihr eigenes Rufzeichen, USAGE und ein CHECK
+ der Rubrik UNIX ausgefuehrt.
+
+Die einzelnen Befehle muessen duch ein "," (Komma) getrennt werden. Ein ";"
+(Semikolon) wuerde zum Abbruch der Eingabe fuehren.
+
+ STARTUP
+
+ Loescht die eingegebenen Befehle und stellt den Standard wieder her.
+
+Geben Sie bitte nicht CHECK ohne Parameter bei STARTUP ein! Normalerweise
+wird die Ausgabe zu lang sein, um sie bei jedem Login in die Box
+erhalten zu wollen....
+
+---------------------------------------------------------------------------
+
+STATISTIK
+
+ST gibt eine Liste aller Rubriken mit geloeschten und aktiven Dateien
+sowie Groesse und Packrate aus.
+
+  ST .........:  Angaben ueber alle Rubriken und Userfiles.
+  ST HUMOR ...:  Angaben ueber die Rubrik HUMOR werden ausgegeben.
+  ST -s ......:  Kurzausgabe fuer User- und Info-Rubriken
+  ST -u ......:  Kurzausgabe fuer User-Rubriken.
+  ST -b ......:  Kurzausgabe fuer Info-Rubriken.
+
+---------------------------------------------------------------------------
+
+STRIPCR
+
+ STRIPCR <filename> aendert MSDOS-Zeilenumbrueche auf Unix-Zeilenumbrueche
+ in der Datei. Ist der dpbox egal, aber nicht jedem Linux-Editor.
+
+ Beispiel:
+
+ STRIPCR system/config.box
+
+Nur als Sysop.
+
+----------------------------------------------------------------------------
+
+SYSTEM oder PW
+
+Dient  zum Einloggen mit dem eigenen Passwort. Nach erfolgreicher
+Anwendung darf man  Nachrichten  schreiben oder loeschen oder ist
+eventuell als Sysop freigeschaltet.
+
+Nach  Eingabe  von  'SYSTEM' sendet die Box eine Antwort, die den
+TheNet-SysOp-Routinen entspricht,
+
+ z.B.:  DB0GR> 1 4 63 10 42
+
+Es muessen nun aus dem vereinbarten Passwort (siehe PASSWORD) die
+der Spaltenposition der Zahlen  entsprechenden Zeichen zurueckge-
+sendet werden,
+
+ z.B.:  eG7+p
+
+Dieser  Vorgang  kann  beliebig oft wiederholt werden, sobald die
+richtige  Antwort kommt,  ist man zum Schreiben oder Loeschen von
+Nachrichten freigeschaltet.
+
+Die Antwort kann auch in einem laengeren Zufalls-String versteckt
+sein (sehr zu empfehlen!),
+
+ z.B.:  kq4183kfvneG7+po935gohb
+
+---------------------------------------------------------------------------
+
+SYSCHK
+
+Mit SYSCHK kann man pruefen, ob man im SYSOP-Status ist. Falls ja,
+bekommt man ein OK zurueck. Wenn nicht, dann gibt es eine Fehlermeldung.
+
+An der lokalen Konsole wird der Sysop-Status mit [S] angezeigt.
+
+---------------------------------------------------------------------------
+
+TALK
+
+Dieser Befehl startet einen Connect mit einem anderen eingeloggten User.
+Dieser Connect ist nicht voll transparent, Binaeruebertragung funktioniert
+nicht. Die Verbindung wird mit CTRL-Z beendet.
+
+ Beispiel: TALK DL1XYZ
+           TALK 4
+
+Waehrend des TALK-Modes kann ein User Mailboxkommandos eingeben, indem er ein
+"!" voranstellt.
+
+ Beispiel: !L Atari
+
+Bei Aufruf eines interaktiven Kommandos wird der TALK-Mode beendet.
+
+---------------------------------------------------------------------------
+
+TIME
+
+Gibt die aktuelle Uhrzeit in UTC aus.
+
+---------------------------------------------------------------------------
+
+TELL
+
+Der Befehl 'TELL' erlaubt eine Fernabfrage von anderen Mailboxen.
+
+Es koennen damit Befehle an eine Box geschickt werden. Diese werden dort
+ausgefuehrt und das Ergebnis wird per S&F zurueckgeschickt.
+
+ Syntax: 'TELL <BoxCall> <Befehl>'
+
+Eingaben o h n e Hochkomma / Klammern, jedoch m i t Leerzeichen!
+
+ Beispiele:
+
+  TELL DK0MAV DIR ALL..: Das User-  und  Info-  Verzeichnis  von
+                         DK0MAV wird per S&F angefordert und per
+                         S&F zurueckgeschickt.
+
+  TELL DK0MAV L TNC2 ..: Die Rubrik TNC2 (von 1-50)  von  DK0MAV
+                         wird per S&F zugeschickt.
+
+ACHTUNG:
+         Bei  'TELL READ TNC2 1-' schickt DieBox IMMER NUR das 1.
+         File! Falls mehrere Nachricht geholt werden sollen, dann
+         muss  fuer  jede  Nachricht  ein  TELL-Befehl  geschickt
+         werden.
+
+Eine dpbox verhaelt sich hier anders, sie fuehrt ein TELL-Komman-
+do  nur  dann  aus,  wenn  die  zurueckgeschickte Nachricht nicht
+groesser  als  300 kByte  ist,  arbeitet  also  auch  Angaben wie
+'TELL DB0XYZ READ TNC2 14-40' ab, sofern die resultierende Ausgabe
+nicht groesser als 300 kByte wird. Ist die Ausgabe groesser
+300 kByte, wird eine Fehlermeldung an den Absender der Anfrage
+geschickt.
+
+Interaktive Befehle wie SEND sind nicht moeglich.
+
+TELL funktioniert nur, wenn die Zielmailbox diesen Befehl auch erkennen
+kann (DieBox und dpbox, sowie einige BCM-Boxen).
+
+
+Sysop-Info:
+
+Der TELL-Befehl wird in der Rubrik T angelegt und hat die Form
+wie S T @ DB0XYZ < sender_callsign title, wobei title der Anfrage-
+Befehl ist zusammen mit @ sender_bbs.
+
+---------------------------------------------------------------------------
+
+TNTCOMM
+
+Damit kann man beliebige Terminalbefehle an beliebige Terminalkanaele
+von TNT schicken.
+
+ Beispiele:
+
+ TNT <qrg> 0 CS        zeigt, wer in dem entsprechenden TNT connected ist.
+ TNT <qrg> 3 D         disconnected den Kanal 3 des entsprechenden TNT.
+
+        Den Parameter <qrg> erfaehrt man mit dem Befehl QRG. Diese Angabe
+        muss genauso geschrieben werden (gross/KLEINschreibung hi).
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+TRACE oder FULLTRACE
+
+TRACE und FULLTRACE startet einen Input/Output-Trace der Verbindungen
+der Mailbox. Mit diesem Befehl kann der Sysop Forward-Probleme oder
+"kritische" User beobachten. Jeder Sysop kann so viele Verbindungen
+ansehen, wie er moechte, aber zwei Sysops koennen nicht die gleiche
+Verbindung ansehen. Der Befehl TRACE wird beim Disconnect des Sysop
+nicht gespeichert und dementsprechend beendet.
+
+ Beispiele:
+
+ TRACE + DB0XYZ
+
+ startet einen Trace aller Verbindungen von DB0XYZ. Waehrend des TRACE
+ koennen weitere Befehle eingegeben werden. Die Ausgabe wird allerdings
+ etwas "seltsam" aussehen. Probleme sind aber nicht zu befuerchten.
+
+ TRACE - DB0XYZ
+
+ beendet das Tracing fuer DB0XYZ.
+
+ TRACE OFF
+
+ beendet sofort alle geoeffneten TRACE.
+
+ TRACE
+
+ zeigt alle laufenden TRACE.
+
+ TRACE ALL
+
+ startet einen TRACE fuer ALLE Verbindungen der Box. Sicher etwas
+ unuebersichtlich... hi
+
+Die Anzeige von TRACE wird mit Zeit, Datum, Kanalnummer und einem
+"action-flag" (nur fuer den Programmierer) versehen. Wenn eine
+Datei ausgegeben wird (z.B. eine Nachricht), dann wird nur die
+Groesse angegeben und nicht der Inhalt.
+
+Wenn Sie auch den Inhalt der Nachrichten sehen wollen, dann koennen Sie
+
+ FULLTRACE + DB0XYZ
+
+eingeben. Nun werden alle Daten so ausgegeben, wie sie tatsaechlich
+die Verbindung passieren. Es werden keine zusaetzlichen Angaben
+zugefuegt. Aus diesem Grund ist es auch nicht sinnvoll, ein FULLTRACE fuer
+mehrere Verbindungen zu setzen.
+
+Ein FULLTRACE fuer EINE Verbindung schaltet ALLE getraceten Verbindungen
+auf FULLTRACE um, also auch die, fuer die man nur TRACE als Befehl ange-
+geben hatte.
+
+Nur als Sysop.
+
+---------------------------------------------------------------------------
+
+TRANSFER oder CP
+
+Der  Befehl  'TRANSFER'  oder 'CP' dient zum Umkopieren von Nach-
+richten.
+
+Syntax: TRANSFER <Call|Rubrik> <Nr.> [>] <Zielcall|Zielrubrik>
+
+Der '>' kann bei der dpbox auch weggelassen werden.
+
+'TRANSFER'  ist  nur  dann  anwendbar,  wenn Quell- und Ziel-File
+gleichen Typs sind: User-File --> User-File und Info-File --> In-
+fo-File. Allerdings kann ein Info-File an einen User transferiert
+werden. Beim Transfer eines Info-Files in eine andere Rubrik wird
+die Quelle geloescht, bei einem Transfer Info-File nach User-File
+nicht, auch nicht bei einem Transfer innerhalb von User-Files.
+
+ Beispiele:
+
+ T DF3AV 3 > DL2YAP  Nachricht Nr. 3 fuer DF3AV wird in den File
+                     fuer DL2YAP uebertragen, die Nachricht DF3AV
+                     3 wird nicht geloescht.
+ T ALLE 25 > DARC    Nachricht Nr. 25 der Rubrik ALLE wird in die
+                     Rubrik DARC uebertragen, die Nachricht Nr.25
+                     der Rubrik ALLE wird geloescht.
+
+Durch diesen Befehl ist es moeglich, verschiedenen Benutzern die-
+selbe  Nachricht zu schreiben, ohne sie jeweils erneut einspielen
+zu  muessen.  Ist  das Ziel ein User-File, dann wird die transfe-
+rierte Nachricht an die gespeicherte Heimat-Mailbox des angegebe-
+nen Benutzers weitergeleitet. Alternativ kann man eine Weiterlei-
+tung auch mit Angabe einer @BBS erzwingen, 
+
+ Beispiel:
+
+ T DL8HBS 4 > DL1XYZ @ DB0ABC 
+
+Ein Sysop kann zusaetzlich einen neue Lifetime hinzufuegen:
+
+ TRA ATARI 7 ALL #7  (neue Lifetime: 7 Tage)
+
+---------------------------------------------------------------------------
+
+TTL
+
+Normalerweise erhaelt man in der Checkliste und im Nachrichtenkopf einer
+ausgelesenen Nachricht die Lifetime der Nachricht bezogen auf das
+Einspieldatum angezeigt. Dies interessiert mich aber in den wenigsten
+Faellen, meist will ich wissen, wie lange die Nachricht NOCH in der
+Box bleibt.
+
+Gibt man nun ein:
+
+ TTL ON
+
+so wird saemtliche Anzeige der Lifetime zu einer sogenannten Time-To-Live-
+Anzeige umgewandelt (daher auch der Name des Kommandos, TTL).
+
+Ich bekomme nun also anstelle der Original-Lifetime, wie sie der Absender
+eingegeben hat, die Anzahl Tage angezeigt, die die Nachricht von heute an
+noch in der Box verweilen wird.
+
+Mit
+
+ TTL OFF
+
+laesst sich das wieder zurueckstellen.
+
+TTL ohne Parameter zeigt die momentan gueltige Einstellung an.
+
+---------------------------------------------------------------------------
+
+UNERASE
+
+Mit diesem Befehl koennen geloeschte persoenliche Nachrichten (ERASE) 
+eines Benutzers wieder sichtbar gemacht werden. Dies ist moeglich, da
+Nachrichten durch den den ERASE-Befehl nicht wirklich geloescht, sondern
+nur als geloescht gekennzeichnet werden.
+
+ Beispiel:
+
+ UNERASE
+
+Als geloescht markierte Nachrichten behalten ihre Nummer, solange sie
+sich noch im Loeschpuffer befinden. Auch nach Loeschen der Meldungen
+1 bis 4 wird also eine neue Nachricht die Nummer 5 erhalten.
+
+
+Sysop-Info:
+In der Datei system/config.box kann die Zeitdauer in Tagen fuer das
+verzoegerte tatsaechliche Loeschen eingestellt werden. Von Usern koennen
+nur Nachrichten wieder sichtbar gemacht werden, die mit User-Erase geloescht
+worden sind.
+
+----------------------------------------------------------------------------
+
+UNPROTO
+
+Mit dem Befehl 'UNPROTO' kann der Sysop den 'Message list request' fuer 
+zugelassene User aktivieren, falls diese Moeglichkeit nicht fuer alle frei-
+gegeben wurde (parameter UNPROTO_ALL unter system/config.box).
+
+'Unproto requests' werden von Programmen wie TPK und TSTHOST benutzt, um
+verlorengegangene Teile einer im Broadcast empfangenen Checkliste
+anzufordern.
+
+Siehe auch im Kapitel ueber 'unproto list' in der Dokumentation.
+
+ Beispiel:
+
+ UNPROTO DL1XYZ ON
+
+Nur als Sysop
+
+---------------------------------------------------------------------------
+
+USAGE oder USER
+
+Der Befehl 'USAGE' dient zur Ausgabe eines Logbuch-Auszuges oder zur
+Ausgabe von Informationen ueber einen bestimmten Benutzer oder eine
+bestimmte Benutzergruppe.
+
+ Syntax: 'USAGE [<CALL>|<PARAMETER>]'
+
+Eingaben o h n e Klammern / Hochkomma, jedoch m i t Leerzeichen!
+
+a) nach der Eingabe von 'U' gibt die Mailbox folgende Zeilen aus:
+
+ LOGINs:
+  1:HB9CMT  2:HB9SBS  3:db0gr   4:        5:DG7GF   6:
+  7:FD1MAP  8:        9:       10:       11:       12:
+ 13:       14:       15:       16:       17:       18:
+
+Es werden lediglich die eingeloggten Rufzeichen angezeigt. Verbindungen
+im S&F werden mit Kleinbuchstaben ausgegeben.
+
+b) nach der Eingabe von 'U DF3AV' gibt die Mailbox z. B. aus:
+
+    Call       : DF3AV
+    Name       : REINHARD
+    Language   : DL
+    MyBBS      : DK0MAV
+    LastLogin  : 15.06.88 03:37
+    .
+    .
+
+Wird das eingegebene Rufzeichen in der Liste der bisher connecteten
+Stationen nicht gefunden, so erfolgt eine diesbezuegliche Meldung.
+
+c) U ALL          gleich wie U, aber die letzten Zeilen des BBS-Logbuches
+                  werden mit ausgegeben.
+
+d) U @CALL        z.B. U @DB0DJ
+                  Zeigt an wieviele User bekannt sind und listet
+                  dann die User auf, die bei CALL (DB0DJ) eingetragen
+                  sind.
+
+e) U @CALL -c     gibt nur die Anzahl der User mit MYBBS CALL aus.
+
+f) U PATH         gibt das AX.25 'from- and to-' Feld mit aus.
+
+g) U U            Ausgabe einer graphischen Darstellung der Boxrechner-
+                  auslastung durch die Box sowie die Anzahl der
+                  Benutzer zum entsprechenden Zeitpunkt.
+
+Ab hier nur fuer Sysops:
+
+h) U @D* -a:      gibt die Anzahl der User mit MYBBS D* aus. Nur als Sysop.
+
+i) U DL8HBS -d    loescht den Eintrag fuer DL8HBS. Nur als Sysop.
+
+j) U @DB0GR -d    loescht alle User-Eintraege, deren MYBBS DB0GR ist. Nur
+                  als Sysop. Und Vorsicht beim Tippen - die Eingabe laesst
+                  sich nicht widerrufen!
+
+k) U PW           zeigt alle User mit Passwort an. Nur Sysop.
+
+l) U HISCORE      zeigt den aktuellen connect-hiscore an
+
+m) U HISCORE -d   loescht den connect-hiscore
+
+n) U ON/OFF       schaltet Userlogin Ein oder Aus. Wird im Prompt mit
+                  [no user] angezeigt. Sysops koennen einloggen.
+
+---------------------------------------------------------------------------
+
+VERSION
+
+Mit VERSION bekommt man Informationen ueber die verwendete Programmversion
+und den freien Speicher im Rechner.
+
+Mit VERSION + werden noch zusaetzliche Informationen ueber den System-
+zustand ausgegeben.
+
+ date             : Aktuelles Datum und Zeit in UTC
+ ixtime           : Unix-Zeit (Sekunden seit 1970)
+ dpbox runtime    : Box-Laufzeit
+ dpbox sysload    : Auslastung der Box
+ system runtime   : Linux-Laufzeit
+ system load      : Linux-Auslastung
+ system version   : Linux-Version
+
+ cpu type         : Verwendeter CPU-Typ
+ cpu speed index1 : Geschwindigkeitsfaktor gegenueber einem Atari ST (8MHz)
+ cpu speed index2 :       - " -               - " -    -"-   ---  " ----
+ Linpack Bench    : Floating-Point-Benchmark
+
+ Parameters:
+
+ Free in Infodir  : Freier Harddisk-Platz auf der Partition mit den Infomails
+ bidhash          : BID-Hash-Speicher
+ maxbullids       : Maximale Anzahl BIDs im BID-Puffer
+ bullidseek       : Aktuelle Schreibposition im BID-Puffer
+ bids             : Anzahl bekannter BIDs
+ sub_bid          : Sub_Box-ID
+ actmsgnum        : Aktuelle MSG-Nummer (sieht man im FBB-Mode)
+ hboxhash         : Hash-Speicher fuer S&F-Adressen
+ ttask            : Zeitschlitz, in dem ein User das System beanspruchen darf
+ ufilhide         : Lesesperre auf Userfiles (ON/OFF)
+ smart_routing    : Autorouter (ON/OFF)
+ small_msgs_first : Kleine Mails zuerst in den SF
+ gzip             : Ob die Box intern GZIP anstelle LZH verwendet
+ 7plus            : Automatisches 7plus-Wandeln, wenn SF-Box kein BIN kann
+ debug level      : Debug-Level 0....5
+ erasedelay       : Nach wievielen Tagen Mails aus dem Loeschspeicher entfernen
+ packdelay        : Nach wievielen Tagen Mails packen
+ bullsfwait       : Max. Anzahl der Tage, die Bulletins im Forward bleiben
+ bullsfmaxage     : Max. Alter einer Mail im SF, damit sie noch akzeptiert wird
+ returntime       : Nach wieviel Tagen nicht-routebare Mails zurueckschicken
+ retmailsize      : Max. Bytegroesse einer zurueckgeschickten Usermail
+ auto7plus        : Autom. Auspacken von 7plus-Mails im Fileserver (ON/OFF)
+ autobin          : Autom. Transfer von BIN-Mails in den Fileserver (ON/OFF)
+ request lt       : Abschicken von Bulletins nur mit Lifetime-Angabe (ON/OFF)
+ create acks      : /ACK in Usermails bestaetigen (ON/OFF)
+ authentication   : "X-INFO"-Zeile in Bulletins einfuegen (ON/OFF)
+ create wp        : Erzeugung von 'White Pages (WP)' (anderes M-Mail-Verfahren)
+ scan all wp      : Auswerten aller WP-Mails (ON/OFF)
+ m_filter         : M-Filter (ON/OFF)
+ lazy MD2         : Nur Prompt ausgeben fuer MD2-Password-Request (ON/OFF)
+ guess mybbs      : Unbekannte User-Mails auf MyBBS-Eintraege scannen (ON/OFF)
+ maxufcache       : max. Anzahl der zwischengespeicherten User-Infos
+ userinfocachehit : Anteil der erfolgreichen Zugriffe auf den Userinfo-Cache
+ usersftellmode   : TELL-Befehle im User-SF zulassen (0, 1, 2)
+ connect hiscore  : Max. Anzahl der gleichzeitigen Connects mit dieser Box
+ allunproto       : Anforderung einer Unproto-Message durch alle User moeglich
+ unproto requests : Anforderungen nach Unproto-Aussendungen moeglich
+ usertimeout      : Zeit, nach der die Box-Sitzung bei Untaetigkeit abbricht
+ userlifetime     : Anzahl Tage, nach der User-Mails geloescht werden
+ maxuserconnects  : max. Anzahl der gleichzeitigen Connects pro Rufzeichen
+ maxread per day  : Anzahl der Bytes, die ein User pro Tag lesen kann
+ sf connect call  : Store&Forward-Call der Box (ohne ssid!)
+ crawler          : Volltextsuche aktiv (ON/OFF)
+ fservexpand      : Pfad in dem 7PL/BIN-Mails im Fileserver abgelegt werden
+ fservexpandlt    : LT der Dateien in FSERVEXPAND
+ 
+---------------------------------------------------------------------------
+
+WANTBOARD
+
+Ergaenzend  zum Befehl 'NOTBOARD' gibt es den Befehl 'WANTBOARD'.
+Dieser ist das genaue Gegenteil von 'NOTBOARD'.
+
+Mit  'WANTBOARD'  gibt man also Rubriken ein, die man bei 'CHECK'
+und  'CS'  beruecksichtigt haben will, alle anderen bleiben unbe-
+ruecksichtigt.
+
+ Beispiel:  WANTBOARD DIGI,-DB0GR-,SYSOP
+
+stellt  die Ausgabe von  'CHECK'  so ein, dass nur  die  Rubriken
+DIGI, -DB0GR- und SYSOP angezeigt werden. Die Parameter werden durch
+Kommata ohne Leerzeichen getrennt.
+
+ 'C < Argument' sucht aber weiterhin in allen Rubriken.
+
+
+Eine Besonderheit gilt dem "virtuellen" Brettnamen "TEMP". Wird
+dieser angegeben, koennen damit nur die undefinierten Rubriken
+(klein geschrieben) eingeblendet werden!
+
+Durch  die  Angabe  eines  Verteilers (z.B. @DL oder @EU) koennen
+gezielt Mails mit den angegebenen Verteilern ausgegeben werden
+(UND-Verknuepfung  mit eventl. angegebenen Brettern!).
+
+Sollten nicht alle anzugebenen  Bretter in eine Eingabezeile pas-
+sen, kann man den Befehl mehrmals anwenden, jede neue Angabe wird
+den bereits bestehenden hinzugefuegt.
+
+Geloescht  wird  die Selektion durch Eingabe von 'WANTBOARD' ohne
+weitere  Parameter,  ersichtlich  ist  die  momentane Einstellung
+durch 'U <eigenes Call>'.
+
+'NOTBOARD' und 'WANTBOARD' schliessen sich aus!
+
+Die maximale Anzahl der Zeichen ist auf 997 begrenzt.
+
+---------------------------------------------------------------------------

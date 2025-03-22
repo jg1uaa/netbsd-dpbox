@@ -1,0 +1,89 @@
+#! /bin/sh
+# 21.11.96 J.Schurig
+# Durchsuchen des Fileservers nach neuen Dateien seit dem letzten QUIT
+#
+# 18.01.98 A.Bauda DG1BBQ
+# Auflisten aller neuen Files der letzten n Tage hinzugefuegt
+#
+# Aufruf: new [suchmaske]
+
+# sind wir im Server oder in der normalen Box-Oberflaeche?
+if [ $DPBOXSERVERMODE = 1 ]; then
+
+  if [ "$2" ]; then
+    if [ "$2" = 1 ]; then
+      echo "Neue Dateien im Fileserver seit 24 Stunden:"
+    else
+      echo "Neue Dateien im Fileserver seit $2 Tagen:"
+    fi
+  else
+    echo "Neue Dateien im Fileserver seit $DPBOXLASTDATE:"
+  fi
+
+# befindet sich der User in einem untergeordneten Server-Directory?
+  if [ "$DPBOXSERVERPATH" ]; then
+# ja, Suchbegrenzung anzeigen
+    echo "Start der Suche ab: /$DPBOXSERVERPATH"
+  fi
+
+# hat der User eine Suchmaske gesetzt?
+# steht in "", weil $1 auch Wildcards enthalten kann
+  if [ "$1" ]; then
+# ja, Suchmaske anzeigen
+    if [ "$1" != "*" ]; then
+      echo "Suchmaske gesetzt auf: *$1*"
+    fi
+  fi
+
+# Intervall in Minuten seit letztem Login errechnen
+# das geht so:
+# date mit option +%s gibt die aktuelle unix-zeit zurueck
+# davon ziehen wir die von DPBOX in $DPBOXIXLASTDATE uebergebene
+# last-login-Zeit ab (die ist auch im Format "Sekunden ab 1.1.1970")
+# und teilen das Ergebnis durch 60 und addieren noch eine Minute
+# das weisen wir dann "logininterval" zu, um es spaeter bei find
+# einsetzen zu koennen
+
+  if [ "$2" ]; then
+    logininterval=$[ $2 * 1440 ]
+  else
+    logininterval=$[($(date +%s) - $DPBOXIXLASTDATE) / 60 + 1]
+  fi
+
+# Ausgabeueberschrift erzeugen
+
+  echo
+  echo "Datum    Zeit      Laenge Name"
+  echo "==================================================================="
+
+# steht der serverpfad auf temp7pl?
+  if [ "$DPBOXSERVERPATH" = 'temp7pl/' ]; then
+# ja, dann hier abbrechen
+    exit
+  fi
+
+# auf den momentanen Serverpfad des Users wechseln
+
+  cd "$DPBOXSERVERROOT$DPBOXSERVERPATH"
+
+# find mit den entsprechenden Optionen aufrufen
+# . :      ab aktuellem Verzeichnis suchen 
+# -follow: auch symbolische Links verfolgen
+# -xdev:   keine externen Filesysteme durchsuchen (CDROMS bleiben immer
+#          gleich...)
+# -path:   ist path = temp7pl?
+# -prune:  wenn path = temp7pl dann directory skippen
+# -o:      OR
+# -type f: nur echte Dateien ausgeben
+# -iname:  Gross/Klein nicht beachten
+# -mmin -: Datei juenger als loginintervall? Bitte das "-" beachten...
+# -printf: Ausgabeformat fuer gefundene Dateien festlegen
+# fuer weitere Erlaeuterungen siehe "man find"
+
+  find . -follow -xdev -path './temp7pl' -prune -o \
+         -type f -iname "*$1*" -mmin -$logininterval \
+         -printf '%Cd/%Cm/%Cy %CX%8s %P\n'
+
+else
+  echo "Kommando ist nur im Fileserver gueltig"
+fi

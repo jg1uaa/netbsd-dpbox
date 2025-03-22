@@ -1,0 +1,379 @@
+changes v5.07.00 - v5.07.08:
+----------------------------
+
+- compiles with glibc (libc6). Still compiles with libc5.
+
+- code completely reworked. Better legibility, shorter executable, faster
+  execution, less hidden bugs by implicit type conversions.
+
+- added parameter SHOW_READERS TRUE/FALSE to system/config.box. If TRUE,
+  every user may get a display of all users that read a specific message.
+  The display is toggled by the switch ":" of the read command.
+
+- user settings of sysops remain undeleted, even if they did not log on for 
+  more than a year.
+
+- had a bug in the 7plus execution for the file server. Could have caused
+  execution of several instances of dpbox, until a final linux collapse.
+  Fixed.
+
+- if operating dpbox across partition boundaries, moving files did not work.
+  Fixed.
+
+- added two parameters for the forward definitions: If a neighbour should not
+  receive 7PLUS files, add a line
+  NOBULL7PLUS
+  to the forward definition file of this neighbour.
+  If binary messages should be suppressed, add the line
+  NOBULLBIN
+  to the forward definition file of this neighbour.
+  These settings ONLY affect flood distribution bulletins (@WW, @EU etc.).
+  Of course, the forward of binary files is also controlled by the SID flags
+  of the neighbour system.
+
+- internal text sorting now needs much less RAM.
+
+- now accepting forwarded messages to bulletin boards without a BID, if the
+  message type is 'P'. dpbox then assigns a BID.
+
+- READLOCK state sometimes was changed by dpbox. Hope I fixed it now.
+
+- dpbox had problems with /tmp/ directories other than /tmp . Fixed.
+
+- a binary message starting with an ascii text of more than 100 lines was
+  not detected as being binary. Fixed.
+
+- now calculating the linpack kflops benchmark instead of displaying the
+  system bogomips. Compare it to the supercomputer list on www.top500.org :)
+
+- the HEADER command now displays up to 15 lines after the last R: line of
+  a message until the first empty line.
+
+- undefined boards (those boards that appear in lowercase in the checklist)
+  now can be suppressed or displayed with WANTBOARD/NOTBOARD using the
+  "virtual" name TEMP.
+
+- had a bug in the evaluation of forwarded mybbs informations. If the
+  homebbs was in hierarchic notation, it was discarded. Fixed. On long terms,
+  this bug led to an outdated mybbs database.
+
+- dl3neu rewrote nearly every line of the mailing list server. Should now
+  work without any remarkable delay of dpbox.
+
+- found a serious memory leak of dpbox. Fixed.
+
+- forward to baycom bbs often stopped with "please restart SF" error message.
+  Fixed.
+
+- changed permissions of files created by dpbox. All own files are only rw
+  for the unix user of dpbox, except of files stored in the file server, they
+  are world readable.
+
+- much faster check of incoming messages for 7plus, badwords, binaries, /ACK-
+  requests.
+
+
+changes with v5.07.11:
+----------------------
+
+- internal RAM disk support removed. Was a left-over of the Atari version.
+
+- included check for integrity of 7plus-user-uploads. If a user uploads a
+  7plus file, each line is checked with the 7plus checksum algorithm, erroneous
+  files are not sorted in the bbs. This check was originally written by oe3dzw
+  for Baybox, using code fragments of dg1bbq.
+
+- dg1bbq proposed another parameter set for 7plus in the file server. Now using
+  "7plus -ka -y -q -sysop" (instead of "-k -y -q -sysop").
+
+- and a lot of smaller code changes for aesthetic reasons.
+
+
+changes with v5.08.00:
+----------------------
+
+- NetBSD port by vk5abn included in dpbox source.
+
+- if internal counter for current message number reaches 999,999, message
+  numbers have to be recreated, to prevent errors with tpk, tsthost and
+  other clients evaluating message numbers. After recreation, the current
+  message number will be much smaller, because of all the deleted messages
+  causing gaps in message numbering before.
+  This recreation was started 10,000 numbers too late. Fixed.
+  
+- in FBB style forward, now "Y", "N" and "L" are accepted as synonyms for
+  "+", "-" and "=" (introduced to dpbox by dk2go)
+
+
+changes with v5.08.01:
+----------------------
+
+- oe9hlh proposed an extension for the ERASE command: After reading a message,
+  it can be erased by typing "ERASE +L" (or "e +l"). You don't have to type
+  the message number again.
+
+- modified the return mailer. If a returned message has to be sent to a known
+  bbs callsign, it is discarded. Usually, this was a response on an automatic
+  system message of that bbs.
+
+- added a linefeed to the dpbox.pid file.
+
+- configuration of dpbox is reloaded if dpbox receives a -SIGHUP signal.
+ 
+
+changes with v5.08.02:
+----------------------
+
+- "make install" now creates relative links in the language/ directory (were
+  absolute before, caused problems when moving the installation directory)
+
+- included new "Makefile.flat" to install dpbox into one single directory
+  (depreciated, use "Makefile.linux" instead for a Unix-style installation)
+
+- dpbox crashed, when smart routing (autorouter) was active and a loop in a
+  calculated forward path occured. This crash was not recoverable. Fixed.
+
+- dpbox now looks for its config file ("dpbox.ini") in the directories
+	"/usr/etc/dpbox"
+        "/usr/local/etc/dpbox"
+        "/usr/local/share/dpbox/conf"
+        "/usr/share/dpbox/conf"
+        "/usr/pkg/share/dpbox/conf"
+  if not found in the local directory and not found in options ("-i dpbox.ini")
+  This change was introduced by vk5abn
+
+
+changes with v5.08.03:
+----------------------
+
+- changed internal watchdog of dpbox for shorter update frequence: now every 5
+  seconds, was 60 seconds. This watchdog now prevents from starting two dpbox
+  instances on the same data set (message files). If a second instance tries
+  to work with the same data, it is exited if an active watchdog is found.
+  The watchdog file is stat/watchdog.dp.
+
+- when sending a -SIGHUP to dpbox, dpbox has to reload its config files (same
+  as typing "RELOAD" in the bbs terminal. Unfortunately, the reload was
+  repeated 50 times a second, endlessly. Fixed.
+
+
+changes with v5.08.04:
+----------------------
+
+- new http access support files.
+
+- automatic installation of http access files, if apache is installed.
+
+- clean restriction of dpbox user rights if dpbox was started as root, but
+  "dpbox_user" is defined in dpbox.ini. After initing the interfaces, dpbox
+  changes to the user and group of "dpbox_user". This is highly recommended.
+
+- the restricted access also applies on the dpbox socket interface. Only user
+  and group of dpbox are allowed to communicate with the socket. Otherwise,
+  every user starting an interface program on the same computer could access
+  dpbox as sysop. For this change, it is necessary to assign the user starting
+  TNT to the group dpbox is part of (per default "localham"). Of course, if TNT
+  is started as "root" (you know you shouldn't do that, don't you?), this
+  superseeds the access restriction. 
+
+
+changes with v5.08.05:
+----------------------
+
+- wrote a little utility to merge multiple mybbs.box files into one. This
+  could be of help if you start a new public bbs or had a total data loss. Ask
+  one or more of your neighbours for a copy of their mybbs.box file (located in
+  stat/), then merge them with your mybbs.box file (ALWAYS OPERATE ON COPIES)
+  with the following (unix) command:
+  "dpmybbs mybbs.box.1 mybbs.box.2 [..] -o outfile"
+  Then stop your dpbox. Copy the outfile to stat/mybbs.box. Restart dpbox.
+  dpmybbs is a quick hack and not optimized at all. Adding 50,000 mybbs infos
+  to 50,000 existing infos takes at least 20 minutes on a P233.
+
+- changed behaviour of the KILL command of dpbox. Formerly, it worked as ERASE,
+  and deleting additionally the BID of the erased message in the BID pool of
+  the bbs. Now, it zeroizes the message (virtually writing zero bytes on disk)
+  and the message header (except of the BID). The erase time is manipulated
+  such that the message (now containig zeroes) is immediately removed from the
+  system during next garbage.
+  This helps for strongly offending material forwarded to your bbs. Take care,
+  the KILL command cannot be reversed, what is killed is lost forever. Don't
+  use it for normal sysop maintenance, except if you really HAVE to delete
+  that message.
+
+- the search for the dpbox.ini file (introduced in v5.08.02) forgot to first
+  check in "/etc/dpbox". Fixed.
+
+
+changes with v5.08.06:
+----------------------
+
+- dpbox now does forward via import/export files. It supports the original
+  FBB mode, and an extended DPBOX mode for exchange of binary messages and
+  message lifetimes. When using the FBB mode, you have to change the newlines
+  in the import/export files from the unix style <LF> to the canonic (DOS)
+  format <CR><LF>. Use the recode tool or what else is convenient. Use the
+  DPBOX mode where ever possible. In one of its future versions, Baybox will
+  support it, too. Maybe it's better to call it the D1 mode (as this is the
+  feature set in the forward SID it is related to).
+  
+  The file forward requires a store and forward definition file as usual for
+  every neighbour of dpbox. Only the IFQRG definition is changed:
+
+  IFQRG definition for normal forward via TNT:
+   
+    IFQRG LINK DB0XYZ-8 900
+
+  IFQRG definition for forward via import/export files:
+  
+    IFQRG FILE DB0XYZ 10 DPBOX /tmp/forward.db0xyz.out /tmp/forward.db0xyz.in
+                         ^^^^^
+			 |
+			 \ change it to FBB for FBB style exchange (and change
+			   linebreaks from unix to dos and vice verse...)
+
+  dpbox checks/sets lockfiles for the import and the export file (the lockfile
+  is extended with ".lock" to the original filename). In a regular interval,
+  you should move the export file by any media to its receiver. For example,
+  you could compress it by gzip, 7-bit-code it with mimencode and send it
+  as email by mail. Please check for the lockfiles before touching the
+  import/export files. Abort processing if a lockfile is present, if not,
+  proceed and SET the lockfiles. Delete them after completion. Delete the
+  export file. Append new input to the input file. dpbox deletes the input
+  file by itself. Take care of file owner and permissions for the input and
+  lock files. dpbox must be able to read and delete them.
+
+- added a new parameter for the store and forward definition files:
+  
+  USERSF
+
+  If this keyword is present in a forward definition file, the corresponding
+  user is treated like a normal user, not like a full operational bbs. This
+  means, this user is not allowed to send messages to one-letter-boards (used
+  for inter-sysop communication and forward of system messages), and every
+  received file gets stripped of R: lines and gets marked by
+  "X-Info: received in user-s&f".
+  For download, this user is treated like any other bbs and according to the
+  definitions in the forward definition file.
+
+- fixed the USER @<CALLSIGN> command of dpbox. Typing "U @F* -a", you get a
+  list of all French mailboxes, sorted by their count of local users. In
+  previous versions, this count was erroneous, and some bbs were left out.
+
+- now zeroing unused data structures in message headers. In all previous
+  versions, they contained random garbage. This not only could create security
+  problems (for the paranoids), but also lowered compress rates when backing
+  up the data.
+
+
+changes with v5.08.07:
+----------------------
+
+- Crawler (full text search) now able to scan private messages, too.
+  PLEASE: Never scan private mails in a public bbs, only use this feature when
+  installing dpbox at home for private use. As most of the private mail
+  passing through your system only remains stored for minutes or hours before 
+  it is forwarded to another bbs, the indexing of those messages would only
+  waste (yes, and in large) your ressources!
+  To switch on scanning of private mails, start crawling with "CRAWL -p".
+  Of course, security and access restrictions are not concerned by this
+  enhancement.
+
+- for WANTBOARD/NOTBOARD, now also definitions of distribution areas apply.
+  Defining something like: "WANTBOARD UNIX,@WW" limits checklist output to
+  all messages sent to board UNIX _and_ all messages distributed worldwide.
+  Selection for NOTBOARD works respectively. NOTBOARD "@DL" suppresses all
+  messages for distribution in German speaking countries.
+
+- some definitions in the store and forward definitions were not recognized:
+  NOBULLBIN, NOBULL7PLUS, and USERSF were not accepted if found alone on a
+  line (but that's how they should appear). Fixed.
+
+- the user and group settings for crawler/crawler are now automatically set
+  to the dpbox user and group settings during startup of dpbox (only if 
+  dpbox initially was started as root). This helps avoiding errors with
+  crawler not found when running a non-root dpbox. 
+
+
+changes with v5.08.08:
+----------------------
+
+- changed a lot of the old Pascal-gotos to C-breaks and -continues. Hopefully
+  no bugs were introduced.
+
+- changed MSGNUMOFFSET from 10,000 to 50,000. This offset is used for
+  FBB style message numbers (used for the message list broadcast and FBBMODE
+  checklist display). First message in dpbox now starts with number 50,001.
+  The change affects the crawler database. If you have the full text search
+  running, you have to recreate the database. Simply type "CRAWL" in dpbox.
+
+- the script "listarc" for the file server used the old name "lharc" for the
+  lzh compressed archive utility. Now changed to "lha". Hope this is the name
+  used on your system.
+
+- for a defined forward partner with "USERSF" flag, now only the sysop is able
+  to see outstanding files in forward (with the "SFSTAT" command). Same for
+  routing definitions. For normal users, this forward partner is completely
+  hidden/transparent.
+
+- crawler could have been started in multiple instances for scanning new
+  messages. As this only costs ressources (and does not minimize overall
+  operation time, the bottleneck is the disk access), this is now changed.
+  Only one instance of the crawler is started at a time. This reduces
+  system load, in some cases in a real drastic manner.
+
+
+changes with v5.08.09:
+----------------------
+
+- dpbox uses an internal callsign check. This is needed to overcome some
+  problems that otherwise might have been caused by the fact that for
+  many years, in German PR network, during forward no distinction was made
+  between private mails and bulletins (and still some bbs exist throwing
+  away the message type flag). dpbox has to distinct between callsigns and
+  message board names by itself.
+  
+  Usually, the check is easy to do, as all amateur radio callsigns worldwide
+  share a simple and common syntax. With upcoming CB usage of packet radio,
+  I got many requests on this issue. As dpbox definitely was written for
+  amateur radio, and first legalization of packet radio for CBers in Germany
+  was hardly suspectible to only serve one organization making money, I
+  never felt responsible for changing anything. Alas, the times have changed.
+  Today, no royalties have to be paid to anyone (but the state, I believe).
+  
+  For this reason, the callsign checker of dpbox now is expandable to cover
+  different callsign syntaxes in addition to those of amateur radio.
+  
+  Add a line "CALLSYNTAX AAANNN" to system/config.box, and everything starting
+  with three characters followed by three numbers is treated as a callsign.
+  Define multiple additions by simply appending them:
+  "CALLSYNTAX AAANNN, NNNAAA" and the more.
+  Take care they don't collide with board names defined in the bbs and the
+  network you are using.
+  
+  For amateur radio networks, no change is necessary nor proposed. 
+
+- R:line timestamps without timezone indication ("z") were discarded for
+  internal due date checks and routing calculations. For example, a w0rli
+  style bbs sends them that way. Changed. If no timezone was indicated, UTC
+  is assumed. If another timezone was indicated, only the date of the
+  timestamp is evaluated.
+
+- automatic bin/7plus extraction into file server now expands into a
+  subdirectory tree, not only in newbin/ . If a message to the board UNIX
+  gets extracted, it is expanded in a subdirectory "unix" of the file server.
+  To enable this feature, you have to define the parameter FSERVEXPAND in
+  system/config.box. For example, if you receive a binary message in board
+  UNIX, and FSERVEXPAND is set to "auto/boxextract", the message is stored
+  in the file server path "/auto/boxextract/unix/". Messages to undefined
+  boards are stored in a subdirectory "div". If FSERVEXPAND is undefined,
+  the automatic extraction remains unchanged compared to previous versions
+  (everything goes into "newbin").
+
+- to limit the lifetime of the extracted files in FSERVEXPAND, the new
+  parameter FSERVEXPANDLT was added to system/config.box. It defines the
+  lifetime in days. Setting it to 0 means an infinite lifetime.
+  
+  
+
+73 Joachim, DL8HBS

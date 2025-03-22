@@ -1,0 +1,200 @@
+# F.LAN   dpbox v5.07  DF8WI 12.5.98
+# DK2GO 13.5.98: 22 25 48 65 95 104 107 144 155-
+# F1RPC 22.10.99
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 parametre invalide
+03 indicatif incorrect
+04 ce fichier n'existe pas
+05 ce fichier trop gros
+06 fichier sauvegarde
+07 commande non autorisee
+08 Le bbs est vide
+09 Erreur: fichier ne contient pas de texte
+10 Attention: Nouveau message pour toi!
+11 message non accepte
+12 *** mode sysop ***
+13 pas d'informations trouve sur ce BBS
+14 il y a pas de messages pour
+15 fichier info:
+16  Nr. de     Date     UTC    Oct.   Titre
+17     # de       a        No  Date     @BBS  Octets #LT Titre
+18 ok, les messages sont effaces
+19 Statistiques
+20 Fichier   MSGs efface    Octets  comprime   a% #LT Level
+21 Utilisez la commande NAME pour enregistrer votre prenom
+22 Utilisez la commande MYBBS pour inserer votre BBS local, %rpar exemple MYBBS %m
+23 ### appuyer sur return s.v.p. ###
+24 inconnu
+25 pas de nouveaux messages, le dernier est
+26  Nr. de     @BBS   #LT Date      Oct.  Comp  Titre
+27  Nr. de     a        @BBS   #LT #TL RxFrom Lev Date   Oct.  Comp FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Auteur Fichier  @BBS   BID/MID      #LT  Oct.  T
+30 pas de texte...
+31 pas de texte pour le sysop...
+32 Boxlog...
+33 patience...
+34 @BBS n'est pas valid
+35 @BBS est:
+36 OK, le nouveau @BBS est:
+37 pas trouve de message
+38 OK, nouveau Lifetime est:
+39 Lifetime invalide
+40 fonction non implementee
+41 CHECK arrete
+42 Total
+43 Libre en RAM
+44 Libre sur disque dur
+45 pas d'informations trouvees
+46 Impossible d'ecrire le fichier d'exportation
+47 Ecrivez le texte pour
+48 finir avec ***END, /EX ou CTRL-Z, arrete avec CTRL-X:
+49 Moindre temps de delivrage
+50 Titre du message? >
+51 Destination? >
+52 Bienvenu
+53 Bienvenu
+54 Dernier login:
+55 Login actuel :
+56 OK, ta boite aux lettres locale est enregistree comme
+57 Level change
+58 Merci
+59 , ton nom est enregistre
+60 STP, ton nom >
+61 La langue choisie est
+62 Langue non supportee
+63 Dernier Login :
+64 Seulement a la console
+65 Send/Erase seulement avec mot de passe (commande SYS, PRIV, MD2 ou MD5)
+66 Langues supportees:
+67 Lundi
+68 Mardi
+69 Mercredi
+70 Jeudi
+71 Vendredi
+72 Samedi
+73 Dimanche
+
+74 *** Limite de lire excedee. Nombre maximal de kB par jour:
+75 *** pas execute:
+76 Effacage de loin cree
+77 Lettre deblocquee
+78 Message(s) non-efface
+79 Information utilisateur. Ne pas effacer! 
+80 *** Somme de controle defectueuse:%r*** Sera efface le prochain 'Garbage'%r*** ou tout de suit avec KILL
+81 dernier indique:
+82 Message(s) transfere
+83 Entrez remarque: 
+84 Le resultat est trop long, 997 signes au maximum 
+85 Des ajustages pour WantBoard et NotBoard effaces
+86 Commande annullee. La disque dur est plein.
+87 *** pas de SID transmis
+88 Connect-Highscore actuel:
+89 efface
+90 *** password non correct
+91 *** password manquant
+92 *** En ce moment pas de S&F. Essayez plus tard svp.
+93 Votre GP n'est pas configure correctement. Definissez
+94 en NAMES.GP comme boite postale electronique!
+
+95 Le mode File Server est active. H vous donne de l'aide,%rEXIT ou QUIT pour quitter
+96 Pas d'acces ecrivant sure la rubrique. Utilisez /incoming/
+97 Le fichier existe deja
+98 Le fichier ne peut pas cree
+99 Entrer un texte svp. Vous finissez avec '.' dans la ligne suivante
+100 Le nom du fichier n'est pas valable
+101 Donnez une description courte pour le fichier s.v.p.%rFinissez avec '.' dans une nouvelle ligne.
+102 --- continuer avec <RETURN>, rupture avec <C> ---
+103 Il n'y a pas une rubrique avec ce nom
+104 Termine le mode fileserver. Mode bbs.
+105 Le commande n'est pas valable. H(elp) ou FHELP vous donne de l'aide
+106 Incapable d'ouvrir le fichier
+107 utilisateurs en selection
+108 utilisateurs
+109 Pas de mot de passe. Retardement de la transmission jusqu'a (heures):
+110 Transfer locale a
+111 Lifetime de cette lettre electronique (1..999 jour, 0 = infini):
+112 La boite postale electronique du recepteur n'est pas connue
+113 Entrez la boite aux lettres electronique de destination manuellement s.v.p.%r(S F1XYZ @ FE6XYZ)
+114 BID existe deja, choississez un autre s.v.p.
+115 Liste d'abonnements du serveur
+116 Creation du serveur de liste d'abonnements
+117 Acceptance d'un abonnant
+118 du serveur de liste d'abonnements
+119 Serveur de liste d'abonnements ne peut pas cree. Erreur de fichier.
+120 Effacer d'un abonnant
+121 Effacer du serveur de liste d'abonnements
+122 Liste des serveurs (de liste d'abonnements) installes:
+123 Information de
+124 Erreur d'expedition vers votre station:
+125 Le routage marche deja
+126 *** DP-Box commandes du mode convers:
+127 /help     : ce texte
+128 /chan <n> : choississez le canal <n>
+129 /who      : liste les stations et les canaux
+130 /quit     : finir le mode convers
+131 *** Les commandes peuvent etres abbreviees
+132 *** Entrez les commandes BBS avec un '!' dephase en avant.
+133 activement sur le canal:
+134 indicatif canal
+135 *** le mode convers est fini
+136 *** maintenant sur le canal
+137 *** numero du canal n'est pas valable
+138 le mode convers a ete commence. /H vous donne de l'aide. Vous ete sur canal 
+139 Mot de passe efface, protection finir
+140 L'usage: PASSWORD <votre mot de passe>
+141 Mot de passe resultant trop long
+142 Protection de mot de passe active. Longeur:
+143 HOLD sera fini le
+144 Mot de passe active au-dessus de longueur 21 seulement. Longueur actuelle:
+145 Finir la connexion avec CTRL-Z. Entrer les commandes BBS avec un '!' %rdephase en avant.
+146 starter le transfer AutoBIN s.v.p.
+147 L'utilisateur a ferme l'acces sur ses courriers
+148 L'information additionelle peut etre obtenue avec
+149 Erreur de lecture
+
+150 Les commandes du serveur de fichier:
+151 ? ou HELP            - ce texte
+152 DIR ou LS ou LS -l   - montre les fichiers du chemin donne
+153 LIST                 - montre les fichiers du chemin donne avec description
+154 CD                   - change le repertoire de travail
+155 READ, GET, TYPE      - lire un fichier de texte (TYPE: avec des stops de page)
+156 WRITE ou PUT         - sauve le fichier donne en mode texte
+157 7GET ou BSGET        - envoie le fichier donne en mode 7plus ou BS-BIN
+158 BGET ou BPUT         - envoie ou sauve le fichier donne en mode AutoBIN
+159 YGET ou YPUT         - envoie ou sauve le fichier donne en mode YAPP
+160 EXIT, BYE ou QUIT    - termine le mode fileserver
+161 Des examples:
+162 CD /linux/packet     - change au repertoire /linux/packet
+163 CD .. ou CD.         - change au dernier repertoire
+164 DIR *.zip -DATE      - montre les fichiers avec *.zip tri par date de creation
+165 DIR -NAME            - montre les fichiers tri par nom
+166 LS -SIZE             - montre les fichiers en format court tri par taille
+167 LIST                 - montre les fichiers du chemin donne avec description
+168 YGET test.zip        - envoie le fichier test.zip en mode YAPP
+169 BGET 4               - envoie le fichier 4 du repertoire courant en mode AutoBIN
+170 BPUT test.lzh        - sauve le fichier test.lzh en mode AutoBIN
+171 Attention: Unix fait une difference entre des lettres majuscules %ret des lettres minuscules
+172 Les repertoires sont separes avec '/' et non avec '\' comme en DOS.
+173 Les noms peuvent etre plus long que 8 + 3,%rpar example "dpbox-4.17-source.tar.gz"
+174 Tous les commandes peuvent etre abregees,%rpar example BG pour BGET, L pour LIST.
+
+175 Les commandes de sysop:
+176 MD et MKDIR          - creer un nouveau repertoire
+177 CP et COPY           - copier des fichiers
+178 MV et MOVE           - changer le nom / la location des fichiers
+179 RM et DEL            - effacer des fichiers
+180 RD et RMDIR          - effacer un repertoire (vide)
+181 INDEX                - ecrire une nouvelle information sur le repertoire
+
+182 Commencer l'application YAPP s.v.p.
+183 #MSG   T Octets a      @BBS    de    date     title
+
+184 Attention: MyBBS change eventuellement sans autorisation
+185 MyBBS change a:
+186 - fichiers trouvees pour vous.
+
+187 Transmission YAPP commencee
+
+188 Le dernier ajustement MyBBS
+189 a ete le

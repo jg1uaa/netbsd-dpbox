@@ -1,0 +1,22 @@
+#! /bin/sh
+# 310597: Daniel Goetz, DL3NEU
+# dploc
+
+echo "Content-type: text/html"
+echo
+echo "<HTML><HEAD>"
+echo "<TITLE>DPBOX search engine</TITLE>"
+echo "</HEAD><BODY>"
+echo '<BODY BGCOLOR="#ffffff">'
+
+cat dptop.html
+
+echo "<PRE>"
+locator=$(echo ${QUERY_STRING} | sed -e s,'^loc1=',, -e s,'&loc2=',' ',)
+/installdir/dphttp "QTHLOC ${locator}" | \
+  /installdir/dpcodeconv
+echo "</PRE>"
+
+cat dpbottom.html
+
+echo "</BODY></HTML>"

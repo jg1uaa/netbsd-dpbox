@@ -1,0 +1,24 @@
+# the mail beacon definition
+
+# the interval. proposed: 30 minutes, maximum: 60 minutes. 0 minutes = OFF
+#
+INTERVAL 30
+#
+# the 'statustext' appears as a single broadcast. the text is parsed
+# by the string convert routine of DPBOX, refer to the PROMPT command
+# to learn more about the possible macro expansions.
+#
+STATUSTEXT < %t > DPBOX v%v
+#
+# then, if there is mail found, the 'mailtext' is transmitted,
+# added with the user callsigns having new mail. (new = unread and
+# not older than one week)
+#
+MAILTEXT Mail for :
+#
+# the unproto-adresses for the mail-beacon:
+#
+QRG LINK MAIL
+QRG LINK MAIL DB0BER DB0BLN
+QRG LINK MAIL DB0BER DB0BNO DB0BLO
+

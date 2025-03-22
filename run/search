@@ -1,0 +1,23 @@
+#! /bin/sh
+if [ $DPBOXSERVERMODE = 1 ]; then
+  if [ ! "$1" ]; then
+    echo "Aufruf: SEARCH <NAME>"
+  else
+    echo "Suche nach: *$1*"
+    if [ "$DPBOXSERVERPATH" ]; then
+      echo "Start der Suche ab: /$DPBOXSERVERPATH"
+    fi
+    echo
+    echo "Datum    Zeit      Laenge Name"
+    echo "==================================================================="
+    if [ "$DPBOXSERVERPATH" = 'temp7pl/' ]; then
+      exit
+    fi
+    cd "$DPBOXSERVERROOT$DPBOXSERVERPATH"
+    find . -follow -noleaf -path './temp7pl' -prune -o \
+           -type f -iname "*$1*" \
+           -printf '%Cd/%Cm/%Cy %CX%8s %P\n'
+  fi
+else
+  echo "Kommando ist nur im Fileserver gueltig"
+fi

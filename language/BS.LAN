@@ -1,0 +1,199 @@
+#HB9EAT 04.98
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 Ungiltige Barameter.
+03 Ungiltigs Rufzaiche.
+04 Die Datei exischdiert nid.
+05 Die Datei isch z'gross...
+06 Die Nochricht isch gschbaicheret
+07 Kai Berächtigung...
+08 D'Box isch leer...
+09 Fääler: Die Datei het kai Teggscht.
+10 Achtig: Grad im Momänt isch e Nochricht fir Di aako !
+11 Die Noochricht wird nid agnoo.%rD„ user isch beraits uusgloggt oder d'Meil isch abbroche worde !
+12 *** Sysop-Modus isch automatisch gschdardet worde ***
+13 Kei Information iiber die BBS gfunde
+14 Es git momentan kaini Nochrichte fir
+15 Info-File:
+16  Nr. Vo     Datum    UTC    Bytes  Wäge   
+17     # Absänder Rubrigg  Nr. Datum    @BBS   Bytes #LT Titel
+18 D' Nochrichte sinn glescht!
+19 Schdadistig:
+20 Rubrik    MSGs glescht   Bytes   paggt    uff% #LT Level
+21 Bitte gib dr aigeni Name mit em NAME - Befehl y!
+22 Bitte d'Heimetmeilbox mit em MYBBS-Befähl aagää, z.B. MYBBS %m %r(e Meilbox-Ruefzaiche aagää, NIT s' eigene Ruefzaiche !)
+23 ### Bitte e Taschte drugge ###
+24 isch em Süschdeem unbekannt.
+25 Kai neye Ydraag gfunde. Ledschde Ytraag isch:
+26  Nr. Vo     @BBS   #LT Datum     Bytes Pack  Wäge
+27  Nr. Vo     Rubrik   @BBS   #LT #TL RxFrom Lev Datum  Bytes Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Audoor Rubrik   @BBS   BID/MID      #LT  Bytes T
+30 Kai Hilfeteggscht vorhande
+31 Kai Hilfeteggscht fir dr Sysop vorhande
+32 Tschegglischte wird erschdellt
+33 Box wird uffgruumt, bitte warte...
+34 @BBS isch ungiltig fir User-Meils
+35 @BBS isch:
+36 OK, die neyi @BBS isch :
+37 Kai Nochricht in däm Beraich
+38 OK, neyi Läbenszyt isch:
+39 ungiltigi Läbenszyt-Agoob
+40 Die Funktion isch nonig imblemendiert
+41 CHECK isch abbroche worde
+42 Gsamt
+43 Freie Schbaicherblatz
+44 Frei uff dr Feschtbladde
+45 Kaini Informatione gfunde
+46 Exportdatei ka nid aaglegt wärde
+47 Bitte dr Teggscht igää fir
+48 Beände mit ***END, /EX oder CTRL-Z, abbräche mit CTRL-X:
+49 Bishärigi Mindeschtlaufzyt nach
+50 Titel vo dr Nochricht? >
+51 An wär soll die Nochricht goh ? >
+52 Härzlig willkomme
+53 Härzlig willkomme
+54 Letschts Login :
+55 Aktuells Login :
+56 Danggscheen, Di Heimet-Mailbox isch
+57 Level gänderet
+58 Danggscheen
+59 , Di Name isch jetzt gschbaicheret
+60 Bitte gib Di Name y >
+61 Igschtellti Sproch isch
+62 Ungiltigi Sproch
+63 Letschts Login isch gsetzt uff:
+64 Nur an dr Konsole meeglich
+65 Send/Erase nur noch Password-Yberbriefig (Kommando SYS, PRIV, MD2 oder MD5)
+66 Unterschtitzti Sproche:
+67 Mäntig
+68 Zischtig
+69 Mittwuch
+70 Donschtig
+71 Friddig
+72 Samschtig
+73 Sunndig
+
+#{Ab v4.18}
+
+74 *** Usläsebeschränggig iberschritte: Max. kBytes pro Daag:
+75 *** nid uusgfiehrt:
+76 Färnerase erziigt
+77 Nochricht freigäh
+78 Nochricht(e) entlescht
+79 Userinfo. NID LESCHE!
+80 *** Fählerhafti Header-Checksumme:%r*** Wird bim näggschte Garbage glescht%r*** oder sofort mit KILL
+81 letschti aazaigti:
+82 Nochricht(e) transferiert:
+83 Kommentar igäh:
+84 Ergäbnis z'lang, max. 997 Zaiche
+85 Ischtellige fir WantBoard und NotBoard glescht
+86 Abbruch. Platte isch voll.
+87 *** kai SID gsändet
+88 Momentane Connect-Highscore :
+89 glescht
+90 *** falschs Passwort
+91 *** Passwort fählt
+92 *** Im Momänt kai S&F. Bitti schpeeter nonemol versueche.
+93 Ihr GP isch falsch konfiguriert. Definiere Si
+94 in NAMES.GP als Box!
+95 File Server Modus aggtiviert. Hilf mit H(elp), FHELP, Ändi mit Q(uit)
+96 Kai Schriibzuegriff auf das Verzaichnis. Ich bruch drfir /incoming/
+97 Datei gits scho
+98 Datei ka nit aaglegt wärde
+99 Teggscht iigäh, Ändi mit '.' in-ere neye Ziile
+100 Ungiltige Dateiname
+101 Bitte e kurzi Dateibeschriibig iigäh. Beände mit '.' in-ere neye Ziile
+102 --- witter mit <RETURN> , Abbräche mit <C> ---
+103 Es git gar kai Verzaichnis wo so heisst
+104 File Server isch verlo worde. Aktive Modus: BOX
+105 Ungiltigs Kommando. Hilf mit H und FHELP.
+106 Datei ka nid geffnet wärde
+107 Benutzer in dr Uswahl
+108 Benutzer
+109 Kai Passwort. Wiiterlaitig verzegeret sich bis zu (Schtunde):
+110 Lokale Transfer nach
+111 Läbensduur vor däre Nochricht (1..999 sin Daag, 0 = unändlich) :
+112 Kai Heimetmailbox vom Empfänger bekannt.
+113 Bitti manuell e Ziel-BBS aagä (S DL1XY @ DB0XY)
+114 BID scho vorhande, bitte e-n-anderi wähle
+115 Abonnänte vom Mailing List Server
+116 Erzyyge vom Mailing List Server
+117 Ufnäh vom Abonnänt
+118 vom Mailing List Server
+119 Mailing List Server ka nit aaglegt wärde. Dateifähler.
+120 Lesche vom Abonnänt
+121 Lesche vom Mailing List Server
+122 Lischte vo de-n-inschtallierte Mailing List Server:
+123 Info vo
+124 Es isch e Fähler bim Forward zu Dinere Schtation passiert:
+125 s'Routing lauft scho
+126 *** DP-Box Convers-Kommandos:
+127 /help     : dä Teggschd
+128 /chan <n> : gang uff Kanal <n>
+129 /who      : Schtatione und Kanäl
+130 /quit     : Convers beände
+131 *** Kommandos kenne abkirzt wärde
+132 *** BBS-Kommandos mit emene '!' am Aafnag ufriefe
+133 Aktiv auf däm Kanal:
+134 Usercall Kanal
+135 *** Convers fertig
+136 *** jetzt uff em Kanal
+137 *** ungiltigi Kanalnummere
+138 Convers gschtartet. /H fir Hilf. Du bisch uff Kanal
+139 Password glescht, Schutz uufghobe
+140 Uffruef: PASSWORD <Di_Password>
+141 S' gsamti Passwort isch z'lang
+142 Passwortschutz isch aktiv. Passwort-Lengi:
+143 HOLD isch fertig am
+144 Passwortschutz wird erscht aktiv ab Lengi 21. Aktuelli Lengi:
+145 Connect beände mit CTRL-Z. BBS-Kommandos mit emene ! am Aafang iigäh
+146 Bitte dr AutoBIN - Transfer schtarte
+147 Benutzer het dr Zuegriff uuf sini Noochrichte geschperrt
+148 Witeri Info bekunsch mit
+149 Läsefääler
+
+150 Dr File-Server kennt folgendi Kommandos:
+151 ? und HELP           - dä Teggschd%rFHELP                - gitt die extärne Befähl uus
+152 DIR und LS und LS -l - zeigt s'Inhaltsverzaichnis
+153 LIST                 - zeigt s'Inhaltsverzaichnis mit Beschriibig
+154 CD                   - wäggslet s'Verzaichnis
+155 READ, GET, TYPE      - liist e Teggschddatei (TYPE: Halt nach jeder Siite)
+156 PUT und WRITE        - schribt e Teggschddatei
+157 7GET und BSGET       - liist e Binärdatei im 7Plus- oder BinSplit-Format
+158 BGET und BPUT        - liist oder schribt e Binärdatei im AutoBIN-Modus
+159 YGET und YPUT        - liist oder schribt e Binärdatei im YAPP-Modus
+160 EXIT, BYE und QUIT   - zrugg zur Mailbox
+161 Biischpil:
+162 CD /linux/packet     - wäggslet zum Verzaichnis /linux/packet
+163 CD ..                - goht ai Verzaichnis zrugg
+164 DIR *.zip -DATE      - zaigt alli Dateie mit *.zip noch Datum sortiert
+165 DIR -NAME            - zaigt s'Verzaichnis noch Näme sortiert (schtandard)
+166 LS -SIZE             - Kurzaazaig vom Verzeichnis, nach Gressi sortiert
+167 LIST                 - zaigt s'Inhaltsverzaichnis mit Inhaltsbeschriibig
+168 YGET test.zip        - liist test.zip im YAPP-Modus uus
+169 BGET 4               - liist Datei 4 im aktuelle Verzaichnis mit AutoBIN uus
+170 BPUT test.lzh        - schriibt e neui Datei test.lzh mit AutoBIN
+171 Achtig: Unix unterschaidet zwische GROSS- und Glaischriibig in Dateinäme!
+172 Verzaichnis wärde mit '/' trennt, nid mit '\' wie bi DOS etc.
+173 Näme deerfe lenger als 8+3 si, z.B. "dpbox-4.17-source.tar.gz"
+174 Alli Kommando kenne abkirzt wärde, z.B. BG fir BGET, L fir LIST.
+
+175 Sysop - Kommandos:
+176 MD und MKDIR         - neus Verzaichnis aalege
+177 CP und COPY          - Datei(e) kopiere
+178 MV und MOVE          - Datei(e) verschiebe/umbenenne
+179 RM und DEL           - Datei(e) lesche
+180 RD und RMDIR         - (leeres) Verzeichnis lesche
+181 INDEX                - neui Verzeichnis-Info schriibe
+
+182 Bitte d'YAPP-Uussändig schdarte
+183 #MSG   T Bytes An wer  @BBS    Vo wem Datum     Titel
+
+184 Warnig: MyBBS isch eventuell unbefugt verschtellt worde
+185 MyBBS isch umgsetzt worde uff:
+186  - do hetz no Poscht fir Di.
+
+187 YAPP-Uussändung isch gschtartet worde
+
+188 Letschts MyBBS
+189 gsetzt am

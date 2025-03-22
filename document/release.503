@@ -1,0 +1,162 @@
+Release Notes DPBOX v5.03
+
+Berlin, 19.10.96
+
+Release Notes dpbox v5.03.00 / 19.10.96
+
+Changes since v5.03.10 / 20.9.96
+
+p2c/p2c.h no more included. Many had problems with odd linux
+distributions with faulty p2c support.
+
+TPK / TSTHOST sf request mode (F< <msgnum>) now corrected,
+tested and running.
+
+TPK / TSTHOST unproto message list requests now corrected,
+tested and running. Needs a TNT version >= 0.9s
+
+Only displaying held messages (HOLD command) when not yet
+released by the release timer.
+
+EA5SW translated all helpfiles in spanish language. Gracias!
+
+MD2SF now also works in outgoing forward.
+
+changed startup check for 7plus. was always reported as "installed",
+even if not available. fixed.
+
+bin>7plus conversion: fixed some remaining bugs and features hi
+
+now recompiling message numbers when nightly house keeping reports disordered
+numbering. message numbers are no essential of dpbox, they are only used for
+TPK style message list broadcasting and TPK user forward requests.
+
+now trying to recompile message numbers if actual number has reached 998000 but
+message base holds less than 998000 messages. should help to avoid problems
+with fbb oriented clients. DPBOX counts up to 2.147.483.647 (signed long) and
+restarts with 10000 (offset needed to distinguish between fbb mode read command
+and dpbox mode read command). internally, DPBOX uses unix time format to order
+messages. of course handles also multiple messages per second. message numbering
+is always upward related to incoming time, if message base does not exceed the
+above signed long number of _stored_ messages (what should be impossible
+nowadays).
+
+PLEASE NOTE: when using high scrollback request values, continous transmission
+of unproto message list may exceed the timeout of a built-in TNC watchdog (mostly
+limiting PTT keying time to some 20 seconds). INCATIVATE IT (cut one pin of the
+R-C time base). else shutdown could even happen with 9k6 data speed.
+
+added a minimum time to exceed between two user unproto list requests. add
+parameter INTERVAL <seconds> to system/unproto.box. default is 20 seconds,
+minimum is 0.
+
+now allowing unproto broadcast of local user mails in message list broadcast.
+add parameter PRIVATES <ON|OFF> to system/unproto.box. default is OFF.
+
+now allowing unproto broadcast of sysop only mails in message list broadcast
+(messages sent to one-letter-boards). add parameter SYSOP <ON|OFF> to
+system/unproto.box. default is OFF.
+
+BTW: TPK style message forward (F< msgnum) will abort with a disconnect if
+user is not priviledged to read the requested message number. is there a
+way to signalise this to TPK/TSTHOST _without_ disconnecting?
+
+now "guessing" homebbs of unknown users. is extracted during
+reception of bulletins, is marked with "(guessed)" if you
+check it with U <CALL>. A user set HomeBBS command will override
+the guessed value. Guessed entries expire after one year of
+inactivity, user set entries after five years (much too high, but
+was requested by some sysops). Guessing is inhibited with
+GUESS_MYBBS OFF in config.box, GUESS_MYBBS ON allows (default)
+DPBOX does _not_ support forward of guessed entries in WP format,
+can't see any reason why to do so. DPBOX guesses for itself, thus
+limiting data base update message sizes. more than 90% of entries
+in european WP mails contain guessed entries. why?
+
+having 20000 or so entries in the forward list slowed down
+execution time of forward proposals a bit dramatically hi.
+Attempted to swap some MB of memory at every proposal ;))
+Now running cached, needs a maximum of 50kB of ram independently
+of the size of the fwd list, and providing a retarded internal
+acknowledge of changes of the forward list (also running cached).
+
+speeded up lookup of user database (HomeBBS etc.) at different points.
+
+fixed one error in premature abort of garbage collection: bbs forever was set
+to busy state, no user was allowed to log in. only happened when file system
+problems were encountered.
+
+TRANSFER and ERASE command now much faster (due to some of the above changes).
+
+fixed a little bug inhibiting fbb style resume mode in sf on offsets > 999999
+bytes.
+
+now resolving addresses such as dl8hbs.dl4ybg.db0gr.#bln.deu.eu.
+Users tend to install their clients this way, although it mostly
+is of no use. remind: DPBOX has an integrated autorouter. it will
+be looked up for such addresses. only if no path found, routing
+of address is restarted at the next less resolved address.
+
+adding two selections for a list command on the forward list
+(LIST X). appending a + shows only private mails in the selection,
+a : shows only bulletins. Don't moan about the syntax, I know
+that it looks stupid. Examples: "L X + < DK0MNL", "L X : 1-"
+etc. It is BTW really the LIST command, no special format.
+An ERASE on the fwd list will work as well. But better use
+the SETSF command for selected erase of fwd entries.
+
+german thebox system found one nasty hole in the security check
+of dpbox inputs. dpbox crashed when getting an input line in 
+german mybbs forward format that exceeded some hundred bytes.
+thebox crashed as well (after sending), that's justice ;)
+fixed.
+
+new macros for the prompt command: %e = cpu-type, %f = bogomips.
+BTW: the output of the system load percentages is faulty with newer
+linux versions. can anyone tell me what the values in /proc/loadavg
+denote? percents? per thousands? per hour? Not a major problem,
+but ranks in top 5 of most reported "bugs"... :)
+
+running a batch ended in a message "unknown channel (user)" when
+terminating the batch. caused no problem, now fixed.
+
+user can no more list the /temp7pl/ directory in file server
+
+TALK mode now should work also in file server. BTW: also in
+file server mode you can apply bbs commands with a leading "!",
+as within converse mode and talk mode.
+
+Mark changed wildcard expansion in dpbox' file system modes. Had
+troubles with selections as: ed*.txt, should work now
+
+changed string sort routine. discovered C strcmp() ;))
+
+now displaying the amount of erased/released messages of a single
+ERASE/RELEASE command.
+
+transferring a message out of board "D" (= the dirty area, messages
+held by the badword filter), you now HAVE to append the distribution
+area as with every other transfer command. A "T D 1 ALL" will stay local
+at your bbs! Look up the distribution area in the incriminated "profile"
+message or do a "LIST :" on board D to see the original distribution.
+Example: "T D 1 ALL@EU"
+In fact it's a bug, but it's almost a feature, and I believe I won't change
+that no more. Had good reasons to alter the previous coding.
+
+known bugs:
+===========
+
+badword filter won't check the subject line (in fact it does, but result gets
+lost)
+
+german network style TELL requests could be multiply delivered to a target
+DPBOX as bulletin ID is not saved. bug exists since ever. not a big problem.
+
+documentation is faulty concerning the "simplified format" for importing mails.
+forgot to instruct you to insert a first line with the "received from" - bbs.
+don't leave it blank! if it is a locally generated message, fill it up with
+the local bbs callsign (it _has_ to be an amateur radio callsign!).
+
+
+
+73 Joachim DL8HBS@DB0GR.#BLN.DEU.EU

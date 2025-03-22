@@ -1,0 +1,22 @@
+#! /bin/sh
+# dpcmd
+
+echo "Content-type: text/html"
+echo
+echo "<HTML><HEAD>"
+echo "<TITLE>DPBOX HTTP Interface: $QUERY_STRING</TITLE>"
+echo "</HEAD><BODY>"
+echo '<BODY BGCOLOR="#ffffff">'
+
+cat dptop.html
+
+echo "<PRE>"
+
+/installdir/dphttp "$QUERY_STRING" | \
+  /installdir/dpcodeconv
+
+echo "</PRE>"
+
+cat dpbottom.html
+
+echo "</BODY></HTML>"

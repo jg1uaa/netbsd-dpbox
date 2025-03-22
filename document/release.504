@@ -1,0 +1,131 @@
+Release Notes DPBOX v5.04.00
+
+Berlin, 04.12.96
+
+Release Notes dpbox v5.04.00 / 04.12.96
+
+
+
+Changes since v5.03.00 / 19.10.96
+
+
+
+In the release notes of v5.03.00 you read:
+>
+>TPK / TSTHOST sf request mode (F< <msgnum>) now corrected,
+>tested and running.
+>
+>TPK / TSTHOST unproto message list requests now corrected,
+>tested and running. Needs a TNT version >= 0.9s
+>
+Unfortunately, it was only a "green table" test. Claudio, IW0FBB, spent a lot
+of time and efforts in testing and programming to get it going under real
+radio conditions. Actually, unproto features should work the way as expected.
+Many thanks to Claudio!
+
+Ulli, DL5HBF wrote two patches:
+A file box/language/NEWS.<LAN> now only gets displayed once to a logging in
+user (at his first login after sysop changed NEWS.<LAN>).
+New config variable: When setting LOGINCHECK ON in box/system/config.box,
+every local user first has to set its HomeBBS and name before proceeding.
+Thank you, Ulli.
+
+Finally, output of fortune cookies is no more a problem ;) If a file
+"cookies.doc" is found in box/system/, randomly any of its cookies is
+returned when quitting the BBS. Of course you may put a symbolic link to
+any of the fortune - files in your linux distribution. Cookies (text chunks)
+are separated by "-" or "%" in first column of a new line. Backspaces and
+tabs are expanded by the output routine.
+
+When calling an external command, two more environment variables are set:
+DPBOXBOXDIR and DPBOXYAPPOUT.
+DPBOXBOXDIR is set to the base directory of the bbs.
+DPBOXYAPPOUT is set in analogy to DPBOXTEXTOUT, DPBOXTRANSOUT, DPBOXBINOUT:
+Any data stored in the file denoted by DPBOXYAPPOUT is sent in YAPP mode
+after termination of the external command. There is an important difference
+to the other output files: DPBOXYAPPOUT is only send if the other output
+files are _unused_!
+
+One hint: DPBOX optimizes output of external commands in DPBOXTEXTOUT,
+DPBOXBINOUT, DPBOXTRANSOUT, DPBOXYAPPOUT if only _one_ of those files is
+existing/used.
+If more than one is existing, they get spooled in whole to the internal
+spooler of the BBS (but see the above restriction for DPBOXYAPPOUT). This
+may fill up your swap file. Whenever you could, you should use only _one_
+of the output files for your purposes. Although in most cases using the
+spooler will not be a problem at all.
+
+New config variable: LAZY_MD2 ON forces MD2 password algorithm to only prompt
+with numbers, not with alphanumericals. This seems to be necessary for some
+MD2 user password clients, although there is no natural reason to do so.
+
+New config variable: PRIVATE_BADWORDFILTER ON|OFF defines if private mails
+shall be filtered by the badword filter, too. Default (starting with
+v5.04.00) is OFF, in former versions it was always ON.
+
+Badword filter now also scans message title.
+
+7PLUS detection on startup of the bbs is changed; did not work when DPBOX
+was not started with root permissions.
+
+Fixed an error that made PWMODE 10 really insecure. Anyway, PWMODE 11 is
+always the better choice for sysops.
+
+Correcting TRANSFER from board "D" to its original board: now, original
+distribution area is always appended. Forget the "known bugs" note of the
+last version
+
+Now nearly never switching back to the _empty_ default board, whatever command
+a user may have applied. Mainly was important for the handling of erroneously
+sent text lines by user clients (GP etc.) after reception of a 7plus or
+AutoBIN file.
+
+Now expanding names of external commands, too. If a command "7get" exists, for
+example, it will get called with 7g, 7ge, 7get. All external commands have to
+be _lowercase_ files (in box/run/) to get executed. Don't forget to arrange
+your box/system/commands.box correctly: an external command "new" has to be
+invoked prior to an external command "news"...
+
+One little fix in the badword filter: putting a space before or after the
+incriminated word inhibited filtering completely. Spaces are (at least in
+german language) needed to stop filtering "interaction" by a badword
+"action" by defining instead " action" (german language consists of many
+compositives). Use spaces at the start or end of a definition to unsharp
+the filter!
+
+When applying the "SERVER" command with no optional parameters, not only the
+installed mailing list servers are returned but also the last access to them.
+
+Now rejecting all invalid board names if proposed in forward. Example: *DX*
+Thanks again to Claudio, IW0FBB for the hint.
+
+Again changed wildcard expansion in DPBOX' file system modes. Now is using
+the (slow but effective) general wildcard expansion of the BBS, as used for
+search of messages, badword filter and similar. Should now _really_ avoid
+expansion of ".*.foo" to "*" as has happened before. Was painful in file
+server when applying a "RM *.foo" (what internally was expanded to ".*.foo"
+and then deleting all files in the current directory...).
+
+Recompiling fwd list when a sysop applies a LIST X command
+
+
+And some other minor changes.
+
+
+Known bugs:
+===========
+
+Still having problems when a private mail has to be converted from full binary
+AutoBIN format to 7plus format (in case of forwarding via non-binary-
+transparent message systems) and the mail _WAS_ in 7plus format, but
+erroneously sent in AutoBIN-mode by the originator (silly, but often
+happening). 7plus detects the mode of operation (encoding, decoding) by the
+suffix of the files name and resigns re-encoding in 7plus if the file was in
+7plus format before.
+Mail then gets lost. Me personally I will not change the bbs' behaviour, if
+you want to instead of teaching your users, you have all the sources. Send me
+the diff if you did.
+
+
+
+73 Joachim DL8HBS@DB0GR.#BLN.DEU.EU

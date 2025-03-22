@@ -1,0 +1,201 @@
+# dg2ggp/dk2go
+# geaendert: 22 65 84 155-157
+# 07.12.97
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 Ungueltiger Parameter.
+03 Ungueltiges Rufzeichen.
+04 Datei existiert nicht.
+05 Datei ist zu gross...
+06 Nachricht ist gespeichert
+07 Keine Berechtigung...
+08 Die Box ist leer...
+09 Fehler: Diese Datei enthaelt keinen Text.
+10 Achtung: Soeben traf eine Nachricht fuer Dich ein!
+11 Die Nachricht wird nicht angenommen.
+12 *** Sysop-Modus automatisch gestartet ***
+13 Keine Information ueber diese BBS gefunden
+14 Es gibt momentan keine Nachrichten fuer
+15 Info-File:
+16  Nr. Von    Datum    UTC    Bytes  Betreff
+17     # Absender Rubrik   Nr. Datum    @BBS   Bytes #LT Titel
+18 Die Nachrichten sind geloescht!
+19 Statistik:
+20 Rubrik    MSGs geloescht Bytes   gepackt  auf% #LT Level
+21 Bitte den eigenen Namen mit dem Befehl NAME angeben!
+22 Bitte die Heimatmailbox mit dem Befehl MYBBS angeben, z.B. MYBBS %m %r(ein Mailbox-Rufzeichen angeben, aber NICHT das eigene Rufzeichen!)
+23 ### Bitte eine Taste druecken ###
+24 ist dem System unbekannt.
+25 Keinen neuen Eintrag gefunden. Letzter Eintrag ist:
+26  Nr. Von    @BBS   #LT Datum     Bytes Pack  Betreff
+27  Nr. Von    Rubrik   @BBS   #LT #TL RxFrom Lev Datum  Bytes Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Autor  Rubrik   @BBS   BID/MID      #LT  Bytes T
+30 Kein Hilfetext vorhanden
+31 Kein Hilfetext fuer Sysop vorhanden
+32 Checkliste wird erstellt
+33 Box wird aufgeraeumt, bitte warten...
+34 @BBS ungueltig fuer User-Mails
+35 @BBS ist:
+36 OK, neue @BBS ist :
+37 Keine Nachricht im angegebenen Bereich
+38 OK, neue Lifetime ist:
+39 ungueltige Lifetimeangabe
+40 Funktion noch nicht implementiert
+41 CHECK abgebrochen
+42 Gesamt
+43 Freier Speicherplatz
+44 Frei auf Harddisk
+45 Keine Informationen gefunden
+46 Exportdatei kann nicht angelegt werden
+47 Bitte den Text eingeben fuer
+48 Ende mit ***END, /EX oder CTRL-Z, Abbruch mit CTRL-X:
+49 Bisherige Mindestlaufzeit nach
+50 Titel der Nachricht? >
+51 An wen soll die Nachricht gehen? >
+52 Herzlich willkommen
+53 Herzlich willkommen
+54 Letztes Login :
+55 Aktuelles Login :
+56 Danke, Deine Heimatmailbox ist
+57 Level geaendert
+58 Danke
+59 , Dein Name ist nun gespeichert
+60 Bitte gib Deinen Namen ein >
+61 Eingestellte Sprache ist
+62 Ungueltige Sprache
+63 Letztes Login ist gesetzt auf:
+64 Nur an der Konsole moeglich
+65 Send/Erase nur nach Password-Ueberpruefung (Kommando SYS, PRIV, MD2 oder MD5)
+66 Unterstuetzte Sprachen:
+67 Montag
+68 Dienstag
+69 Mittwoch
+70 Donnerstag
+71 Freitag
+72 Samstag
+73 Sonntag
+
+#{Ab v4.18}
+
+74 *** Auslesebeschraenkung ueberschritten. Max. kBytes pro Tag: 
+75 *** nicht ausgefuehrt: 
+76 Fernerase erzeugt
+77 Nachricht freigegeben
+78 Nachricht(en) entloescht
+79 Userinfo. NICHT LOESCHEN!
+80 *** Fehlerhafte Header-Checksumme:%r*** Wird beim naechsten Garbage geloescht%r*** oder sofort mit KILL
+81 letzte angezeigte: 
+82 Nachricht(en) transferiert:
+83 Kommentar eingeben:
+84 Ergebnis zu lang, max. 997 Zeichen
+85 Einstellungen fuer WantBoard und NotBoard geloescht
+86 Abbruch. Platte ist voll.
+87 *** keine SID gesendet
+88 Momentaner Connect-Highscore :
+89 geloescht
+90 *** falsches Passwort
+91 *** Passwort fehlt
+92 *** Zur Zeit kein S&F. Bitte spaeter nocheinmal versuchen.
+93 Ihr GP ist falsch konfiguriert. Definieren Sie
+94 in NAMES.GP als Box!
+95 File Server Modus aktiviert. Hilfe mit H(elp), Ende mit Q(uit)
+96 Kein Schreibzugriff auf dieses Verzeichnis. Benutze /incoming/
+97 Datei existiert bereits
+98 Datei kann nicht angelegt werden
+99 Text eingeben, Ende mit '.' in einer neuen Zeile
+100 Ungueltiger Dateiname
+101 Bitte eine kurze Dateibeschreibung eingeben. Ende mit '.' in einer neuen Zeile
+102 --- weiter mit <RETURN> , Abbruch mit <C> ---
+103 Es gibt kein Verzeichnis dieses Namens
+104 File Server wurde verlassen. Aktiver Modus: BOX
+105 Ungueltiges Kommando. Hilfe mit H.
+106 Datei kann nicht geoeffnet werden
+107 Benutzer in Auswahl
+108 Benutzer
+109 Kein Passwort. Verzoegerung der Weiterleitung bis zu (Stunden):
+110 Lokaler Transfer nach
+111 Lifetime dieser Nachricht (1..999 Tage, 0 = unendlich) :
+112 Keine Heimatmailbox des Empfaengers bekannt.
+113 Bitte manuell eine Ziel-BBS angeben (S DL1XY @ DB0XY)
+114 BID schon vorhanden, bitte eine andere waehlen
+115 Abonnenten des Mailing List Servers
+116 Erzeugen des Mailing List Servers
+117 Aufnehmen des Abonnenten
+118 des Mailing List Servers
+119 Mailing List Server kann nicht angelegt werden. Dateifehler.
+120 Loeschen des Abonnenten
+121 Loeschen des Mailing List Servers
+122 Liste installierter Mailing List Server:
+123 Info von
+124 Es trat ein Fehler im Forward zu Deiner Station auf:
+125 Routing laeuft bereits
+126 *** DP-Box Convers-Kommandos:
+127 /help     : dieser Text
+128 /chan <n> : waehle Kanal <n>
+129 /who      : Stationen und Kanaele
+130 /quit     : Convers beenden
+131 *** Kommandos koennen abgekuerzt werden
+132 *** BBS-Kommandos mit fuehrendem '!' aufrufen
+133 Aktiv auf diesem Kanal:
+134 Usercall Kanal
+135 *** Convers beendet
+136 *** nun auf Kanal
+137 *** ungueltige Kanalnummer
+138 Convers gestartet. /H fuer Hilfe. Du bist auf Kanal
+139 Password geloescht, Schutz aufgehoben
+140 Anwendung: PASSWORD <DeinPassword>
+141 Resultierendes Passwort zu lang
+142 Passwortschutz aktiv. Laenge:
+143 HOLD endet am
+144 Passwortschutz erst aktiv ab Laenge 21. Aktuelle Laenge:
+145 Connect beenden mit CTRL-Z. BBS-Kommandos eingeben mit fuehrendem !
+146 Bitte den AutoBIN - Transfer starten
+147 Benutzer hat den Zugriff auf seine Nachrichten gesperrt
+148 Weitere Info erhaeltlich mit
+149 Lesefehler
+
+150 Die File-Server - Kommandos:
+151 ? und HELP           - dieser Text
+152 DIR und LS und LS -l - zeigt Inhaltsverzeichnis
+153 LIST                 - zeigt Inhaltsverzeichnis mit Beschreibung
+154 CD                   - Verzeichnis wechseln
+155 READ, GET, TYPE      - Textdatei lesen (TYPE: mit Seitenstops)
+156 WRITE und PUT        - Textdatei schreiben
+157 7GET und BSGET       - Binaerdatei 7Plus-codiert bzw. BS-gesplittet lesen
+158 BGET und BPUT        - Binaerdatei im AutoBIN - Modus lesen oder schreiben
+159 YGET und YPUT        - Binaerdatei im Yapp - Modus lesen oder schreiben
+160 EXIT, BYE und QUIT   - zurueck zum Mailbox-Modus
+161 Beispiele:
+162 CD /linux/packet     - wechselt zum Verzeichnis /linux/packet
+163 CD .. oder CD.       - geht ein Verzeichnis zurueck
+164 DIR *.zip -DATE      - zeigt alle Dateien mit *.zip nach Datum sortiert
+165 DIR -NAME            - zeigt das Verzeichnis nach Namen sortiert (default)
+166 LS -SIZE             - Kurzanzeige des Verzeichnisses, nach Groesse sortiert
+167 LIST                 - zeigt das Inhaltsverzeichnis mit Inhaltsbeschreibung
+168 YGET test.zip        - liest test.zip im YAPP-Modus aus
+169 BGET 4               - liest Datei 4 im aktuellen Verzeichnis als AutoBIN aus
+170 BPUT test.lzh        - schreibt eine neue Datei test.lzh in AutoBIN - Modus
+171 Beachte: Unix unterscheidet zwischen GROSS- und Kleinschreibung in Dateinamen!
+172 Verzeichnisse werden mit '/' getrennt, nicht mit '\' wie bei DOS etc.
+173 Namen duerfen laenger als 8+3 sein, z.B. "dpbox-4.17-source.tar.gz"
+174 Alle Kommandos koennen abgekuerzt werden, z.B. BG fuer BGET, L fuer LIST.
+
+175 Sysop - Kommandos:
+176 MD und MKDIR         - neues Verzeichnis anlegen
+177 CP und COPY          - Datei(en) kopieren
+178 MV und MOVE          - Datei(en) verschieben/umbenennen
+179 RM, DEL und Erase    - Datei(en) loeschen
+180 RD und RMDIR         - (leeres) Verzeichnis entfernen
+181 INDEX                - neue Verzeichnis-Info schreiben
+
+182 Bitte die YAPP-Aussendung starten
+183 #MSG   T Bytes An      @BBS    Von    Datum     Titel
+
+184 Warnung: MyBBS eventuell unbefugt verstellt
+185 MyBBS wurde umgesetzt auf:
+186  - hier liegen noch Nachrichten fuer Dich.
+
+187 YAPP-Aussendung gestartet
+
+188 Letztes MyBBS
+189 gesetzt am

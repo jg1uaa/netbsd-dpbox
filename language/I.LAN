@@ -1,0 +1,198 @@
+# update DK2GO 2.5.98
+# 22 65 84 155-157
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 parametro non valido
+03 nominativo non valido
+04 file inesistente
+05 file troppo grande
+06 testo salvato
+07 accesso vietato
+08 la box e' vuota
+09 errore: questo file non contiene nessun testo
+10 messaggio(i) nuovo(i) per te!
+11 messaggio non accettato
+12 *** modalita' sysop attivata automaticamente ***
+13 non e' disponibile nessuna Info per il PBBS richiesto
+14 non ci sono messaggi per
+15 file di info:
+16  Nr. from   date     UTC    bytes  subject
+17     # Call     Board    Nr. date     @BBS   bytes #LT title
+18 messaggio(i) cancellato(i)!
+19 statistiche:
+20 board     MSGs deleted   bytes    packed   to% #LT level
+21 Inserisci il tuo nome usando il comando NAME <nome>
+22 Inserisci il tuo HomeBBS usando il comando MYBBS <tuo HomeBBS>, per esempio: MYBBS %n%r(di mettere un indicativo BBS, pero non il propio indicativo)
+23 ### Premi un tasto ###
+24 sconosciuto
+25 Nessun messaggio nuovo trovato. Ultimo messaggio:
+26  Nr. From   @BBS   #LT Date      Bytes Pack  Subject
+27  Nr. From   Board    @BBS   #LT #TL RxFrom Lev Date   Bytes Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Author Board    @BBS   BID/MID      #LT  Bytes T
+30 Non e' disponibile nessun file di help
+31 Non e' disponibile nessun file di help per il sysop
+32 Sto' creando le checklists
+33 Stiamo facendo manutenzione, riprova fra qualche minuto, grazie.
+34 @BBS non valido per il destinatario
+35 @BBS e':
+36 OK, il nuovo @BBS e':
+37 nessun messaggio nel campo specifico
+38 OK, il nuovo tempo di durata e':
+39 tempo di durata non valido
+40 funzione non ancora implementata
+41 CHECK annullato
+42 Totale
+43 Memoria libera
+44 Spazio libero sull'HD
+45 non e' stata trovata nessuna informazione
+46 non riesco a creare il file di export
+47 Inserisci il testo per
+48 end with *** END, /EX or CTRL-Z, abort with CTRL-X:
+49 inoltro nel piu' breve tempo ancora da
+50 Titolo del messaggio? >
+51 Destinatario? >
+52 Benvenuto
+53 Benvenuto
+54 Ultima connessione  :
+55 Presente connessione:
+56 OK, il tuo HomeBBS e'
+57 Livello modificato
+58 Grazie
+59 , il tuo nome e' stato registrato
+60 Inserisci il tuo nome >
+61 Lingua selezionata:
+62 Lingua non ancora supportata
+63 L'ultima connessione risale al:
+64 supportato soltanto dalla console
+65 Send/Erase soltanto dopo la convalida con password (comando SYS, PRIV, MD2 o MD5)
+66 Lingue supportate:
+67 Lunedi
+68 Martedi
+69 Mercoledi
+70 Giovedi
+71 Venerdi
+72 Sabato
+73 Domenica
+
+74 *** limite di lettura superato! Max. kBytes per giorno:
+75 *** comando di lettura sospeso:
+76 comando Erase dato da remoto
+77 rilasciato
+78 Messaggio ripristinato (Unerased)
+79 Info Utente. NON CANCELLARE!
+80 *** checksum dell'header non valido:%r*** sara' cancellato alla prossima manutenzione%r*** oppure immediatamente con il comando KILL
+81 ultimo listato:
+82 Trasferimento OK:
+83 Inserisci un commento:
+84 risulta troppo lungo, max. 997 caratteri
+85 Settaggi per Wantboard e NotBoard cancellati
+86 Annullato. Il disco non ha piu' spazio.
+87 *** SID mancante
+88 classifica corrente delle connessioni:
+89 cancellato
+90 *** password sbagliata
+91 *** password mancante
+92 *** Spiacente forwarding non disponibile al momento. Riprova piu' tardi.
+93 Stai usando una configurazione sbagliata nel tuo GP, corregila
+94 in NAMES.GP come un PBBS!
+95 File server attivato. Batti H per l'HELP, esci con EXIT o QUIT
+96 Scrittura non permessa in questa directory. Usa /incoming/
+97 Il file gia' esiste
+98 Errore nella creazione del file
+99 inserisci il testo, termina con un punto '.' nella linea successiva
+100 nome del file non valido
+101 inserisci una breve descrizione, termina con un '.' nella linea successiva
+102 --- premi <RETURN> per continuare, <C> per annullare ---
+103 directory inesistente
+104 file server disattivato, ritorno in modalita' PBBS
+105 Comando non valido. Chiedi aiuto digitando H.
+106 Errore nell'apertura del file
+107 utenti in selezione
+108 utenti
+109 Senza password. La spedizione potra' essere ritardata di ore :
+110 Trasferimento locale a
+111 Tempo di durata di questo msg (1..999 giorni, 0 = infinito) :
+112 Non e' conosciuto l'HomeBBS del destinatario
+113 Inserisci manualmente il PBBS di destinazione (es.: S IK0XY @ I0XY)
+114 BID ancora conosciuto. Selezionane un altro.
+115 Utenti abilitati al server per listare i messaggi
+116 Sto' creando un nuovo list server per i messaggi
+117 Inserisce un altro utente abilitato
+118 al server per listare i messaggi
+119 Non riesco a creare il mailing list server. Errore nel file.
+120 Sto' cancellando un utente (dal server mailing list)
+121 Sto' cancellando il server per il mailing list
+122 Lista dei servers installati per il mailing list:
+123 Info di
+124 Errore di forward durante la spedizione di un msg al tuo PBBS:
+125 ancora in routing
+126 *** Comandi di DPBOX in modo conversazione:
+127 /help     : questo testo
+128 /chan <n> : seleziona il canale <n>
+129 /who      : stazioni e canali
+130 /quit     : per terminare la conversazione
+131 *** i comandi possono essere abbreviati
+132 *** il comando di escape del PBBS si da' con un punto esclamativo '!'
+133 attivo su questo canale:
+134 canale nominativo utente
+135 *** conversazione terminata
+136 *** adesso sul canale
+137 *** numero di canale non valido
+138 conversazione attivata. /H per l'help. Sei sul canale
+139 Password cancellata
+140 Uso: PASSWORD <TuaPassword>
+141 la password risulta essere troppo lunga
+142 la password e' attiva, lunghezza:
+143 l'HOLD diventa inattivo al
+144 la password sara' attivata dopo il 21° car.; l'attuale lunghezza e':
+145 Termina la connessione con CTRL-Z. Il comando di escape e' '!'
+146 Inizio  del trasferimento in modo AutoBIN
+147 accesso ristretto per l'utenza sui propri files personali
+148 info piu' estese si ottengono con
+149 Errore durante la lettura del file
+
+150 Riepilogo dei comandi per il server dei files:
+151 ? e HELP             - Questo file di help
+152 DIR, LS e LS -l      - Mostrano la lista delle directory
+153 LIST                 - Mostra le directory con le loro descrizioni
+154 CD                   - Cambia la Directory
+155 READ, GET, TYPE      - Download di un file ASCII (TYPE: con paginazione)
+156 WRITE e PUT          - Trasferisce un file ASCII da o per il PBBS
+157 7GET e BSGET         - Upload un file binario con protocollo 7Plus e BS
+158 BGET e BPUT          - Trasferisce un file binario con protocollo AutoBIN
+159 YGET e YPUT          - Trasferisce un file binario con protocollo YAPP
+160 EXIT, BYE e QUIT     - Per ritornare in modalita' PBBS
+161 Esempi:
+162 CD /linux/packet     - per andare sulla directory /linux/packet
+163 CD ..                - torna indietro di una directory
+164 DIR *.zip -DATE      - mostra la lista dei files *.zip ordinata per data
+165 DIR -NAME            - mostra la lista dei files ordinata per nome (default)
+166 LS -SIZE             - mostra la lista dei files ordinata per dimensione
+167 LIST                 - mostra la lista del files con relativa descrizione
+168 YGET test.zip        - download del file test.zip in modo Yapp
+169 BGET 4               - download del file numero 4 in modo AutoBIN
+170 BPUT test.lzh        - upload di un file in AutoBIN denominato test.lzh
+
+171 Nota: Unix distingue fra lettere MAIUSCOLE e minuscole nei nomi dei files!
+172 Il segno di separazione fra directory e' un  '/', non un '\' come nel DOS.
+173 I nomi possono essere piu' lunghi di 8+3 caratt. es: "dpbox-4.17.tar.gz"
+174 I comandi dei servers possono essere abbreviati. YG per YGET, L per LIST.
+
+175 Comandi riservati al Sysop:
+176 MD e MKDIR           - Crea una Directory
+177 CP e COPY            - Copia un file
+178 MV e MOVE            - Muove/Rinomina un file
+179 RM e DEL             - Cancella un file
+180 RD e RMDIR           - Cancella una Directory
+181 INDEX                - Scrive una nuova Info per una Directory
+
+182 Pronto a ricevere il file con protocollo YAPP
+183 #MSG   T  Size To      @BBS    From   Date      Subject
+
+184 Attenzione: Il tuo MyBBS (HomeBBS) potrebbe essere falso
+185 MyBBS era :
+186  - ci sono ancora messaggi nuovi per te.
+
+187 Inizio della trasmissione del file con protocollo YAPP
+
+188 Il precedente MyBBS
+189 aggiornato

@@ -1,0 +1,75 @@
+# PA3GLJ/DK2GO 03.05.98
+#
+01 (H C L R D S E Q U T TI LO) >  cmd PSE ?
+02 Parameter?
+03 Call?
+04 File bestaat niet.
+05 File te groot.
+06 File gesaved.
+07 Geen Bevoegdheid.
+08 Geen post.
+09 ERROR: geen tekst!
+10 OPGELET: Post!
+11 Niets gesaved.
+12 *** Sysop-Mode automatisch gestart ***
+13 Geen BBS-Info 
+14 Geen berichten 
+15 Info-File:
+16  Nr. Van    Datum    UTC    Bytes  Onderw.
+17     # Call     Area     Nr. Datum    @BBS   Bytes #LT Onderw.
+18 OK, gewist!
+19 Statistiek:
+20 Area      MSGs gewist    Bytes   gecompr.  op% #LT Level
+21 AUB je Naam.
+22 AUB je HomeBBS. Bijvoorbeeld: MYBBS %m.(NIET uw eigen roepletters.)
+23 ### Druk een toets ###
+24 Niet bekend.
+25 Geen nieuws, laatste bericht :
+26  Nr. Van    @BBS   #LT Datum     Bytes Comp. Onderw.
+27  Nr. Van    Area     @BBS   #LT #TL RxFrom Lev Datum  Bytes Comp FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Auteur Area     @BBS   BID/MID      #LT  Bytes T
+30 Geen Helptekst! 
+31 Geen Helptekst! 
+32 Checklist gesaved.
+33 QRX...
+34 @BBS ongeldig voor User-Mails.
+35 @BBS is:
+36 OK, nieuwe @BBS is :
+37 Geen berichten.
+38 OK, nieuwe Lifetime is:
+39 Lifetime?
+40 Cmd onbekend!
+41 CHECK afgebroken.
+42 Totaal
+43 Vrij geheugen
+44 Vrij op Harddisk
+45 Geen informatie gevonden.
+46 Exportfile niet aangemaakt.
+47 Tekst voor
+48 ***END of CTRL-Z:
+49 Kortste tijdsduur naar 
+50 Titel ? >
+51 Voor wie ? >
+52 Welkom
+53 Welkom
+54 Laatste Login:
+55 Aktuele Login:
+56 OK, 
+57 OK
+58 Bedankt.
+59 , OK
+60 Naam ? >
+61 Gekozen Taal :
+62 niet aanwezig!
+63 Laatste Login :
+64 Alleen vanuit Console 
+65 Send/Erase alleen met Passwoord (SYS, PRIV, MD2 of MD5)
+66 welke Taal ? :
+67 Maandag
+68 Dinsdag
+69 Woensdag
+70 Donderdag
+71 Vrijdag
+72 Zaterdag
+73 Zondag
+

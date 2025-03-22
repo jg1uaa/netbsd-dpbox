@@ -1,0 +1,117 @@
+#! /bin/sh
+
+# Erzeugen von Korrekturfiles für im Fileserver vorhandene Dateien...
+# created : 15.1.98 Daniel Goetz DL3NEU
+# modified: 23.1.98 Axel Bauda DG1BBQ  modified for 7PLUS v2.19 
+
+if [ $DPBOXSERVERMODE = 0 ]; then
+  echo 'Only valid in fileservermode'
+  exit
+fi
+
+if [ ! "$1" ] || [ "$1" = '-h' ] || [ "$1" = '-?' ]; then
+  echo 'Usage: 7cor <filename|filenumber> [-MAIL]'
+  echo '       <filename> is the name of the original archive'
+  echo '       You are interactively prompted for uploading the .err file.'
+  echo '       -MAIL imports the .COR file locally to your user directory.'
+  exit
+fi
+
+fname=$(echo "$1" | sed -e s,'\.\./',, -e s,/~,, \
+                        -e s,~/,, -e s,'?',, -e s,'*',,)
+if [ $fname != $1 ]; then
+  echo 'Not a valid Filename'
+  exit
+fi
+ispath=$(echo "$1" | sed -e s,'^/',,)
+fn="$ispath"
+if [ "$ispath" != "$1" ]; then 
+  fname=${DPBOXSERVERROOT}${ispath}
+else
+  fname=${DPBOXSERVERROOT}${DPBOXSERVERPATH}$1
+fi
+if [ ! -e "$fname" ]; then
+  dummy=$(echo "$1" | tr -d '[:digit:]') 
+  fn="$DPBOXSELECTEDFILE"
+  fname="$DPBOXSERVERROOT$DPBOXSERVERPATH$DPBOXSELECTEDFILE"
+  if [ "$dummy" ] || [ ! "$DPBOXSELECTEDFILE" ] \
+                  || [ ! -e "$fname" ]; then
+    echo "unknown file: $1"
+    exit
+  fi
+fi
+echo "7plus correction for ${fn}"
+echo ''
+if [ "$2" = '-MAIL' ] || [ "$2" = '-mail' ]; then
+  import="1"
+fi
+
+errname="${fn}.err"
+
+mytempname=$DPBOXUSERCALL.$DPBOXUSERNUMBER.$RANDOM
+
+
+echo ' ' | cat >$errname
+echo 'Please upload your Error-Report now. The upload will be terminated'
+echo 'automatically. In case of an upload error abort upload by typing'
+echo '"***abort".'
+echo ''
+read
+endmark=$(echo "$REPLY" | tr a-z A-Z | sed -e s,'^ ',,)
+while [ "$endmark" != 'STOP_TEXT.' ] && [ "$endmark" != '***ABORT' ]; do
+  echo "$REPLY" | cat >>$errname
+  read 
+  endmark=$(echo "$REPLY" | tr a-z A-Z | sed -e s,'^ ',,)
+done
+echo "$REPLY" | cat >>$errname
+if [ "$endmark" != 'STOP_TEXT.' ]; then
+  rm -f $errname
+  echo 'Upload aborted! No correction file generated.'
+  exit 2
+fi
+
+if [ "$import" = "1" ]; then
+  # Header-Datei erstellen...
+  echo '@@top'               >> ${mytempname}.hdr
+  echo ${DPBOXBOXCALL}       >> ${mytempname}.hdr
+  echo ${DPBOXBOXCALL}       >> ${mytempname}.hdr
+  echo ${DPBOXUSERCALL}      >> ${mytempname}.hdr
+  echo ${DPBOXBOXCALL}	     >> ${mytempname}.hdr
+  echo ''                    >> ${mytempname}.hdr
+  echo ''                    >> ${mytempname}.hdr
+  echo "%n"                  >> ${mytempname}.hdr
+  echo 'X-Info: Mail automatically created @'${DPBOXBOXCALL} \
+                             >> ${mytempname}.hdr
+  echo ''                    >> ${mytempname}.hdr
+  echo '@@bottom'            >> ${mytempname}.hdr
+  echo ''                    >> ${mytempname}.hdr
+  echo "73 de $DPBOXBOXCALL" >> ${mytempname}.hdr
+
+  7plus -q -y $errname ${DPBOXSERVERROOT}${DPBOXSERVERPATH} \
+        -tb ./${mytempname}.hdr -u import.${mytempname}
+
+  rm -f $errname
+  back=$?
+  if [ $back != 0 ]; then
+    echo 'Error '$back' during .COR file generation by 7plus.'
+    rm -f *$mytempname*
+    exit
+  fi
+  mv import.$mytempname* ${DPBOXBOXDIR}newmail/
+  rm -f *$mytempname*
+  echo 'Done. Mail import will commence within 1 min. Please stand by.'
+else
+  7plus -q -y $errname ${DPBOXSERVERROOT}${DPBOXSERVERPATH} -u ${mytempname}
+  back=$?
+  rm -f $errname
+  if [ $back != 0 ]; then
+    echo 'Error '$back' during .COR file generation by 7plus.'
+    rm -f $mytempname*
+    exit
+  else
+    cat $mytempname* > $DPBOXTEXTOUT
+    rm -f $mytempname*
+    echo ''
+    echo ''
+  fi
+fi

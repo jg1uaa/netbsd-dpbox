@@ -1,0 +1,58 @@
+Berlin, 15.05.97
+
+
+This folder contains the cgi-interfacing programs for DPBOX. Other scripts
+for http access have to be installed in the cgi-bin/ directory of your
+http server.
+
+These files are not placed therein because they may be useful for any kind
+of remote access to DPBOX and therefore have no direct relationship to a http
+cgi extension.
+
+12.09.1999: The dpgate, dpcodeconv and dpputlinks sources are now in the source/
+directory.
+
+Please check out the "dpgate" executable. It offers multiple usability:
+
+When called without any arguments, it asks for your callsign and your DPBOX
+password, and, if accepted, opens a connection to DPBOX. You can use it to
+make DPBOX accessible via telnet or modem logins, or even for a quick sysop
+login on the local console.
+
+Additionally, it supports the http-cgi interface of DPBOX or any kind of
+scripts you write.
+
+The following options are available when calling "dpgate":
+
+-v                : if first option returns version information
+-u <callsign>     : the callsign used to connect to DPBOX
+-s <pathname>     : the full path name of the DPBOX socket to be connected
+-c <command>      : a single command to be executed by DPBOX. The "dpgate"
+                    will finish after execution, this is a very easy way to
+                    invoke DPBOX queries in any kind of scriptings or
+                    programs. If your command contains spaces, embed it in
+                    "" (-c "LIST BBS 2-10").
+-i                : interpretation of cgi translation sequences in -c commands
+                    (-i -c "this%20is%20a%20test" -> -c "this is a test")
+
+Please note that we use a tricky way to allow "dpgate" to access to the
+DPBOX socket: The socket is accessible only for the owner of the DPBOX
+process. To allow "dpgate" to connect to when called from users inequal to
+that one starting DPBOX, we set the "s" flag with "chmod u+s dpgate". This
+moves access control for the DPBOX socket to the access rights of the "dpgate"
+process. This is necessary because of httpd otherwise would not be able to open
+the socket via "dpgate". Owner of "dpgate" has to be the same as the one of
+DPBOX, of course.
+
+-----
+
+A sample script, named "dpc", e.g.:
+
+#! /bin/sh
+dpgate -u dl1xyz -s /var/run/dpbox -c "$*"
+#end of script
+
+When calling "dpc c < DPBOX", you get returned all message list items to
+stdout containing the word "DPBOX" in the subject line.
+
+Have fun with it, see you, 73 Joachim Schurig, DL8HBS

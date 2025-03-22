@@ -1,0 +1,21 @@
+#! /bin/sh
+# dplist
+
+echo "Content-type: text/html"
+echo
+echo "<HTML><HEAD>"
+echo "<TITLE>DPBOX message list</TITLE>"
+echo "</HEAD><BODY>"
+echo '<BODY BGCOLOR="#ffffff">'
+
+cat dptop.html
+
+echo "<PRE>"
+/installdir/dphttp "L $QUERY_STRING" | \
+  /installdir/dpcodeconv | \
+  /installdir/dpputlinks -list
+echo "</PRE>"
+
+cat dpbottom.html
+
+echo "</BODY></HTML>"

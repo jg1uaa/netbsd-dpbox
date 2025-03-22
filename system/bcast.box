@@ -1,0 +1,15 @@
+# the PACSAT-BBS-Broadcast definition structure. Consult the manual!
+
+{
+QRG 438300
+# TXPATH sets the "via-field" in the ax.25 header. Mostly, omit this parameter
+# TXPATH DB0BLO
+MSGSEL 0
+LEVEL 1
+FILETYPE 0
+SLICE 60
+SLICE 120
+SLICE 300
+SLICE 86400
+}
+

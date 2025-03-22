@@ -1,0 +1,90 @@
+<HTML><HEAD><TITLE>DPBOX Index</TITLE></HEAD>
+<BODY BGCOLOR="#c0c0c0" text="#000000" link="#0000FF" vlink="#FF0000">
+<HR size=10 noshade>
+<CENTER><H1>DPBOX Main Page</H1></CENTER>
+<HR size=10 noshade>
+<BR>
+<CENTER><TABLE WIDTH=95% BORDER=6 CELLSPACING=10 CELLPADDING=20><TR>
+<TD WIDTH=33%>
+<FONT SIZE=5>Show messages :</FONT>
+<BR><BR>
+<FONT SIZE=4>
+Show last <A HREF="/cgi-bin/dpcheck?50">50</A><BR>
+Show last <A HREF="/cgi-bin/dpcheck?100">100</A><BR>
+Show last <A HREF="/cgi-bin/dpcheck?250">250</A><BR>
+Show last <A HREF="/cgi-bin/dpcheck?500">500</A><BR>
+Show last <A HREF="/cgi-bin/dpcheck?750">750</A><BR>
+Show last <A HREF="/cgi-bin/dpcheck?1000">1000</A><BR>
+Show last <A HREF="/cgi-bin/dpcheck?2500">2500</A><BR>
+Show last <A HREF="/cgi-bin/dpcheck?5000">5000</A><BR>
+<BR>
+Preselected <A HREF="boxrub.html">Boards</A><BR>
+Choose from all <A HREF="/cgi-bin/dpdir?i">current boards</A><BR>
+</FONT>
+</TD>
+<TD WIDTH=33%>
+<FONT SIZE=5>Further calls :</FONT>
+<BR><BR>
+<FONT SIZE=4>
+DPBOX <A HREF="/cgi-bin/dpcmd?h%20">commands</A><BR>
+DPBOX <A HREF="/cgi-bin/dpcmd?v%20+">version</A><BR>
+User with <A HREF="/cgi-bin/dpcmd?u%20@DB0XYZ">MYBBS</A> DB0XYZ<BR>
+Current <A HREF="/cgi-bin/dpcmd?u%20u">system load</A> of DPBOX<BR>
+Currently logged in <A HREF="/cgi-bin/dpcmd?u%20path">users</A><BR>
+<BR><BR><BR><BR>
+Current <A HREF="/cgi-bin/dpcmd?ti%20">time</A> (UTC)<BR>
+</FONT>
+</TD></TR></TABLE></CENTER><BR><HR SIZE=3>
+<BR>
+<CENTER><TABLE WIDTH=95% BORDER=0><TR><TD  WIDTH=50%>
+<CENTER><FONT SIZE=5>Check for message titles </FONT> ( max. 50 characters )</CENTER>
+<FORM action="/cgi-bin/dpsertit" method=get>
+<STRONG>Search phrase : </STRONG>
+<INPUT name="pattern" size=23 maxlength=50> &nbsp
+<INPUT type=submit value="Search">
+</FORM>
+</TD><TD WIDTH=50%>
+<CENTER><FONT SIZE=5>Full text search </FONT> ( max. 50 characters )</CENTER>
+<FORM action="/cgi-bin/dpftr" method=get>
+<STRONG>Search words :</STRONG>
+<INPUT name="pattern" size=23 maxlength=50> &nbsp
+<INPUT type=submit value="Search">
+</FORM>
+</TD></TR></TABLE></CENTER>
+<BR>
+<CENTER><TABLE WIDTH=95% BORDER=0><TR><TD WIDTH=50%>
+<CENTER><FONT SIZE=5>Prefix database</FONT></CENTER>
+<FORM action="/cgi-bin/dpprefix" method=get>
+<STRONG>Enter call prefix : </STRONG>
+<INPUT name="call" size=6> &nbsp
+<INPUT type=submit value="Show">
+</FORM>
+</TD><TD WIDTH=50%>
+<CENTER><FONT SIZE=5>User database</FONT></CENTER>
+<FORM action="/cgi-bin/dpuser" method=get>
+<STRONG>Enter user call :</STRONG>
+<INPUT name="call" size=6> &nbsp;
+<INPUT type=submit value="Show">
+</FORM>
+</TD></TR></TABLE></CENTER>
+<BR>
+<CENTER>
+<FONT SIZE=5>QTH locator calculations</FONT>
+<FORM action="/cgi-bin/dploc" method=get>
+<STRONG>Loc 1 : </STRONG> &nbsp
+<INPUT name="loc1" size=6> &nbsp;
+<STRONG>Loc 2 : </STRONG> &nbsp
+<INPUT name="loc2" size=6> &nbsp
+<INPUT type=submit value="Show">
+</CENTER>
+<BR>
+<CENTER>
+<STRONG>
+Searching for message titles and full text search may return hughe amounts of data!
+</STRONG>
+</CENTER>
+<BR><HR>
+<A HREF="index.html"><BIG><CENTER>Back to start page</CENTER></BIG></A>
+<BR><BR>
+
+</BODY></HTML>

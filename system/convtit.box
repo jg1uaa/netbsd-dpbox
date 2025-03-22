@@ -1,0 +1,13 @@
+# this file helps transferring mails into specific boards AND
+# limiting the lifteime of incoming mails according to some keywords
+# that you define
+#
+# & is a token for the senders callsign
+# 
+
+*        CLOVER   100 CLOVER
+*        SUCHE      7 SCHALTP
+*        SUCHE      7 UNTERL
+*        Z          1 &DL9XYZ
+*        WAMPES   365 WAMPES
+

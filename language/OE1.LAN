@@ -1,0 +1,200 @@
+# oe1dmb/oe3klu/dg2ggp/dk2go
+# 11 65 84
+# 2.5.98
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 Parameta passt ned.
+03 Des Rufzeichen gibt's ned.
+04 Datei gibt's ned.
+05 Vüzuvü Daten in dera Datei...
+06 Passt, Nochricht is g'speichert
+07 Des derfst' ja goar ned...
+08 De Box ist lahr, nix mehr do...
+09 Do passt wos ned, in der Datei steht nix.
+10 Pass' auf: Grod is a Nochricht fuer Di kumma!
+11 De Nochricht nimm i Da ned oh.%rUser ist bereits ausgeloggt oder Mail wurde abgebrochen!
+12 *** Dir geht's guat, bist automatisch im Sysop-Modi ***
+13 Ueber "de" Box waas i nix.
+14 Tuat Laad, zur Zeid kane Nochricht`n fuern
+15 Info-File:
+16  Nr. Von    Datum    UTC    Bytes  Betreff
+17     # Obsenda  Rubrik   Nr. Datum    @BBS   Bytes #LT Titel
+18 De Nochricht`n san wegga!
+19 Stoatistik:
+20 Rubrik    MSGs g'loescht Bytes   gepackt  auf% #LT Level
+21 Kumm, stöh Di vur mit'n "NAME" Befoeh !
+22 Wennst Deine Nochricht`n in Dein`a Mailbox hobn wuest -> "MYBBS" Befoeh !
+23 ### Geh, druck a Tast`n ###
+24 Kenn i ned ! Mog i ned !!!
+25 Nix neichs g'funden. Des Letzte is:
+26  Nr. Von    @BBS   #LT Datum     Bytes Pack  Betreff
+27  Nr. Von    Rubrik   @BBS   #LT #TL RxFrom Lev Datum  Bytes Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Autor  Rubrik   @BBS   BID/MID      #LT  Bytes T
+30 Dafuer gibt's ka Huef
+31 Fuern Sysopa kan Huefstext, der muaß sowas wissn
+32 Checklisten wird grad g'mocht
+33 Box wird zaumgrammt, woart a bissl...
+34 @BBS guet ned für User-Mails
+35 @BBS is:
+36 Passt, neiche @BBS is :
+37 Wo Du manst find i kane Nochricht`n
+38 A guat, neiche Lifetime is:
+39 Do hot's wos: ungueltige Lifetimeaungob`n
+40 De Funktion gibt's no ned
+41 CHECK obbroch`n
+42 Zusauman
+43 Freia Speichaplotz
+44 Frei auf da Harddisk
+45 Kane Informationen doda
+46 Exportdatei kann i Da ned anlegn
+47 Na dann schreib amoi dei Text`l fuer
+48 Ende mit ***END, /EX oder CTRL-Z, Abbruch mit CTRL-X:
+49 Bisherige Mindest-transportzeit noch
+50 Schreib a gscheide Ueberschrift ! >
+51 Wer soll de Nochricht kriag`n ? >
+52 Griass Di
+53 Serwas Hawara
+54 Letztes Login woar :
+55 Aktuelles Login is :
+56 Daunk Da, Dei Heimatmailbox kenn i jetzt a
+57 Dienstgrad-Level g'aendert
+58 Daunke
+59 , Jetzt waas i a wiast haast
+60 Geh, sog ma Dein Naumen >
+61 Eing'stoede Sproch is jetzda 
+62 Des is ka Sproch
+63 Letztes Login is jetztda:
+64 Des gibt's aber nur an der Konsoi`n
+65 Send/Erase nur nach aner Password-Ueberpruefung %r(Kommando SYS, PRIV, MD2 oder MD5) [AETSCH]
+66 De Sproch`n kaun i:
+67 Mondog
+68 Diensdog
+69 Midwoch
+70 Donnersdog
+71 Freidog
+72 Samsdog
+73 Sunndog
+
+74 *** De Ausleseb'schraenkung is ueberschritten. Max. kBytes pro Tag: 
+75 *** Des hob i ned daun: 
+76 Fernerase g'mocht
+77 Nochricht freig'eben
+78 Nochricht(en) san wieda do
+79 Usarinfo. DES LOESCH'ST NED!
+80 *** Foehlahofte Header-Checksumme:%r*** Des wird beim naechsten Garbage g'loescht%r*** oda glei' mit KILL
+81 letzte aunzagte: 
+82 Nochricht(en) transfariert:
+83 Hau in Kommentar eina:
+84 Ergebnis is z' lang, max. 997 Zeich'n
+85 Einstoellungan fuer WantBoard und NotBoard g'loescht
+86 Obbruch. Plott'n ist voi.
+87 *** kane SID g'sendet
+88 Momentaner Connect-Highscore :
+89 g'loescht
+90 *** foisches Passwort
+91 *** Passwort foehlt
+92 *** Zur Zeit kan S&F. Probier's spaeda noamoi.
+93 Geh, konfigurier' dei GP g'scheit. Schreib de
+94 in de NAMES.GP ois Box eina!
+95 File Server Modus is jetztda aktiv. Huelfe mit H(elp), FHELP, Aus is mit Q(uit)
+96 Ka Zuagriff zum Schreiben auf des Vazeichnis. I nimm' /incoming/
+97 De Datei gibt's scho, suach an audan Naum
+98 De Datei konn I Da ned aunleg'n
+99 Text'l einahaun, Ende mit '.' in aner neichen Zeul'n
+100 Ungueltiga Dateinaum
+101 Schreib a kurze B'schreibung ueber de Datei. Ende mit '.' in aner neichen Zeul'n
+102 --- weida mit <RETURN> , Obbruch mit <C> ---
+103 Es gibt ka Vazeichnis mit dem Naum
+104 File Server host' valoss'n. Jetzt is aktiv: BOX
+105 Kommando guet ned. Huelfe gibt's mit H.
+106 Datei kaun I ned aufmoch'n
+107 Da Benutza is in Auswohl
+108 Benutza
+109 Ka Passwoert'l. Die Weidaleitung vo deine Nochricht'n kaun si vazoegern bis zu (Stunden):
+110 Lokala Transfoer noch
+111 Gib de Lifetime ein (1..999 Tage, 0 = unendlich) :
+112 De Heimat-Box vom Empfaenga kenn i ned.
+113 Gib de Box soeba aun (S OE1XYZ @ OE1XYX)
+114 BID scho do, varwend a aundare
+115 De Abonnent'n von dem Server san
+116 I moch an Mailing list server
+117 I nimm den Abonnent'n auf
+118 von dem Mailing list server
+119 Den Mailing List Server kaun i ned aunleg'n. Dateifoehlar.
+120 I loesch den Abonnent'n
+121 I loesch den Mailing List Servers
+122 Diese Mailing List Server san installiert:
+123 Info vom
+124 Beim Forwarden zu Deina Station is a Foehla auftret'n:
+125 Des Routing lauft eh scho
+126 *** DP-Box Convers-Kommandos:
+127 /help     : der Text doda
+128 /chan <n> : woehl' an Kanoeh <n>
+129 /who      : Stationan und Kanoeh
+130 /quit     : Vorbei mim plappern
+131 *** De Kommandos kaennan o'kiarzt wearn
+132 *** BBS-Kommandos kaun ma mit an '!' davuar aufruaf'n
+133 Aktiv auf dem Kanoeh:
+134 Usercall Kaoeh
+135 *** Convers O'draht
+136 *** Jetztda auf Kanoeh
+137 *** De Kanoehnumma gibt's ned
+138 Convers aungwurf'n. /H fuer Huelf. Du bist auf'n Kanoeh
+139 Passwoert'l g'loescht, Jetzt haum Deine Nochricht'n kan Schutz mehr
+140 Aunwendung: PASSWORD <DeiPasswoert'l>
+141 Des Passwort wos si do draus ergeben dadert is scho z' long
+142 Passwortschutz jetztda aktiv. Laenge von dei'm Passwoert'l:
+143 Mit'n HOLD is es vorbei am
+144 Passwortschutz gibt's erst waun's Woert'l 21 Zeich'n hot. Aktuelle Laenge:
+145 Connect o'drahn mit CTRL-Z. BBS-Kommandos kaunst' eingeben mit an '!' davuar
+146 Start' Dein AutoBIN - Transfer
+147 Benutza mog ned waun ma in seine Nochricht'n liest
+148 Mehr erfoahrst' mit
+149 Foehla beim Lesen
+
+150 De File-Server - Kommandos:
+151 ? und HELP           - der Text doda
+152 DIR und LS und LS -l - zagt da a Inhoitsverzeichnis
+153 LIST                 - zagt da a Inhoitsverzeichnis mit B'schreibung
+154 CD                   - In a aundars Verzeichnis hupf'n
+155 READ, GET, TYPE      - Les'n von aner Textdatei (TYPE: mit Seitenstops)
+156 WRITE und PUT        - Schreib'n von aner Textdatei
+157 7GET und BSGET       - Les'n von aner Binaerdatei 7Plus-codiert oda BS-gesplittet lesen
+158 BGET und BPUT        - Les'n oda schreib'n von aner Binaerdatei mit AutoBIN
+159 YGET und YPUT        - Les'n oda schreib'n von aner Binaerdatei im Yapp - Modus
+160 EXIT, BYE und QUIT   - Z'ruck in de Mailbox-Modus
+161 Beispuehle:
+162 CD /linux/packet     - hupft ins Verzeichnis /linux/packet
+163 CD .. oder CD.       - hupft a Verzeichnis z'ruck
+164 DIR *.zip -DATE      - zagt Da olle Datei'n mit *.zip noch'n Datum sortiert
+165 DIR -NAME            - zagt Da des Verzeichnis noch'n Nauman sortiert (default)
+166 LS -SIZE             - Kurzaunzeige vom Verzeichnis, noch da Graess' sortiert
+167 LIST                 - zagt Da des Inhoitsverzeichnis mit Inhoitsb'schreibung
+168 YGET test.zip        - les'n von test.zip im YAPP-Modus
+169 BGET 4               - liest Datei 4 im aktuellen Verzeichnis ois AutoBIN aus
+170 BPUT test.lzh        - schreibt a neiche Datei test.lzh im AutoBIN - Modus
+171 Aufpass'n: Unix maucht oan Unterschied zwisch'n GROSS- und Klanschreibung in Dateinoman!
+172 de Verzeichnisse wearn mit '/' 'trennt, ned mit '\' wia beim DOS etc.
+173 Nauman duerf'n laenga ois 8+3 sei, z.B. "dpbox-4.17-source.tar.gz"
+174 Olle Kommandos kaennan o'kiarzt wearn, z.B. BG fuer BGET, L fuer LIST.
+
+175 Sysop - Kommandos san:
+176 MD und MKDIR         - neiches Verzeichnis aunleg'n
+177 CP und COPY          - Datei(en) kopier'n
+178 MV und MOVE          - Datei(en) varschiab'n/umb'nennan
+179 RM, DEL und Erase    - Datei(en) loesch'n
+180 RD und RMDIR         - (leeres) Verzeichnis entfernan
+181 INDEX                - neiche Verzeichnis-Info schreib'n
+
+182 Geh', start' dei YAPP-Aussendung
+183 #MSG   T Bytes An      @BBS    Von    Datum     Titel
+
+184 Aufpass'n: MyBBS koennt von an aundern verstoellt wor'n sei
+185 MyBBS is umg'setzt wor'n auf:
+186  - I hob no msgs fuer Di do.
+
+187 YAPP-Aussendung aung'fongt
+
+188 Letztes MyBBS
+189 g'setzt wor'n am
+

@@ -1,0 +1,17 @@
+# In dieser Datei sind Rufzeichen von WNOS-(TCP/IP) - S&F-Partnern
+# enthalten. Dies dient der Protokollerkennung durch die TCP/IP-
+# Software. Der Text nach dem Call wird sofort nach dem Connect
+# gesendet (geht auch durch den Zeichenwandler...). Es wird mindestens
+# immer ein <CR> gesendet, auch wenn nichts hinter dem Call steht.
+# Man kann diese Routine natuerlich auch mit nicht-tcp/ip-Systemen
+# einsetzen, wenn es denn sinnvoll erscheint...
+#
+# In this file you may enter callsigns which require the so-called
+# protocol recognition frame when connecting. This is what TCP/IP
+# bbs'es usually do...
+# The word(s) following the callsign will be transmitted instead of
+# the default single CR
+#
+DL9SAU
+DB0TUD bbs
+

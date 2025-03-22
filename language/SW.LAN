@@ -1,0 +1,202 @@
+# dl3gbf/dg2ggp
+# 24.04.98
+# dg2ggp Zeile 84 ->997, 22
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 Was soll ich 'etzt mit dem Befehl machae ? - des kenn ich ittae
+03 Des Ruaefzeichae ischt ittae gueltig
+04 Diae Datei exischtiert ittae
+05 Diae Datei ischt viel z' gross
+06 Diae Nachricht ischt g'schpeichert
+07 Koi Berechtigung...                              
+08 Diae Box ischt leer...
+09 Faehler: Diae Datei enthelt koin Tekscht.
+10 'etzt guck do na, do send grad Nochrichtae fer Dich kommae !
+11 Diae Messitsch wird ittae a'gnommae!%rUser ischt breits ausgloggt oder Mail wurd abgebrochae!
+12 *** Sysop-Modus automatisch g'schtartet ***
+13 Koi Information ueber diae BBS g'fundae
+14 Im Moment send koine Nochrichtae do fer
+15 Info-File:
+16  Nr. Vo Wem Wann     alsUTC Baits  Iberschrift
+17     # Wer      Wo-Na    Nr. Wann     @BBS   Baits #LT Iberschrift
+18 Diae Nochrichtae send g'lescht!
+19 Schdadisdik:
+20 Rubrik    MSGs g'lescht Bytes   ei'packt  auf% #LT Level
+21 Gib emmol Dein Namae mit'em NAME - Befehl ei
+22 Gib emmol dein Heimatmeilbox mit'em MYBBS - Befehl ei, z.B. MYBBS %m %r Aber nitt dei eignes Call!
+23 ### Druck ei'fach uff'en Knopf uff Dei're Taschtatur ###
+24 des kennt des Sischtem ittae
+25 Koin neiae Ei'trag gfundae. 's letzschte ischt:
+26  Nr. Von    @BBS   #LT Wann      Baits Pack  Iberschrift
+27  Nr. Von    Rubrik   @BBS   #LT #TL RxFrom Lev Wann   Baits Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Autor  Rubrik   @BBS   BID/MID      #LT  Baits T
+30 Koin Hilfetekscht do 
+31 Koin Hilfetekscht fer dae Sysop do
+32 I' mach g'schwid ae Tschecklischte
+33 Box wird aufg'rommt, en kleinae Moment...
+34 @BBS u'giltig fer User-Mails
+35 @BBS ischt:
+36 Alles Banane, Dei neie @BBS ischt :
+37 Koine Nochrichtae im a'gaebenae Bereich
+38 Alles Banane, diae nei Laeb'nszeit ischt:
+39 u'giltige Laeb'nszeit - Angabe
+40 Den Befehl ka' ich no ittae
+41 Ich hab 'etzt uff'ghert mit'em Tscheck
+42 Aelles
+43 Freiae Schpeicherblatz
+44 Frei uff dae Feschtplattae
+45 Koine Informationen g'fundae
+46 Exportdatei ka ittae a'gleit werrae
+47 'etzt fang mol aah mit schreibae fer
+48 Am End' schreibscht ***END, /EX oder CTRL-Z, Abbrechae mit CTRL-X:
+49 Mindeschtlaufzeit bis 'etzt noch
+50 Ond wi soll des 'etzt aelles hoissae >
+51 A' wen soll diae Messitsch 'etzt g'schickt werrae ? >
+52 Mogaeaeaeaeaeaeaehn
+53 Mogaeaeaeaeaeaeaehn
+54 's letscht' mol warscht i dae Box am :
+55 's Aktuell' Login :
+56 Dangeeeeeee, Dei' Heimatmeilbox ischt
+57 Level g'aendert
+58 Dangeeeeeeee
+59 , Dein Nammae ischt 'etzt g'schpeichert
+60 Gib ammol Dein Nammae ei' >
+61 'etzt schwaetzae mer Schwaebisch >
+62 Diae Schproch kenn ich ittae
+63 S'letscht Login ischt g'setzt uff:
+64 Blos a' dae  Konsole meglich
+65 Ausfiaerig blos noch Password-Ieberpriaefung (SYS, PRIV, MD2 oder MD5-Kommando)
+66 Diae Schprochae kenn ich :
+67 Maendig
+68 Zeischdig
+69 Mittwoch
+70 Donnerschdig
+71 Freidig
+72 Samschdig
+73 Sonndig
+
+#(Ab v4.18)
+
+74 *** Auslaesebeschraenkung iberschrittae . Max. kBytes am Tag:
+75 *** ittae ausg'fuehrt:
+76 Ferneras g'macht
+77 Naechrichtae freigae
+78 Nochricht(ae) entloescht
+79 Userinfo. ITTAE LOESCHAE!
+80 *** Fehlerhafte Header-Checksumme:%r*** Wird beim naeschstae Garbage g'laescht%r*** oder glei mit KILL
+81 letschte a'zoaegte:
+82 Nochricht(ae) transferiert:
+83 Kommentar ei'gaee:
+84 's Ergebnis ischt z'lang, max. 997 Zeichae
+85 Ei'schtellungae fuer WantBoard ond NotBoard g'laescht
+86 Abbruch. D'Feschtplattae ischt voll.
+87 *** koine SID g'sendet
+88 Dae Augeblicklich' Connect-Highscore :
+89 g'laescht
+90 *** falsches Passwort
+91 *** Passwort fehlt
+92 *** Im Moment koin S&F. Probier's halt schbaeter no-aemol.
+93 Dei GP ischt falsch konfiguriert. Definier's halt
+94 in NAMES.GP als Box!
+95 File Server Modus aktiviert. Hilfe mit H(elp), Ende mit Q(uit)
+96 Kein Schreibzaeugriff auf des Vozeichnis. Probier's mit /incoming/
+97 Diae Datei geit's scho
+98 Datei kah ittae a'gleit werrae
+99 Tekscht ei'gaee, Am End schreibscht '.' in ae-rrae neuae Zeilae
+100 Der Dateinamae ischt u'gueltig
+101 Gib ammol ae kurze Dateibeschreibung ei'.Am End' schreibscht '.' in ae-rrae neuae Zeilae
+102 --- weiter mit <RETURN> , Abbruch mit <C> ---
+103 's geit koi Vozeichnis mit dem Nammae
+104 File Server Adee. Aktiver Modus: BOX
+105 U'gueltig's Kommando. Hilfe mit Help.
+106 Datei kah ittae uffg'macht werrae
+107 Benutzer in Auswahl
+108 Benutzer
+109 Koi Passwort. Verzoegerung bis es Weiterleitung wird, bis zu (Stunden):
+110 Lokalae Transfer noch
+111 Lifetime vo' derrae Nochricht (1..999 Tage, 0 = ewig) :
+112 Ich kenn diae Heimatmailbox vom Empfaenger ittae.
+113 Gib ammol schnell ae Ziel-BBS ah (S DL1XY @ DB0XY)
+114 BID geits scho, no nimmscht halt ae andere
+115 Abonnentae vo dem Mailing List Server
+116 Erzeigeae vo dem Mailing List Server
+117 Aufneae vo dem Abonnent
+118 vo dem Mailing List Server
+119 Mailing List Server kah ittae a'gleit werrae. Dateifehler.
+120 Loeschen vo ae-mmae Abonnent
+121 Loeschen vo dem Mailing List Server
+122 Ausgab' vo-nerae Lischtae vo aellenae inschtalliertae Mailing List Server:
+123 Info vo
+124 'etzt ischt aen Fehler im Forward zu Deinerae Station auf'traetae:
+125 Routing lauft bereits
+126 *** DP-Box Convers-Kommandos:
+127 /help     : der Text
+128 /chan <n> : Kanal waehlae <n>
+129 /who      : Schtationae ond Kanael
+130 /quit     : Uffherae mit em Convers
+131 *** Kommandos kaenned ab'kuerzt werrae
+132 *** BBS-Kommandos mit '!' vornae dra uffruaefae
+133 Aktiv uff demm Kanal:
+134 Usercall Kanal
+135 *** Uffg'hert mit em Convers
+136 *** 'etzt uff Kanal
+137 *** u'gueltige Kanalnommer
+138 Convers g'schtartet. /H fer Hilfe. Du bischt uff Kanal
+139 Password g'loescht, Schutz uffghobae
+140 A'wendung: PASSWORD <DeinPassword>
+141 Resultierend's Passwort ischt z'lang
+142 Passwortschutz isch nu aktiv. Laenge:
+143 HOLD endet am
+144 Passwortschutz erscht aktiv ab Laenge 21. Aktuelle Laenge:
+145 Connect beendae mit CTRL-Z. BBS-Kommandos ei'gaee mit '!' vornae dra
+146 Schtart a-mol dae AutoBIN - Transfer
+147 Dae Benutzer haet dae Zuaegriff uff senne Nochrichtae g'schperrt
+148 Weitere Info krieaegscht mit
+149 Lesefehler
+
+150 Die File-Server - Kommandos:
+151 ? und HELP           - der Tekscht
+152 DIR und LS und LS -l - zoaeget's Inhaltsverzeichnis
+153 LIST                 - zoaeget's Inhaltsverzeichnis mit Beschreibung
+154 CD                   - Wechselt's Vozeichnis 
+155 READ, GET, TYPE      - Tekschtdatei laeesae (TYPE: mit Seitaeschtops)
+156 WRITE und PUT        - Tekschtdatei schreibae
+157 7GET und BSGET       - Binaerdatei 7Plus-codiert bzw. BS-gesplittet lesen
+158 BGET und BPUT        - Binaerdatei im AutoBIN - Modus laeesae oder schreibae
+159 YGET und YPUT        - Binaerdatei im Yapp - Modus laeesae oder schreibeae
+160 EXIT, BYE und QUIT   - zurueck zum Mailbox-Modus
+161 Beispiele:
+162 CD /linux/packet     - wechselt zom Verzeichnis /linux/packet
+163 CD .. oder CD.       - goht ae Vozeichnis z'ruck
+164 DIR *.zip -DATE      - zoaeget aelle Dateiae mit *.zip noch Datum sortiert
+165 DIR -NAME            - zoaeget's Verzeichnis noch Nammae sortiert (default)
+166 LS -SIZE             - Kurzanzeig vom Vozeichnis, noch Graesse sortiert
+167 LIST                 - zoaeget's Inhaltsvozeichnis mit Inhaltsbeschreibung
+168 YGET test.zip        - lisst test.zip im YAPP-Modus aus
+169 BGET 4               - lisst Datei 4 im aktuellae Vozeichnis als AutoBIN aus
+170 BPUT test.lzh        - schreibt ae neie Datei test.lzh in AutoBIN - Modus
+171 Uffpassae: Unix unterscheidet zwischae GROSS- ond Klei'schreibung in dae Dateinammae!
+172 Vozeichniss werred mit '/' 'trennt, ittae mit '\' wie bei DOS etc.
+173 Nammae duerfed laenger wieae 8+3 sei, z.B. 'dpbox-4.17-source.tar.gz'
+174 Älle Kommandos kaenned ab'kuerzt werrae, z.B. BG fuer BGET, L fuer LIST.
+
+175 Sysop - Kommandos:
+176 MD und MKDIR         - ae Neiss Vozeichnis a'leggae
+177 CP und COPY          - Datei(ae) kopierae
+178 MV und MOVE          - Datei(ae) voschieaebae/umbenennae
+179 RM , DEl und Erase   - Datei(ae) laeschae
+180 RD und RMDIR         - ae (leer's) Vozeichnis entfernae
+181 INDEX                - ae neiss Vozeichnis-Info schreibae
+
+182 Bitte die YAPP-Aussendung schtartae
+183 #MSG   T Bytes An      @BBS    Vo Wem Datum     Titel
+
+184 ABER VORSICHT !:Dei MyBBS ischt unter Umschtaend unbefugt voschtellt worrae
+185 MyBBS ischt um'gsetzt worrae uff:
+186  - do send no Nochrichtae fuer Dich.
+
+187 YAPP-Aussendung g'schtartet
+
+188 Letschtes MyBBS
+189 g'setzt am
+

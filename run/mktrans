@@ -1,0 +1,130 @@
+#! /bin/sh
+
+# 30.11.96 J.Schurig
+# modifying system/transfer.box online
+
+if [ ! "$1" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  echo 'Usage: MKTRANS -s <board> : show transfer settings for <board>'
+  if [ $DPBOXSYSOP = 1 ]; then
+    echo '       MKTRANS -a <board1> <board2> : add new transfer setting'
+    echo '       MKTRANS -d <board> : delete transfer setting for <board>'
+  fi
+  echo
+  echo 'Wildcards * and ? may be used'
+  exit
+fi
+
+tfile="$PWD/../system/transfer.box"
+tmpfile=$tfile.$DPBOXUSERNUMBER.$RANDOM
+altered=0
+was_add=0
+title1='From       To'
+title2='==================='
+arg1=$(echo "$1" | tr a-z A-Z)
+arg2=$(echo "$2" | tr a-z A-Z)
+arg3=$(echo "$3" | tr a-z A-Z)
+
+# if occasionally a sysop changed linebreaks
+tr -s '[\r]' '[\n*]' <$tfile >$tmpfile
+mv $tmpfile $tfile
+
+if [ "$arg1" = "-A" ]; then
+  if [ $DPBOXSYSOP = 0 ]; then
+    echo "invalid option: $arg1"
+    exit
+  fi
+  if [ ! "$arg3" ]; then
+    echo 'not enough parameters'
+    exit
+  fi
+  was_add=1
+  arg1='-D'
+fi
+
+if [ "$arg1" = "-D" ]; then
+  if [ $DPBOXSYSOP = 0 ]; then
+    exit
+  fi
+  if [ ! "arg2" ]; then
+    echo 'not enough parameters'
+    exit
+  fi
+
+  if [ $was_add = 0 ]; then
+    targ2=$(echo "$arg2" | sed -e s,'*','.*',g -e s,'?','.?',g)
+    expression='(^|[^0-9A-Za-z_-]+)'"$targ2"'([^0-9A-Za-z_-]+|$)'
+  else
+    expression='^'"$arg2"'[^0-9A-Za-z_-]+'
+  fi
+
+  deleted=$(grep -i -E -e "$expression" $tfile | tr a-z A-Z)
+  if [ "$deleted" ]; then
+    echo 'deleted transfer settings:'
+    echo
+    echo "$title1"
+    echo "$title2"
+    echo "$deleted"
+  fi
+
+  grep -v -i -E -e "$expression" $tfile >$tmpfile
+  mv $tmpfile $tfile
+
+  if [ "$deleted" ]; then
+    if [ $was_add = 1 ]; then
+      echo
+    else
+      echo 'type RELOAD to make the change effective'
+      exit
+    fi
+  else
+    if [ $was_add = 0 ]; then
+      echo "transfer setting not found: $arg2"
+      exit
+    fi
+  fi
+fi
+
+if [ $was_add = 1 ]; then
+  arg1='-A'
+fi
+
+if [ "$arg1" = "-A" ]; then
+  altered=1
+  addparm=$(printf '%-10s %s\n' "$arg2" "$arg3")
+  echo 'added transfer setting:'
+  echo
+  echo "$title1"
+  echo "$title2"
+  echo "$addparm"
+  echo
+  echo "$addparm" | cat >>$tfile
+  sort -o $tmpfile -f $tfile
+  mv $tmpfile $tfile
+  arg1='-S'
+  arg2="$arg3"
+fi
+
+if [ "$arg1" = "-S" ]; then
+  echo "transfer settings for $arg2 :"
+  echo
+  echo "$title1"
+  echo "$title2"
+  if [ "$arg2" ]; then
+    arg2=$(echo "$arg2" | sed -e s,'*','.*',g -e s,'?','.?',g)
+    expression='(^|[^0-9A-Za-z_-]+)'"$arg2"'([^0-9A-Za-z_-]+|$)'
+  else
+    expression='.+'
+  fi
+  printf '%-10s %s\n' $(grep -v -E -e '^#|^\W*$' $tfile \
+                        | grep -i -E -e "$expression" \
+                        | sort -f) \
+        | tr a-z A-Z
+  if [ $altered = 1 ]; then
+    echo
+    echo 'type RELOAD to make the change effective'
+  fi
+  exit
+fi
+
+echo "invalid option: $1"
+echo 'try -h or --help for help'

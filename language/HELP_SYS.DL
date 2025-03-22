@@ -1,0 +1,74 @@
+
+Dem SYSOP stehen noch weitere Befehle zur Verfuegung (22.02.1999):
+
+
+Activity   * Zeigt die letzte Eingabezeile von jedem Box-User
+BAtch        Startet ein Batch-File
+BEacon       Aktiviert User-Mail-Bake
+BOxlog       Erzeugt das File BOXLOG.DP
+BRoadcast    Broadcast Starten und Stoppen
+BUllid       BULLID pruefen / loeschen
+CONFig       Hiermit koennen System-Dateien konfiguriert werden
+CONNect      Weiterconnect, GATE
+CRawl        Indexierung fuer FTR ein- und ausschalten
+CText        Connecttext fuer die Box eingeben
+DEbug        Setzt den Debug-Level temporaer neu (0...5)
+DISconnect   User von der Box diconnecten
+DOs          siehe FEXECUTE
+EXPort       Nachrichten aus der Box exportieren
+FCopy        Files auf der Platte kopieren
+FDElete      Files auf der Platte loeschen
+FDir         Directory der Platte ausgeben
+FExecute     Startet ein externes Programm
+FMAil        Erzeugt eine Nachricht an F; siehe auch MKFMAIL
+FMove        Files auf der Platte verschieben
+Forward    * Nachrichten manuell in die Forward-Liste eintragen
+FREAd        BIN-Lesen auf der Platte; siehe auch READBIN
+FRee         siehe RELEASE
+FUlltrace    Aehnlich TRACE, Es wird eine Art "copy" Ausgegeben
+FWrite       BIN-Schreiben auf die Platte; siehe auch SENDBIN
+Garbage    * Box aufraeumen; siehe auch PUTZEN
+HIDden       "negative Logik" fuer die Box-Befehle
+HOld         Zeigt die "angehaltenen" Nachrichten
+IFusage      Ueber welches TNT auf welchen Boxkanal welcher User gelegt wird
+Import     * Files in die Box importieren
+Kill       * Files in der Box loeschen inkl. ihrer BULLID
+LEvel        Userlevel fuer die Box vergeben
+LIFetime     Aendern der Lebensdauer einer Nachricht; siehe auch LT, SETL
+LT           siehe LIFETIME oder SETL
+MAxread      Begrenzt die Anzahl auszulesender Bytes fuer <call>
+MBx          Aendern des @MBX einer Nachricht
+MKfmail      Erzeugt eine Nachricht an F; siehe auch FMAIL
+MYbbs        Setzt fuer ein User das MyBBS; siehe auch SETUSR
+Osshell      siehe FEXECUTE
+PRofile      Ausgabe des System-Files PROFILE BOX
+PROTo        Protokoll-File oeffnen
+PWGen        Passwort Generierung
+PWmode       Eingabe des Passwort-Modes fuer einen User
+QRg          Ausgabe der QRG, die man bei CONNECT eingeben kann
+READBin      BIN-Lesen auf der Platte; siehe auch FREAD
+REBuild      Neuaufbau der Bulletin-ID-Datei
+RELease      Freigeben von gehaltenen Mails; siehe auch FREE
+RELOad       Nachladen der Box-Systemdateien
+SENDBin      siehe FWRITE
+SERver       Einrichten einer Mailing-Liste
+SETL         siehe LIFETIME oder LT
+SETSf        Eintraege in der Rubrik "X" aendern
+SETusr       siehe MYBBS
+SF           S&F starten / stoppen
+SFLevel      Eingabe des S&F-Levels fuer S&F-Partner
+SFParms      S&F-Parameter anzeigen oder temporaer aendern
+SHell        Oeffnet ein Shell zum Linux!
+STatistik    Ausgabe der Box-Statistik 
+STRipcr      Aendert MSDOS-Zeilenumbrueche auf Unix-Zeilenumbrueche
+TNTcom       Verschicken beliebiger Terminalbefehle an Terminalkanaele
+TShell       Oeffnet ein transparentes Shell zum Linux
+TRACe        Startet den Trace
+UNProto      Steuert das UNPROTO-Request-Verhalten (fuer BC)
+
+
+RUNs/Scripte
+------------
+
+RUn          Gibt eine Liste der RUNs aus, inkl. der externen Sysop-Kommandos
+

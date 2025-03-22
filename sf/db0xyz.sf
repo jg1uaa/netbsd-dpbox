@@ -1,0 +1,48 @@
+# connect timeout of 900 seconds, use the "LINK" interface with TNT
+
+IFQRG LINK DB0XYZ-8 900
+# for forward via import/export files, use the following definition instead
+# of the above
+#IFQRG FILE DPBOX DB0XYZ 10 /tmp/forward.db0xyz.out /tmp/forward.db0xyz.in
+
+SFPARMS 2 1 2 2000000 2000000 200000 120 0000 2359
+
+# Send Mybbs-Infos? If yes, which format (EM or WP) ?
+# Use WP for FBB, DPBOX, BAYBOX.
+# USE EM for DIEBOX and WAMPES only
+# if none of the above, comment this parameter out
+MYBBS WP
+
+# is this neighbour to be treated like a user mailbox?
+#USERSF
+
+# should it get routing infos, although not sending own routing infos?
+# (normally no!)
+# if this neighbour sends routing infos, it will receive them in any case
+#ROUTING_GUEST
+
+FOR DB0XYZ
+
+FOR WW DL NORD EU AMSAT THEBOX BAYBOX
+
+# These are the hierarchical definitions for the areas db0xyz
+# delivers mails to:
+
+FOR *.#HES.DEU.EU *.#BW.DEU.EU *.#SAR.DEU.EU *.#NDS.DEU.EU
+FOR *.#RPL.DEU.EU *.#NRW.DEU.EU *.#HB.DEU.EU *.#HH.DEU.EU *.#SLH.DEU.EU
+FOR *.#BAY.DEU.EU *.#SAX.DEU.EU *.#BRB.DEU.EU *.#SAA.DEU.EU *.#THR.DEU.EU
+FOR *.#MVP.DEU.EU *.#BLN.DEU.EU
+
+FOR *.FRA.EU* *.CHE.EU* *.SVN.EU* *.BEL.EU* *.NLD.EU* *.LUX.EU* *.RUS.EU*
+FOR *.KRO.EU* *.ITA.EU* *.ESP.EU* *.POR.EU* *.GBR.EU* *.GRC.EU* *.ESP.EU*
+FOR *.AUT.EU* *.BGA.EU* *.TCH.EU* *.SVK.EU* *.HUN.EU*
+FOR *.DNK.EU* *.SWE.EU* *.NOR.EU* *.FIN.EU* *.UKR.EU*
+
+
+FOR *.NA *.NOAM *.SA *.SOAM *.MDLE *.AS *.OC *.AU *.PCI *.IOT *.AF
+
+# DB0ZZZ is running its own sf with db0xyz, and both are running sf with us.
+# So, do not propose bulletins received from db0zzz to db0xyz. No necessity.
+# This definition is ignored for private mails:
+
+NOTFROM DB0ZZZ

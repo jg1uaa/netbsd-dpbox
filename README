@@ -1,0 +1,116 @@
+Berlin, 31.10.1999
+
+If you are using a *BSD system, copy the file source/Makefile.*bsd to
+source/Makefile. If you are using Linux, use source/Makefile.linux
+(already copied to source/Makefile). If you are using Linux, but prefer
+an installation into one single directory tree, copy source/Makefile.flat
+to source/Makefile. This results in an "installed" dpbox in a subdirectory
+of source/.
+
+It is not a bad idea to check the installation directories in the first
+few lines of the makefile, as they might differ between linux distributions.
+
+
+
+To compile the package:
+
+Change to the directory source/
+
+type 
+     make clean
+     make dep
+     make all
+
+
+
+To install DPBOX in its various locations on the unix file system:
+
+Change to the directory source/
+
+type
+     make install
+
+
+
+Change to the cgi/ directory
+
+read the README therein
+
+and of course the documentation in documents/ as well as the release notes
+
+DPBOX will be installed according to the linux file system standard, what
+in other words means that it is cluttered across the file system ;)
+The install script will create symbolic links to all these locations in the
+main spool directory of dpbox, /var/spool/dpbox.
+
+Additionally, the linux install script will add dpbox as a service
+started in runlevels 2 and 3 to /sbin/init.d/ . You can start/stop DPBOX
+with the script
+/usr/local/sbin/rcdpbox (options start | stop | reload | restart | status )
+
+
+
+If you want to uninstall dpbox, stop dpbox.
+Then change to the directory source/
+
+type
+     make instclean
+
+This removes all installed files and directory trees of dpbox.
+
+To preserve the contents of the mailbox (as well as your configurations),
+make instclean creates a backup tar archive /var/tmp/dpbox-instsave-xxx.tgz,
+where xxx is the current date as of uninstalling the package. Keep in mind
+that this archive could be quite large (depending on the contents of the
+mailbox and file server).
+
+To restore the files after installation of a new version of the package (that
+is, after typing "make install"),
+
+type
+     make instrestore
+
+This restores the contents of the mailbox. Please note that the configuration
+files are restored as well, and this might be a bad idea when the new package
+came with modified (extended) configuration files. In that case, make a copy
+of the new configuration files BEFORE restoring the old ones and compare them
+manually.
+
+
+
+To ensure a restart of DPBOX after it has crashed, you should add something
+like
+
+xxx startproc /usr/local/sbin/dpbox -i /etc/dpbox/dpbox.ini
+
+into your crontab (provided your system has startproc). Check the start file
+for dpbox in /sbin/init.d/ for details. startproc takes care that only one
+instance of dpbox is started.
+
+
+
+
+License, copyright, warranty
+----------------------------
+
+DPBOX is Copyright (C) 1990-2000 by Joachim Schurig, DL8HBS, Berlin.
+Parts of the source are Copyright (C) 1994-1996 by Mark Wahl, DL4YBG, Berlin.
+Huffman coding is (C) 1989 Haruhiko Okomura, Haruyasu Yoshizaki and Y. Tagawa.
+MD2 and MD5 algorithm is (C) 1990-1992 RSA Data Security, Inc.
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation.
+
+This program is distributed WITHOUT ANY WARRANTY; even without the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details (contained in the file 'license').
+
+You should have received a copy of the GNU General Public License along with
+this program; if not, write to the Free Software Foundation, Inc., 675 Mass
+Ave, Cambridge, MA 02139, USA.
+
+In order to use amateur radio you must obtain a license by your local
+telecommunications administration.
+
+

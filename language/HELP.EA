@@ -1,0 +1,50 @@
+DEUTSCH:     Zum Sprachwechsel auf Deutsch bitte Befehl "SPEAK D".
+FRANCAIS:    Veuillez changer la langue avec la commande "SPEAK F".
+ESPANOL:     Para cambiar el mailbox a idioma Espanol manda "SPEAK EA".
+ENGLISH:     To change to english language type "SPEAK G".
+
+Atencion, este fichero informara (momentaneamente) de los comandos de ayuda
+traducidos al español hasta el momento.
+Muchos comandos se abrevian a la primera letra de su nombre.
+Si quieres mas ayuda de un comando manda:
+H xxx donde xxx es el nombre del comando.
+
+Comandos en español al 25-09-96:
+
+ACT,BATCH,BBS,BEACON,BKILL,BOXLOG,BROADCAST,BULLID,BYE,CHECK,CD,CLEARBUF,
+COMMENT,COMP,CONNECT,CONFIG,CONVERSE,CP,CS,CTEXT,DEBUG,DIR,DISCONNECT,ERASE,
+FBBMODE,FCOPY,FMOVE,FDELETE,FDIR,FEXECUTE,FHEADER,FILSERVER,FORWARD,FREAD,
+FWRITE,GARBAGE,HEADER,HID,HNAME,HELP,HOLD,IFUSAGE,KILL,LANGUAGES,LEVEL,
+LIFETIME,LIST,LOGINTIME,MAILBEACON,MAXREAD,MBX,MD2,MD2SF,MKFMAIL,MSG,MYBBS,
+NAME,NEXT,NODE,PASSWORD,PREFIX,PRINT,PRIV,PROFILE,PROMPT,PROTO,PWMODEM,QRG,
+QUIT,READ,READLOCK,REBUILD,RELEASE,RELOAD,REPLY,RESET,SAT,SEND,SERVER,
+SELECTION,SETREPLY,SETSF,SETTIME,SETDATE,SF,SFLEVEL,SFPARMS,SFTEST,SHELL,SPEAK,
+STARTUP,STATISTIK,STRIPCR,SYSOP,SYSTEM,SYSCHK,TALK,TELL,TIME,TNTCOMM,TRACE,
+TSHELL,TRANSFER,TTL,UNERASE,UNPROTO,USER,VERSION,WANTBOARD,NEWUSER,? 
+
+(Nota: algunos comandos son de SYSOP y pueden NO DAR respuesta
+a los usuarios)
+
+Lista de comandos mas usuales:
+
+C     : Check      - Lista de los ultimos mensajes llegados a la bbs.
+D     : Dir        - Lista de las areas activas.
+L     : List       - Lista los mensajes de un area especifica.
+R     : Read       - Leer mensajes de un area.
+S     : Send       - Mandar un mensaje.
+U     : User       - Informacion del usuario.
+BBS   : BBS        - Informacion de bbs.
+SPEAK : SPEAK      - Cambia de idioma.
+PASSW : Password   - Permite añadir o cambiar password.
+? o H : Help       - Manda texto de ayuda.
+B o Q : Bye        - Desconectar de la bbs.
+V     : Version    - Informacion del sistema.
+FILE  : Fileserver - Servidor de ficheros (YAPP,Autobin,ASCII).
+FBBMO : FBBMODE    - Hace compatible la bbs con comandos FBB.
+
+En cuanto te acostumbres a la nueva sintaxis,veras que no es complicado.
+Pide a tu sysop la documentacion completa de los comandos.
+
+La salida de esta BBS puede ser interrumpida en todo momento mandado
+<ENTER> o <CR> en una sola linea.
+

@@ -1,0 +1,273 @@
+Berlin, 16.05.97
+
+Release Notes dpbox v5.07.00 / 15.05.97
+
+Changes since v5.06.00 / 04.03.97
+
+
+
+DPBOX v5.07.00 includes, beside a lot of other changes, the following
+extensions compared with v5.06.00:
+
+- plain text retrieval software
+- import of baycom bbs message base and user data
+- http(WWW) access
+
+
+
+1) Plain Text Search
+
+Plain text search is provided by an external program called "crawler".
+This program first scans all current messages of DPBOX and encodes the
+content in its database. Depending on the size of your message base and
+the speed of your computer, this may last between 2 hours and 5 days.
+Normal mailbox operations are not affected by the creation procedure, except
+that response times of the system may be slower than usual.
+After creating the database, the crawler gets fed with newly arriving messages.
+
+The database typically grows to a size between 10-20& of the size of your
+message base directory. For 20.000 messages, expect 25 MB of size, for 50.000
+messages about 40 MB.
+
+As the database is not cleaned up (for deleted files in your message base),
+you should recreate it every some weeks or month (depending on your disk space).
+Also, transfered files are lost for the retrieval algorithm until next
+recreation of the database. This makes a frequent recreation useful, too.
+
+Scanning incoming files increases disk accesses. Each word of new messages is
+encoded in the database. If available, link the database directory to a
+less used hard disk of your installation, so hard disk controller operation will
+not affect the overall unix system response time. Anyway, don't worry if you
+lack this possibility, we also do at DB0GR, and it works well.
+
+The source code "crawler.c" is included in this distribution, but kindly note
+that it is NOT under GPL, it remains copyrighted by Joachim Schurig, (c) 1997,
+and you are not allowed to modify it or use it in any way other than with DPBOX,
+especially NOT in any kind of commercial environment. Look out for alta vista
+software offers, for but 15.999$ you get a professional crawler from there.
+
+Requesting the database is performed with the "FTR" command (Full Text 
+Retrieval).
+
+Each word appended to the command is searched in the database, multiple words
+are combined in an AND expression, Warning: prefixing a word with "-" will
+result in a NOT expression, but the algorithm is not correctly coded, so will
+output garbage.
+
+Output format of FTR is a Checklist (see DPBOX CHECK output) showing up all
+messages containing all requested words.
+
+Note the following:
+
+7plus and binary messages are NOT scanned by the crawler, so they are not
+indexed and not found by FTR.
+
+User requests and crawled messages are parsed by an algorithm that changes some
+umlauts (german ae, oe, ue, sz diphtongues) to their bi-letter equivalents. As
+there is no coding standard for diphtongues in the computer world, I felt unable
+to include scandinavian ones or others, and even the inclusion of the german
+umlauts is only a hard coded hack not respecting MacIntosh or Windows
+representations.
+
+Many languages allow concatenation of words for each user of the language. The
+German is a good example for that: "Das Super-Programm", where super and program
+are combined to a new word ("Superprogramm", by the way, would express another
+meaning, commonly fixed in the mental dictionary of each user of German
+language, other than "Super-Programm", that combines the meanings of "Super"
+and "Program"). English offers similar possibilities, but typically uses less
+often the "-" concatenator but a space. I talk about that because an information
+retrieval software has to deal with such linguistic rules, and I decided
+to let the parser for FTR behave this way: Whenever a "-" is found in input, it
+is replaced by " " (a space, breaking the word in two), except if the following
+word only consists of numbers (then, the "-" is deleted and the two words are
+combined in one).
+
+While the last problem meets a solution, other languages create problems not
+solutable:
+
+Turkish, for example, is an agglomerative language, defining many other
+things in each produced word than only the common designation of an existing or
+imagined matter. Some african languages express whole english phrases in one
+word. For such languages, automatic information retrieval is hard to do, at
+least my algorithm will fail.
+
+While scanning messages, crawler counts percentages of existance of a word in
+all messages. If a defined threshold is passed, typically for words like "for",
+"and", "it", "the", the word is marked in a "stopword" list. Such words are not
+searchable and are not stored in the database. I set up the initial "stopword"
+list with very common german, english, french and spanish words, but it will get
+adapted to every other language through usage of the crawler.
+
+Sorry boring you, now for the crawler related commands:
+
+In system/commands.box you have to add the following lines:
+
+CRAWL 126 1 1
+FTR 127 0 1
+
+Then, you have to compile the box/crawler/crawler.c source.
+Change to the box/crawler/ directory and type: "compile"
+
+CRAWL is a DPBOX sysop command, it controls the crawler operations:
+
+CRAWL      : starts scanning of all messages, deletes old database.
+CRAWL -q   : stops scanning, database is not deleted
+
+A restart of DPBOX while initial creation of the database will lead to an abort
+of the indexing. After creating databases, crawl state is stored internally and
+will not be affected by restarts of the bbs software.
+
+The user command FTR allows database requests: simply add one or more words to
+the command, documents containing all appended words are displayed.
+
+Example: "FTR dpbox update"
+Will find all documents containing the words "dpbox" and "update". Request is
+case-insensitive.
+
+
+
+2) Import of baycom bbs message base and user data
+
+Daniel, DL3NEU, wrote a new import filter for DPBOX. Similar to the existing one
+for DieBox BBS, it allows import of all messages and user settings of a baycom
+bbs installation. Check documentation of "TheBox-Import" in the documentation
+of DPBOX, it works similar.
+
+Example:
+
+IMPORT BAYBOX /mount/dos_filesystem/baybox
+
+Import works with DOS and Linux versions.
+
+For further questions, write to DL3NEU@DB0SIF . Thank you, Daniel!
+
+
+
+
+3) HTTP(WWW) Access
+
+We decided to use an already installed http server on the system for http access
+to DPBOX. It uses the cgi interface of http. After inflating the dpbox507.tgz,
+you find a directory box/cgi/ . Read the installation instructions in the
+README files therein, it should be installed in one minute.
+
+The interface is in an experimental state. It's up to you to extend it to a more
+comfortable one. You only need basic knowledge in html scripting. Extending it
+with forms would be fine.
+
+
+
+4) dpgate
+
+The HTTP interface uses a short program "dpgate". This program is useful for
+many purposes: it offers a full DPBOX access from a shells command line; via
+telnet or modem logins; you may use it as a filter to query information from
+DPBOX; or for many other things. It only depends on your configuration. Read
+the README for more information (in box/cgi/dpboxcgi/).
+
+
+
+5) Password Import
+
+Daniel, DL3NEU added a password import procedure: IMPORT PW <pathname> reads a
+file <pathname> with password definitions for one or multiple users. Syntax of
+the file is:
+<CALL1> <PASSWORD1>
+<CALL2> <PASSWORD2>
+...
+
+
+
+6) Fuzzy Search
+
+As a quick hack, I implemented a fuzzy search as extension of the usual
+"CHECK < search" - feature. Typing "CHECK %50 search" will lower matching
+threshold of found words in subject lines to 50%, so, only 50% of the searched
+string has to exist. Original coding is (c) Reinhard Rapp, c't.
+
+Results are not that good as expected, but, anyway, it is implemented.
+
+Works also with "LIST ATARI %30 another query string" and so on.
+
+
+
+7) GZIP
+
+Internally, now gzip is used for compression of stored messages, no more
+LHarc (except for very small messages). Gzip is three times faster than LHarc
+AND more efficient... This change makes it impossible to return to an older
+DPBOX version after updating to v5.07 of DPBOX!
+
+Gzip only is used if available on your machine. If you delete the gzip or
+use a PATH setting that dpbox can't find it, you have a problem, especially
+if gzip was found before and there yet exist gzip compressed messages.
+
+Type "V +" to check if gzip is available.
+
+
+
+8) External Connect Script for Forward
+
+If defining the IFQRG statement of an .sf script of DPBOX alike:
+
+IFQRG EXTERNAL DB0XYZ-8 900 /var/box/external_script
+
+instead of looking for a valid interface qrg (typically linked to TNT),
+/var/box/external_script is started as a routing application. Parameters in its
+command line are: The call to connect to (DB0XYZ-8), the source call of the
+DPBOX, the timeout (900 seconds). Optional parameters may be appended to the
+IFQRG statement, they are passed to the called application.
+
+If your "external_script" has opened a connection to the target, it is
+responsible for starting a socket connect to DPBOX, and please do not forget to
+set the UM_SF_OUT - flag when connecting the BBS.
+
+Typically, you could use a slightly modified dpgate.c for socket connection.
+
+
+
+9) FREAD with Gzip
+
+FREAD command of DPBOX now supports gzip compression. Typing
+"FREAD proto/userlog.box -Z" will deflate the file and transmit it.
+
+
+
+10) DPBOXSELECTEDFILE in Fileserver
+
+When calling an external fileserver program, if first word after the commands
+name is a number, the full name of the file denoted by that number is stored in
+the DPBOXSELECTEDFILE environment variable.
+
+
+
+11) New English Helpfiles
+
+Robert, HB9XBO (a native english speaker) corrected the english help files of
+DPBOX. Thank you, Robert, and forgive me the mistakes in these release notes ;)
+
+
+
+12) Error Fixing
+
+If the message base grew > 32767 files, oldest files were not searchable. Fixed.
+If free space on DPBOX partition was > 2.1GB, DPBOX prompted "disk full". Fixed.
+If system/digimap.stn - file was improper, DPBOX crashed. Fixed.
+Had a bug in exec() of external programs. Could crash DPBOX. Fixed.
+Had a little year 2000 problem in user date display. Fixed,
+Received BIDs longer than 12 chars could crash DPBOX. Fixed.
+Forgot REJECT negociation in ASCII SF. Fixed.
+
+
+What you have to update:
+------------------------
+system/commands.box: CRAWL and FTR command
+language/: all english related files
+and of course dpbox itself.
+
+DIFF between v5.06 and v5.07 is nearly 200kB of size, please excuse that I
+didn't mention all changes. Many bugfixes not noted here were done.
+
+
+
+73 Joachim, DL8HBS@DB0GR.#BLN.DEU.EU

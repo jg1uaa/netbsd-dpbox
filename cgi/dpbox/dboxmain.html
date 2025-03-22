@@ -1,0 +1,90 @@
+<HTML><HEAD><TITLE>DPBOX-Index</TITLE></HEAD>
+<BODY BGCOLOR="#c0c0c0" text="#000000" link="#0000FF" vlink="#FF0000">
+<HR size=10 noshade>
+<CENTER><H1>DPBOX-Hauptseite</H1></CENTER>
+<HR size=10 noshade>
+<BR>
+<CENTER><TABLE WIDTH=95% BORDER=6 CELLSPACING=10 CELLPADDING=20><TR>
+<TD WIDTH=33%>
+<FONT SIZE=5>Nachrichten anzeigen :</FONT>
+<BR><BR>
+<FONT SIZE=4>
+Die letzten <A HREF="/cgi-bin/dpcheck?50">50</A><BR>
+Die letzten <A HREF="/cgi-bin/dpcheck?100">100</A><BR>
+Die letzten <A HREF="/cgi-bin/dpcheck?250">250</A><BR>
+Die letzten <A HREF="/cgi-bin/dpcheck?500">500</A><BR>
+Die letzten <A HREF="/cgi-bin/dpcheck?750">750</A><BR>
+Die letzten <A HREF="/cgi-bin/dpcheck?1000">1000</A><BR>
+Die letzten <A HREF="/cgi-bin/dpcheck?2500">2500</A><BR>
+Die letzten <A HREF="/cgi-bin/dpcheck?5000">5000</A><BR>
+<BR>
+Diverse ausgew&auml;hlte <A HREF="dboxrub.html">Rubriken</A><BR>
+&Uuml;ber <A HREF="/cgi-bin/dpdir?i">Mail-Directory</A> ausw&auml;hlen<BR>
+</FONT>
+</TD>
+<TD WIDTH=33%>
+<FONT SIZE=5>Sonstige Abrufe :</FONT>
+<BR><BR>
+<FONT SIZE=4>
+DPBOX-<A HREF="/cgi-bin/dpcmd?h%20">Befehle</A><BR>
+DPBOX-<A HREF="/cgi-bin/dpcmd?v%20+">Version</A><BR>
+User mit <A HREF="/cgi-bin/dpcmd?u%20@DB0XYZ">MYBBS</A> DB0XYZ<BR>
+Momentane <A HREF="/cgi-bin/dpcmd?u%20u">Auslastung</A> der Box<BR>
+Zur Zeit eingeloggte <A HREF="/cgi-bin/dpcmd?u%20path">User</A><BR>
+<BR><BR><BR><BR>
+Die aktuelle <A HREF="/cgi-bin/dpcmd?ti%20">Uhrzeit</A> (UTC)<BR>
+</FONT>
+</TD></TR></TABLE></CENTER><BR><HR SIZE=3>
+<BR>
+<CENTER><TABLE WIDTH=95% BORDER=0><TR><TD  WIDTH=50%>
+<CENTER><FONT SIZE=5>Titelsuche </FONT> ( max. 50 Zeichen )</CENTER>
+<FORM action="/cgi-bin/dpsertit" method=get>
+<STRONG>Suchbegriff : </STRONG>
+<INPUT name="pattern" size=23 maxlength=50> &nbsp
+<INPUT type=submit value="Suchen">
+</FORM>
+</TD><TD WIDTH=50%>
+<CENTER><FONT SIZE=5>Volltextsuche </FONT> ( max. 50 Zeichen )</CENTER>
+<FORM action="/cgi-bin/dpftr" method=get>
+<STRONG>Suchbegriff :</STRONG>
+<INPUT name="pattern" size=23 maxlength=50> &nbsp
+<INPUT type=submit value="Suchen">
+</FORM>
+</TD></TR></TABLE></CENTER>
+<BR>
+<CENTER><TABLE WIDTH=95% BORDER=0><TR><TD WIDTH=50%>
+<CENTER><FONT SIZE=5>Prefix-Datenbank</FONT></CENTER>
+<FORM action="/cgi-bin/dpprefix" method=get>
+<STRONG>Call-Prefix eingeben : </STRONG>
+<INPUT name="call" size=6> &nbsp
+<INPUT type=submit value="Anzeigen">
+</FORM>
+</TD><TD WIDTH=50%>
+<CENTER><FONT SIZE=5>User-Datenbank</FONT></CENTER>
+<FORM action="/cgi-bin/dpuser" method=get>
+<STRONG>User-Call eingeben :</STRONG>
+<INPUT name="call" size=6> &nbsp;
+<INPUT type=submit value="Anzeigen">
+</FORM>
+</TD></TR></TABLE></CENTER>
+<BR>
+<CENTER>
+<FONT SIZE=5>QTH-Locatorberechnungen</FONT>
+<FORM action="/cgi-bin/dploc" method=get>
+<STRONG>Loc 1 : </STRONG> &nbsp
+<INPUT name="loc1" size=6> &nbsp;
+<STRONG>Loc 2 : </STRONG> &nbsp
+<INPUT name="loc2" size=6> &nbsp
+<INPUT type=submit value="Anzeigen">
+</CENTER>
+<BR>
+<CENTER>
+<STRONG>
+Titelsuche und Volltextsuche k&ouml;nnen unter Umst&auml;nden sehr grosse Datenmengen liefern !
+</STRONG>
+</CENTER>
+<BR><HR>
+<A HREF="dindex.html"><BIG><CENTER>Zur&uuml;ck zur Startseite</CENTER></BIG></A>
+<BR><BR>
+
+</BODY></HTML>

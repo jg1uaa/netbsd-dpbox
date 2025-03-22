@@ -1,0 +1,22 @@
+#
+# how many lines in message list broadcast may a request scroll back?
+MAXBACK 100
+#
+# do we want to broadcast in F6FBB mode?
+FBB OFF
+#
+# do we want to broadcast in DPBOX mode?
+DPBOX ON
+#
+# broadcast local private mails as well?
+PRIVATES OFF
+#
+# broadcast sysop only boards (one-letter-boards) as well?
+SYSOP OFF
+#
+# how many seconds must exceed between two user requests?
+INTERVAL 20
+#
+# broadcast via which path?
+QRG LINK DB0BLO
+QRG LINK DB0BLO DB0SPR

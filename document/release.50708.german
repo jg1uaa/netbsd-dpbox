@@ -1,0 +1,250 @@
+Changes.log von DPBOX v5.07.00 bis zur Beta-Version v5.07.08.
+
+
+- die Aenderungen am Source von DPBOX sind dermassen umfangreich, dass
+  ein DIFF zur letzten veroeffentlichten Version groesser ist als die
+  neuen Sourcen. Daraus ergibt sich, dass hier schlicht nicht alle
+  Aenderungen aufgefuehrt werden koennen. Die wichtigeren sollten es
+  aber sein.
+
+- aufgrund der diversen Code-Umstellungen kann DPBOX nun problemlos mit
+  saemtlichen Compiler-Warnings (-Wall) kompiliert werden. Es sollten
+  keine Warnings ausgegeben werden. Im neuen Makefile ist das bereits
+  so eingestellt.
+  
+- ebenfalls im neuen Makefile wird nun die Ausgabe von Debugger-Symbolen
+  in das Binary der DPBOX unterbunden. Da DPBOX unter Linux nun mit der
+  Option -fomit-frame-pointer kompiliert wird (kann man natuerlich auch
+  auskommentieren), kann man das binary eh nicht mehr debuggen, also kann
+  man auch die verbliebenen Symbole im Binaercode der DPBOX loeschen.
+  Da ich noch nie einen debuggten Core-Dump der DPBOX erhalten habe, scheint
+  das eh niemanden zu interessieren. Der Programmcode wird durch die beiden
+  Optionen ein gutes Stück kürzer.
+
+- auch aufgrund der diversen Code-Umstellungen ist DPBOX nun kuerzer
+  geworden als die letzte Version, obwohl weitaus mehr Source-Funktionen
+  enthalten sind. Die Optimierungen haben etwa 7% an Binaercode eingespart.
+  Das, liebe Leute, war Handarbeit. Mich scheren ja die paar zehn kB nicht,
+  aber natuerlich ist der Code dadurch noch erheblich schneller geworden.
+
+- DPBOX kompiliert nun problemlos mit glibc. Das ging bisher eigentlich auch
+  schon, aber man musste halt wie immer vier Zeilen aendern und wissen,
+  welche. Mit alten Systemen gibt es auch keine Probleme.
+
+- DPBOX ist dennoch komplett kompatibel zur letzten veroeffentlichten Version
+  v5.07.00. Ein Umstellen in beide Richtungen ist problemlos moeglich.
+
+- wenn in config.box eine Zeile SHOW_READERS TRUE steht, dann kann jeder
+  User sehen, wer bereits eine Nachricht ausgelesen hat. Ich finde das nicht
+  so gut, es geht eigentlich nicht jeden was an, was ich so lese, aber nun
+  gut.
+  
+- Sysop-Userinfos werden nicht wie normale Userinfos nach einem Jahr
+  geloescht (DL3NEU).
+
+- kleiner (aber folgenreicher) Bug beim Aufruf von 7plus zum Zusammenfuegen
+  von Nachrichten fuer den Fileserver: DPBOX setzt beim Starten von 7plus
+  ein Lockfile, um nur eine Instanz von 7plus gleichzeitig zu starten. Ein
+  eventuell notwendiger weiterer Aufruf von 7plus wartet, bis der erste
+  Aufruf fertig ist (das bremst die Box nicht, die wird dazu als Tochterprozess
+  neu gestartet). Wenn 7plus nun in einer Endlosschleife haengt (bei Versionen
+  < 2.19 kam das wohl oefter vor), dann sollte DPBOX nur maximal zwei Minuten
+  warten (eine Ewigkeit fuer einen Computer) und dann das Lockfile loeschen
+  und die neue Instanz von 7plus starten. Durch einen Tippfehler hat DPBOX
+  leider ewig gewartet, das hat dazu gefuehrt, dass irgendwann unzaehlige
+  DPBOX-Instanzen gestartet waren, und irgendwann hat sich Linux dann die
+  Karten gelegt (bzw. war unendlich langsam). Behoben.
+  
+- beim Betrieb von DPBOX ueber Partitionsgrenzen hinweg konnten Probleme
+  beim (auch internen) Verschieben von Dateien entstehen. Behoben.
+
+- man kann nun in den SF-Definitionen fuer eine Partnerbox angeben, ob
+  diese auch 7plus- und/oder BIN-Bulletins erhalten soll (BIN-Nachrichten
+  werden natuerlich auch durch den Typ des Partner-Boxsystems gesteuert,
+  kann die kein BIN, erhaelt sie auch keins). Bulletins sind in diesem
+  Fall Nachrichten an Flood-Verteiler wie EU, DL, WW usw.
+  Persoenliche Nachrichten / Bulletins an nicht-Flood-Verteiler sind davon
+  unberuehrt.
+  Steht in den SF-Definitionen (sf/<call>.sf) eine Zeile mit
+  NOBULLBIN
+  und/oder
+  NOBULL7PLUS
+  , dann wird kein BIN / 7plus an die Nachbarbox im Flood-Forward
+  weitergeleitet. Wie gesagt, Usermails und Nachrichten an BLABLA@DB0XYZ
+  sind davon nicht beruehrt.
+
+- interner Sortieralgorithmus fuer Dateien benoetigt nun weitaus weniger RAM.
+
+- wenn eine Nachricht an ein Nicht-Rufzeichen (in diesem Fall war es die
+  Rubrik WP) im SF eintraf und keine BID hatte, so wurde sie abgewiesen,
+  auch wenn der Status der Nachricht als Typ "P" (private) angegeben war.
+  Ich bin nicht ganz sicher, ob das nicht zu Problemen fuehren kann, aber
+  sie werden nun (dank eines Patches von Uli, DK2GO) angenommen und mit einer
+  eigenen BID/MID versehen.
+
+- beim Umbauen des Sources sind mir eher zufaellig zwei Bugs aufgefallen,
+  die im Zusammenhang mit dem gemeldeten zufaelligen Verstellen des
+  READLOCK-Status stehen. Ob das wirklich die Ursache des Problems war,
+  kann ich nicht feststellen, leider trat der Fehler extrem unreproduzierbar
+  und extrem selten auf. Bitte beobachten.
+
+- man konnte zwar bislang schon immer fuer DPBOX ein eigenes TEMP-Verzeichnis
+  an anderer Stelle als /tmp/ einrichten, aber spaetestens beim Forward
+  hat es dann nicht mehr funktioniert. Das lag an einer unsauberen
+  Definition des TEMP-Verzeichnisses fuer die Kompressionsalgorithmen.
+  Das ist nun behoben. Wer (wie ich) mehr als eine DPBOX auf demselben
+  Rechner betreibt, sollte dringend unterschiedliche TEMP-Verzeichnisse
+  in dpbox.ini festlegen - jetzt klappts auch.
+
+- nebenbei: haben eigentlich alle Systeme die libgz installiert? Dann koennte
+  ich mir den Aufruf von gzip als externes Programm sparen... Bitte
+  Rueckmeldung (mal mit "locate libgz" in der shell nachsehen...).
+  Insbesondere interessieren mich Systeme, auf denen das nicht drauf ist
+  (welche Distribution, welche Version). Wenn sich hier keiner meldet, gehe
+  ich davon aus, dass das ueberall installiert ist.
+
+- wenn eine BIN-Nachricht einen Vorspann von mehr als 100 Textzeilen
+  hatte (z.B. eine Programmbeschreibung), dann wurde der Uebergang auf
+  den Binaermodus beim Auslesen nicht erkannt. Die verantwortliche
+  Routine ist jetzt neu geschrieben und duerfte keine messbare Rechen-
+  zeit mehr verbrauchen, dadurch kann sie auch problemlos die komplette
+  Nachricht, die ja mehrere MB lang sein kann, nach einem BIN-Start
+  durchsuchen. Meine besondere Entschuldigung an Peter, DB2OS, den
+  es in den vergangenen Jahren mehrfach mit seinen Nachrichten erwischt
+  hat. Ausser ihm spielt anscheinend kaum jemand eine Beschreibung des
+  BIN-Teils in derselben Nachricht ein (dabei ist das durchaus sinnvoll).
+
+- anstelle der unsinnigen Angabe der Bogomips des Linux-Rechners beim
+  "V +" - Befehl wird nun der Linpack-Benchmark errechnet (ja, das ist
+  der, der auch fuer die Supercomputer-Liste auf www.top500.org verwendet
+  wird). Das erscheint erstmal unsinnig, weil das ein Floating-Point-
+  Benchmark ist, und eine Mailbox relativ wenig Floating-Point-Berechnungen
+  ausfuehrt, oder, wie DPBOX, gar keine (bis auf Zusatzfunktionen wie
+  QTHLOC-Berechnungen) : Es ist in der Tat unsinnig. Aber es macht Spass,
+  und immerhin taugt der Wert zum Vergleichen kompletter Rechnerarchitekturen,
+  wohingegen die Bogomips schlicht nichts angeben. Nebenbei habe ich auch
+  die Schleife fuer die uralten CPU-Index-Werte um den Faktor 100 erhoeht,
+  die lief bislang schon auf einem Pentium 100 ueber. Aber sie zeigt immer
+  noch recht zuverlaessig, wie schnell das System unterhalb DPBOX nun ist im
+  Vergleich zu einem 8Mhz-Atari (dem ersten System vor Mac und Linux, auf
+  dem DPBOX lief).
+
+- beim Befehl HEADER werden nun auch noch moeglichst alle auf die
+  R:-Zeilen folgenden Header des Mail-Umschlages angezeigt. Zur
+  Erinnerung: eine Nachricht (nicht nur im Packet-System) besteht aus
+  einem Header mit beliebig vielen Elementen (dem Umschlag) und dem
+  Inhalt selber. Zwischen beiden besteht eine klare Abgrenzung durch
+  eine LEERZEILE. Nach der ersten Zeile, die nur aus einem Zeilen-
+  vorschub besteht, beginnt der Inhalt, alles vorher ist der Umschlag
+  und gehoert nicht zum Inhalt. Ich schreibe das hier nochmal etwas
+  ausfuehrlicher, weil manche gepatchten Boxsysteme diese Trennung
+  in Unkenntnis der Protokolle aufheben. DPBOX interessiert das nicht,
+  der Inhalt solcher fehlerhaften Nachrichten wird einfach nicht ausgewertet.
+  Der Befehl HEADER bricht allerdings nach 15 solcher Zeilen die Ausgabe ab.
+
+- endlich gibt es auch einen Oberbegriff fuer die undefinierten
+  Bretter (die, die bei CHECK in Kleinschreibung ausgegeben werden).
+  Wenn ein User bei WANTBOARD/NOTBOARD diese Bretter komplett
+  einblenden/ausblenden will, kann er das mit dem "virtuellen"
+  Brettnamen "TEMP" tun. Existiert schon ein Brett TEMP in der Box,
+  schadet das auch nicht. Dessen Inhalt duerfte etwa dem Umfang der
+  undefinierten Bretter entsprechen. Die werden dann zusaetzlich auch
+  mit ausgegeben oder unterdrueckt, so vorhanden.
+
+- der Sysop kann nun Bretter angeben, die der User nicht mit
+  WANTBOARD/NOTBOARD ausblenden kann. Egal was der User einstellt,
+  diese Bretter werden auf jeden Fall angezeigt. Bitte nur sinnvoll
+  einsetzen, z.B. fuer EIN lokales Info-Brett. In config.box
+  muss dazu eine Zeile
+  MUSTCHECK BRETT1 BRETT2 BRETT3...
+  eingefuegt werden. Das "virtuelle" Brett TEMP kann man hier aus
+  konzeptionellen Gruenden uebrigens nicht angeben ;)
+
+- Zufallsgenerator für PW-Checks geringfügig verändert. Hatte
+  zwar bislang auch niemand ausgenutzt, aber wer genau bescheid
+  wusste, konnte die Ergebnisse vorausberechnen, wenn er wusste,
+  wann DPBOX gestartet wurde (Netscape hatte auch mal damit zu
+  kaempfen, so kam ich ueberhaupt drauf). Ich will es nicht beschwoeren,
+  aber vermutlich geht das nun nicht mehr.
+
+- in der Ueberpruefung eingehender M-Meldungen anderer Boxen war ein
+  bloeder Fehler: wenn die Angabe des MyBBS in hierarchischer Notation
+  war (BayBox macht das, und auch DPBOX in bestimmten Faellen), dann
+  wurde die Meldung nicht ausgewertet (allerdings dennoch an andere Boxen
+  weitergeleitet). Das Ergebnis kann man sich ganz gut vorstellen, so
+  nach einigen Jahren Laufzeit, nicht? Deswegen haben die Baybox-User
+  vor einem halben Jahr so geschimpft, wie daemlich DPBOX programmiert
+  sei. Nett uebrigens, dass mir dabei das System der Weiterleitung von
+  MyBBS-Infos erklaert wurde. Was meinen die wohl, wer das fuer die 
+  programmiert? Aber wir sitzen ja alle immer im Glashaus.
+  Eingebaut habe ich den Bug uebrigens, nachdem DieBox durch vollkommen
+  kaputte M-Meldungen DPBOX zum Absturz brachte. Gut gemeint ist eben nicht
+  immer gut gemacht.
+
+- wo wir gerade bei den Usern waren, die ueber mich als Programmierer
+  schimpfen: Wenn ein User mit Call DL1XYZ sein MyBBS auf DL1XYZ setzt
+  (beliebt, aber dadurch wird es trotzdem nicht genialer), dann wird das nun
+  abgewiesen, es sei denn, es existiert tatsaechlich eine Route zu diesem BBS.
+  Ich unterbinde uebrigens mit Absicht keine Angaben unbekannter MyBBS-
+  Ziele. Nur diesen absoluten DAU-Fehler.
+
+- im Zusammenhang mit MyBBS-Forward moechte ich uebrigens darauf
+  hinweisen, dass Baybox definitiv keine Probleme mehr mit dem Mischbetrieb
+  von WP-MyBBS-Forward und M-Meldungs-MyBBS-Forward hat. Nur noch DieBox
+  kann dadurch lokal zu erhoehtem M-Meldungs-Aufkommen verleitet werden,
+  das ist aber in der Praxis blockiert, sobald eine Bay- oder DP- box in
+  der Forward-Strecke liegt. (Danke Dietmar fuer die Klaerung). Wer
+  nun ueberhaupt nicht versteht, was hier gemeint ist: egal... Schaltet
+  zu DPBOX- und FBB-Nachbarn nach Absprache WP-Forward ein, deaktiviert dafuer
+  die Weiterleitung von M-Meldungen (aber nicht von E-Meldungen, da arbeiten
+  Dietmar und ich momentan an einer gemeinsamen Loesung, die uns von der
+  Menge E-Meldungen befreit, aber das ist noch nicht fertig). Der komprimierte
+  Forward dankt es euch... Ihr werdet zwar beschimpft werden, dass eure Box
+  massenhaft M-Mails faelscht, aber das koennt ihr getrost in die
+  Rundablage legen und auf Dietmar und mich verweisen (oder besser nur auf
+  mich, sonst ist Dietmar boese, weil ich ihn nicht vorher gefragt habe ;)
+
+- wenn ein TRANSFER an einen User mit unbekanntem MyBBS (oder einen
+  unbekannten User, oder an einen mit falsch angegebener Zieladresse)
+  ging, wurde das anders als beim direkten SEND-Befehl angenommen.
+  Das ist nun geaendert, ein TRANSFER wird in solchen Faellen mit
+  Fehlermeldung abgebrochen.
+
+- DL3NEU hat eine Erweiterung des Hilfesystems geschrieben, die
+  ich allerdings selber nochmal nachvollziehen muss... :) . Sollte
+  einer von euch schneller sein als ich, bitte sachdienliche Hinweise
+  an DPTNT@DL (show_help() und show_allhelp() in box_sub.c) Sollte
+  Daniel momentan QRV sein, bitte melden.
+
+- Mailing-List-Server komplett umgeschrieben (von Daniel, DL3NEU).
+  Kann die Box nun nicht mehr über mehrere Minuten (auf lahmen 
+  Rechnern) anhalten, waehrend neue Mails an Maillisten mit mehreren
+  hundert Abonnenten einsortiert werden. Einige Sekunden sind aber
+  durchaus noch drin (eben solange, wie es dauert, eine Datei an
+  hunderte Abonnenten zu kopieren). Auf Pentiums mit einigermassen
+  modernen Platten scheint das aber nicht mehr messbar zu sein.
+
+- sehr unangenehmes Speicherleck gefunden: an verschiedenen Stellen
+  wurde reservierter Speicher nicht wieder sauber freigegeben. Bitte
+  mal bei Gelegenheit beobachten (mit "ps axm" in der shell), ob dpbox
+  über mehrere Wochen und Monate ununterbrochener Laufzeit relativ
+  konstant in der Speicherbelegung bleibt.
+
+- S&F: Sonderfall im gepackten SF mit Bayboxen abgedeckt. Kommen jetzt
+  keine SF-Abbrüche mit "Please restart SF" mehr. Hatte was mit Faulheit
+  beim Programmieren zu tun, und auch damit, dass das mit FBB und DPBOX
+  fast nie auftritt (zur Erinnerung: FBB hat gepackten SF etwa 1989
+  eingebaut, DPBOX folgte 1993, Baybox 1998 - lange Zeit war das also gar
+  nicht wichtig).
+
+- endlich mal sauber gesetzte Permissions. Alle Dateien, die die Box anlegt,
+  sind nur RW für den Unix-user des Boxprozesses, mit Ausnahme der Dateien,
+  die im Fileserver abgelegt werden, die sind zusätzlich world readable.
+  Ich hoffe, das trifft sich mit der Praxis, bitte Korrekturvorschläge.
+
+- erheblich schnelleres Durchsuchen von Mails auf 7plus-Teile, badwords,
+  / /ECHO-Bomben, Binaerfragmente, /ACK-Aufforderungen. Da das bei jeder
+  eintreffenden Nachricht geschieht (jede Nachricht wird bis zu Ende
+  durchgelesen), ist die Performance hier nicht unbedeutend.
+
+Gruss, Joachim, DL8HBS

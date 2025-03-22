@@ -1,0 +1,39 @@
+#! /bin/sh
+
+# Wird durch einen Eintrag in /var/cron/tabs/root von crond alle 5min
+# aufgerufen. Eintrag in der crontab kann wie folgt aussehen (Pfad anpassen):
+# */5 * * * * /usr/local/dptnt/box/run/bsjoin
+
+# bsjoin - Kombiniert Binsplit-Files in Fileserver & Privserv
+# benoetigt bs >= 1.56
+#
+# 30.11.1997  created: Daniel Goetz, DL3NEU
+# 15.02.1998 modified: Daniel Goetz, DL3NEU
+# 20.02.1998 minor corrections: Axel Bauda, DG1BBQ
+
+# Hier bitte das Root-Verzeichnis der Box eintragen (z.B. /work/box/)
+boxdir=/usr/local/dptnt/box/
+
+# Verzeichnisse in denen gesucht werden soll:
+privservdir=${DPBOXBOXDIR}privserv/
+incomingdir=${DPBOXSERVERROOT}incoming/
+newbindir=${DPBOXSERVERROOT}newbin/
+#
+
+if [ ! $DPBOXBOXDIR ]; then
+  DPBOXBOXDIR=$boxdir
+  DPBOXSERVERROOT=${boxdir}fileserv/
+fi
+
+
+cd $privservdir
+find $privservdir -noleaf -type f -iname '*.b01' \
+                  -exec bs '{}' '-q -dp' ';' >/dev/null
+
+cd $incomingdir
+find $incomingdir -noleaf -type f -iname '*.b01' \
+                  -exec bs '{}' '-q -dp' ';' >/dev/null
+
+cd $newbindir
+find $newbindir   -noleaf -type f -iname '*.b01' \
+                  -exec bs '{}' '-q -dp' ';' >/dev/null

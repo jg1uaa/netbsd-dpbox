@@ -1,0 +1,37 @@
+# this file helps limiting the lifteime of incoming mails
+# according to some keywords that you define
+#
+# & is a token for the senders callsign
+ 
+
+IBM      15 &DL9XYZ
+SOFTWARE 22 &HB9XYZ
+*         3 &DL9XYZ
+*         2 DANK
+*         2 THANK
+*         2 ^TNX
+*         2 TNX
+*         1 HROUTE
+*         1 H-ROUTE
+*         3 ASTRA
+*         1 SALE
+*         1 VEND
+*         7 ?
+*         7 SUCHE
+*         7 PROBLEM
+*         7 PROBL
+*         7 PROBS
+*         7 NEED
+*         7 HILFE
+*         7 WANTED
+*         7 HELP
+*         7 GESUCHT
+*         7 FRAGE
+*         7 CHERCHE
+*         7 SEARCH
+*         7 LOOKING
+*         7 PLEASE
+*         7 PSE
+*         1 .ERR
+*         1 ERR-FILE
+

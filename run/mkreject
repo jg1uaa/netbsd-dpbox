@@ -1,0 +1,213 @@
+#! /bin/sh
+
+# 28.11.96 J.Schurig
+# Modifying reject.box online
+
+if [ $DPBOXSYSOP = 0 ]; then
+ echo 'This is a sysop-only command'
+ exit
+fi
+
+tfile="$PWD/../system/reject.box"
+
+if [ "$1" ]; then
+ REPLY="$1"
+else
+ echo 'You may call this command non-interactive, too. Call it with the'
+ echo 'expected answers in the parameter list'
+ echo
+ echo 'Do you want to'
+ echo
+ echo ' (a)dd entries to'
+ echo ' (d)elete entries in'
+ echo ' (s)how parts of'
+ echo
+ echo -n 'the reject list? (a,d,s) >'
+ read
+fi
+REPLY=$(echo "$REPLY" | tr A-Z a-z)
+if [ ! "$REPLY" ]; then
+ exit
+fi
+if [ ! "$REPLY" = "a" ] && [ ! "$REPLY" = "d" ] && [ ! "$REPLY" = "s" ]; then
+ echo "invalid option: $REPLY"
+ exit
+fi
+
+# if occasionally a sysop changed linebreaks
+tr -s '[\r]' '[\n*]' <$tfile >$tfile.$DPBOXUSERNUMBER
+mv $tfile.$DPBOXUSERNUMBER $tfile
+
+if [ "$REPLY" = "a" ]; then
+ if [ "$2" ]; then
+  REPLY="$2"
+ else
+  echo
+  echo 'creating a new entry for the reject list'
+  echo '----------------------------------------'
+  echo 'You are now asked for some filter criteria. All messages matching'
+  echo 'all of these criteria will be'
+  echo
+  echo ' (R)ejected'
+  echo ' (H)eld (stopped from forward for sysop control)'
+  echo ' held if (L)ocally generated'
+  echo ' held if locally generated without (P)assword'
+  echo
+  echo -n 'What of the above do you want? (R,H,L,P) >'
+  read
+ fi
+ REPLY=$(echo "$REPLY" | tr a-z A-Z)
+ if [ ! "$REPLY" = "R" ] && [ ! "$REPLY" = "H" ] \
+  && [ ! "$REPLY" = "L" ] && [ ! "$REPLY" = "P" ]; then
+  echo "invalid option: $REPLY"
+  exit
+ fi
+ action="$REPLY"
+
+ if [ "$3" ]; then
+  REPLY="$3"
+ else
+  echo
+  echo 'OK. Now you have to define six different filter criteria. Except for'
+  echo 'the last one (the minimum file size), each of them may contain the'
+  echo 'wildcard "*". Also, a leading "~" will negate the expression of each'
+  echo 'filter. The filters are not case sensitive.'
+  echo
+  echo 'Filters are:'
+  echo 'Message-Type  From  @BBS  To  BID/MID  FileSize'
+  echo
+  echo 'Enter the Message-Type. Common are:'
+  echo
+  echo ' (B)ulletins'
+  echo ' (P)rivate mails'
+  echo ' N(T)S-messages'
+  echo ' (A)cknowledges' 
+  echo ' (*) = all'
+  echo
+  echo -n '(A,B,P,T,*) >'
+  read
+ fi
+ messagetype=$(echo "$REPLY" | tr a-z A-Z)
+ 
+ if [ "$4" ]; then
+  REPLY="$4"
+ else
+  echo -n 'Enter the From-field filter (callsign or "*") >'
+  read
+ fi
+ fromfield=$(echo "$REPLY" | tr a-z A-Z)
+
+ if [ "$5" ]; then
+  REPLY="$5"
+ else
+  echo -n 'Enter the @BBS-field filter (callsign, distribution area or "*") >'
+  read
+ fi
+ distfield=$(echo "$REPLY" | tr a-z A-Z)
+
+ if [ "$6" ]; then
+  REPLY="$6"
+ else
+  echo -n 'Enter the To-field filter (callsign, board or "*") >'
+  read
+ fi
+ tofield=$(echo "$REPLY" | tr a-z A-Z)
+
+ if [ "$7" ]; then
+  REPLY="$7"
+ else
+  echo -n 'Enter the BID/MID filter >'
+  read
+ fi
+ bidfield=$(echo "$REPLY" | tr a-z A-Z)
+
+
+ if [ "$8" ]; then
+  REPLY="$8"
+ else
+  echo -n 'Enter the minimum message size (in kBytes, 0 = all messages) >'
+  read
+ fi
+ bytesfield="$REPLY"
+
+ if [ "$9" ]; then
+  REPLY="$9"
+ else
+  echo -n 'Enter a (short) comment >'
+  read
+ fi
+ commentfield="$(date +%m)/$(date +%y) $DPBOXUSERCALL: $REPLY"
+
+ echo
+ echo 'You entered the following definition:'
+ echo
+ entry=$(printf '%s %s %-8s %-8s %-8s %-12s %-3s #%s' \
+         "$action" "$messagetype" "$fromfield" "$distfield" \
+         "$tofield" "$bidfield" "$bytesfield" "$commentfield") 
+
+ echo '? T From     @BBS     To       BID/MID      Len Comment'
+ echo "$entry"
+
+ echo
+ echo -n 'Add that to the reject list? (y/n) >'
+ read
+ REPLY=$(echo "$REPLY" | tr a-z A-Z)
+ if [ "$REPLY" != "Y" ]; then
+  echo 'not added.'
+  exit
+ fi
+ echo "$entry" | cat >>$tfile
+ echo
+ echo 'OK, added. Type RELOAD to make the change effective.'
+ exit
+fi
+
+if [ "$REPLY" = "s" ]; then
+ if [ "$2" ]; then
+  REPLY="$2"
+ else
+  echo
+  echo 'search in reject list'
+  echo '---------------------'
+  echo
+  echo -n 'enter a string to search for: >'
+  read
+ fi
+ searchstring=$(echo "$REPLY" | sed -e s,'*','.*',g -e s,'?','.?',g)
+ echo
+ echo '? T From     @BBS     To       BID/MID      Len Comment'
+ echo '------------------------------------------------------------------------------'
+ grep -i -E -e "^[^#]+.*$searchstring.*$" $tfile
+ exit
+fi
+
+if [ "$REPLY" = "d" ]; then
+ if [ "$2" ]; then
+  REPLY="$2"
+ else
+  echo
+  echo 'delete in reject list'
+  echo '---------------------'
+  echo
+  echo -n 'enter a string to search for deletion: >'
+  read
+ fi
+ delstring=$(echo "$REPLY" | sed -e s,'*','.*',g -e s,'?','.?',g)
+ echo
+ echo '? T From     @BBS     To       BID/MID      Len Comment'
+ echo '------------------------------------------------------------------------'
+ grep -i -E -e "^[^#]+.*$delstring.*$" $tfile
+ echo
+ echo -n 'delete these entries? (y/n) >'
+ read
+ REPLY=$(echo "$REPLY" | tr A-Z a-z)
+ if [ "$REPLY" = "y" ]; then
+  grep -i -E -v -e "^[^#]+.*$delstring.*$" $tfile >$tfile.$DPBOXUSERNUMBER
+  mv $tfile.$DPBOXUSERNUMBER $tfile 
+  echo 'OK, now deleted'
+  echo 'type RELOAD to make the change effective'
+ else
+  echo 'not deleted'
+ fi
+ exit
+fi

@@ -1,0 +1,166 @@
+#! /bin/sh
+
+# 3.11.97 Daniel Goetz, DL3NEU
+# calls bs >= v1.56 for bsmail
+# 15.01.98 Daniel Goetz DL3NEU: combined bsget & bsmail
+#                               If you want to have an extra bsmail, set a
+#                               symbolic link to bsget named 'bsmail'.
+# 22.01.98 Axel Bauda DG1BBQ:   Modified for BS v1.56
+#
+# BinSplit support for DPBOX Fileserver
+
+basicsize="20000"
+
+if [ $DPBOXSERVERMODE = 0 ]; then
+  echo 'bsget: only valid in file server mode'
+  exit
+fi
+
+ismail=$(echo $0 | tail -c 8)
+
+if [ "$ismail" = "/bsmail" ]; then
+  import="1"
+  if [ "$2" ]; then
+    parts="$2"
+  fi
+else
+  if [ "$4" ]; then
+    if [ "$4" = "-MAIL" ] || [ "$4" = "-mail" ]; then
+      import="1"
+    elif [ "$4" = "+" ]; then
+     spmode=" -+"
+    else
+      parts="$4"
+    fi
+  fi
+  if [ "$3" ]; then
+    if [ "$3" = "-MAIL" ] || [ "$3" = "-mail" ]; then
+      import="1"
+    elif [ "$3" = "+" ]; then
+      spmode=" -+"
+    else
+      parts="$3"
+    fi
+  fi
+  if [ "$2" ]; then
+    if [ "$2" = "-MAIL" ] || [ "$2" = "-mail" ]; then
+      import="1"
+    elif [ "$2" = "+" ]; then
+      spmode=" -+"
+    else
+      parts="$2"
+    fi
+  fi
+fi
+
+if [ ! "$1" ] && [ "$ismail" = "/bsmail" ]; then
+  echo 'usage: bsmail <filename|filenumber> [<recode parts>]'
+  echo ''
+  echo '<recode parts>: a selection of parts that will be generated.'
+  echo '                in hex-format (from 00 up to FF)'
+  echo ''
+  echo 'examples: bsmail file.bin 09-0F'
+  echo '          bsmail test 0a-'
+  echo '          bsmail info.doc -2'
+  echo ''
+  echo 'Note: File-import will only be done locally!'
+  exit
+fi
+if [ ! "$1" ]; then
+  echo 'usage: bsget <filename|filenumber> [<recode parts>] [+] [-MAIL]'
+  echo ''
+  echo '<recode parts>: a selection of parts that will be generated.'
+  echo '                in hex-format (from 00 up to FF)'
+  echo ''
+  echo 'examples: bsget file.bin 09-0F'
+  echo '          bsget test 0a-'
+  echo '          bsget info.doc -2'
+  echo ''
+  echo '-MAIL makes 7get import the files into your user board'
+  echo '      Note: File-import will only be done locally!'
+  echo ''
+  echo 'Note: If your terminal has problems receiving back-to-back BIN files,'
+  echo '      try adding a + to the command line!'
+  exit
+fi
+
+# the following is a hacking check:
+fname=$(echo "$1" | sed -e s,'\.\./',, -e s,'/~',, -e s,'~/',, -e s,'?',, -e s,'*',,)
+if [ "$fname" != "$1" ]; then
+  echo "bad file: $1"
+  exit
+fi
+ispath=$(echo "$1" | sed -e s,'^/',,)
+if [ "$ispath" != "$1" ]; then
+  fname=${DPBOXSERVERROOT}${ispath}
+else
+  fname=${DPBOXSERVERROOT}${DPBOXSERVERPATH}$1
+fi
+
+if [ ! -e "$fname" ]; then
+  dummy=$(echo "$1" | tr -d '[:digit:]')
+  fname="$DPBOXSERVERROOT$DPBOXSERVERPATH$DPBOXSELECTEDFILE"
+  if [ "$dummy" ] || [ ! "$DPBOXSELECTEDFILE" ] \
+                  || [ ! -e "$fname" ]; then
+    echo "unknown file: $1"
+    exit
+  fi
+fi
+
+if [ ! "$parts" ]; then
+  parts="1-"
+fi
+
+if [ "$import" = "1" ]; then
+  mytempname=$DPBOXUSERCALL.$DPBOXUSERNUMBER.$RANDOM
+
+  # Header-Datei erstellen...
+  echo ${DPBOXBOXCALL}     >> header.${mytempname}
+  echo ${DPBOXBOXCALL}     >> header.${mytempname}
+  echo ${DPBOXUSERCALL}    >> header.${mytempname}
+  echo ${DPBOXBOXCALL}	   >> header.${mytempname}
+  echo ''                  >> header.${mytempname}
+  echo ''                  >> header.${mytempname}
+  echo '%o %P/%Q'          >> header.${mytempname}
+  echo 'X-Info: Mail automatically created @'${DPBOXBOXCALL}\
+                                       >> header.${mytempname}
+  echo ''                  >> header.${mytempname}
+
+  bs ${fname} -${basicsize} -q -r "${parts}" -sfl "header.${mytempname}" \
+              -w -u2 "import.${mytempname}"
+  back=$?
+  if [ $back = 0 ]; then
+    rm header.${mytempname}
+    mv import.${mytempname}* ${DPBOXBOXDIR}newmail/
+    echo 'Done. Mail import will commence within 1 min. Please stand by.'
+  else
+    echo 'BS-error' $back'. Could not create mails. Please notify sysop!'
+  fi
+else
+  bs ${fname} -${basicsize} -q -r "${parts}" -u ${DPBOXTRANSOUT} -w ${spmode}
+  back=$?
+  if [ ! -s ${DPBOXTRANSOUT} ]; then
+    if [ $back != 0]; then
+      echo 'BS-error' $back': please notify sysop!'
+    else
+      echo 'Error occured... Uploadfile is empty.'
+    fi
+    rm -f ${DPBOXTRANSOUT}
+  fi
+fi
+
+if [ $back = 0 ]; then
+  exit 0
+elif [ $back = 1 ]; then
+  echo 'File not found.'
+elif [ $back = 7 ]; then
+  echo 'Cannot write to file.'
+elif [ $back = 8 ]; then
+  echo 'Requested part no. higher than total no. of parts.'
+fi
+
+if [ ! "$import" ]; then
+  rm -f ${DPBOXTRANSOUT}
+fi
+
+exit 1

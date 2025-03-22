@@ -1,0 +1,28 @@
+#! /bin/sh
+# 190597: Daniel Goetz, DL3NEU
+# dpsertit
+
+echo "Content-type: text/html"
+echo
+echo "<HTML><HEAD>"
+echo "<TITLE>DPBOX search engine</TITLE>"
+echo "</HEAD><BODY>"
+echo '<BODY BGCOLOR="#ffffff">'
+
+cat dptop.html
+
+echo "<PRE>"
+pattern=$(echo ${QUERY_STRING} | sed -e s,'^pattern=',,)
+if [ ! ${pattern} ]; then
+  echo "<BIG>No search pattern found!</BIG>"
+  echo "<BIG>Kein Suchbegriff angegeben!</BIG>"
+else
+  /installdir/dphttp "CS < ${pattern}" | \
+    /installdir/dpcodeconv | \
+    /installdir/dpputlinks
+fi
+echo "</PRE>"
+
+cat dpbottom.html
+
+echo "</BODY></HTML>"

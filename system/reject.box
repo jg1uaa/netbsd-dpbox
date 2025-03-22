@@ -1,0 +1,71 @@
+# File for rejecting messages
+#
+# Type, from, @BBS, to, BID, maximum_size(kB)
+#
+# * can be used as wildcard
+# ~ is a negation of the expression
+#
+# R = REJECT H = HOLD L = HOLD only when locally entered
+# P = HOLD only when locally entered without password
+#
+
+# Hold all locally entered BULLETINS of users without Password:
+# alle lokal eingegebenen BULLETINS von Benutzern ohne Passwort anhalten:
+P B *       *          *        *        0
+
+# Deferred boards:
+# "Badnames" - abgewehrte Rubriknamen:
+R * *       *          BILDER   *        0
+R * *       *          IMAGE*   *        0
+R * *       *          BUY      *        0
+R * *       *          FOOD     *        0
+R * *       *          GAME     *        0
+R * *       *          GIF      *        0
+R * *       *          JOKES    *        0
+R * *       *          MIDI     *        0
+R * *       *          MUSIC    *        0
+R * *       *          MUSIK    *        0
+R * *       *          MOD      *        0
+R * *       *          PICT*    *        0
+R * *       *          RECIPE   *        0
+R * *       *          SALE     *        0
+R * *       *          SALES    *        0
+R * *       *          SELL     *        0
+R * *       *          TRIVIA   *        0
+R * *       *          VENDE    *        0
+R * *       *          VENTE    *        0
+R * *       *          VENTES   *        0
+R * *       *          4SALE    *        0
+
+# useless combinations of message type and @mbx: 
+# unsinnige Msgtyp/@mbx-Kombinationen:
+# (Achtung, wichtig! sonst wuerde SP KILL@WW nicht aufgehalten)
+# (Da DieBox aus dem SP wieder ein SB machen wuerde, waere das)
+# (dann auch ueberall zu lesen!                               )
+R P *       WW         ~SYSOP   *        0
+R P *       EU         ~SYSOP   *        0
+R P *       DL         ~SYSOP   *        0
+R P *       BB         ~SYSOP   *        0
+R P *       AMSAT      ~SYSOP   *        0
+
+# useless combinations of board and @mbx:
+# unsinnige Rubrik/@mbx-Kombinationen:
+R B *       WW         MEINUN*  *        0
+
+# deferred BIDs:
+# abgewehrte BIDs:
+R * *       *          *        *_OV1BBS 0   # CB
+R * *       *          *        *_DK0BBS 0   # CB
+R * *       *          *        *_SRD0CA 0   # CB
+R * *       *          *        *_ITA*   0   # CB
+R * *       *          *        *_WR2BBS 0   # CB
+R * *       *          *        *_K1MBBS 0   # CB
+R * *       *          *        *_CH1BBS 0   # CB
+R * *       *          *        *_PPN*   0   # CB
+
+
+# Max size file accepted (in kBytes):
+#R B *       EU         *        *        15
+#R B *       WW         *        *        15
+#R B *       AMSAT      *        *        15
+

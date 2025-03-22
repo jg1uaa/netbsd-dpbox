@@ -1,0 +1,2374 @@
+-----------------------------------------------------------------------------
+# File: EA.ALL
+# Spanish Help Language for DP-BOX 5.0
+# Revised and corrected by EA5SW
+#
+# ham-radio: EA5SW @ EA5VDR.EAV.ESP.EU
+#    e-mail: EA5SW @ AMSAT.ORG
+#
+# Version 1.3 - 960925 (new commands for DP-BOX 5.0)
+#
+# BUG Corrections:
+#
+# Version 1.2: 960828 - No changes for DP4.17
+#
+# Version 1.1: TELL,TRACE and FULLTRACE commands in english.
+#              PASSWORD command with some text in english.
+#              READ command with some text in english.
+#              SEND command with some text in english.
+# 
+#
+# Observations:
+# In this file you have new help commands appended and one changed.
+# The new command is NEWUSER, contains a very short description of
+# the use of the bbs.
+# The command changed is KILL (now BKILL), if you want, only rename BKILL to
+# KILL, and the help for KILL works again, also i changed ERASE to ERASE or 
+# KILL. The reasons for this changes is simple, here in spain, no Thebox type
+# mailboxes are running, only F6FBB or in rare cases, TCP/IP variants.
+# Because this, the users sends frecuently a K command to erase messages,
+# and the response is "Unknow command" or similar.
+# I rewrite the commands.box file to make DP-Box more FBB
+# "compatible",thanks to the ability of DP-BOX to make new commands easily.
+# Also the bye or quit commands confuses users, i change is, and added a
+# '?' command linked to HELP.
+# At your discrection ....
+# Sorry for my bad english.
+# 73 & DX - EA5SW 
+#
+----------------------------------------------------------------------------
+FBBMODE
+
+El comando FBBMODE permite cambiar entre dos tipos de salida del comando
+CHECK, poniendo FBBMODE a ON, la salida es con el formato de F6FBB,
+incluyendo el numero total de mensajes.
+Cuando se esta en modo FBB se pueden leer los mensajes  con R numero_msj. al
+igual que en una FBB, de todos modos tambien funciona el comando normal
+de R AREA MSJ.
+
+Nota: El modo FBBMODE ON no cambia la sintaxis normal de los comandos
+del DPBOX (excepto el comando READ).
+No esta planeado el implementar toda la sintaxis de los comandos FBB.
+El modo FBBMODE solo se ha implementado para funciones de broadcasting de
+mensajes
+----------------------------------------------------------------------------
+UNPROTO
+
+Solo Sysop
+
+El comando UNPROTO permite al sysop activar las listas de UNPROTO para
+usuarios especificos, si no estan activadas para todos (parametro
+UNPROTO_ALL en system/config.box)
+
+Este tipo de listas las utilizan los programas TPK y Winpack (entre otros)
+para poder tener los listados de la bbs sin conectase a ella.
+
+Ejemplo:
+
+UNPROTO EB5BZM ON
+
+----------------------------------------------------------------------------
+MD2
+
+Comienza el login con el tipo de password MD2
+Se utiliza el algoritmo MD2 de RSA Data Security Inc.
+
+Asumiendo que el usuario ha creado su password con el comando PASSWORD, al
+mandar el comando MD2 el resultado es una cadena del siguiente tipo:
+
+EA5SW> [12345abdef]
+
+Tu terminal debe de responder con 16 numeros hexadecimales (32 caracteres
+en total), calculados aplicando el algoritmo MD2 en los 10 caracteres
+recibidos y tu cadena completa de password.
+
+La proteccion de password MD2 es la mas segura de los tres metodos
+disponibles en DPBOX (PRIV,SYS,MD2), pero solo algunos programas terminales
+son capaces de soportarlo.
+
+Si tienes dudas, utiliza el comando SYS
+ 
+----------------------------------------------------------------------------
+MD2SF
+
+El comando MD2SF permite proteccion con password MD2 en el FWD.
+Se utiliza el algoritmo MD2 de RSA Data Security Inc.
+
+Si un  usuario quiere utilizar el modo md2 en sus conexiones de fwd, tan
+solo tiene que mandar:
+
+MD2SF ON
+
+Un sysop puede cambiar este parametros para otros usuarios asi:
+
+MD2SF EA5RQ ON
+
+El prompt de login de la bbs en modo FWD cambia a:
+[DP-5.00-AB1D1FHMR$] [12345abcde]
+
+Para entrar correctamente la bbs corresponsal deberia de mandar:
+
+[XYZ-1.0-XYZ$] 1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d
+
+(Este es el resultado de la encriptacion MD2)
+
+----------------------------------------------------------------------------
+SHELL and TSHELL
+
+Solo Sysop.
+
+Los comandos SHELL y TSHELL abren un shell en Linux.
+
+TSHELL pasa todos los datos en modo transparente, en especial no hay
+conversion de nueva linea.
+
+El shell se abre inmediatamente, el usuario es el mismo que pone en marcha
+el proceso DPBOX.
+
+Si tienes problemas de seguridad, consulta el manual.
+
+----------------------------------------------------------------------------
+CONFIG
+Permite configurar ficheros de sistema en modo on-line
+Ejemplo:
+
+CONFIG config.box REMOTE_ERASE
+Devuelve el parametro REMOTE_ERASE con la configuracion actual que tiene en
+el fichero config.box
+
+CONFIG config.box REMOTE_ERASE ON
+Fija el parametro REMOTE_ERASE a ON en el fichero config.box
+
+CONFIG config REMOTE_ERASE ON
+Hace lo mismo que el anterior, pero el sistema se ocupa de añadir el sufijo
+.box o .sf al parametro dado como fichero.
+Se busca en los directorios /box,box/system y box/sf (en este orden).
+
+CONFIG sin parametros da una ayuda de este comando (en ingles)
+Si cambias algun parametro de sistema, recuerda mandar un RELOAD para
+actualizarlo.
+----------------------------------------------------------------------------
+DEBUG
+
+Solo Sysop.
+Muestra o fija el nivel del DEBUG de la bbs (hasta el proximo RELOAD o
+rearranque)
+
+Ejemplo:
+
+DEBUG sin parametros muestra el estado actual del comando.
+
+DEBUG 5 Fija el estado de DEBUG a 5
+
+DEBUG 0 desconecta el DEBUG
+
+Cuando se hace un RELOAD o la bbs arranca, el estado de debug se toma del
+fichero system/config.box
+El parametro por defecto es 0, el rango es de 0 a 5.
+----------------------------------------------------------------------------
+
+CS
+
+Igual que el comando CHECK, pero ordena el listado por areas.
+Revisar el comando CHECK.
+
+----------------------------------------------------------------------------
+BEACON
+
+Solo Sysop.
+Comienza la transmision manual de la baliza de correo manualmente.
+Util para revisar la definicion de los parametros en system/beacon.box
+
+----------------------------------------------------------------------------
+CONNECT
+
+Solo Sysop.
+Permite conectar con un indicativo via un interface TNT.
+Sintaxis:
+
+CONNECT <Indicativo> [QRG] [Timeout]
+
+Ejemplo:
+
+CONNECT EA5URV-4 439800
+
+Si no se añade un parametro QRG, se utiliza el interface actual.
+Para saber los QRG validos se utiliza el comando QRG
+---------------------------------------------------------------------------
+
+IFUSAGE o IFUSER
+
+Solo Sysop.
+Muestra  los nombres de interface y el numero de cada usuario en la bbs.
+
+---------------------------------------------------------------------------
+
+MAXREAD
+
+Solo Sysop.
+Usando este comando, se puede limitar el numero de bytes maximos que
+puede leer un usuario por dia.
+Ejemplo:
+
+MAXREAD EA5XXX 80000
+Limita las operaciones de lectura de EA5XXX a 80000 Bytes diarios
+
+----------------------------------------------------------------------------
+MAILBEACON
+
+Usando este comando se determina si el indicativo propio aparecera en la
+baliza de la bbs o no (cuando llega un nuevo mensaje)
+
+MAILBEACON sin parametros muestra el estado actual,ON y OFF cambia el
+parametro.
+
+----------------------------------------------------------------------------
+
+NEXT
+
+Permite leer el siguiente mensaje del area seleccionada
+
+----------------------------------------------------------------------------
+QRG
+
+Solo Sysop.
+El comando QRG muestra todos los interfaces definidos en TNT.
+Pueden usarse con el comando CONNECT
+
+----------------------------------------------------------------------------
+READLOCK
+
+Sirve para fijar parametros del area de correo de usuario.
+
+El comando READLOCK tiene tres posibles opciones:
+
+READLOCK 0
+Todos los usuarios pueden leer el correo del area del usuario que aplica
+este comando
+
+READLOCK 1 
+Exceptuando al remitente y al destinatario, los usuarios en general
+solo pueden leer este area despues de que el usuario haya leido su correo y
+no haya borrado los mensajes.
+
+READLOCK 2
+Solo el remitente y el destinatario pueden leer el correo de este area.
+
+----------------------------------------------------------------------------
+SETREPLY
+
+Permite marcar los mensaje de tu area de usuario como "contestados" (signo
+'+' cuando haces un LIST de tu area).
+Normalmente esto se hace cuando haces un REPLY de ese mensaje para
+contestarlo, pero no cuando haces un simple SEND.
+
+La sintaxis es como REPLY:
+
+SETREPLY EA5XXX 1
+marca el mensaje numero 1 de ea5xxx como contestado.
+
+SETREPLY sin parametros marca como contestado el ultimo mensaje leido.
+
+----------------------------------------------------------------------------
+
+STRIPCR
+
+Permite cambiar los retornos de carro de MSDOS a retornos de carro Unix.
+DPBox no hace diferencias entre los dos, pero algunos editores de texto
+Unix, si.
+
+----------------------------------------------------------------------------
+
+TNTCOMM
+
+Solo Sysop.
+Permite mandar comandos a cualquier canal de cualquier TNT conectado.
+Ejemplo:
+
+TNT <QRG> 0 CS
+Muestra todas las conexiones actuales del TNT seleccionado.
+
+Para encontrar el QRG adecuado, busca con el comando QRG
+
+----------------------------------------------------------------------------
+TTL
+
+El comando TTL permite escoger el formato de salida de la caducidad de los
+mensajes en la salida de CHECK y LIST.
+
+TTL ON
+Muestra el tiempo de caducidad que le queda a un mensaje.
+
+TTL OFF muestra el tiempo total de caducidad de un mensaje.
+
+Si se cambia TTL a on, el comando de sysop LIFETIME, se basa en la fecha
+actual.
+
+----------------------------------------------------------------------------
+NEWUSER
+Un paseo por DP-BOX
+
+Supongo que tienes impaciencia por ver como funciona este sistema, vamos
+a dar unos cuantos pasos juntos.
+Tal vez lo primero que deberias de hacer es pedir que el sistema te mande
+algo de ayuda, manda H y te contestara con una corta descripcion.
+Este sistema esta distribuido en "areas" o zonas de mensajes, si mandas
+el comando D (Directorio) la bbs te contestara con un listado de areas
+activas.
+De todos modos si prefieres un listado a la vieja usanza manda por ejemplo
+C 50 lo cual te dara un listado de los ultimos 50 mensajes que han entrado
+a la bbs.
+Una vez sepas las areas activas, querras un listado detallado de ellas,
+manda por ejemplo L UNIX y obtendras un listado de los mensajes relacionados
+con estos sistemas operativos.
+Ahora puedes leer mensajes con R xxx donde xxx es el numero del mensaje
+R 50 lee el mensaje 50 del area UNIX
+Tambien puedes incluir el area como parametro:
+R UNIX 50 lee el mensaje 50 del area UNIX
+R TODOS 25 lee el mensaje 25 del area TODOS
+
+-----------------------------------------------------------------------------
+
+/ACK
+Envia un mensaje de ACK a la estacion que lo pide
+
+----------------------------------------------------------------------------
+
+ABORT o BYE
+
+Acaba la conexion con la bbs. La fecha de login no se actualiza.
+Lo mismo se produce con una simple desconexion.
+
+Ejemplo:
+
+ABORT
+
+----------------------------------------------------------------------------
+
+ACTIVITY
+
+Solo Sysop. 
+Muestra las ultimas lineas de comando de cada usuario.
+Los canales de FWD se muestran en minusculas, con un indicador
+de direccion siguiente el indicativo.
+
+Ejemplo:
+
+ACT
+
+----------------------------------------------------------------------------
+
+BATCH
+
+Solo Sysop.
+Ejecuta un fichero batch. Este fichero contiene lineas que se ejecutan
+como si lo hicieras manualmente.
+Hay que tener cuidado con la sintaxis, ya que no aborta cuando se detectan
+errores.
+Ejemplo:
+
+BATCH D:\DP\BOX\CLEANUP.BAT
+BATCH system/cleanup.bat
+
+----------------------------------------------------------------------------
+
+BBS or FIND
+
+Muestra informacion sobre otras bbs,s.Opciones posibles:
+
+BBS EA0XYZ 
+Muestra infomacion sobre la bbs ea0xyz, incluyendo el path de rutas
+de correo que DP toma, cuando mandas correo a esta estacion.
+
+BBS EA 
+Muestra una lista de todas las bbs que tengan como primeras letras de su
+indicativo "EA"
+
+BBS < Valencia
+Busca las bbs,s que contengan la palabra "Valencia" en el header de correo.
+
+BBS *.FL.USA.NOAM 
+Muestra todas las bbs con ruta jerarquica FL.USA.NOAM
+
+Puedes usar los comodines *' - BBS *.USA.* - en cualquier combinacion.
+
+----------------------------------------------------------------------------
+
+BOXLOG
+
+Solo Sysop.
+Regenera el fichero BOXLOG.DP (la base de salida del comando checklist)
+Normalmente, no debes de usar este comando, ya que GARBAGE incluye esta
+operacion.
+
+Ejemplo:
+
+BOXLOG
+
+----------------------------------------------------------------------------
+
+BROADCAST
+
+Solo Sysop.
+Comenzando con la version 4.00,DP es capaz de generar broadcast compatible
+PACSAT.
+Hay mas informacion disponible en el manual del DP-Box.
+Con el comando BROADCAST el sysop puede inmediatamente conmutar las
+transmisiones broadcast de la bbs.
+
+BROADCAST ON
+BROADCAST OFF
+
+----------------------------------------------------------------------------
+
+BULLID
+
+Solo Sysop.
+Permite chequear el estado de los BID,s.
+Sin parametros, muestra informacion sobre tamaño, tamaño maximo y 
+busqueda de punteros.
+Si la busqueda de punteros es menor que el tamaño, el pool es completamente
+rellenado y sobreescrito desde el principio.Esto es normal.
+Si tu añades un BID como parametro, el BID es busca y la posicion en el BID
+pool es mostrada.
+La opcion "-" borra el BID, la opcion "+" añade un BID.
+Ejemplos:
+
+BULLID
+BULLID 12635_F6ABJ
+BULLID 12635_F6ABJ -
+BULLID 12635_F6ABJ +
+
+Para una operacion normal de BBS, no deberias de borrar BID,s.
+
+----------------------------------------------------------------------------
+
+CHECK
+
+El comando CHECK es similar a la L en una bbs F6FBB.
+Muestra lo siguiente:
+
+* todos los boletines nuevos en la bbs (C sin parametros)
+
+* todos los boletines con un titulo especial 
+(C < search, donde 'search' es buscado en el  titulo y campo "De" de todos
+los mensajes)
+
+* todos los boletines nuevos de un area (C LINUX)
+
+* un rango de todos los boletines (C 200-300, muestra los ultimos 200 a 300
+boletines; o C 50, muestra los ultimos 50 boletines).
+
+La salida de CHECK se para despues de mostrar varios cientos de lineas para
+prevenir una carga excesiva del trafico en HF.
+
+Ejemplos:
+
+C
+C 50
+C 1000-1200
+C < DL8HBS
+C < FT-757
+C < WP Update
+C ATARI
+
+El comando CHECK tiene un parametro opcional "+", si es añadido al comando,
+en vez de boletines solo el correo privado es examinado.
+Este comando es solo para sysop.
+Ejemplos:
+
+C +
+C < DL8HBS +
+C DL8HBS +
+
+Adicionalmente, se dispone del parametro "$", este, en vez de mostrar la
+fecha del correo, muestra el BID.
+Usando el parametro search y BID en combinacion obtienes una lista
+del correo buscado que ademas contenga los siguientes BID,s.
+Ejemplos:
+
+C $
+C 50 $
+C 1000-1200 $
+C < $DB0GR
+C < $12345_DB0GR
+C ATARI $
+
+Naturalmente, tu eres libres para combinar las opciones que necesites.
+Ejemplo:
+
+C 500 < DL8HBS
+C 1000-20000 < $DB0GR
+C + 100-300 < $DB0GR
+
+y como no...
+
+La palabra a buscar puede incluir comodines (*):
+
+C < FT*757
+
+Esto busca FT-757, FT 757 FT757 etc.
+
+----------------------------------------------------------------------------
+
+CD
+
+Solamente para compatibilidad con BaycomBox.
+Cambia al area seleccionada.
+
+Ejemplo:
+
+CD FAX
+
+----------------------------------------------------------------------------
+
+CLEARBUF
+
+Absolutamente innecesario usando Linux.
+
+Ejemplo:
+
+CLEARBUF
+
+----------------------------------------------------------------------------
+COMMENT
+
+Es muy similar a REPLY, la diferencia es que no se genera un mensaje
+privado, sino que se genera un mensaje con el mismo destino y campo @bbs que
+el mensaje leido.
+
+Ejemplo:
+
+COMMENT BBS 34
+
+----------------------------------------------------------------------------
+
+COMP or //COMP
+
+COMP ON activa la compresion huffman de la bbs.
+Envia un comando de respuesta  //COMP 1 y comienza la compresion.
+COMP OFF cambia la compresion a off, la respuesta es //COMP 0.
+
+----------------------------------------------------------------------------
+
+CONVERSE
+
+La bbs ofrece un modo converse interno, es solamente local, no se puede
+conectar al modo pingpong converse de TheNetNode,Wampes u otros nodos
+basados en TCP/IP.
+
+Ejemplos:
+
+CONVERSE
+
+comienza converse, canal seleccionado: 0.
+
+CONVERSE 1234
+
+comienza converse, canal seleccionado: 1234.
+
+Cuando estas en modo converse manda /HELP para recibir ayuda.
+
+Converse acaba cuando mandas /Q
+
+Los usarios pueden usar numeros de canal del 0 al 100.000
+Los sysops de area hasta el 200.000
+Y los sysop, un numero realmente alto, 4.000.000.000
+
+----------------------------------------------------------------------------
+
+CTEXT
+
+Solo Sysop.
+Puedes entrar un texto de logon que es mostrado a todos los usarios, el
+CTEXT anterior es mostrado y luego borrado.
+
+----------------------------------------------------------------------------
+
+DBASE
+
+No implementado en la version Linux
+
+----------------------------------------------------------------------------
+
+DIRECTORY
+
+El comando DIRECTORY muestra una lista de areas de la bbs.
+Tiene cuatro opciones diferentes:
+
+D muestra las areas de boletines, el numero despues del nombre es el maximo
+tiempo de vida para esa area, tal como es puesto en RUBRIKEN.BOX
+
+D I tambien muestra las areas de boletines, pero el numero es el numero del
+ultimo mensaje en esta area (Debido al borrado del corro, no muestra el
+total de mensaje)
+
+D U muestra las areas de usuario, el numero es el numero del ultimo mensaje
+en el area del usuario.
+
+D A muestra las areas de boletines como "D" y tambien las areas de usuario,
+pero sin contador de mensajess.
+
+Solo Sysop.
+D L muestra todas las areas de usuario que tengan una bbs distinta de esta
+bbs.
+I es una abreviatura de INFO, U de USER, A de ALL (todos) and L de LOST.
+
+Solo se muestran aquellas areas que tiene un valor de accesso igual o menor
+al del usuario que ha mandado el comando.
+
+Para agilizar el proceso, el chequeo de un area que ha sido borrada
+completamenteo solo se produce con areas de usuario o de boletines con 3
+o menos mensajes.
+Si un area de boletines contiene 100 mensajes que han sido borrados por el
+sysop, DIR muestra ese area hasta que se ejecute el proximo comando GARBAGE
+
+----------------------------------------------------------------------------
+
+DISCONNECT
+
+Solo Sysop. 
+Permite desconectar uno o todos los usuarios de la bbs.
+Opciones:
+
+DISC ALL
+
+desconecta todos los usuarios
+
+DISC DL9XYZ
+
+desconecta a DL9XYZ
+
+DISC 6
+
+desconecta al usuario en el port de la bbs numero 6.
+
+DISC SF
+
+desconecta todas las conexiones de forwarding.
+
+DISC USER
+
+desconecta todas las conexiones no-forward
+
+Se puede añadir un texto que se mandara con la desconexion.
+Ejemplo:
+
+DISC ALL Lo siento, vamos a hacer un mantenimiento.
+
+Dependiente de la version del sistema, este texto es mostrado o no, hi.
+
+----------------------------------------------------------------------------
+
+EDITOR
+
+No implementado en la version Linux
+
+----------------------------------------------------------------------------
+
+ERASE or KILL
+
+Borra los mensajes seleccionados de una area.
+Nota: El comando ERASE de DP no funciona inmediatamente.Solamente marca
+en el header de cada mensaje una orden de borrado.
+Como sysop, tu puedes reconstruir mensajes borrados hasta el proximo
+GARBAGE, o dependiento de la configuracion, durante varios dias.
+Revisa el comando HIDDEN y GARBAGE y el setup del fichero CONFIG.BOX
+
+Naturalmente, un usuario solo puede borrar mensajes de el o para el.
+Ejemplos:
+
+E DL9XYZ 7-10
+E 9
+E ATARI 12
+E DP < DL8HBS
+E DP < $DB0GR
+
+ERASE sin parametros, borra todos los mensajes nuevos de un area de usuario
+(si estas en un area activa). No funciona en areas de boletines,al menos si
+no eres sysop.
+
+Nota para sysops:
+La documentacion del erase remote se encuentra en el manual de DP-BOX.
+Revisela en caso de necesidad.
+----------------------------------------------------------------------------
+
+EXPORT
+
+Solo Sysop.
+Exporta un mensaje especificado (o un numero de mensajes) a disco.
+
+La sintaxis es igual que READ, por ejemplo, EXP ATARI 7-10
+
+Se te requiere el nombre de fichero de salida, si el comando se manda via
+packet, el fichero de salida se llama EXPORT.BOX en el directorio DP\SAVE.
+El .BOX puede  ser sustituido por un contador numerico.
+Adicionalmente se puede extender el comando con el nombre del fichero de
+salida.
+
+EXPORT BBS 17 save/test.dat
+
+Hay que hacer notar, que con Linux, cada uno, si, cada uno de los comandos
+que tiene que ver con los ficheros del sistema se expanden con el path del
+directorio principal de la bbs.
+Esto hace que un sysop de bbs no tenga acceso a ningun fichero del sistema
+Linux fuera de este path, de esta manera, es posible hacer funcionar al
+mismo tiempo servicios multiples en un solo ordenador, por ejemplo
+servidores ftp conectados a Internet o software TCP/IP para
+radioaficionados.
+Asi que un sysop de DP-BBS lo es solo de DP-BBS, si se quiere tener acceso a
+traves de la bbs a ficheros del sistema Linux, hay que crear Links
+simbolicos en el estructura de directorios de la bbs ya que todo el sistema
+de bbs, arranca con el usuario root.
+Si quieres tener acceso directo como superusuario, la manera normal de
+hacerlo es via el interface que proporciona TNT (asumiendo que hay definido
+un ssid para hacer logins de terminal), de esta manera y mandando el
+password, podremos comenzar un shell como root con el comando /rootsh.
+Asi es como se opera normalmente en DB0GR en Berlin.
+
+----------------------------------------------------------------------------
+
+FCOPY and FMOVE
+
+Solo Sysop.
+Copia o mueve un fichero en el sistema de ficheros.
+
+Ejemplo:
+
+FCOPY proto/debug.box save/debug.001
+FMOVE save/debug.001 /run/test.dat
+
+----------------------------------------------------------------------------
+
+FDELETE
+
+Solo Sysop.
+Borra un fichero o una lista de ficheros especificados con comodines.
+Ejemplos:
+
+FDELETE D:\TEST.TXT
+FDELETE D:\TEST*.*
+
+o en maquinas Linux:
+
+FDELETE proto/debug.*
+
+----------------------------------------------------------------------------
+
+FDIR
+
+Solo Sysop.
+Muestra un directorio ordenado del sistema de ficheros.
+
+Ejemplos:
+
+FDIR proto/
+FDIR D:\DP\BOX\PROTO\
+FDIR system/conv*.box
+FDIR
+
+----------------------------------------------------------------------------
+
+FEXECUTE or OSSHELL or DOS (sorry...)
+
+Solo Sysop.
+Ejecuta un fichero (un programa externo). Si no se le da un path,
+el programa buscara en la carpeta box/run.
+En Atari, la extension .PRG se añade al nombre del fichero si no se le ha
+dado ninguna extension.
+
+Ejemplos:
+
+FEX date
+OS df
+DOS ps -u
+FEXECUTE save/test/ownprog
+DOS D:\DP\TEST.PRG (on Atari)
+
+La bbs se para durante la ejecucion, por tanto hay que usar programas
+rapidos y que auto-terminen.
+
+Usando Linux, la redireccion de salida se hace con el comando shell.
+
+Adicionalmente, puedes encontrar un parametro para el fichero con
+informacion sobre el indicativo de usuario que llama el comando, y tres
+nombres de ficheros, para ASCII,binario (autobin) y raw binario.
+Revisar la descripcion de los comandos externos para mas informacion sobre
+este tema.
+
+----------------------------------------------------------------------------
+
+FHEADER
+
+Atencion:
+Este comando esta anticuado.
+Puede usarse, pero usualmente lo activaras en el fichero system/config.box
+
+----------------------------------------------------------------------------
+
+FORWARD
+
+Solo Sysop.
+El comando FORWARD permite marcar manualmente mensajes en la lista de FWD.
+Si por ejemplo se instala una nueva bbs que hace FWD contigo y quiere
+recibir todos los mensajes del area ATARI de ti, tu puedes poner:
+FOR ATARI 1- DB0XYZ (donde DB0XYZ es la nueva bbs).
+El campo @bbs se cambia a @DB0XYZ, este es el unico cambio comparado al
+forwarding automatico.
+Si no quieres que esto suceda, puedes añadir el signo '+' al comando (pero
+atencion, esto causa el reenvio de todos esos mensajes, incluidos BID,s y se
+pueden generar reenvios de BID,s no deseados si el cache de BID,s en otras
+BBS,s en la red no es muy grande).
+Normalmente y para empezar, se deberia omitir el '+'
+
+La opcion + es util cuando hay errores de ruta de mensajes privados.
+Entonces se puede reenviar manualmente a otra bbs de la red, que creas utils
+que reciba ese mensaje, asi se guarda la direccion jerarquica original.
+
+Los errores de ruta se muestran en el fichero PROFILE.BOX y son usualmente
+un indicador de parametros de sistema erroneos en tu sistema o en los de tus
+corresponsales.
+Muchas veces, aparecen como una deteccion de bucle de mensajes privados.
+Otras veces, puede ser que aparezca un nuevo pais, y no se hayan definido
+sus rutas jerarquicas.
+
+----------------------------------------------------------------------------
+
+FREAD or READBIN
+
+Solo Sysop.
+Leee un fichero del sistema en modo autobin (#BIN#...)
+Para Linux, como es usual, los paths se encuentran del del directorio
+principal de la bbs.
+
+Ejemplos:
+
+FREAD system/config.box
+FREAD D:\DP\BOX\SYSTEM\CONFIG.BOX (para Atari)
+
+El comando tiene las opciones:
+
+-a la salida es ASCII normal, no BIN
+-p la salida es BIN, pero comprimida antes con LHARC (algoritmo de forward
+comprimido, pero mandado como un fichero #BIN#)
+-f completamente transparente. salida en BIN pero no se manda header.
+-t nnnn Solo se mandan los ultimos nnnn bytes del fichero.Tambien se combina
+con -a.
+-tn nnnn, adicionalmente busca una linea de "break" para empezar.
+
+Ejemplos:
+
+FREAD system/reject.box
+FREAD system/commands.box -p
+FREAD system/config.box -a
+FREAD proto/debug.box -a -t 2000
+
+----------------------------------------------------------------------------
+
+FWRITE or SENDBIN
+
+Solo Sysop.
+Escribe un fichero en el sistama en modo autobin (#BIN#...).
+Para Linux, como es usual, los paths se encuentran del del directorio
+principal de la bbs.
+
+Ejemplos:
+
+FWRITE system/config.box
+FWRITE D:\DP\BOX\SYSTEM\CONFIG.BOX
+
+Despues de mandar el comando, la bbs envia un comando de "preparado para
+recibir", entonces hay que comenzar la transmision manual desde el programa
+terminal.
+
+----------------------------------------------------------------------------
+
+GARBAGE
+
+Solo Sysop.
+Este comando comienza la rutina de limpieza de la bbs.
+Es una rutina compleja que chequea todas las entradas en la bbs y borra
+fisicamente los mensajes marcados para borrar, y aquellos cuya caducidad ha
+expirado.
+En ese momento la lista de correo se reescribe (es la base del comando
+CHECK).
+Luego la informacion de rutas de la bbs (fichero HPATH.BOX en box/stat) se
+chequea y aquellas entradas que tenga un "lasttx" mayor de seis meses se
+borran.
+
+Cuando creas que hay algun tipo de problema con los datos de la bbs, lo
+mejor es llamar esta rutina.(Si estas utilizando Linux, deberias olvidar
+esta ultima frase, jamas ocurren errores en el sistema de ficheros de Linux)
+
+La rutina comienza una vez al dia, en el horario definido por el sysop.
+Tal vez lo mejor es poner este horario entre las 0300 a 0400, la rutina
+tarda entre 5 y 20 minutos en hacer su trabajo (dependiendo de la cantidad
+de correo).
+ES IMPORTANTE LIMPIAR LA BBS, NO TE OLVIDES DE HACERLO AL MENOS UNA VEZ
+AL DIA !!!
+
+----------------------------------------------------------------------------
+
+HEADER
+
+Header es muy similar a READ,pero solo muestra el header del correo, no el
+contenido.
+Este comando es util para hacer un vistazo rapido de un path de FWD.
+Todas las opciones de READ estan implementadas.
+
+----------------------------------------------------------------------------
+
+HELP
+
+Comando de ayuda, para buscar ayuda de un comando determinado el comando es
+H xxxx  donde xxxx es el nombre del comando.
+
+Ejemplo:
+
+H DIR
+Envia la ayuda del comando DIR.
+
+----------------------------------------------------------------------------
+
+HIDDEN
+
+Solo sysop.
+Esto es un conmutador.Normalmente solo se muestran los mensajes no borrados.
+Poniendo HID ON, todas las operaciones de mensajes se hacen con mensajes
+borrados.
+El comando LIST solo muestra mensajes borrados, asi como el comando CHECK y
+otros.
+HID OFF te devuelve al modo normal.
+En el prompt aparece una letra [H] indicando el modo.
+Cuando estas en el modo hidden (oculto), puedes devolver a estado de lectura
+mensaje borrados anteriormente simplemente borrandolos (lo logica de borrado
+es invertida).
+Hay que hacer constar que esto solo funciona hasta que se produce un nuevo
+comando GARBAGE o mientras dure el tiempo de caducidad de esos mensajes.
+
+----------------------------------------------------------------------------
+
+HOLD
+
+Muestra los mensajes actualmente retenidos.
+Internamente, esto es una combinacion de los comandos:
+SELECTION SFHOLD OWNHOLD y CHECK 1-
+
+Ejemplo:
+
+HOLD
+
+Un sysop puede "soltar" los mensaje retenidos con el comando RELEASE
+
+
+Ejemplo:
+
+HOLD SOFTWARE 1-
+
+----------------------------------------------------------------------------
+
+HNAME
+
+Solo Sysop.
+Este comando esta anticuado.
+Usa la configuracion del parametro OWNHIERNAME en el fichero
+system/config.box.
+
+----------------------------------------------------------------------------
+
+IMPORT
+
+Solo sysop.
+Importa un fichero en la bbs.
+Puede ser un fichero binario (se detecta automaticamente) o un texto o
+fichero 7plus.
+Se requiere enviar el nombre del fichero, el destino y el titulo.
+Ejemplo:
+
+IMP
+
+Si se entra como comando remoto, se tiene que dar el path total y valido
+para el nombre del fichero.
+Ejemplo:
+
+IMP D:\TEST.TXT
+
+o (Linux):
+
+IMP save/test.txt
+
+La version Linux incluye adicionalmente la posibilidad de importar el
+contenido completo y los parametros BBS de un sistema TheBox.
+
+IMPORT DIEBOX /mount/dos_c/box/
+
+Revisa la documentacion de DP-BOX para mas informacion sobre la conversion
+TheBox=DP-BOX 
+
+----------------------------------------------------------------------------
+
+BKILL
+(antes KILL)
+
+Solo Sysop.
+Es el mismo comando que ERASE, pero ademas se borra el BID de ese mensaje.
+La bbs no reenviara ese mensaje en su lista de FWD.
+Ademas, es la unica posibilidad de eliminar aquellos mensajes cuyos headers
+parecen corruptos ( a pesar de que DP chequea todas las estructuras de
+ficheros con checksums para evitar y prevenirse de errores de fichero).
+Normalmente, los mensajes y ficheros erroneos se borran en el proximo
+GARBAGE, pero KILL es la posibilidad manual que se ofrece.
+
+----------------------------------------------------------------------------
+
+LANGUAGES
+
+Muestra todos los lenguajes disponibles de la bbs.
+
+----------------------------------------------------------------------------
+
+LEVEL
+
+Solo Sysop.
+Fija el nivel de un usuario.
+Ejemplo:
+LEV DL9XYZ 2
+
+El nivel por defecto de cada nuevo usuario es 1.
+Los niveles validos van del 0 al 127.
+El nivel 0 imposibilita que un usuario conecte con la bbs.
+
+Los niveles se pueden usar, para definir areas especiales, donde no
+todos los usuarios tengan acceso.
+En Alemania, esto no es legal.
+
+Esto normalmente se usa para areas especiales, por ejemplo UPLOAD, donde
+mandamos nuevas versiones del sistema, para que los sysops de desarrollo,
+puedan instalarlas rapidamente.
+
+Una aplicacion mas util,es definir comandos especiales de la bbs (tal como
+SEND o ERASE), con niveles mas altos del standard 1,asi un nuevo usuario no
+puede mardar o borrar mensajes hasta que el sysop le da un nuevo nivel de
+usuario.
+Esto si es legal.
+
+----------------------------------------------------------------------------
+
+LIFETIME or LT or SETL
+
+Solo Sysop.
+Permite corregir la caducidad de cada mensaje. esto no tiene efecto en
+la salida de FWD, pero si en la administracion de tu bbs.
+Ejemplo:
+
+LT ATARI 1- 0
+LT ATARI 5 #365
+
+----------------------------------------------------------------------------
+
+LIST
+
+Lista el contenido de un area.
+Ejemplos:
+
+L ATARI 1-4
+L < DL8HBS
+
+Esta disponible la opcion "+". Esta muestra mas informacion sobre los
+mensajes, como ratios de compresion,tiempo de vida y @BBS.
+Ejemplo:
+
+L ATARI 1- +
+
+La opcion ":" esta disponible.
+Esta muestra mas informacion sobre los mensajes, como los contadores de
+lectura, indicativos de lectores (solo sysop),fuente de ERASE (solo sysop y
+en modo HIDDEN).
+Ejemplo:
+
+L ATARI 1- :
+
+Como en el comando CHECK, la opcion $ se puede usar.
+Ejemplo:
+
+L ATARI 50 $
+L ATARI 1- $
+L ATARI < $DB0GR
+
+----------------------------------------------------------------------------
+
+LOGINTIME
+
+Muestra o fija la ultima fecha/hora de login.
+Ejemplos:
+
+LOG muestra el ultimo logintime
+LOG 1.10. fija el ultimo login el dia 1.10. de este año, a las 00:00 UTC
+LOG 1.10.92 fija el ultimo login el dia 1.10.92 00:00 UTC
+
+----------------------------------------------------------------------------
+
+MBX
+
+Solo Sysop.
+Cuando un usuario manda un mensaje con el campo @bbs erroneo, se puede
+corregir con este comando.
+La lista de FWD se actualiza con este cambio.
+Si el nuevo @bbs es un indicativo, se busca la direccion jerarquica y se
+añade, o bien puedes añadirla manualmente.
+Sintaxis:
+
+MBX VK4XYZ 1-3 VK3BBS
+MBX DL8HBS 1 DB0GR.#BLN.DEU.EU
+MBX ATARI 8 EU
+MBX ATARI 1-3 ALL
+
+----------------------------------------------------------------------------
+
+MKFMAIL
+
+Solo Sysop.
+Crea un F-Mail.
+Funciona como el comando REPLY, pero genera un mensaje de atencion al sysop
+en F@THEBOX (o cualquier campo @bbs, dependiendo de lo definido en
+system/config.box).
+La caducidad es de 14 dias.
+
+Ejemplos:
+
+MKF ATARI 78
+MKF
+
+El sistema pregunta por el comentario que se añade al correo generado.
+
+----------------------------------------------------------------------------
+
+MYBBS or SETUSR
+
+Con este comando, un usuario indica su home bbs.
+Esta es la bbs donde habitualmente recibes correo, debe de dar la misma en
+todas las bbs,s donde entres, aunque a veces vayas a leer mensajes a una 
+distinta de la habitual, para que cualquier mensaje que te llegue por la
+red, sepa donde recibes normalmente el correo.
+La informacion suministrada se envia al area M@THEBOX ( o cualquiera que se 
+haya definido en CONFIG.BOX).
+Adicionalmente cuando el intercambio de WP esta configurado, estos datos se
+importan en el formato WP y se le envian a los corresponsales de WP
+definidos.
+El formato M@THEBOX se suele usar en paises de habla germana, el WP en el 
+resto del mundo.
+Ejemplo:
+
+MY DB0XYZ
+
+Si el usuario añade la opcion "+", la informacion no se envia a las otras
+bbs,s
+Ejemplo:
+
+MY DB0XYZ +
+
+El sysop puede modificar el mybbs de un usuario, en este caso, la
+informacion nunca se envia por FWD, solo se usa localmente.
+Sintaxis:
+
+MY DL9XYZ DB0XYZ
+MY DL9XYZ DB0XYZ 2 Esto ademas cambia el nivel de usuario a 2
+(por defecto 1).
+
+----------------------------------------------------------------------------
+
+MSG
+
+El comando MSG manda una sola linea de texto a otro usuario de la bbs.
+Ejemplos:
+
+MSG DL9XYZ Hi Peter Manda la linea 'Hi Peter' a DL9XYZ (si esta conectado).
+ 
+MSG 6 Hi Peter Manda la linea 'Hi Peter' al usuario del port 6 (si
+esta conectado).
+
+Naturalmente, es imposible mandar un MSG a un usuario que esta escribiendo
+un mensaje o a una bbs haciendo FWD.
+
+Puedes mandarte un mensaje a ti mismo, esto es necesario para algunos
+generadores batch de otros progrmas.
+Si el texto que te mandas comienza con '&' no se hace eco del prompt,
+solo el texto puro (sin '&').
+Un sysop puede mandar texto a todos los usuarios, ejemplo:
+
+MSG ALL el sistema se apagara en 5 minutos
+
+----------------------------------------------------------------------------
+
+NAME
+
+Parametro requerido: Nombre del usuario.
+Ejemplo:
+
+N Joachim
+
+En modo sysop, el sysop puede cambiar los datos de otros usuarios.
+Ejemplo:
+
+N DL9XYZ Peter
+
+----------------------------------------------------------------------------
+
+NODE
+
+No implementado en la version Linux.
+
+----------------------------------------------------------------------------
+
+NOTBOARD
+
+Este comado, fuerza a la bbs a suprimir areas especificas en la salida
+del comando CHECK.
+Por ejemplo, estas aburrido de ver mensajes dirigidos a WINDOWS y SOFTWARE,
+entonces mandas:
+
+NOTBOARD WINDOWS,SOFTWARE
+
+Si quieres borrar esta seleccion, mandas: 
+
+NOTBOARD
+
+sin parametros
+
+Los parametros actuales son visibles con el comando U.
+
+U <INDICATIVO>
+
+de esta manera puedes ver tus parametros de usuario actuales.
+
+Importante: Si seleccionas mas de un area para suprimier, separalas con
+comas, no pongas espacios entre ellas.
+
+----------------------------------------------------------------------------
+
+PASSWORD
+
+Se puede definir un password para usarlo con el comando SYSTEM.
+Ademas, un sysop puede definir el password de un usuario especifico.
+El password no puede contener el caracter ";" ya que se utiliza para dividir
+comandos.
+Debe de ser mas largo de 20 caracteres, cuanto mas largo sea y mas
+caracteres aleatorios contenga, mas dificil sera de interceptar (sin exceder
+de 80 caracteres)
+Ejemplo:
+
+PASS DJGseut7k4088904fbvvjughrfw6kjjjjhKJHd3jg
+
+Un sysop puede activar el password de otro usuario:
+
+PASS DL8HBS Ljfi8uHJkfhwfhKfjj776Gjhdwtdfgh75jk
+
+Para hacer la vida de los hackers mas dificil, se ha previsto que la
+generacion del password se pueda hacer por etapas.
+Se pueden ir mandando partes del password a horas distintas y por puertos
+distintos, el password comienza a estar activo a partir del caracter 21, asi
+que para seguir mandado signos, hay que pedir ya, el comando SYSTEM (basado
+ya en esos primeros 21 caracteres), ademas el comando PWMODE pasa a modo 2.
+
+PASSWORD
+
+Sin parametros BORRA el password actual y fija el modo PWMODE a 0
+
+Hay que hacer constar que la BBS lleva un sistema de retencion (HOLD-DELAY)
+para los boletines enviados localmente sin proteccion de password.
+La retencion para un usuario que ha puesto su propio password, acaba en el
+periodo de tiempo que se ha definido.
+En este tiempo intermedio un sysop puede revisar la veracidad de esa
+accion y asi prevenirse del uso de password por piratas.
+La accion de entrar o borrar un password se refleja en el fichero
+PROFILE.BOX ( con lo cual volvemos a decir, que es un fichero al cual el
+sysop deberia de mirar frecuentemente)
+
+----------------------------------------------------------------------------
+
+PREFIX
+
+No implementado en la version Linux.
+
+----------------------------------------------------------------------------
+
+PRINT
+
+Solo Sysop.
+No implementado en la version Linux.
+
+----------------------------------------------------------------------------
+
+PRIV
+
+Comando de envio de password.
+Un password generado con el comando PWGEN (1620 caracteres aleatorio), se
+chequea con las cuatro letras que siguen el comando PRIV.
+El password completo se guarda en el fichero sf/<indicativo>.pwd
+
+Las letras de login, se computan con tu terminal de usuario, basado en la
+fecha de conexion actual.
+Esta informacion se extrae del texto de conexion de la bbs y necesita
+programas terminales especificos, que puedan buscar en el texto de login.
+El algoritmo para computar la respuesta correcta es el mismo que se utiliza
+en una bbs TheBox, y los programas terminal que permiten esto son los mismos
+que se utilizan con TheBox (DP, TNT, GP?, THP, WinGT, SP ...).
+
+Despues de un login correcto, tu status depende de los parametros de tu
+PWMODE.
+
+El comando se puede mandar varias veces, incluyendo falsas respuestas para
+prevenir el pirateo de tu password,
+
+Si tienes problemas generando este tipo de password, puedes usar otro
+metodo, con el comando SYSTEM (y el password asociado con el comando
+PASSWORD).
+No hay diferencias en el nivel de privilegio que se obtiene con ambos
+metodos.
+
+En general, el comando PRIV es un poco mas facil y rapido que el comando SYS
+(pero este no es interactivo y el SYS si), pero el comando SYS es un poco
+mas seguro (debido a que puedes contestar la respuesta en una cadena
+aleatoria)
+
+----------------------------------------------------------------------------
+
+PROFILE
+
+Solo Sysop.
+Muestra el fichero proto/profile.box en formato ASCII.
+Este fichero se rellena con informacion importante del sistema y errores
+criticos de error.
+El sysop deberia leerlo al menos una vez al dia.
+Cuando se ejecuta la rutina de mantenimineto, el fichero profile.box del
+dia, se importa al area Y para luego poder leerlo.
+
+Hemos experimentado que el fichero profile.box es un buen medio para
+comunicarse entre varios sysops para chequear las bbs,s.
+Cualquier texto añadido al comando PROFILE se escribe en el fichero
+profile.box, añadiendo ademas la fecha y el indicativo de la persona que lo
+ejecuta.
+
+Ejemplos:
+
+PROFILE
+PRO He resuelto el problema de ruteo con db0xyz
+
+----------------------------------------------------------------------------
+
+PROMPT
+
+Permite cambiar el prompt del sistema , el prompt estandar es como este:
+
+(ATARI) DL8HBS de DB0GR>
+
+Para cambiar a un nuevo prompt manda:
+
+PROMPT Hola Joachim>
+
+Y entonces el promtp cambia a:
+
+Hi Joachim>
+
+(no es muy practico).
+
+PROMPT
+
+sin parametros borra el prompt definido por el usuario y cambia al promtp
+por defecto del sistema.
+Ok, para hacer de este comando algo interesante se han definidos unos
+cuantos macros para usar en la definicion del prompt.
+Existen las siguientes alternativas:
+
+%a carga actual de la bbs
+%b area activa
+%c tu indicativo
+%d fecha
+%i logintime
+%l ultimo login
+%m indicativo de la bbs
+%n tu nombre
+%o numero de usuarios actuales
+%p tiempo utilizado por la CPU desde el ultimo login
+%r line break (retorno de carro)
+%t hora
+%v numero de version de software
+%z ultimo comando
+%% el caracter %
+
+Asi el prompt estandar es
+
+PROMPT (%b) %c de %m>
+
+Atencion, cambiar el prompt te puede dar problemas si usas programas, como
+DP,WinGT o Winpack, normalmente el prompt standar se usa para determinar el
+final de correo. Para evitar conflictos, añade solo parametros al setting
+standard. por ejemplo:
+
+PROMPT (%b) %c de %m> (%o/%a)
+
+----------------------------------------------------------------------------
+
+PROTO
+
+Solo Sysop.
+El comando proto abre un fichero que se relleana con todas las acciones que
+hace un usuario determinado.
+El fichero se guarda en proto/indicativo.pro.
+Se importa en la bbs (en el area Y) cuando se pone en marcha la rutina de
+mantenimiento.
+
+Ejemplos:
+
+PROTO + DL1XYZ
+
+activa un fichero proto para dl1xyz
+
+PROTO - DL1XYZ
+
+desactiva el fichero proto de dl1xyz
+
+PROTO
+
+muestra una lista de indicativos en protocolo
+
+PROTO OFF
+
+desactiva todos los ficheros proto.
+
+----------------------------------------------------------------------------
+
+PWGEN
+
+Genera un fichero de password de 1620 caracteres para usarse con el comando
+PRIV.
+Este tipo de password se utiliza en Alemania para proteger los enlaces de
+FWD entre BBS,s.
+Tambien lo usan los sysops para proteger el acceso con su indicativo.
+Para la proteccion de un usuario el comando PASSWORD ofrece una via simple y
+sencilla de protegerse (y ademas no da mucho trabajo a los sysops).
+
+Ejemplos:
+
+PWGEN DB0XYZ +
+
+Crea un password para DB0XYZ  con el nombre box/db0xyz.pwd.
+Este fichero se importa en modo binario en la bbs y se reenvia a DB0XYZ.
+Despues de la recepcion del fichero en DB0XYZ, simplemente hay que mover el
+fichero box/db0xyz.pwd a box/sf/db0xyz y desde ese momento, el Forwarding
+esta protegido.
+Naturalmente, DB0XYZ debe de tener lo mismo en su configuracion (con el
+password recibido).
+Este algoritmo es el mismo que utiliza TheBox y BaycomBox para proteger el
+forwarding.
+
+Para omitir la importacion y el reenvio del password, mandar el comando sin
+la opcion '+':
+
+PWGEN DB0XYZ
+
+asi solo se crea el fichero box/db0xyz.pwd.
+
+Como funciona el calculo del password ???
+La BBS manda la fecha y hora actual despues del SID de bienvenida de FWD.
+La estacion que llama contestas con el SID (como es usual), y añade una
+cadena de 4 caracteres calculada con un algoritmo especial.
+
+Para usar este tipo de password como usuario, tu programa terminal, debe de
+estar especialmente diseñado para responder este algoritmo (programas como 
+DP, TNT, THP, WinGT, SP y otros lo tienen).
+Estos programas buscan por el texto de conexion de la bbs, extraen la fecha
+y hora del login y contestan con el password calculado cuando mandas PRIV u
+otro caracter de control especial.
+
+Existe otra via para los usuarios para comenzar el FWD protegido.
+Si el usuario ha definido un password con el comando PASSWORD,  una vez
+conectado la bbs manda el SID y los 5 numeros aleatorios que se describen en
+el comando SYSTEM.
+Entonces se puede contestar con el SID y añadir la respuesta correcta del
+password.
+
+----------------------------------------------------------------------------
+
+PWMODE
+
+Solo Sysop.
+Este comando define el nivel de privilegio de un usuario despues de
+responder a un comando de password.
+
+Los niveles son: 0,1,2,8,9,10,11
+
+Donde
+
+0 significa que el usuario conecta por el puerto modem, no tiene permiso de
+escritura (esto es por defecto) (En la version Linux no existe driver para
+modem)
+
+1 significa que el usuario conecta via el puerto modem, con permiso de
+escritura,esto ademas habilida el acceso via un puerto de radio si el
+parametro global 'SEND/ERASE with PW' esta seleccionado.
+
+2 es como el 1, excepto que el usuario siempre es requerido a entrar el
+password para poder tener permiso de escritura, independientemente del
+parametro global.
+Si un usuario manda el password por si mismo utilizando el comando PASSWORD,
+este es el nivel al que automaticamente se le ajusta.
+
+8  ajusta el nivel en sysop de area, esto se invento para mantener bbs,s
+grandes con mucha cantidad de correo y usuarios.
+Los sysops de area no son literalmente sysops (solo pueden ejecutar comandos
+de usuario, pero se les extienden los comandos de sysop a las areas de las
+que se encargan)
+Las areas mantenidas por sysops de area se definen en el fichero prvcalls.box
+
+9 Igual que el 9, adicionalmente el sysop de area es protegido contra malos
+usos, forzando que se envia password para cada operacion de escritura/borrado
+
+10 fija el modo sysop principal, via radio o modem. 
+
+11 fija el modo sysop principal, combinado con PWMODE 2, el sysop tiene que
+mandar el password incluso para las operaciones no sysop.
+Hay que hacer constar que el comando QUIT es una operacion de escritura
+(escribe la ultima fecha de login), y es convertida a un comando ABORT si se
+sigue en estado de no privilegio
+
+Ejemplo: PWM DL9XYZ 1
+
+----------------------------------------------------------------------------
+
+QUIT or EXIT
+
+Finaliza la conexion con la bbs.
+El ultimo dia de login se actualiza con la fecha de esta conexion.
+
+----------------------------------------------------------------------------
+
+READ
+
+Lee el contenido de un area.
+Ejemplos:
+
+R 4
+R ATARI 1-4
+R ATARI < DL8HBS
+
+La opcion "+" esta disponible. Esta muestra el header total del mensaje
+(S&F-header)
+Ejemplo:
+
+R ATARI 9 +
+
+Los sysops pueden usar la opcion ":", esto muestra todos los indicativos que
+han leido ese mensaje.
+
+La opcion READ se ejecuta solo si la salida del buffer del usuario esta por
+debajo del valor maximo configurado ( en config.box).
+Si un usuario manda R IBM 1-, en muchos casos, solamente veras los primeros
+50 mensajes y luego un indicador avisando que los mensajes 51-788 no han
+sido enviados.
+
+----------------------------------------------------------------------------
+
+REBUILD
+
+Solo Sysop.
+Esto borra la lista de BIDs de la bbs, luego se rellena con todos los BID,s
+activos actualmente en la bbs.
+Normalmente la lista de BID,s contiene toda la informacion sobre los
+mensajes que han pasado,leido o borrado por la bbs en todo sus tiempo de
+actividad.
+El efecto del comando REBUILD es que puedes recibir mensajes que ya han
+pasado por la bbs y volverlos a reenviar.
+Para una operacion normal de la bbs, este comando no deberia de usarse.
+
+----------------------------------------------------------------------------
+
+RELEASE or FREE
+
+Solo Sysop.
+Permite liberar un mensaje o boletin que han sido detenidos por el comando 
+HOLD de la bbs.
+Lo mismo se produce cuando expira el tiempo del HOLD definido por el sysop,
+pero si el tiempo de HOLD es largo, este comando es util para que el sysop
+chequee diariamente el correo y libere los mensajes manualmente.
+
+La sintaxis del comando es igual a READ.
+
+Ejemplos:
+
+RELEASE ALL 17
+REL DIGI 12-14
+FREE ATARI 9
+
+Los mensajes retenidos se muestran con el comando HOLD.
+
+----------------------------------------------------------------------------
+
+RELOAD
+
+Solo Sysop.
+RELOAD recarga todos los ficheros de configuracion de la bbs ( y reorganiza
+la memoria en sistemas que no tienen MMU real como MasOS o Atari)
+
+Despues de editar los ficheros de configuracion de la bbs, hay que aplicar
+este comando para que esos cambios sean efectivos.
+
+Ejemplo:
+
+RELOAD
+
+----------------------------------------------------------------------------
+
+REPLY
+
+El comando reply crea un mensaje privado al remitente del ultimo mensaje
+leido con READ.
+Adicionalmente puedes especificar el mensaje al que quieres responder.
+Ejemplo:
+
+REP BBS 43
+
+El titulo de la respuesta es el titulo del mensaje original, al cual se le
+añade las letras RE:, el campo @bbs se mira primero en los ficheros HOMEBBS
+internos de la bbs, si no se encuentra un destino, se escanea el mensaje
+leido y la ultima bbs encontrada en el header del mensaje se usa para
+el campo @bbs.
+----------------------------------------------------------------------------
+
+RESET
+
+No disponible en la version Linux.
+
+----------------------------------------------------------------------------
+
+SAT
+
+No disponible en la version Linux
+
+----------------------------------------------------------------------------
+
+SELECTION
+
+Este es un comando para usuarios avanzados o sysops.
+SELECTION temporalmente activa una variable interna de tus parametros
+de usuarios, que permite filtrar correo, mostrando solo determinados
+mensajes cuando mandas el comando LIST o CHECK.
+Las opciones disponibles son:
+ 
+SFWAIT
+PROPOSED;
+SFRX
+SFTX
+SFERR
+SFNOFOUND
+CUT
+MINE
+BROADCAST
+BROADCAST_RX
+OWNHOLD
+LOCALHOLD
+SFHOLD
+
+No vamos a explicar todas aqui, como hemos dicho, es un comando
+para usuarios avanzados.
+
+SELECTION SFWAIT
+
+selecciona solo mensajes esperando en la lista de FWD.
+
+SELECT SFWAIT SFERR
+
+selecciona mensajes en espera y aquellos que han dado un forward error
+etc,etc,etc.
+
+SELECTION
+
+sin parametros, desactiva el comando.
+
+----------------------------------------------------------------------------
+
+SEND
+
+Mandar un nuevo mensaje.
+Si lo mandas solo se te requieren todos los parametros omitidos.
+Los parametros del comando SEND son numerosos:
+
+S DL9XYZ @DB0ZZZ <Remitente $BID #Caducidad Titulo
+
+El $BID,#Caducidad,<REmitente y @campo-BBS es opcional.
+Por defecto, DP pone el campo @bbs con el indicativo de la bbs local (el
+correo no se envia por FWD.
+El $BID (Identificador de mensaje) se genera automaticamente.
+La #Caducidad se pone a 0 (infinita) y el <Remitente se pone con el
+indicativo del usuario que mandado el comando SEND.
+
+Si el destino es un indicativo, DP mira el campo @bbs (si ha sido omitido)
+para encontrar si ese indicativo tiene informacion para recibir el correo en
+otra bbs. (Similar a las WP,paginas blancas).
+
+La caducidad determina, despues de cuantos dias el mensaje debe de ser
+borrado automaticamente.Solo soportado en DP / TheBox.
+
+Se debe decir que para las aplicaciones mas usuales no hay diferencias entre
+el correo privado y los boletines. La distincion se hace por el destino.
+Si es un indicativo, es correo personal.
+
+Ejemplos:
+
+S
+S DL8HBS how are you?
+S DL8HBS@DB0GR
+S DL8HBS@DB0GR.#BLN.DEU.EU how are you?
+S ATARI @ EU problems with hard disk
+S SYSOP @DL
+S ATARI @WW $123456DL9XYZ #30 new comp.
+
+Aunque esta distincion entre correo personal y boletines se hace
+automaticamente, alguna vez puedes necesitar forzar a DP para cambiar esto
+, por ejemplo cuando mandas correo a una BBS F6FBB (lo cual es normal).
+Para ello, DP ofrece los comandos SB /SP con la sintaxis de una BBS F6FBB,
+lo cual te deja elegir el tipo de correo.
+
+Tambien hay que hacer constar que DP es transparente sobre el tipo de
+correo. Por ejemplo, puedes mandar un correo SZ, pero como usuario terminal
+ estas limitado a tipos "B" y "P",todos los demas no estan definidos
+actualmente (excepto "T" para servicios NTS en U.S.A.)
+------------------------------------------------------------------------------
+
+SERVER
+
+Solo Sysop (incluyendo sysop especifico de server).
+DP ofrece un servidor de listas de correo.
+Para aquellos que no estan familiarizados con Internet:
+Esto es como una fotocopiadora programable para usuarios registrados.
+Cada servidor instalado mantiene una lista de correo con direcciones, y cada
+mensaje enviado a ese servidor especifico es copiado y reenviado como correo
+privado a cada uno de los suscriptores.
+Este es un buen medio de tener comunicados un grupo de OM, en una area 
+pequeña.
+Solo suscriptores registrador pueden escribir al servidor y no se admiten
+auto-suscripciones.
+Excepto todos los sysops de la bbs, uno o mas "sysop de servidor" pueden
+ser definidos para mantener las listas de correo.
+
+Basicamente, los comandos de mantenimiento del servidor consisten en:
+
+SERVER <NOMBRE> =
+SERVER <NOMBRE> +
+SERVER <NOMBRE> -
+
+<NOMBRE> se reemplaza con un nombre de servidor de tu bbs.
+Los nombre de servidor deben de ser de carateristicas similares a las de
+un indicativo (6 caracteres), por ejemplo en DB0GR hay definidos:
+BB0SYS (servidor para sysops, region de Berlin-Brandenburg)
+BB2DEV (servidor de desarrollo de BBS)
+OS2DEV (servidor de desarrollo de OS2)
+Se pueden utilizar nombres que no contemplen las caracteristicas de un
+indicativo, pero , esto puede causar problemas en redes con, por ejemplo
+sistemas BaycomBox o Diebox.
+
+SERVER BB0SYS =
+lista todos los suscriptores del servidor bb0sys
+SERVER BB0SYS + DL8HBS
+añade al suscriptor DL8HBS al servidor bb0sys
+SERVER BB0SYS + DL8HBS@DB0GR
+añade al suscriptor DL8HBS que recibe el correo en la bbs DB0GR al servidor
+bb0sys (si no se especifica destino, el servidor interno de WP (Paginas
+Blancas) se chequea, buscado el mejor camino)
+SERVER BB0SYS + !DL8HBS
+añade al suscriptor DL8HBS al servidor bb0sys y lo actualiza como
+"sysop de servidor", esto autoriza a dl8hbs con privilegios para alterar
+informacion de suscripcion para este servidor especifico.
+SERVER BB0SYS - DL8HBS
+borrar al suscriptor DL8HBS del servidor bb0sys
+
+Un servidor es borrado si no tiene suscriptores, y es automaticamente 
+generado si tiene al menos, un suscriptor.
+
+Un mensaje debe de mandarse al servidor con su direccion completa, en el
+siguiente ejemplo, con:
+S BB0SYS@DB0GR o SP BB0SYS@DB0GR (el servidor tambien accepta correo de 
+entrada mandado como boletines, pero esto es solo un truco para prevenir
+problemas con TheBox/BaycomBox).
+
+----------------------------------------------------------------------------
+
+SETSF
+
+Solo Sysop.
+El comando SETSF manipula la lista de FWD, esto se hace a traves de la
+pseudo-area 'X', este comando tiene tres opciones:
+
+SETSF DB0XYZ tipo DB0ZZZ
+Todas las entradas en la lista de FWD del tipo "tipo" que vayan dirigidas a
+DB0XYZ se deben de mandar a DB0ZZZ.
+
+
+SETSF 3-6 DB0ZZZ
+Las entradas 3 a 6 de la lista de FWD se deben de mandar a DB0ZZZ
+
+
+SETSF type 1- DB0ZZZ
+Todas las entradas en la lista de FWD del tipo "tipo" deben de mandarse a
+DB0ZZZ.
+
+Donde "tipo" es uno de los siguientes:
+
+
+A = todos
+B = boletin
+P = personal
+S = sistema (erase y mybbs)
+
+Hay que hacer constar que este comando, no cambia el correo de por si.
+Solo la bbs de FWD usada para la ruta se cambia.
+
+Hay un indicativo especial de destino: NIL, cuando se aplica este
+indicativo, todas las entradas de la lista de FWD se borran.
+Ejemplo:
+
+SETSF DB0ZZZ B NIL
+
+esto borra todos los boletines en la lista de FWD para DB0ZZZ.
+
+----------------------------------------------------------------------------
+
+SETTIME
+
+Solo Sysop.
+No implementado en la version Linux.
+
+----------------------------------------------------------------------------
+
+SETDATE
+
+Solo Sysop.
+No implementado en la version Linux.
+
+----------------------------------------------------------------------------
+
+SF
+
+Solo Sysop.
+Comenzar manualmente el FWD a otra BBS.
+Ejemplos:
+
+SF DB0XYZ comienza el envio de FWD a db0xyz (en la TNC #0).
+SF DB0XYZ #1 comienza el envio de FWD a db0xyz (en la TNC #1).
+SF DB0XYZ 430900 #1 comienza el envio de FWD a db0xyz (en la TNC #1,
+frecuencia puesta a 430900).
+
+Esto solamente funciona si hay un fichero de definicion de FWD en el
+directorio box/sf para DB0XYZ (DB0XYZ.SF).
+Hay que hacer notar que la version de Linux utiliza una forma completamente
+diferente de definir los paths hacia la bbs corresponsal, revisar el
+capitulo correspondiente del manual del programa TNT.
+
+El comando tiene ademas otras tres opciones:
+
+SF OFF  detiene el timer de FWD. No se producen conexiones de FWD salientes.
+Las conexiones FWD de entrada se paran tambien.
+
+SF ON permite operacion automatica de FWD.
+
+SF KILL hace igual que SF OFF, pero ademas, desconecta todas las conexiones
+de FWD.
+
+Por defecto SF esta en ON, este conmutador no se graba.
+Cuando se vuelve a arrancar DP, este siempre esta con SF en ON.
+El comando SF OFF se indica en el prompt con los caracteres [no S&F]
+
+----------------------------------------------------------------------------
+
+SFLEVEL
+
+Solo Sysop.
+El comando SFLEVEL define como funcioanara el SID (Identificador de
+sistema), cuando conecta con otra BBS.
+DP cambia entre dos SID,s:
+
+1) [DP-3.60-AB1DFHMR$] (El propio SID de DP)
+2) [THEBOX-1.9-H$] (una mentira, hi)
+
+Esto es necesario debido a que los sistema TheBox son incompatibles con el
+formato usado internacionalmente.
+Las funciones especiales de TheBox (ficheros binarios,forwardin mybbs) estan
+solo disponibles si el corresponsal manda tambien un prompt con [THEBOX-..].
+Si no se utilizan corresponsales que tengan un sistema TheBox, lo mejor es
+dejarlo con SFLEVEL 1.
+
+Aqui estan los niveles de SFLEVEL:
+
+0 se manda la pantalla normal de logon de la bbs, notar que se manda el
+SID No.1, pero ademas se mandan todas las bienvenidas, etc de usuario.
+
+1 Se manda el SID No. 1 seguido directamente del prompt de FWD en una nueva
+linea ('>') .
+
+2 se manda el SID No. 2,  seguido directamente del prompt de FWD en una nueva
+linea ('>') . Debe de usarse cuando el corresponsal tenga una bbs TheBox.
+
+3 se manda el SID No. 1 seguido de un pequeño texto de bienvenida y el
+prompt de FWD en una nueva linea.
+Es un poco diferente del 1 , hace lo mismo que una bbs FBB, pero no es
+necesario para la operacion de FWD
+
+Hay que observar el comando SFLEVEL solo afecta a la reaccion de DP cuando
+contesta a una conexion.
+En la otra direccion, DP cambia automaticamente el SID, si una conexion de
+salida manda un SID TheBox, automaticamente se le contesta con la misma.
+DP intenta utilizar siempre y automaticamente el protocolo mas rapido
+posible.
+
+Ejemplos:
+
+SFLEVEL DB0XYZ 2
+SFLEVEL DB0XXX 3
+SFLEVEL DB0YYY 1
+
+----------------------------------------------------------------------------
+
+SFPARMS
+
+Solo Sysop.
+Muestra todos los parametros SFPARMS - definiciones de los ficheros de
+forwarding (se hacen con los ficheros del directorio box/sf).
+En la ultima posicion se marca la hora UTC en la que la bbs empezo a hacer
+FWD con la bbs corresponsal.
+Un asterisco (*) mostrado despues de la ultima columna indica que
+actualmente hay una conexion en marcha hacia esa bbs.
+
+El comando tiene diferentes opciones:
+
+SFP muestra todos los SFPARMS.
+
+SFP DB0XYZ 3 1 fija el tercer parametro de sfparms de DB0XYZ a 1.
+
+SFP DB0XYZ _all_parms_ fija todos los sfparms de DB0XYZ (_all_parms_ puede
+ser reemplazado con los 9 parametros!).
+
+----------------------------------------------------------------------------
+
+SFSTAT
+
+Muestra informacion sobre los ficheros reenviados.
+
+SFS sin parametros, muestra el numero actual de ficheros esperando FWD,
+especificados por su tipo.
+SFS + muestra adicionalmente el contador de ficheros reenviados desde
+el comienzo de mes.
+SFS ! muestra informacion del rendimiento de la bbs desde que fue instalada.
+
+A cada comienzo de mes, la bbs llama el comando SFS ! durante la rutina
+de mantenimiento, la salida se almacena en el area STATISTI (esto implica
+que hay que definir este area en el fichero RUBRIKEN.BOX)
+
+----------------------------------------------------------------------------
+
+SFTEST
+
+Chequea las definiciones de rutas.
+Un usuario puede pedir los paths de FWD para un comando SEND especifico.
+SFTEST acepta los parametros como si se tratara de un comando send, pero
+naturalmente, no se crea ningun mensaje.
+El resultado es una lista de bbs, donde se reenviaria el mensaje o bien
+un mensaje de error.
+Ejemplo:
+
+SFT DP @ ALL
+
+----------------------------------------------------------------------------
+
+SPEAK
+
+Cambia el lenguaje de usuario.
+
+Ejemplo:
+
+SPE DL
+
+SPEAK sin parametros, muestra todos los lenguajes.
+En modo sysop se puede cambiar el lenguaje de cualquier usuario.
+Ejemplo:
+
+SPE DL9XYZ DL
+
+Por defecto, el lenguaje de usuario se define en el fichero:
+SYSTEM/WHOTALKS.LAN.
+
+----------------------------------------------------------------------------
+
+STARTUP
+
+Se puede definir uno o mas comandos de startup (esto son comandos que
+se ejecutan cuando conectas con la bbs),
+El startup por defecto hace un LIST del area de usuario.
+
+Ejemplos:
+
+STARTUP L,U,C UNIX
+
+Hace un LIST en el area de usuario, un USAGE y chequea todos los
+mensajes nuevos del area UNIX.
+
+Los comandos se pueden separar con comas, no con punto y coma como
+normalmente se hace al entrar otros comandos multiples.
+
+STARTUP
+
+sin parametros, borra los parametros de usuario y restaura el startup
+standard del sistema.
+
+No hay que poner un comando CHECK sin parametros en la secuencia STARTUP,
+porque normalmente la salida de este comando es demasiado larga para verla
+cada vez que conectas, especialmente si tienes una mala conexion con la bbs.
+
+----------------------------------------------------------------------------
+
+STATISTIK
+
+Solo Sysop.
+Llamado sin parametros, se muestra un listado con informacion extendida de
+cada area, si el parametro es el nombre de area, solo se muestra la
+informacion de esa area especifica.
+Tambien existen los parametros -s,-u y -b, con los cuales se muestra solo
+informacion de sumario para areas de usuario (-u),boletines (b) o ambas
+(-s).
+Ejemplos:
+
+STAT
+STAT ATARI
+STAT -s
+STAT -b
+STAT -u
+
+----------------------------------------------------------------------------
+
+SYSOP
+
+No implementado en la version Linux
+
+----------------------------------------------------------------------------
+
+SYSTEM
+
+Comienza el procedimiento de entrada de password.
+Si tienes definido un password (que se define con el comando PASSWORD), la
+bbs te manda 5 numeros.
+Estos numeros corresponden a la posicion de los caracteres definidos en tu
+cadena de password.
+Tienes que responder a los numeros con los 5 caracteres correspondientes.
+Para prevenir el pirateo de tu password, puedes repetir el comando varias
+veces, con respuestas incorrectas, ademas se puede ocultar la respuesta
+correcta en una cadena de texto larga y con caracteres aleatorios
+
+Por ejemplo:
+Tu password es abcdefghijklmnopqrstuvwxyz
+Mandas SYSTEM
+La bbs responde: dpbox:DB0GR> 1 2 3 4 5
+La respuesta correcta es abcde
+Tambien puedes mandar ghsuwbxgdlf825shfabcdeskfhwnh
+El password es correcto...
+
+Dependiendo de tu modo PWMODE personal, se te dan privilegios para escribir
+correo, ser un sysop de area o ser un sysop general.
+
+Hay otra maneraa de acceder con password, el comando PRIV.
+Su estructura es completamente diferente.
+
+----------------------------------------------------------------------------
+
+SYSCHK
+
+Responde un 'OK' si eres sysop, si no, aparece un mensaje de error.
+
+----------------------------------------------------------------------------
+
+TALK
+
+Comienza una conexion con otro usuario conectado.
+La conexion no es transparente total, los datos binarios fallan, esta
+orientado a texto.
+La conexion finaliza con CTRL-Z.
+
+Ejemplo:
+
+TALK DL1XYZ
+TALK 4
+
+Cuando estas en modo TALK, un usuario puede mandar comandos a la bbs con
+el prefijo '!', '!L UNIX' por ejemplo
+Si se manda un comando interactivo, el modo talk finaliza.
+
+----------------------------------------------------------------------------
+
+TIME
+
+Muestra la fecha y la hora actual (en UTC).
+
+----------------------------------------------------------------------------
+
+TELL
+
+Genera un comando que es reenviado a otra bbs.
+La bbs de destino ejecuta el comando y devuelve la respuesta,
+Solamente TheBox y DP son capaces de comprender esta sintaxis, asi como tambien
+algunas bbs Baycom con una utilidad especial, en el resto este comando no
+tiene efecto.
+Este comando es mas potente que los REQDIR y REQFIL de otros sistemas, de
+todos modos los comandos tipo REQ* de f6fbb y otros sistemas no se soportan
+(aunque son correctamente reenviados si DP esta en la cadena de FWD).
+Los parametros de un comando TELL deben de ser comandos que no requieran
+respuestas interactivas (como NAME, MYBBS, etc.)
+
+Ejemplos:
+
+TE DB0XYZ L ATARI 1-
+TE DB0XYZ R ATARI < DL8HBS
+
+donde DB0XYZ es la bbs que debe de ejecutar el comando.
+
+Informacion para el Sysop:
+El comando TELL se reenvia en el area especial 'T'.
+Es un fichero generado con 'S T @ DB0XYZ < indicativo_envio titulo', donde
+el titulo es el comando pedido y el añadido '@ bbs_que_envia'.
+Si el fichero que se produces es mayor de 50K, se borra y entonces se envia
+un mensaje de error al indicativo que lo pidio.
+
+----------------------------------------------------------------------------
+
+TRACE and FULLTRACE
+
+Solo Sysop.
+Comienza un seguimiento de las conexiones de entrada/salida de la bbs.
+Este comando puede ayudar a analizar problemas de FWD o supervisar a
+usuarios "criticos".
+Cada sysop puede hacer tantos seguimientos de estaciones como quiera, pero
+dos sysop no pueden seguir el mismo indicativo.
+Los parametros de TRACE no se guardan despues de la desconexion del sysop
+que lo supervisa.
+
+Ejemplos:
+
+TRACE + DB0XYZ
+
+comienza el seguimiento de todas las conexiones con db0xyz.
+Cuando se sigue a una estacion, el sysop puede continuar mandando comandos a
+la bbs, pero ambas salidas aparecen en la misma conexion, esto a veces puede
+llevar a confusion.
+
+TRACE - DB0XYZ
+
+acaba el seguimiento de db0xyz.
+
+TRACE OFF
+
+acaba inmediatamente todos los seguimientos abiertos de este sysop.
+
+TRACE
+
+muestra la lista de los seguimientos abiertos.
+
+TRACE ALL
+
+sigue TODAS las conexiones de la bbs (un poco confuso, hi)
+
+La salida de la conexion en seguimiento, se muestra con fecha y hora,
+numeros de canal, y un puntero interno que muestra la accion (esto es solo
+una ayuda para el programador, hi).
+Cuando se manda un buffer de texto a la conexion en seguimiento (como un
+mensaje, un fichero de ayuda,etc), el buffer se indica solamente por su
+tamaño, el contenido se suprime del seguimiento.
+
+Si necesitas ver completamente lo que hace el usuario, hay que mandar:
+
+FULLTRACE + DB0XYZ
+
+FULLTRACE se usa como TRACE, pero no hay prefijos de ningun tipo, no hay
+supresion de buffer y todo se muestra "tal cual", o sea, recibes una copia
+total del canal del usuario.
+Internamente FULLTRACE es el mismo comando que TRACE pero con una sola
+diferencia, "Efectivamente, quiero ver TODO lo que hace el usuario, sin
+limitaciones".
+No es posible hacer TRACE de un usuario y FULLTRACE de otro.
+Si no entiendes demasiado bien todo esto, lo mejor es que lo pruebes, es mas
+facil que documentarlo con 500 palabras.
+
+----------------------------------------------------------------------------
+
+TRANSFER or CP
+
+Mueve un boletin de un area a otra o copia un mensaje de usuario de un
+area de usuario a otra.
+Si no se esta en modo sysop, solo los boletines dirigidos o escritos por el
+usuario actual son transferidos.
+Ejemplos:
+
+T DL8HBS 12-13 > DL9XYZ (El signo '>' no es necesario)
+T DL8HBS 12 > DL9XYZ @ DB0XYZ
+T ATARI 7 SOFTWARE
+T IBM 9-10 > SOFTWARE
+
+Si es posible, una note sobre la accion de transferencia es añadida al
+correo. Esto solo funciona si el correo permanece en mod ASCII total.
+Si ha sido comprimido o con ficheros binarios, no funciona.
+
+El sysop puede añadir una nueva caducidad al comando, sintaxis:
+
+T ATARI 7 ALL #7 (nueva caducidad: 7 dias)
+
+De otra forma, la caducidad se adopta del area de destino (si no es mejor
+que la que ha puesto el remitente del mensaje)
+
+----------------------------------------------------------------------------
+
+UNERASE
+
+La bbs DP utiliza un retardo fisico de borrado de correo.
+El sysop puede configurar un numero de dias (en system/config.box) en los
+cuales un borrado logico de mensaje no produce un borrado fisico.
+Un usuario puede aplicar el comando UNERASE para restaurar mensajes que
+anteriormente han sido borrados.
+Este comando puede ser necesario si algun "gracioso" se dedica a borrar tu
+correo privado.
+
+Ejemplo:
+
+UNERASE
+
+Este comando es la causa de los contadores distintos para areas de usuario y
+areas de boletines.
+Despues de borrar por ejemplo, los mensajes 1 a 4, el proximo mensaje es el
+numero 5, (ya que los mensajes del 1 al 4 existen todavia fisicamente)
+solamente despues de un mantenimiento y de un borrado fisico, los contadores
+se resetean y vuelven a contar desde el 1.
+
+----------------------------------------------------------------------------
+
+UPDATE
+?????
+
+----------------------------------------------------------------------------
+
+USAGE o USER
+
+Sin parametros opcionales, este comando muestra todos los usuarios actuales
+de la bbs.
+Con un indicativo como opcion, toda la informacion sobre el ese usuario (tal
+como HomeBBS,nombre,lenguaje).
+En modo sysop, mas informacion como su nivel y nivel SF.
+Si el usuario esta conectado actualmente, el sysop recibe un listado de
+bytes enviados y recibidos,tiempo usado de CPU y tiempo total de conexion.
+
+Ejemplos:
+
+U muestra usuarios conectados. las conexiones de FWD se muestran en
+minusculas.
+
+U DL8HBS muestra la ficha de DL8HBS
+U @DB0XYZ muestra una lista de usuarios con el HomeBBS en @DB0XYZ
+U @DB0XYZ -c solo CUENTA los usuarios con el HomeBBS en @DB0XYZ
+U @D* -a solo sysop. cuenta los usuarios de todas las bbs,s con el prefijo D*
+U ALL identico al U, pero ademas muestra algunas lineas del fichero de log.
+U DL8HBS - solo sysop. Borra la ficha de DL8HBS
+U @DB0GR - solo sysop. Borra todas las fichas de usuarios con HomeBBs en DB0GR
+
+----------------------------------------------------------------------------
+
+VERSION
+
+Muestra el numero de version de DP, tambien el espacio libre en RAM y HD.
+En la version de Linux, el espacio libre en HD no se muestra debido a la
+estructura del sistema de ficheros.
+La opcion "+" muestra informacion extendida.
+
+Ejemplos:
+
+VERSION
+VERSION +
+
+----------------------------------------------------------------------------
+WANTBOARD
+
+El comando WANTBOARD selecciona areas para ser mostradas en la salida de
+CHECK.
+Por ejemplo, si solo quieres ver los mensajes dirigidos a WINDOWS y
+SOFTWARE, debes de mandar:
+
+WANTBOARD WINDOWS,SOFTWARE
+
+Si quieres borrar la seleccion manda:
+
+WANTBOARD
+sin parametros.
+
+Se pueden mandar selecciones consecutivas de este comando hasta un total de
+253 caracteres.
+
+Los parametros actuales son visibles con el comando U
+
+U <Indicativo>
+muestra tus parametros de usuario
+
+Importante: Si seleccionas mas de un area, separalas con coma y no pongas
+espacios entre ellas.
+Revisa el comando NOTBOARD para una seleccion negativa de areas.
+---------------------------------------------------------------------------
+FILESERVER
+
+Activa el servidor de ficheros de DPBOX.
+
+Este servidor tiene sus propios comandos, para abandonarlo debes de mandar
+EXIT o QUIT.
+
+Esta es una lista corta de los comandos del servidor de ficheros:
+? y HELP            - Este fichero de ayuda
+DIR y LS y LS -l    - Muestra la lista del directorio
+LIST                - Muestra la lista del directorio con descripciones
+CD                  - Cambia directorio
+TYPE                - Envia un fichero ASCII con paginacion
+READ y WRITE        - Envia un fichero ASCII desde o a la bbs
+GET y PUT           - Envia/recibe un fichero ASCII desde o a la bbs
+BGET y BPUT         - Envia/recibe un fichero binario con el protocolo AutoBIN
+YGET y YPUT         - Envia/recibe un fichero binario con el protocolo Yapp
+EXIT, BYE y QUIT    - Vuelve al modo BBS
+Ejemplos:
+CD /linux/packet    - cambia al directorio /linux/packet
+CD ..               - vuelve un directorio atras
+DIR *.zip -DATE     - muestra una lista de ficheros *.zip ordenados por fecha
+DIR -NAME           - muestra una lista de ficheros ordenados por nombre (por defecto)
+LS -SIZE            - muestra una lista de ficheros ordenados por tamaño
+LIST                - muestra una lista de ficheros con una descripcion del contenido
+YGET test.zip       - envia test.zip en modo Yapp
+BGET 4              - envia el fichero numero 4 en modo AutoBIN
+BPUT test.lzh       - recibe un fichero en AutoBIN, se archiva como test.lzh
+Nota: Unix distinge entre MAYUSCULAS y minusculas en los nombres de fichero!
+El separador de directorio es '/', no '\' como en DOS y similares.
+Los nombres pueden ser mas largos de 8+3 caracteres, ej. "dpbox-4.17-src.tar.gz"
+Los comandos del servidor se pueden abreviar, ej. YG para YGET, L para LIST.
+Comandos de Sysop:
+MD y MKDIR          - Crea Directorio
+CP y COPY           - Copia un fichero
+MV y MOVE           - Mover/Renombrar un fichero
+RM y DEL            - Borrar un fichero
+RD y RMDIR          - Borrar un directorio
+INDEX               - Escribir una nueva informacion de directorio
+
+Si esta activado por el sysop, el directorio /newbin/ se llena con ficheros
+7plus recogidos y decodificados en el FWD.
+
+Los usuarios pueden dejar ficheros en el directorio /incoming/
+Lo mejor es dejar otro fichero acabado con .txt explicando de que trata
+el fichero que se manda a la bbs, o bien mandar un mensaje al sysop.
+
+El servidor de ficheros es solamente local, no se produce fwd de ficheros
+entre bbs.
+
+Usando el comando LIST en vez de DIR o LS se manda una descripcion de los
+contenidos del los ficheros (si existen)
+
+El protocolo YAPPC esta mas protegido contra errores que por ejemplo el
+Autobin, aunque la transmision se corte en cualquier punto, se puede
+reanudar a partir de ese punto (modo resume).
+
+------------------------------------------------------------------------------

@@ -1,0 +1,133 @@
+#! /bin/sh
+
+# 27.11.96 J.Schurig
+# calls 7plus >= v2.19
+# 17.09.97 Daniel Goetz DL3NEU
+# 15.01.98 Daniel Goetz DL3NEU: combined 7get & 7mail
+#                               If you want to have an extra 7mail, set a
+#                               symbolic link to 7get named '7mail'.
+# 22.01.98 Axel Bauda DG1BBQ:   Modified for 7PLUS v2.19
+
+# set splitsize here: (not more than 36000!)
+splitsize="20000"
+
+if [ $DPBOXSERVERMODE = 0 ]; then
+  echo 'Only valid in fileservermode'
+  exit
+fi
+
+ismail=$(echo $0 | tail -c 7)
+
+if [ "$ismail" = "/7mail" ]; then
+  import="1"
+  if [ "$2" ]; then
+    parts="$2"
+  fi
+else
+  if [ "$3" ]; then
+    if [ "$3" = "-MAIL" ] || [ "$3" = "-mail" ]; then
+      import="1"
+    else
+      parts="$3"
+    fi
+  fi
+  if [ "$2" ]; then
+    if [ "$2" = "-MAIL" ] || [ "$2" = "-mail" ]; then
+      import="1"
+    else
+      parts="$2"
+    fi
+  fi
+fi
+
+if [ ! "$1" ] && [ "$ismail" = "/7mail" ]; then
+  echo 'usage: 7mail <filename | filenumber> [<parts>]'
+  echo '       <parts> may be: 1-4, 3, 2-10 etc. or omitted'
+  echo '       Note: File-import will only be done locally!'
+  exit
+fi
+if [ ! "$1" ]; then
+  echo 'usage: 7get <filename | filenumber> [<parts>] [-MAIL]'
+  echo '       <parts> may be: 1-4, 3, 2-10 etc. or omitted'
+  echo '       -MAIL makes 7get import the files into your user board'
+  echo '             Note: File-import will only be done locally!'
+  exit
+fi
+
+# the following is a hacking check:
+fname=$(echo "$1" | sed -e s,'\.\./',, -e s,/~,, \
+                        -e s,~/,, -e s,'?',, -e s,'*',,)
+if [ "$fname" != "$1" ]; then
+  echo "bad filename: $1"
+  exit
+fi
+
+ispath=$(echo "$1" | sed -e s,'^/',,)
+if [ "$ispath" != "$1" ]; then
+  fname=${DPBOXSERVERROOT}${ispath}
+else
+  fname=${DPBOXSERVERROOT}${DPBOXSERVERPATH}${1}
+fi
+
+if [ ! -e "$fname" ]; then
+  dummy=$(echo "$1" | tr -d '[:digit:]')
+  fname="$DPBOXSERVERROOT$DPBOXSERVERPATH$DPBOXSELECTEDFILE"
+  if [ "$dummy" ] || [ ! "$DPBOXSELECTEDFILE" ] \
+                  || [ ! -e "$fname" ]; then
+    echo "unknown file: ${1}"
+    exit
+  fi
+fi
+
+if [ ! "$parts" ]; then
+  parts="1-"
+fi
+
+if [ "$import" = "1" ]; then
+  mytempname=$DPBOXUSERCALL.$DPBOXUSERNUMBER.$RANDOM
+
+  # Header-Datei erstellen...
+  echo '@@top'                > ${mytempname}.hdr
+  echo ${DPBOXBOXCALL}       >> ${mytempname}.hdr
+  echo ${DPBOXBOXCALL}       >> ${mytempname}.hdr
+  echo ${DPBOXUSERCALL}      >> ${mytempname}.hdr
+  echo ${DPBOXBOXCALL}	     >> ${mytempname}.hdr
+  echo ''                    >> ${mytempname}.hdr
+  echo ''                    >> ${mytempname}.hdr
+  echo '%o %P/%Q'            >> ${mytempname}.hdr
+  echo 'X-Info: Mail automatically created @'${DPBOXBOXCALL}\
+                             >> ${mytempname}.hdr
+  echo '@@bottom'            >> ${mytempname}.hdr
+  echo ''                    >> ${mytempname}.hdr
+  echo 'Beschaedigte Teile bitte erneut anfordern.'\
+                             >> ${mytempname}.hdr
+  echo 'Alternativ mit 7COR ein passendes COR-File erzeugen...'\
+                             >> ${mytempname}.hdr
+  echo ''                    >> ${mytempname}.hdr
+  echo "73 de $DPBOXBOXCALL" >> ${mytempname}.hdr
+
+  7plus -sb 20000 -q -y -tb ${mytempname}.hdr \
+          -r "$parts" -u import.${mytempname} "$fname"
+  back=$?
+  if [ $back = 0 ]; then
+    rm *${mytempname}.hdr
+    mv *${mytempname}* ${DPBOXBOXDIR}newmail/
+    echo 'Done. Mail import will commence within 1 min. Please stand by.'
+  else
+    echo '7PLUS-error' $back 'during file encoding by 7plus.'
+    rm *${mytempname}*
+    exit
+  fi
+else
+  7plus -sb ${splitsize} -j -q -y -t ' ' -r "$parts" -u ${DPBOXTEXTOUT} "$fname"
+  back=$?
+  mv ${DPBOXTEXTOUT}.upl ${DPBOXTEXTOUT}
+  if [ ! -s ${DPBOXTEXTOUT} ]; then
+    if [ $back != 0 ]; then
+      echo '7PLUS-error' $back ': Please notify sysop!'
+    else
+      echo 'Error occured... Uploadfile is empty.'
+    fi
+    rm -f ${DPBOXTEXTOUT}
+  fi
+fi

@@ -1,0 +1,199 @@
+# HB9EAT 04.98
+#
+01 Help Check List Read Dir Send Erase Quit Usage Transfer TIme LOgintime
+02 Ungltige Parameter.
+03 Ungltigs Rufzeiche.
+04 Die Datei exischtiert nit.
+05 Die Datei isch z'gross...
+06 Die Nochricht isch gschpeicheret
+07 Kei Ber„chtigung...
+08 D'Box isch leer...
+09 F„hler: Die Datei het kei Teggscht.
+10 Achtung: Grad im Mom„nt isch e Nochricht fr Di aacho !
+11 Die Nachricht wird nit agnoo !%rD„ User isch bereits usgloggt oder d'Mail isch abbroche worde
+12 *** Sysop-Modus isch automatisch gschtartet worde ***
+13 Kei Information ber die BBS gfunde
+14 Es git momentan keini Nochrichte fr
+15 Info-File:
+16  Nr. Vo     Datum    UTC    Bytes  W„ge   
+17     # Abs„nder Rubrik   Nr. Datum    @BBS   Bytes #LT Titel
+18 D' Nochrichte sinn gl÷scht!
+19 Schtatistik:
+20 Rubrik    MSGs gl÷scht   Bytes   packt    uff% #LT Level
+21 Bitte gib dr eigeni Name mit em NAME - Befehl ii!
+22 Bitte d'Heimetmailbox mit em Bef„hl MYBBS aag„, z.B. MYBBS %m %r(e Mailbox-Ruefzeiche aag„, NIT s'eigene Ruefzeiche!)
+23 ### Bitte e Taschte drucke ###
+24 isch em Syschtem unbekannt.
+25 Kei neue Itraag gfunde. Letschte Itraag isch:
+26  Nr. Vo     @BBS   #LT Datum     Bytes Pack  W„ge
+27  Nr. Vo     Rubrik   @BBS   #LT #TL RxFrom Lev Datum  Bytes Pack FCT FLG T
+29  Nr. FwdTo  RxFrom  (QRG)  Autor  Rubrik   @BBS   BID/MID      #LT  Bytes T
+30 Kei Hilfeteggscht vorhande
+31 Kei Hilfeteggscht fr dr Sysop vorhande
+32 Checklischte wird erschtellt
+33 Box wird uffgruumt, bitte warte...
+34 @BBS isch ungltig fr User-Mails
+35 @BBS isch:
+36 OK, die neui @BBS isch :
+37 Kei Nochricht in d„m Bereich
+38 OK, neui L„benszyt isch:
+39 ungltigi L„benszyt-Agoob
+40 Die Funktion isch nonig implementiert
+41 CHECK isch abbroche worde
+42 Gsamt
+43 Freie Schpeicherplatz
+44 Frei uff dr Feschtplatte
+45 Keini Informatione gfunde
+46 Exportdatei cha nid aaglegt w„rde
+47 Bitte dr Teggscht ig„„ fr
+48 Be„nde mit ***END, /EX oder CTRL-Z, abbr„che mit CTRL-X:
+49 Bish„rigi Mindeschtlaufzyt nach
+50 Titel vo dr Nochricht? >
+51 An w„r soll die Nochricht goh ? >
+52 H„rzlich willkomme
+53 H„rzlich willkomme
+54 Letschts Login :
+55 Aktuells Login :
+56 Danggsch÷n, Di Heimet-Mailbox isch
+57 Level g„nderet
+58 Danggsch÷n
+59 , Di Name isch jetzt gschpeicheret
+60 Bitte gib Di Name i >
+61 Igschtellti Sproch isch
+62 Ungltigi Sproch
+63 Letschts Login isch gsetzt uff:
+64 Nur an dr Konsole m÷glich
+65 Send/Erase nur nach Password-šberprefig (Kommando SYS, PRIV, MD2 oder MD5)
+66 Unterschttzti Sproche:
+67 M„ntig
+68 Zischtig
+69 Mittwuch
+70 Donschtig
+71 Frittig
+72 Samschtig
+73 Sunndig
+
+{Ab v4.18}
+
+74 *** Usl„sebeschr„nkig berschritte: Max. kBytes pro Tag:
+75 *** nid uusgfehrt:
+76 F„rnerase erzgt
+77 Nochricht freig„h
+78 Nochricht(e) entl÷scht
+79 Userinfo. NID L™SCHE!
+80 *** F„hlerhafti Header-Checksumme:%r*** Wird bim n„chschte Garbage gl÷scht%r*** oder sofort mit KILL
+81 letschti aazeigti:
+82 Nochricht(e) transferiert:
+83 Kommentar ig„h:
+84 Erg„bnis z'lang, max. 997 Zeiche
+85 Ischtellige fr WantBoard und NotBoard gl÷scht
+86 Abbruch. Platte isch voll.
+87 *** kei SID gs„ndet
+88 Momentane Connect-Highscore :
+89 gl÷scht
+90 *** falschs Passwort
+91 *** Passwort f„hlt
+92 *** Im Mom„nt kei S&F. Bitte schp÷ter nomol versueche.
+93 Ihr GP isch falsch konfiguriert. Definiere Sie
+94 in NAMES.GP als Box!
+95 File Server Modus aktiviert. Hilf mit H(elp), FHELP, ndi mit Q(uit)
+96 Kei Schribzuegriff auf das Verzeichnis. Ich bruch /incoming/
+97 Datei gits scho
+98 Datei cha nit aaglegt w„rde
+99 Teggscht iig„h, ndi mit '.' in-ere neue Ziile
+100 Ungltige Dateiname
+101 Bitte e kurzi Dateibeschriibig iig„h. Be„nde mit '.' in-ere neue Ziile
+102 --- witter mit <RETURN> , Abbr„che mit <C> ---
+103 Es git gar kei Verzeichnis wo so heisst
+104 File Server isch verlo worde. Aktive Modus: BOX
+105 Ungltigs Kommando. Hilf mit H und FHELP.
+106 Datei cha nid g÷ffnet w„rde
+107 Benutzer in dr Uswahl
+108 Benutzer
+109 Kei Passwort. Witerleitig verz÷geret sich bis zu (Schtunde):
+110 Lokale Transfer nach
+111 L„bensduur vor d„re Nochricht (1..999 sin Tag, 0 = un„ndlich) :
+112 Kei Heimatmailbox vom Empf„nger bekannt.
+113 Bitte manuell e Ziel-BBS aag„h (S DL1XY @ DB0XY)
+114 BID scho vorhande, bitte e-n-anderi w„hle
+115 Abonn„nte vom Mailing List Server
+116 Erzge vom Mailing List Server
+117 Ufn„h vom Abonn„nt
+118 vom Mailing List Server
+119 Mailing List Server cha nit aaglegt w„rde. Dateif„hler.
+120 L÷sche vom Abonn„nt
+121 L÷sche vom Mailing List Server
+122 Lischte vo de-n-inschtallierte Mailing List Server:
+123 Info vo
+124 Es isch e F„hler bim Forward zu Dinere Schtation passiert:
+125 s'Routing lauft scho
+126 *** DP-Box Convers-Kommandos:
+127 /help     : d„ Tegscht
+128 /chan <n> : gang uff Kanal <n>
+129 /who      : Schtatione und Kan„l
+130 /quit     : Convers be„nde
+131 *** Kommandos ch÷nne abkrzt w„rde
+132 *** BBS-Kommandos mit emene '!' am Aafnag ufrefe
+133 Aktiv auf d„m Kanal:
+134 Usercall Kanal
+135 *** Convers fertig
+136 *** jetzt uff em Kanal
+137 *** ungltigi Kanalnummere
+138 Convers gschtartet. /H fr Hilf. Du bisch uff Kanal
+139 Password gl÷scht, Schutz uufghobe
+140 Uffruef: PASSWORD <Di_Password>
+141 S' gsamti Passwort isch z'lang
+142 Passwortschutz isch aktiv. Passwort-Lengi:
+143 HOLD isch fertig am
+144 Passwortschutz wird erscht aktiv ab Lengi 21. Aktuelli Lengi:
+145 Connect be„nde mit CTRL-Z. BBS-Kommandos mit emene ! am Aafang iig„h
+146 Bitte dr AutoBIN - Transfer schtarte
+147 Benutzer het dr Zuegriff uuf sini Nochrichte geschperrt
+148 Witeri Info bechunsch mit
+149 L„sef„hler
+
+150 Dr File-Server kennt folgendi Kommandos:
+151 ? und HELP           - d„ T„ggscht
+152 DIR und LS und LS -l - zeigt s'Inhaltsverzeichnis
+153 LIST                 - zeigt s'Inhaltsverzeichnis mit Beschribig
+154 CD                   - w„chslet s'Verzeichnis
+155 READ, GET, TYPE      - liist e Teggschtdatei (TYPE: Halt nach jeder Siite)
+156 PUT und WRITE        - schribt e Teggschtdatei
+157 7GET und BSGET       - liist e Binaerdatei im 7Plus- resp. BinSplit-Modus
+158 BGET und BPUT        - liist oder schribt e Bin„rdatei im AutoBIN-Modus
+159 YGET und YPUT        - liist oder schribt e Bin„rdatei im YAPP-Modus
+160 EXIT, BYE und QUIT   - zruck zur Mailbox
+161 Bischpil:
+162 CD /linux/packet     - w„chslet zum Verzeichnis /linux/packet
+163 CD ..                - goht ei Verzeichnis zruck
+164 DIR *.zip -DATE      - zeigt alli Dateie mit *.zip noch Datum sortiert
+165 DIR -NAME            - zeigt s'Verzeichnis noch N„me sortiert (schtandard)
+166 LS -SIZE             - Kurzaazeig vom Verzeichnis, nach Gr÷ssi sortiert
+167 LIST                 - zeigt s'Inhaltsverzeichnis mit Inhaltsbeschriibig
+168 YGET test.zip        - liist test.zip im YAPP-Modus us
+169 BGET 4               - liist Datei 4 im aktuelle Verzeichnis mit AutoBIN us
+170 BPUT test.lzh        - schriibt e neui Datei test.lzh mit AutoBIN
+171 Achtung: Unix unterscheidet zwsche GROSS- und Chleischribig in Datein„me!
+172 Verzeichnis w„rde mit '/' trennt, nid mit '\' wie bi DOS etc.
+173 N„me d÷rfe lenger als 8+3 si, z.B. "dpbox-4.17-source.tar.gz"
+174 Alli Kommando ch÷nne abkrzt w„rde, z.B. BG fr BGET, L fr LIST.
+
+175 Sysop - Kommandos:
+176 MD und MKDIR         - neus Verzeichnis aalege
+177 CP und COPY          - Datei(e) kopiere
+178 MV und MOVE          - Datei(e) verschiebe/umbenenne
+179 RM und DEL           - Datei(e) l÷sche
+180 RD und RMDIR         - (leeres) Verzeichnis l÷sche
+181 INDEX                - neui Verzeichnis-Info schriibe
+
+182 Bitte d'YAPP-Uuss„ndig schtarte
+183 #MSG   T Bytes An w„r  @BBS    Vo w„m Datum     Titel
+
+184 Warnig: MyBBS isch eventuell unbefugt verschtellt worde
+185 MyBBS isch umgsetzt worde uff:
+186  - do hetz no Poscht fr Di.
+
+187 YAPP-Uuss„ndung isch gschtartet worde
+
+188 Letschts MyBBS
+189 gsetzt am

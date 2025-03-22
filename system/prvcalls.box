@@ -1,0 +1,23 @@
+# Here you define all of your local "board-sysops"
+# Instead of a proper board name, you may use the following masks:
+# * = all boards
+# ! = all undefined boards
+# 10 = all boards with a lifetime <= 10 days
+
+XX6XY     *
+XX7XY     F
+XX7XY     QRV
+XX7YZ     AUB
+XX7YZ     UKW
+XX7YZ     CONTEST
+XX7YZ     ANTENNEN
+XX7YZ     BAKEN
+XX6XY     AMIGA
+XX6XY     AHP
+XX6XY     C64
+XX6XY     CBM
+XX6XY     ALLE
+XX6XY     DIVERSES
+XX6XY     F
+XX6YZ     FFR
+XX6YZ     F
