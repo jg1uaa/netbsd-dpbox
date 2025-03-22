@@ -14,7 +14,7 @@
 NOSHELL		= -DNO_SHELL
 
 INSTALL		= /usr/bin/install -c
-INSTALL_PROGRAM	= ${INSTALL} -s 
+INSTALL_PROGRAM	= ${INSTALL} 
 INSTALL_DATA	= ${INSTALL} -m 444
 INSTALL_CONF	= ${INSTALL} -m 440
 MKDIR		= mkdir -p
@@ -35,10 +35,10 @@ httpdir		= $(prefix)/share/httpd/htdocs
 DEFS		= $(SYSTEM) $(NOSHELL)
 CC		= gcc
 CPP		= $(CC) -E
-CFLAGS		= -Wall -O2 -funsigned-char -fomit-frame-pointer -fno-strength-reduce
-CRAWLERCFLAGS	= -Wall -O3 -funsigned-char -fomit-frame-pointer -fno-strength-reduce
+CFLAGS		= -Wall -O0 -ggdb -funsigned-char -fomit-frame-pointer -fno-strength-reduce
+CRAWLERCFLAGS	= -Wall -O0 -funsigned-char -fomit-frame-pointer -fno-strength-reduce
 LD		= $(CC)
-LDFLAGS		= -s
+LDFLAGS		=
 LIBS		= -lm
 
 HDRS		= filesys.h box.h box_file.h box_mem.h box_send.h box_sf.h \
