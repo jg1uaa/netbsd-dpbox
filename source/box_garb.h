@@ -1,9 +1,9 @@
 #ifndef BOX_GARB_H
 #define BOX_GARB_H
 
-extern void create_new_boxlog(short unr, boolean bullids);
+extern void create_new_boxlog(short unr, bool bullids);
 extern void delete_tempboxfiles(void);
-extern void garbage_collection(boolean xgar, boolean fill_cbyte, boolean check_all,
-      	      	      	       boolean immediate, short unr);
+extern void garbage_collection(bool xgar, bool fill_cbyte, bool check_all,
+			       bool immediate, short unr);
 
 #endif

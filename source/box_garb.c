@@ -36,7 +36,7 @@ static void check_mybbsfile(void)
 {
   mybbstyp	nheader;
   pathstr	oidxname, nidxname;
-  long		ct, dsize;
+  int32_t	ct, dsize;
   short		kin_index, kout_index;
 
   debug0(2, 0, 6);
@@ -82,7 +82,7 @@ static void check_mybbsfile(void)
 }
 
 
-static void ordne_ein(blogmem *lroot, blogmem **last, time_t date1, long logct1)
+static void ordne_ein(blogmem *lroot, blogmem **last, time_t date1, int32_t logct1)
 {
   blogmem	*temp;
   short		erg;
@@ -172,13 +172,13 @@ static void schreibe_templog(short templog, char *brett1, short idxct, indexstru
 }
 
 
-static boolean schreibe_log(short templog, short log, blogmem *lroot)
+static bool schreibe_log(short templog, short log, blogmem *lroot)
 {
   blogmem		*temp, *hp;
   boxlogstruct		blog;
-  long			ct;
-  boolean		disordered_msgnums;
-  long			lastmsgnum;
+  int32_t		ct;
+  bool			disordered_msgnums;
+  int32_t		lastmsgnum;
   char	      	      	hs[256];
 
   ct			= 0;
@@ -194,9 +194,9 @@ static boolean schreibe_log(short templog, short log, blogmem *lroot)
       if (blog.msgnum <= lastmsgnum) {
         disordered_msgnums = true;
 	append_profile(-1, "disordered msgnums:");
-	snprintf(hs, 255, "last message number = %ld", lastmsgnum);
+	snprintf(hs, 255, "last message number = %d", lastmsgnum);
 	append_profile(-1, hs);
-	snprintf(hs, 255, "%s %d = %ld", blog.brett, blog.idxnr, blog.msgnum); 
+	snprintf(hs, 255, "%s %d = %d", blog.brett, blog.idxnr, blog.msgnum); 
 	append_profile(-1, hs);
       }
       lastmsgnum	= blog.msgnum;
@@ -216,9 +216,9 @@ static boolean schreibe_log(short templog, short log, blogmem *lroot)
 }
 
 
-static boolean cnb_sem = false;
+static bool cnb_sem = false;
 
-static boolean create_new_boxlog1(short unr, boolean bullids)
+static bool create_new_boxlog1(short unr, bool bullids)
 {
   short			fmem;
   DTA			dirinfo;
@@ -228,10 +228,9 @@ static boolean create_new_boxlog1(short unr, boolean bullids)
   char			brett[256], hs[256];
   char			fmemfile[256];
   char			tempname[256];
-  long			totalsize;
-  boolean		recalc_msgnums;
+  bool			recalc_msgnums;
   blogmem		*lroot, *lastptr;
-  long			err, logct, bseek;
+  int32_t		err, logct, bseek;
   char			STR1[256];
   char			TEMP;
 
@@ -246,7 +245,6 @@ static boolean create_new_boxlog1(short unr, boolean bullids)
   sprintf(fmemfile, "%sdpchecklist%cXXXXXX", tempdir, extsep);
   mymktemp(fmemfile);
   *tempname		= '\0';
-  totalsize		= 0;
   fmem			= sfcreate(fmemfile, FC_FILE);
   if (fmem < minhandle) {
     debug(0, unr, 13, "create error");
@@ -261,7 +259,6 @@ static boolean create_new_boxlog1(short unr, boolean bullids)
     strcpy(hs, dirinfo.d_fname);
     del_ext(hs);
     str2file(&fmem, hs, true);
-    totalsize		+= dirinfo.d_length / sizeof(indexstruct);
     result		= sfnext(&dirinfo);
   }
   sfclose(&fmem);
@@ -356,7 +353,7 @@ static boolean create_new_boxlog1(short unr, boolean bullids)
 }
 
 
-void create_new_boxlog(short unr, boolean bullids)
+void create_new_boxlog(short unr, bool bullids)
 {
   debug(2, unr, 13, "01");
   free_boxbcastdesc();
@@ -378,7 +375,7 @@ void create_new_boxlog(short unr, boolean bullids)
 }
 
 
-static void gberror1(boolean xgar, short unr, char *s, boolean *garbage_error)
+static void gberror1(bool xgar, short unr, char *s, bool *garbage_error)
 {
   debug(0, unr, 14, s);
   debug(0, unr, 14, "garbage aborted");
@@ -390,9 +387,9 @@ static void gberror1(boolean xgar, short unr, char *s, boolean *garbage_error)
 
 static short gberasenumber;
 
-static void gberrclose(long bct, char *dname, short unr, boolean xgar,
-		       char **copybuf, boolean *garbage_error, short posi,
-		       short *k, short ct, char *temp, boolean cserr)
+static void gberrclose(int32_t bct, char *dname, short unr, bool xgar,
+		       char **copybuf, bool *garbage_error, short posi,
+		       short *k, short ct, char *temp, bool cserr)
 {
   char		hs[256];
 
@@ -471,7 +468,7 @@ static void imp_sysfile(char *fname, char *titel)
 }
 
 
-static void extract_readcalls(boolean rej, char *readby, char *w)
+static void extract_readcalls(bool rej, char *readby, char *w)
 {
   short		x;
   char		hs[256];
@@ -490,7 +487,7 @@ static void extract_readcalls(boolean rej, char *readby, char *w)
 }
 
 
-static short retmailinf(indexstruct *hptr, boolean unread, boolean unknown)
+static short retmailinf(indexstruct *hptr, bool unread, bool unknown)
 {
   short		k, x;
   pathstr	hs;
@@ -560,7 +557,7 @@ static short retmailinf(indexstruct *hptr, boolean unread, boolean unknown)
   str2file(&k, hs, true);
   sprintf(hs, "Your subject : %s", hptr->betreff);
   str2file(&k, hs, true);
-  sprintf(w, "%ld", (clock_.ixtime - hptr->rxdate) / SECPERDAY);
+  sprintf(w, "%"PRId64, (int64_t)(clock_.ixtime - hptr->rxdate) / SECPERDAY);
   if (unread || unknown)
     sprintf(hs, "Deleted after: %s days", w);
   else
@@ -593,11 +590,11 @@ static short retmailinf(indexstruct *hptr, boolean unread, boolean unknown)
 }
 
 
-static void returnmail(boolean pack, boolean gzip, short *handle, char *buf, long size)
+static void returnmail(bool pack, bool gzip, short *handle, char *buf, int32_t size)
 {
-  long		size2;
+  int32_t	size2;
   short		k, i;
-  boolean	first;
+  bool		first;
   char		hs[256], s[256], s1[256], lastr[256];
   pathstr	tname, tname2;
   char		STR1[256], STR7[256];
@@ -706,45 +703,43 @@ static void delete_invalid_board(char *fname)
 }
 
 
-void garbage_collection(boolean xgar, boolean fill_cbyte, boolean check_all,
-			boolean immediate, short unr)
+void garbage_collection(bool xgar, bool fill_cbyte, bool check_all,
+			bool immediate, short unr)
 {
-  indexstruct *hptr, header, *nhptr;
+  indexstruct *hptr, header;
   boxlogstruct blog;
   short kin_index, kout_index, kin_info, kout_info;
-  boolean output_opened, m_changed;
-  long in_info_size, spos, tomorrowct;
+  bool output_opened, m_changed;
+  int32_t in_info_size, spos, tomorrowct;
   short ct, k;
   DTA dirinfo;
-  short result, sflfsp, tomorrow;
-  boolean garbage_error, ugzip;
-  long err = 0;
-  long obsolete, dsize;
+  short result, tomorrow;
+  bool garbage_error, ugzip;
+  int32_t err = 0;
+  int32_t obsolete, dsize;
   short fmem;
   char *copybuf;
-  long cbsize = 0;
-  long bct = 0;
-  long boardct, hsize, rs;
-  boolean do_it;
-  long ddiff1, ddiff2;
+  int32_t cbsize = 0;
+  int32_t bct = 0;
+  int32_t boardct, hsize, rs;
+  bool do_it;
+  int32_t ddiff1, ddiff2;
   short kx, k1;
-  boolean no_info, unknown_user;
-  long diff, packgewinn;
-  char swappart;
-  boolean swap_info, swap_index;
-  long seconds, tbytes, tmsgs, bps;
+  bool no_info, unknown_user;
+  int32_t diff, packgewinn;
+  bool swap_info, swap_index;
+  int32_t seconds, tbytes, tmsgs, bps;
   short delct;
-  long tbzs, tmsgszs;
+  int32_t tbzs, tmsgszs;
   char *ipuffer;
-  long isize;
+  int32_t isize;
   short new_ct;
-  boolean copied;
-  long lastend;
-  boolean from_disk, iscall;
+  bool copied;
+  bool from_disk, iscall;
   char fbyte;
   short returnhandle, nhv;
-  long l1;
-  boolean invheader, reroute;
+  int32_t l1;
+  bool invheader, reroute;
   unsigned short ics;
   char temp1[256], temp2[256];
   char hs[256], w[256], w1[256], umbbs[256];
@@ -857,7 +852,7 @@ void garbage_collection(boolean xgar, boolean fill_cbyte, boolean check_all,
 	del_ext(hs);
 	del_lastblanks(hs);
 	if (*hs != '\0') {
-	  sprintf(w, "%ld", dirinfo.d_length);
+	  sprintf(w, "%d", dirinfo.d_length);
 	  sprintf(hs + strlen(hs), " %s", w);
 	  str2file(&fmem, hs, true);
 	} else {
@@ -947,8 +942,8 @@ void garbage_collection(boolean xgar, boolean fill_cbyte, boolean check_all,
     output_opened = false;
     spos = 0;
 
-    if (dsize / sizeof(indexstruct) > SHORT_MAX-1)
-      dsize = sizeof(indexstruct) * (SHORT_MAX-1); /* cut index file */
+    if (dsize / sizeof(indexstruct) > SHRT_MAX-1)
+      dsize = sizeof(indexstruct) * (SHRT_MAX-1); /* cut index file */
 
     k = dsize / sizeof(indexstruct);
     ct = 1;
@@ -986,8 +981,6 @@ void garbage_collection(boolean xgar, boolean fill_cbyte, boolean check_all,
 	}
 
 	if (!do_it) {
-	  sflfsp = ct;
-
 	  if (!hptr->deleted) {
 	    ddiff2 = clock_.ixtime - hptr->rxdate;
 	    if (hptr->lifetime > 0)
@@ -1046,7 +1039,6 @@ void garbage_collection(boolean xgar, boolean fill_cbyte, boolean check_all,
     if (do_it) {
       in_info_size = sfsize(oinfname);
       boxsetgdial(xgar, "1", 0, delct, tbytes, tmsgs, bps, "optimizing...");
-      swappart = '0';
     }
 
 
@@ -1063,8 +1055,6 @@ void garbage_collection(boolean xgar, boolean fill_cbyte, boolean check_all,
       k = dsize / sizeof(indexstruct);
 
       new_ct = 0;
-      lastend = 0;
-      nhptr = NULL;
       FORLIM = k;
       for (ct = 1; ct <= FORLIM; ct++) {
 	fbyte = 0;
@@ -1532,9 +1522,10 @@ void garbage_collection(boolean xgar, boolean fill_cbyte, boolean check_all,
 		replace_x_nr(ct, new_ct);
 	    }
 
-	    if (copybuf != NULL)
+	    if (copybuf != NULL) {
 	      free(copybuf);
 	      copybuf = NULL;
+	    }
 	  }
 
 	} else {
@@ -1643,19 +1634,19 @@ _L1:
     }
   }
 
-  sprintf(hs, "%ld", obsolete);
+  sprintf(hs, "%d", obsolete);
   sprintf(hs, "Deleted          : %s Bytes", strcpy(STR13, hs));
   wlnuser(unr, hs);
   append_profile(unr, hs);
-  sprintf(hs, "%ld", packgewinn);
+  sprintf(hs, "%d", packgewinn);
   sprintf(hs, "Saved by packing : %s Bytes", strcpy(STR1, hs));
   wlnuser(unr, hs);
   append_profile(unr, hs);
-  sprintf(hs, "%ld", tbytes);
+  sprintf(hs, "%d", tbytes);
   sprintf(hs, "Total Bytes      : %s", strcpy(STR1, hs));
   wlnuser(unr, hs);
   append_profile(unr, hs);
-  sprintf(hs, "%ld", tmsgs);
+  sprintf(hs, "%d", tmsgs);
   sprintf(hs, "Total Msgs       : %s", strcpy(STR1, hs));
   wlnuser(unr, hs);
   append_profile(unr, hs);
@@ -1683,9 +1674,9 @@ _L1:
   kill_resume();
   utc_clock();
   seconds = clock_.ixtime - seconds;
-  sprintf(hs, "%ld", seconds / 3600);
-  sprintf(w, "%ld", seconds % 3600 / 60);
-  sprintf(w1, "%ld", seconds % 60);
+  sprintf(hs, "%d", seconds / 3600);
+  sprintf(w, "%d", seconds % 3600 / 60);
+  sprintf(w1, "%d", seconds % 60);
   sprintf(hs, "used time: %sh %smin %ssec", strcpy(STR13, hs), w, w1);
   wlnuser(unr, hs);
 
