@@ -173,7 +173,7 @@ static void dispose_rejectinfos(void)
 }
 
 
-static boolean checkneg(char *w)
+static bool checkneg(char *w)
 {
   if (w[0] != '~')
     return true;
@@ -341,7 +341,7 @@ static void load_rubrikinfos(short unr)
   sfclose(&inf);
 }
 
-static boolean valid_target_board(char *w)
+static bool valid_target_board(char *w)
 {
   if (!strcmp(w, "E")) return false;
   if (!strcmp(w, "M")) return false;
@@ -603,8 +603,8 @@ static void load_convlt(void)
 
 static void load_balise(void)
 {
-  long		rp;
-  boolean	ok;
+  int32_t	rp;
+  bool		ok;
   char		hs[256], w[256];
 
   debug0(2, 0, 24);
@@ -1827,7 +1827,7 @@ static void check_indexes(void)
 {
   DTA		dirinfo;
   short		result;
-  long		sz;
+  int32_t	sz;
   pathstr	STR1;
 
   snprintf(STR1, LEN_PATH, "%s%c%c%s", indexdir, allquant, extsep, EXT_IDX);
@@ -1847,7 +1847,7 @@ static void check_indexes(void)
 
 /* local fuer check_bullidseek */
 
-static long lastbid(void)
+static int32_t lastbid(void)
 {
   short		log, lognr;
   boxlogstruct	logheader;
@@ -1867,7 +1867,7 @@ static long lastbid(void)
 void check_bullidseek(void)
 {
   /* falls das bidseek-file fehlt... */
-  long		fpos, bs;
+  int32_t	fpos, bs;
 
   fpos		= bullidseek;
   bs		= sfsize(msgidlog) / sizeof(bidtype);
@@ -1898,13 +1898,13 @@ void check_bullidseek(void)
   }
 }
 
-static boolean msgnumsem = false;
+static bool msgnumsem = false;
 
-void create_all_msgnums(boolean recalc)
+void create_all_msgnums(bool recalc)
 {
-  long		bsize, xsize;
+  int32_t	bsize, xsize;
   short		k, h;
-  long		ct, cct, l;
+  int32_t	ct, cct, l;
   boxlogstruct	log;
   indexstruct	header;
   pathstr	fn, lfn;
@@ -2005,11 +2005,11 @@ void create_all_msgnums(boolean recalc)
 }
 
 
-static long check_msgnum(void)
+static int32_t check_msgnum(void)
 {
-  long		Result;
+  int32_t	Result;
   short		k;
-  long		size;
+  int32_t	size;
   boxlogstruct	log;
 
   Result	= actmsgnum;
@@ -2048,7 +2048,7 @@ static void init_filenames(void)
 void init_boxvars(void)
 {
   short	x;
-  long	l;
+  int32_t	l;
   char	dbold[256], w[256];
 
   profile_to_syslog   	= true;

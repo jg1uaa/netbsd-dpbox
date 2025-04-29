@@ -7,7 +7,7 @@
 #include "boxlocal.h"
 
 extern void check_bullidseek(void);
-extern void create_all_msgnums(boolean recalc);
+extern void create_all_msgnums(bool recalc);
 extern void load_tcpipbuf(void);
 extern void load_all_parms(short unr);
 extern void init_boxvars(void);
