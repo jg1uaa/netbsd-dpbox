@@ -11,7 +11,7 @@
 #include "filesys.h"
 
 #include <unistd.h>
-#if defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 #include <sys/param.h>
 #include <sys/mount.h>
 #endif
@@ -48,7 +48,7 @@
 /* execution time                                                       */
 
 static short myVolume;
-static long myWorkDir;
+static int32_t myWorkDir;
 static char apName[256];
 static short apRefNum;
 
@@ -64,10 +64,10 @@ void StartupFilesysInit(void)
 
 #define DiskFreeDefault 80000000L
 
-long Diskfree(int dummy)
+int32_t Diskfree(int dummy)
 {
   short retVId;
-  long retval;
+  int32_t retval;
   char hs[256];
   
   if (GetVInfo(myVolume, &hs, &retVId, &retval) < 0)
@@ -77,7 +77,7 @@ long Diskfree(int dummy)
   return retval;
 }
 
-long DFree(char *mount)
+int32_t DFree(char *mount)
 {
   return Diskfree(0) / 1024;
 }
@@ -93,7 +93,7 @@ char *wild_str;
   if (strchr(wild_str,'*') == NULL) {
     return strcmp(file_str,wild_str);
   }
-  if (wildcardcompare(SHORT_MAX, wild_str, file_str, "")) return 0;
+  if (wildcardcompare(SHRT_MAX, wild_str, file_str, "")) return 0;
   return 1; 
 }
 
@@ -276,9 +276,9 @@ void get_path(char *s)
 
 /* sind wir am Ende der Datei ? */
 
-boolean myeof(short handle)
+bool myeof(short handle)
 {
-  long apos;
+  int32_t apos;
 
   if (handle < minhandle)
     return true;
@@ -322,7 +322,7 @@ short sfsetdatime(char *name, unsigned short *date, unsigned short *time)
 }
 
 
-long sfsize(char *name)
+int32_t sfsize(char *name)
 {
   struct stat buf;
   if (stat(name,&buf) != 0) {
@@ -332,7 +332,7 @@ long sfsize(char *name)
 }
 
 
-boolean exist(char *name)
+bool exist(char *name)
 {
   struct stat buf;
   if (stat(name,&buf) != 0) {
@@ -399,9 +399,9 @@ short sfremovedir(char *name)
 
 
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 
-#if (defined(__NetBSD__) && (__NetBSD_Version__ >= 299000900)) || defined(__DragonFly__)
+#if (defined(__NetBSD__) && (__NetBSD_Version__ >= 299000900)) || defined(__DragonFly__) || defined(__OpenBSD__)
 #include <sys/statvfs.h>
 #endif
 
@@ -411,12 +411,12 @@ short sfremovedir(char *name)
 /* code. lot of the code was written by Mark Wahl DL4YBG for the first  */
 /* localisation of the dpbox code from Atari to Linux                   */
 
-long Diskfree(int dummy)
+int32_t Diskfree(int dummy)
 {
   return 80000000L;
 }
 
-long DFree(char *mount)
+int32_t DFree(char *mount)
 {
 #if defined(__linux__) || (defined(__NetBSD__) && (__NetBSD_Version__ < 299000900))
   struct statfs mystatfs;
@@ -448,7 +448,7 @@ static int namecomp(char *file_str, char *wild_str)
   if (strchr(wild_str, '*') == NULL) {
     return strcmp(file_str, wild_str);
   }
-  if (wildcardcompare(SHORT_MAX, wild_str, file_str, "")) return 0;
+  if (wildcardcompare(SHRT_MAX, wild_str, file_str, "")) return 0;
   return 1; 
 }
 
@@ -660,9 +660,9 @@ void get_path(char *s)
 
 /* sind wir am Ende der Datei ? */
 
-boolean myeof(short handle)
+bool myeof(short handle)
 {
-  long apos;
+  int32_t apos;
 
   if (handle < minhandle)
     return true;
@@ -700,7 +700,7 @@ short sfsetdatime(char *name, unsigned short *date, unsigned short *time)
 }
 
 
-long sfsize(char *name)
+int32_t sfsize(char *name)
 {
   struct stat buf;
   if (stat(name, &buf) != 0) {
@@ -710,7 +710,7 @@ long sfsize(char *name)
 }
 
 
-boolean exist(char *name)
+bool exist(char *name)
 {
   struct stat buf;
   if (stat(name, &buf) != 0) {
@@ -816,11 +816,11 @@ void del_dir(char *name)
 
 /* haengt ein File an ein bereits geoeffnetes an */
 
-void app_file2(char *filea, short k2, long ab, boolean del_source)
+void app_file2(char *filea, short k2, int32_t ab, bool del_source)
 {
   char *puffer;
-  long psize;
-  long done, bc, cstep, hli, fsize;
+  int32_t psize;
+  int32_t done, bc, cstep, hli, fsize;
   short k1;
 
   if (k2 < minhandle)
@@ -870,15 +870,15 @@ void app_file2(char *filea, short k2, long ab, boolean del_source)
 #define copysize2       128
 
 
-short fmv_x(char *filea, char *fileb, boolean delete_source,
-		       long start, long size, boolean was_rename)
+short fmv_x(char *filea, char *fileb, bool delete_source,
+		       int32_t start, int32_t size, bool was_rename)
 {
-  long err;
+  int32_t err;
   char *puffer;
-  long psize;
-  long done, bc, cstep, hli, fsize;
+  int32_t psize;
+  int32_t done, bc, cstep, hli, fsize;
   short k1, k2, dtime, ddate;
-  boolean save_date;
+  bool save_date;
 
 
   if (!was_rename && delete_source && size == 0 && start == 0) {
@@ -995,10 +995,10 @@ void validate(char *name)
 
 /*fuegt eine Zeile an eine bereits geoeffnete Datei an*/
 
-void str2file(short *handle, const char *line, boolean crlf)
+void str2file(short *handle, const char *line, bool crlf)
 {
   static char crlfarr = 10;
-  long l;
+  int32_t l;
 
   if (*handle < minhandle)
     return;
@@ -1018,9 +1018,9 @@ void str2file(short *handle, const char *line, boolean crlf)
 /* funktioniert nur korrekt, wenn Eingabezeilen maximal maxlen-2 Bytes lang sind */
 
 
-boolean file2lstr2(short handle, char *line, long maxlen, boolean *eol)
+bool file2lstr2(short handle, char *line, int32_t maxlen, bool *eol)
 {
-  long x, ct, s2, l;
+  int32_t x, ct, s2, l;
 
   *line = '\0';
 
@@ -1054,19 +1054,19 @@ boolean file2lstr2(short handle, char *line, long maxlen, boolean *eol)
   return true;
 }
 
-boolean file2lstr(short handle, char *line, long maxlen)
+bool file2lstr(short handle, char *line, int32_t maxlen)
 {
-  boolean eol;
+  bool eol;
  
   return file2lstr2(handle, line, maxlen, &eol);
 }
 
 /* Fuegt eine Zeile an eine Datei an, gibt neue Laenge zurueck */
 
-long append(char *name, char *zeile, boolean crlf)
+int32_t append(char *name, char *zeile, bool crlf)
 {
   short k;
-  long sz;
+  int32_t sz;
 
   sz = -1;
   k = sfopen(name, FO_RW);
@@ -1092,7 +1092,7 @@ typedef struct flocktype {
   struct flocktype *next;
   char cs;
   short handle;
-  boolean write;
+  bool write;
   time_t attime;
   pathstr name;  
 } flocktype;
@@ -1132,7 +1132,7 @@ static void flockp2s(flocktype *hp, char *hs)
   else
     c = 'r';
 
-  sprintf(hs, "%3d %c %.2ld:%.2ld %s", hp->handle, c, t2 / 60, t2 % 60, hp->name);
+  sprintf(hs, "%3d %c %.2"PRId64":%.2"PRId64" %s", hp->handle, c, (int64_t)t2 / 60, (int64_t)t2 % 60, hp->name);
 }
 
 
@@ -1202,14 +1202,13 @@ short dpsyscreate(char *fname, int flags, int mode)
 }
 
 
-short open_locked(boolean create, char *name, short mode)
+short open_locked(bool create, char *name, short mode)
 {
-  short Result, handle;
+  short handle;
   flocktype *hp;
-  boolean nowrite, wantwrite;
+  bool nowrite, wantwrite;
   char tcs;
 
-  Result = nohandle;
   tcs = calccs(name);
   handle = nohandle;
   wantwrite = (create || mode != FO_READ);
@@ -1298,7 +1297,7 @@ static flocktype *valid_handle(short handle)
 }
 
 
-long sfseek(long count, short handle, short mode)
+int32_t sfseek(int32_t count, short handle, short mode)
 { 
   if (valid_handle(handle) != NULL)
     return lseek(handle, count, mode);
@@ -1307,7 +1306,7 @@ long sfseek(long count, short handle, short mode)
 }
 
 
-long sfread(short handle, long count, char *buf)
+int32_t sfread(short handle, int32_t count, char *buf)
 {
   if (valid_handle(handle) != NULL)
     return read(handle, buf, count);
@@ -1316,7 +1315,7 @@ long sfread(short handle, long count, char *buf)
 }
 
 
-long sfwrite(short handle, long count, const char *buf)
+int32_t sfwrite(short handle, int32_t count, const char *buf)
 {
   if (valid_handle(handle) != NULL)
     return write(handle, buf, count);
@@ -1324,7 +1323,7 @@ long sfwrite(short handle, long count, const char *buf)
     return -1;
 }
 
-void sfclose_x(short *handle, boolean delete_it)
+void sfclose_x(short *handle, bool delete_it)
 {
   flocktype *hp, *hpa;
   pathstr dname, w;
@@ -1404,7 +1403,7 @@ void chkopenfiles(time_t maxopen, char *fn)
   }
 }
 
-boolean tas_lockfile(long waittime, long oldtime, char *name)
+bool tas_lockfile(int32_t waittime, int32_t oldtime, char *name)
 {
   time_t ixt, time1;
   struct stat buf;
@@ -1431,9 +1430,9 @@ boolean tas_lockfile(long waittime, long oldtime, char *name)
 }
 
 /* creates a directory including all parent directories */
-boolean create_dirpath(char *dirpath)
+bool create_dirpath(char *dirpath)
 {
-  boolean result;
+  bool result;
   char	  *p;
   pathstr curdir, hs;
 
@@ -1486,7 +1485,7 @@ static void usintasc(short digits, unsigned int num, char *asc)
 /* this function requires a case sensitive file system	      	      	  */
 /* it offers 238328 ((26+26+10)^3) different filenames per pid       	  */
 
-boolean mymktemp(char *name)
+bool mymktemp(char *name)
 {
   static unsigned int tempcount = 0;
   static pid_t mypid = 0;
@@ -1534,7 +1533,7 @@ void _filesys_init(void)
 #ifdef __macos__
   StartupFilesysInit();
 #endif
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
   nextptr = NULL;
 #endif
 }

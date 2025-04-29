@@ -48,7 +48,7 @@ typedef struct DTA {
   char d_attrib;
   int d_time;
   int d_date;
-  long d_length;
+  int32_t d_length;
   int d_lastindex;
   int d_volumeID;
   int d_dirID;
@@ -71,7 +71,7 @@ extern void mktemp(char *name);
 
 
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 
 /* simply copied that widespread file access code of former dpbox code  */
 /* in this single file. Not a real change to previous versions of the   */
@@ -79,7 +79,7 @@ extern void mktemp(char *name);
 /* localisation of the dpbox code from Atari to Linux                   */
 
 #include <sys/stat.h>
-#if !defined(__NetBSD__) && !defined(__DragonFly__)
+#if defined(__linux__)
 #include <sys/vfs.h>
 #endif
 
@@ -110,7 +110,7 @@ typedef struct DTA {
   char d_attrib;
   int d_time;
   int d_date;
-  long d_length;
+  int32_t d_length;
   char d_fname[256];
 } DTA;
 
@@ -136,10 +136,10 @@ typedef void (*dispfilelistproc)(const short x, const char *s);
 
 /* these ones are coded different */
 
-extern long Diskfree(int dummy);
-extern long DFree(char *mount);
-extern boolean exist(char *name);
-extern long sfsize(char *name);
+extern int32_t Diskfree(int dummy);
+extern int32_t DFree(char *mount);
+extern bool exist(char *name);
+extern int32_t sfsize(char *name);
 extern short sfrename(char *oldname, char *newname);
 extern short sfgetdatime(char *name, unsigned short *date,
 			 unsigned short *time);
@@ -157,32 +157,32 @@ extern void new_ext(char *s, char *ext);
 extern void get_path(char *s);
 extern void del_path(char *s);
 extern void del_blanks(char *s);
-extern boolean myeof(short handle);
+extern bool myeof(short handle);
 
 /* these ones are coded common */
 
 extern void del_dir(char *name);
-extern void app_file2(char *filea, short k2, long ab, boolean del_source);
+extern void app_file2(char *filea, short k2, int32_t ab, bool del_source);
 extern void validate(char *name);
-extern void str2file(short *handle, const char *line, boolean crlf);
-extern boolean file2lstr2(short handle, char *line, long maxlen, boolean *eol);
-extern boolean file2lstr(short handle, char *line, long maxlen);
-extern long append(char *name, char *zeile, boolean crlf);
+extern void str2file(short *handle, const char *line, bool crlf);
+extern bool file2lstr2(short handle, char *line, int32_t maxlen, bool *eol);
+extern bool file2lstr(short handle, char *line, int32_t maxlen);
+extern int32_t append(char *name, char *zeile, bool crlf);
 extern void handle2name(short handle, char *name);
 extern short dpsyscreate(char *fname, int flags, int mode);
-extern short open_locked(boolean create, char *name, short mode);
-extern long sfseek(long count, short handle, short mode);
-extern long sfread(short handle, long count, char *buf);
-extern long sfwrite(short handle, long count, const char *buf);
-extern void sfclose_x(short *handle, boolean delete_it);
+extern short open_locked(bool create, char *name, short mode);
+extern int32_t sfseek(int32_t count, short handle, short mode);
+extern int32_t sfread(short handle, int32_t count, char *buf);
+extern int32_t sfwrite(short handle, int32_t count, const char *buf);
+extern void sfclose_x(short *handle, bool delete_it);
 extern void sfdelfile(char *name);
 extern void sfdispfilelist(short x, dispfilelistproc outproc);
 extern void chkopenfiles(time_t maxopen, char *fn); /* maxopen in sekunden */
-extern short fmv_x(char *filea, char *fileb, boolean delete_source,
-		       long start, long size, boolean was_rename);
-extern boolean tas_lockfile(long waittime, long oldtime, char *name);
-extern boolean create_dirpath(char *dirpath);
-extern boolean mymktemp(char *name);
+extern short fmv_x(char *filea, char *fileb, bool delete_source,
+		       int32_t start, int32_t size, bool was_rename);
+extern bool tas_lockfile(int32_t waittime, int32_t oldtime, char *name);
+extern bool create_dirpath(char *dirpath);
+extern bool mymktemp(char *name);
 extern char *mytmpnam(char *name);
 
 #define app_file(filea, k2, del_source) app_file2(filea, k2, 0, del_source)
