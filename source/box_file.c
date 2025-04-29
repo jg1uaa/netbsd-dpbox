@@ -45,7 +45,7 @@ void check_disk_full(void)
 /* Functions for cached index access					*/
 /************************************************************************/
 
-short open_index(char *brett, short mode, boolean cache, boolean vorwaerts)
+short open_index(char *brett, short mode, bool cache, bool vorwaerts)
 {
   indexcachetype	*ic;
   short			handle;
@@ -61,7 +61,7 @@ short open_index(char *brett, short mode, boolean cache, boolean vorwaerts)
         ic->size	= 0;
         ic->next	= NULL;
         ic->prev	= NULL;
-        ic->CurBufOffs	= LONG_MAX;
+        ic->CurBufOffs	= INT32_MAX;
         ic->handle	= handle;
         ic->vorwaerts	= vorwaerts;
         if (indexcacheroot == NULL) indexcacheroot = ic;
@@ -106,9 +106,9 @@ void close_index(short *handle)
 void read_index(short handle, short nr, indexstruct *ibuf)
 {
   indexcachetype	*ic;
-  long			WantedOffs;
-  long			seek, err;
-  boolean		ok;
+  int32_t		WantedOffs;
+  int32_t		seek, err;
+  bool			ok;
   pathstr		hs, STR1;
 
   ibuf->absender[0]	= '\0';
@@ -123,7 +123,7 @@ void read_index(short handle, short nr, indexstruct *ibuf)
       return;
     }
 
-    if (ic->CurBufOffs < LONG_MAX) /* flag fuer ersten Zugriff */
+    if (ic->CurBufOffs < INT32_MAX) /* flag fuer ersten Zugriff */
       ic->vorwaerts	= (WantedOffs > ic->CurBufOffs);
 
     if (ic->vorwaerts)
@@ -168,9 +168,9 @@ void read_index(short handle, short nr, indexstruct *ibuf)
 short write_index(short handle, short nr, indexstruct *ibuf)
 {
   indexcachetype	*ic;
-  long			WantedOffs;
-  long			seek, err;
-  boolean		ok;
+  int32_t		WantedOffs;
+  int32_t		seek, err;
+  bool			ok;
   pathstr		hs, STR1;
 
   ibuf->hver		= HEADERVERSION;
@@ -189,7 +189,7 @@ short write_index(short handle, short nr, indexstruct *ibuf)
   
   if (nr == -1) {
     err			= sfseek(0, handle, SFSEEKEND);   /* Eintrag anhaengen */
-    ok			= (err / sizeof(indexstruct) < SHORT_MAX);
+    ok			= (err / sizeof(indexstruct) < SHRT_MAX);
   } else {
     seek		= (nr - 1) * sizeof(indexstruct);
     err			= sfseek(seek, handle, SFSEEKSET);
@@ -215,10 +215,10 @@ short write_index(short handle, short nr, indexstruct *ibuf)
 /**********************************************************************/
 
 
-void read_log(short handle, long nr, boxlogstruct *ibuf)
+void read_log(short handle, int32_t nr, boxlogstruct *ibuf)
 {
-  long		seek, err;
-  boolean	ok;
+  int32_t	seek, err;
+  bool		ok;
   pathstr	hs, STR1;
 
   if (nr == -1)
@@ -241,10 +241,10 @@ void read_log(short handle, long nr, boxlogstruct *ibuf)
 }
 
 
-void write_log(short handle, long nr, boxlogstruct *ibuf)
+void write_log(short handle, int32_t nr, boxlogstruct *ibuf)
 {
-  long		seek, err;
-  boolean	ok;
+  int32_t	seek, err;
+  bool		ok;
   pathstr	hs, STR1;
 
   if (nr == -1) {
@@ -324,7 +324,7 @@ typedef struct counttyp {
   struct counttyp	*next;
   calltype		bbs;
   char			csum;
-  long			anz;
+  int32_t		anz;
 } counttyp;
 
 static unsigned short shall_sem;
@@ -380,7 +380,7 @@ static void write_ctp(short k)
   hp		= countroot;
   while (hp != NULL) {
     if (hp->anz >= csustain) {
-      sprintf(hs, "%.4ld %s", hp->anz, hp->bbs);
+      sprintf(hs, "%.4d %s", hp->anz, hp->bbs);
       str2file(&k, hs, true);
     }
     hp		= hp->next;
@@ -388,15 +388,15 @@ static void write_ctp(short k)
 }
 
 
-void show_all_user_at(short unr, char *call, boolean del, boolean del2,
-		      boolean only_count, char *all_count)
+void show_all_user_at(short unr, char *call, bool del, bool del2,
+		      bool only_count, char *all_count)
 {
   mybbstyp	*bbsptr;
-  long		dsize, anz, ct, cct;
+  int32_t	dsize, anz, ct, cct;
   short		k, list, last, outf;
-  boolean	countall;
+  bool		countall;
   char		*puffer;
-  long		psize, rpos;
+  int32_t	psize, rpos;
   indexstruct	header;
   mybbstyp	bbsrec;
   pathstr	fname;
@@ -451,7 +451,7 @@ void show_all_user_at(short unr, char *call, boolean del, boolean del2,
       while (rpos < psize - 1) {
 	bbsptr	= (mybbstyp *)(&puffer[rpos]);
 	if (countall) {
-	  if (wildcardcompare(SHORT_MAX, all_count, bbsptr->bbs, ls) && callsign(bbsptr->call)) {
+	  if (wildcardcompare(SHRT_MAX, all_count, bbsptr->bbs, ls) && callsign(bbsptr->call)) {
 	    add_ctp(bbsptr->bbs);
 	    cct++;
 	  }
@@ -487,7 +487,7 @@ void show_all_user_at(short unr, char *call, boolean del, boolean del2,
       for (ct = 1; ct <= anz; ct++) {
 	sfread(k, sizeof(mybbstyp), (char *)(&bbsrec));
 	if (countall) {
-	  if (wildcardcompare(SHORT_MAX, all_count, bbsrec.bbs, ls) && callsign(bbsrec.call)) {
+	  if (wildcardcompare(SHRT_MAX, all_count, bbsrec.bbs, ls) && callsign(bbsrec.call)) {
 	    add_ctp(bbsrec.bbs);
 	    cct++;
 	  }
@@ -498,7 +498,7 @@ void show_all_user_at(short unr, char *call, boolean del, boolean del2,
 	  if (del) {
 	    clear_uf_cache(bbsrec.call);
 	    strcpy(bbsrec.call, "******");
-	    sfseek(-sizeof(mybbstyp), k, SFSEEKCUR);
+	    sfseek((int32_t)-sizeof(mybbstyp), k, SFSEEKCUR);
 	    sfwrite(k, sizeof(mybbstyp), (char *)(&bbsrec));
 	  }
 	}
@@ -553,10 +553,10 @@ void show_all_user_at(short unr, char *call, boolean del, boolean del2,
     w_btext(unr, 42);
     if (countall) {
       get_btext(unr, 107, ls);
-      sprintf(hs, " %ld %s %s", cct, ls, all_count);
+      sprintf(hs, " %d %s %s", cct, ls, all_count);
     } else {
       get_btext(unr, 108, ls);
-      sprintf(hs, " %ld %s ", anz, ls);
+      sprintf(hs, " %d %s ", anz, ls);
     }
     wlnuser(unr, hs);
     wlnuser0(unr);
@@ -603,7 +603,7 @@ void show_all_user_at(short unr, char *call, boolean del, boolean del2,
       if (!only_count)
 	wlnuser0(unr);
       get_btext(unr, 108, ls);
-      sprintf(hs, "@%s: %ld %s", call, cct, ls);
+      sprintf(hs, "@%s: %d %s", call, cct, ls);
       if (del) {
 	get_btext(unr, 89, ls);
 	sprintf(hs + strlen(hs), " %s", ls);
@@ -617,7 +617,7 @@ void show_all_user_at(short unr, char *call, boolean del, boolean del2,
   sfdelfile(sname);
 }
 
-static void redir_denied(boolean has_mail, char *call, char *newbbs, char *language)
+static void redir_denied(bool has_mail, char *call, char *newbbs, char *language)
 {
   char	betreff[256];
   char	msg[256], msg2[256];
@@ -641,17 +641,17 @@ static void redir_denied(boolean has_mail, char *call, char *newbbs, char *langu
 
 #define rbsize 2500*sizeof(mybbstyp)
 
-boolean update_mybbsfile(boolean by_usercommand, char *call_, time_t *updatetime,
-			 char *mybbs_, char *mybbsmode)
+bool update_mybbsfile(bool by_usercommand, char *call_, time_t *updatetime,
+		      char *mybbs_, char *mybbsmode)
 {
   short		k;
-  boolean	Result;
-  boolean	found, rdout, redirect, has_mails;
+  bool		Result;
+  bool		found, rdout, redirect, has_mails;
   char		*puffer;
   char		gmode;
   time_t	gtime;
-  long		psize, dsize, fsize, rpos, wpos, spos, bc;
-  long		anz, ct;
+  int32_t	psize, dsize, fsize, rpos, wpos, spos, bc;
+  int32_t	anz, ct;
   mybbstyp	bbsrec, *bbsptr;
   userstruct	rec;
   calltype	call;
@@ -839,8 +839,8 @@ boolean update_mybbsfile(boolean by_usercommand, char *call_, time_t *updatetime
 	}
       }
     } else {
-      sprintf(STR1, "corrupted M-forward-date : %s@%s stamp:%ld mytime:%ld",
-	      call, mybbs, *updatetime, clock_.ixtime);
+      sprintf(STR1, "corrupted M-forward-date : %s@%s stamp:%"PRId64" mytime:%"PRId64,
+	      call, mybbs, (int64_t)*updatetime, (int64_t)clock_.ixtime);
       append_profile(-1, STR1);
     }
   }
@@ -974,7 +974,7 @@ static short find_mptr(char *call)
 }
 
 
-static boolean load_m(short mpos, char *call, indexstruct *ix)
+static bool load_m(short mpos, char *call, indexstruct *ix)
 {
   short		k;
 
@@ -1055,10 +1055,10 @@ static void add_uf_cache(userstruct uf)
 }
 
 
-static boolean load_uf_through_cache(char *call, userstruct *uf)
+static bool load_uf_through_cache(char *call, userstruct *uf)
 {
   short		x;
-  boolean	hit;
+  bool		hit;
   char		csum;
 
   csum		= calccs(call);
@@ -1093,7 +1093,7 @@ static void clear_userstruct(userstruct *rec)
 }
 
 
-void convert_ufil(boolean with_ext_strings, indexstruct header, userstruct *rec)
+void convert_ufil(bool with_ext_strings, indexstruct header, userstruct *rec)
 {
   char		*p1, *p2;
   short		x, y, k;
@@ -1302,11 +1302,11 @@ void convert_ufil(boolean with_ext_strings, indexstruct header, userstruct *rec)
 
   rec->logins		= header.msgflags;
 
-  rec->maxread_day	= (long)header.firstbyte * MAXREADDIVISOR;
+  rec->maxread_day	= (int32_t)header.firstbyte * MAXREADDIVISOR;
   if (clock_.ixtime - rec->lastatime > SECPERDAY)
     rec->read_today	= 0;
   else
-    rec->read_today	= (long)header.eraseby * MAXREADDIVISOR;
+    rec->read_today	= (int32_t)header.eraseby * MAXREADDIVISOR;
 
   if (*ds != '\0' && in_real_sf(rec->call)) {
     get_word(ds, w);
@@ -1342,7 +1342,7 @@ void convert_ufil(boolean with_ext_strings, indexstruct header, userstruct *rec)
 }
 
 
-void load_userfile(boolean only_m, boolean with_ext_strings, char *calls, userstruct *rec)
+void load_userfile(bool only_m, bool with_ext_strings, char *calls, userstruct *rec)
 {
   indexstruct	header, *hp;
   calltype	mbbs;
@@ -1365,7 +1365,7 @@ void load_userfile(boolean only_m, boolean with_ext_strings, char *calls, userst
       strcpy(rec->call, hp->absender);
       strcpy(rec->mybbs, hp->verbreitung);
       strcpy(rec->language, hp->id);
-      cut(hp->dest, 80);
+      cut(hp->dest, LEN_BOARD);
       strcpy(rec->name, hp->dest);
       strcpy(rec->password, hp->betreff);
       rec->lastdate	= hp->rxdate;
@@ -1408,7 +1408,7 @@ void load_userfile(boolean only_m, boolean with_ext_strings, char *calls, userst
 }
 
 
-void load_userinfo_for_change(boolean only_m, char *callx, userstruct *ufil)
+void load_userinfo_for_change(bool only_m, char *callx, userstruct *ufil)
 {
   char lan[256];
 
@@ -1437,7 +1437,7 @@ void code_ufil(userstruct *rec, indexstruct *header)
   memset(header, 0, sizeof(indexstruct));
   *ds = '\0';
   if (in_real_sf(rec->call)) {
-    sprintf(ds, "%ld %ld %ld %ld %ld %ld %ld %ld %d",
+    sprintf(ds, "%d %d %d %d %d %d %d %d %d",
 		rec->dstat_rx_p, rec->dstat_rx_b, rec->dstat_rx_s, rec->dstat_rx_bytes,
 		rec->dstat_tx_p, rec->dstat_tx_b, rec->dstat_tx_s, rec->dstat_tx_bytes,
 		rec->dlogins);
@@ -1637,8 +1637,8 @@ void code_ufil(userstruct *rec, indexstruct *header)
 void save_userfile(userstruct *rec)
 {
   short		k, list, last;
-  boolean	found, full;
-  long		isize;
+  bool		found, full;
+  int32_t	isize;
   indexstruct	header;
   userstruct	rec2;
 
@@ -1646,7 +1646,7 @@ void save_userfile(userstruct *rec)
 
   isize		= sfsize(userinfos);
   last		= isize / sizeof(indexstruct);
-  full		= last > (SHORT_MAX - 30);
+  full		= last > (SHRT_MAX - 30);
   list		= sfopen(userinfos, FO_RW);
   found		= false;
   k		= nohandle;
@@ -1726,9 +1726,9 @@ short last_valid(short unr, char *brett)
   short		Result;
   indexstruct	header;
   userstruct	uf;
-  long		isize;
+  int32_t	isize;
   short		k, mct;
-  boolean	hit, iscall, ufloaded, ownboard;
+  bool		hit, iscall, ufloaded, ownboard;
   unsigned	short lt, acc;
   char		hs[256];
   char		STR1[256];
@@ -1739,7 +1739,7 @@ short last_valid(short unr, char *brett)
     return 0;
 
   lt		= 0;
-  acc		= SHORT_MAX;
+  acc		= SHRT_MAX;
 
   if (strlen(brett) == 1) {
     if (user[unr]->supervisor || user[unr]->rsysop) {
@@ -1747,7 +1747,7 @@ short last_valid(short unr, char *brett)
 	return 0;
       check_lt_acc(brett, &lt, &acc);
     } else
-      acc	= SHORT_MAX;
+      acc	= SHRT_MAX;
   } else
     check_lt_acc(brett, &lt, &acc);
 
@@ -1829,7 +1829,7 @@ short last_valid(short unr, char *brett)
 /* Forwardliste beruecksichtigt wird.                                        */
 
 typedef struct erafwdtype {
-  long		new_msgnum;
+  int32_t	new_msgnum;
   char		what;
   bidtype	bid;
   calltype	sfcall;
@@ -1837,7 +1837,7 @@ typedef struct erafwdtype {
 } erafwdtype;
 
 
-void alter_fwd(char what, char *bid, long new_msgnum, char *new_board, char *sfcall)
+void alter_fwd(char what, char *bid, int32_t new_msgnum, char *new_board, char *sfcall)
 {
   erafwdtype	elog;
   short		k;
@@ -1870,7 +1870,7 @@ void alter_fwd(char what, char *bid, long new_msgnum, char *new_board, char *sfc
   sfclose(&k);
 }
 
-static boolean in_alterfwd_list(char *epuffer, long esize, char *bid, char *fwdto, long *epos)
+static bool in_alterfwd_list(char *epuffer, int32_t esize, char *bid, char *fwdto, int32_t *epos)
 {
   erafwdtype	*elog;
 
@@ -1893,7 +1893,7 @@ static boolean in_alterfwd_list(char *epuffer, long esize, char *bid, char *fwdt
 }
 
 
-static void alter_fwdptr(char *epuffer, long esize, indexstruct *logptr, long epos)
+static void alter_fwdptr(char *epuffer, int32_t esize, indexstruct *logptr, int32_t epos)
 {
   erafwdtype	*elog;
   
@@ -1931,15 +1931,15 @@ static void alter_fwdptr(char *epuffer, long esize, indexstruct *logptr, long ep
 #define cpentries       150
 #define cpsize          (cpentries * sizeof(indexstruct))
 
-boolean recompile_fwd(void)
+bool recompile_fwd(void)
 {
-  long		err;
+  int32_t	err;
   short		log;
   indexstruct	*logptr;
-  long		lv, ct;
+  int32_t	lv, ct;
   indexstruct	logheader;
   char		*epuffer;
-  long		esize, retep;
+  int32_t	esize, retep;
   pathstr	efname;
 
   debug0(2, -1, 164);
@@ -2000,14 +2000,14 @@ boolean recompile_fwd(void)
 /* also erst bei CHECK wirklich in BOXLOG.DP uebernommen...                  */
 
 typedef struct eralogtype {
-  long			msgnum;
+  int32_t		msgnum;
   char			what;
   unsigned short	msgflags;
   char			info[21];
 } eralogtype;
 
 
-void alter_log(boolean onram, long msgnumber, unsigned short msgflags,
+void alter_log(bool onram, int32_t msgnumber, unsigned short msgflags,
 	       char what, char *info)
 {
   eralogtype	elog;
@@ -2036,7 +2036,7 @@ void alter_log(boolean onram, long msgnumber, unsigned short msgflags,
 }
 
 
-static boolean in_erase_list(char *epuffer, long esize, long msgnumber, short nr, long *epos)
+static bool in_erase_list(char *epuffer, int32_t esize, int32_t msgnumber, short nr, int32_t *epos)
 {
   eralogtype	*elog;
 
@@ -2054,10 +2054,10 @@ static boolean in_erase_list(char *epuffer, long esize, long msgnumber, short nr
 }
 
 
-static void alter_logptr(char *epuffer, long esize, boxlogstruct **logptr, long epos)
+static void alter_logptr(char *epuffer, int32_t esize, boxlogstruct **logptr, int32_t epos)
 {
   eralogtype	*elog;
-  long	      	mnum;
+  int32_t	mnum;
   char		w2[256];
 
   while (epos < esize) {
@@ -2112,14 +2112,14 @@ static void alter_logptr(char *epuffer, long esize, boxlogstruct **logptr, long 
 
 void recompile_log(short unr)
 {
-  long		cpstart, err, seekpos;
+  int32_t	cpstart, err, seekpos;
   short		log;
   boxlogstruct	*logptr;
-  long		lv, ct;
+  int32_t	lv, ct;
   boxlogstruct	logheader;
   char		*ipuffer, *epuffer;
-  long		esize, retep;
-  long		act;
+  int32_t	esize, retep;
+  int32_t	act;
 
   debug(2, unr, 21, boxlog);
 
@@ -2191,10 +2191,10 @@ void recompile_log(short unr)
 
 short check_held_messages(short unr, short display_if_less_than)
 {
-  long		cpstart, err, seekpos;
+  int32_t	cpstart, err, seekpos;
   short		log, held_messages, outhandle;
   boxlogstruct	*logptr;
-  long		lv, ct;
+  int32_t	lv, ct;
   boxlogstruct	logheader;
   char		*ipuffer;
   char	      	hs[256];
@@ -2297,7 +2297,7 @@ void show_hold(short unr, short disp_if_less)
 }
 
 
-short boxcheck(boolean all, char *callx)
+short boxcheck(bool all, char *callx)
 {
   /* all wird nicht benutzt */
   short		list, msgct, ct, lv;
@@ -2381,12 +2381,12 @@ void send_tcpip_protocol_frame(short unr)
 static unsigned short mfilter_sem;
 
 
-static short call_m_filter(char **puffer, long *size, long *lesezeiger,
+static short call_m_filter(char **puffer, int32_t *size, int32_t *lesezeiger,
   char *frombox, char *ziel, char *mbx, char *absender, char *lifetime,
-  char *bulletin_id, char *betreff, boolean *no_sf)
+  char *bulletin_id, char *betreff, bool *no_sf)
 {
   short		Result, handle, ergebnis;
-  long		rp;
+  int32_t	rp;
   pathstr	tempname, filtername;
   char		hs[256];
 
@@ -2478,19 +2478,19 @@ static short call_m_filter(char **puffer, long *size, long *lesezeiger,
 #define blocksize       16384
 
 static void new_entry(short unr, char *dname1_, char *status_, char *betreff1,
-		      char *bulletin_id, long size1, long lesezeiger,
-		      char *rcall_, char *frombox_, boolean forwarding,
-		      boolean sfcut, boolean authentisch, boolean broadcast)
+		      char *bulletin_id, int32_t size1, int32_t lesezeiger,
+		      char *rcall_, char *frombox_, bool forwarding,
+		      bool sfcut, bool authentisch, bool broadcast)
 {
   short		k, k1, k2, k4, nr, packresult, fidx, loopct, ergebnis;
   unsigned short acc, lth, ics;
-  boolean	fw1, looperr, server, dieboxsys, no_sf, is_7plus, is_binary;
-  boolean	ack_requested, compress, is_html, dirty, part, db, ok, usersf;
-  boolean	hmbxiscall, dirtys, ugzip, is_broken;
-  long		nsize, psize, bct, lastpos1, lastpos2, sv, hsize, rs, li;
-  long		chargedate, txdate1, lesezeiger1;
-  boolean	wpupdate, outdated, reject_it, hold_it, dbimport, dbimpfilter;
-  boolean     	wprotupdate, direct_sf;
+  bool		fw1, looperr, server, dieboxsys, no_sf, is_7plus, is_binary;
+  bool		ack_requested, compress, is_html, dirty, part, db, ok, usersf;
+  bool		hmbxiscall, dirtys, ugzip, is_broken;
+  int32_t	nsize, psize, bct, lastpos1, lastpos2, sv, hsize, rs, li;
+  time_t	chargedate, txdate1;
+  bool		wpupdate, outdated, reject_it, hold_it, dbimport, dbimpfilter;
+  bool     	wprotupdate, direct_sf;
   char		*nmem, *puffer;
   char 		TEMP, mtyp, mtyp7ext;
   indexstruct	header;
@@ -2536,7 +2536,6 @@ static void new_entry(short unr, char *dname1_, char *status_, char *betreff1,
   lastvias[0]	= '\0';
   dirtystring[0]= '\0';
   chargedate	= 0;
-  lesezeiger1	= lesezeiger;
   compress	= (size1 - lesezeiger >= PACKMIN && packdelay == 0);
 
   if (sfcut)
@@ -2863,7 +2862,7 @@ static void new_entry(short unr, char *dname1_, char *status_, char *betreff1,
 
       sprintf(info, "%s%s%c%s", infodir, ziel, extsep, EXT_INF);
       sprintf(index, "%s%s%c%s", indexdir, ziel, extsep, EXT_IDX);
-      if (sfsize(index) / sizeof(indexstruct) >= SHORT_MAX - 1) {
+      if (sfsize(index) / sizeof(indexstruct) >= SHRT_MAX - 1) {
 	sprintf(STR13, "board %s full. No more input possible.", ziel);
 	debug(0, unr, 26, STR13);
 	return;
@@ -3323,7 +3322,7 @@ static void new_entry(short unr, char *dname1_, char *status_, char *betreff1,
 #undef blocksize
 
 
-static void get_fbbdatime(char *zs, long *date)
+static void get_fbbdatime(char *zs, time_t *date)
 {
   char	    d, m, y, h, min, s;
   short     x;
@@ -3369,7 +3368,7 @@ static void transform_boxheader(cutboxtyp cuttyp, char *status, char *z1,
 {
   indexstruct	header;
   short		x;
-  boolean	nb;
+  bool		nb;
   char		brett[256], dw[256], z0[256], w[256];
 
   debug(3, 0, 27, status);
@@ -3547,12 +3546,12 @@ static void transform_boxheader(cutboxtyp cuttyp, char *status, char *z1,
 
 #define blocksize       16384
 
-static boolean sort_new_mail3(short unr, char *pattern_, char *rcall1_)
+static bool sort_new_mail3(short unr, char *pattern_, char *rcall1_)
 {
   short		result, k;
-  long		bct, lesezeiger, hlz, err, dsize;
-  boolean	Result, imperr, origin, sfcut, okb, oka, had_no_bid;
-  boolean	take_double, broadcast, authentisch, mycall_in_rlines;
+  int32_t	bct, lesezeiger, hlz, err, dsize;
+  bool		Result, imperr, origin, sfcut, okb, oka, had_no_bid;
+  bool		take_double, broadcast, authentisch, mycall_in_rlines;
   cutboxtyp	cuttyp;
   char		*puffer;
   pathstr	dname;
@@ -3660,16 +3659,16 @@ static boolean sort_new_mail3(short unr, char *pattern_, char *rcall1_)
 	cuttyp = boxheader(status);
 
 
-      if (((1L << ((long)cuttyp)) & ((1L << ((long)W0RLI_USER)) |
-	     (1L << ((long)AA4RE_USER)) | (1L << ((long)F6FBB_USER)) |
-	     (1L << ((long)F6FBB_USER_514)) | (1L << ((long)RAW_IMPORT)))) != 0) {
+      if (((1L << ((int32_t)cuttyp)) & ((1L << ((int32_t)W0RLI_USER)) |
+	     (1L << ((int32_t)AA4RE_USER)) | (1L << ((int32_t)F6FBB_USER)) |
+	     (1L << ((int32_t)F6FBB_USER_514)) | (1L << ((int32_t)RAW_IMPORT)))) != 0) {
 	hlz = lesezeiger;
 	get_line(puffer, &lesezeiger, bct, z1);
 	get_line(puffer, &lesezeiger, bct, z2);
 	get_line(puffer, &lesezeiger, bct, z3);
 	get_line(puffer, &lesezeiger, bct, z4);
-	if (((1L << ((long)cuttyp)) & ((1L << ((long)F6FBB_USER_514)) |
-				       (1L << ((long)RAW_IMPORT)))) != 0) {
+	if (((1L << ((int32_t)cuttyp)) & ((1L << ((int32_t)F6FBB_USER_514)) |
+				       (1L << ((int32_t)RAW_IMPORT)))) != 0) {
 	  get_line(puffer, &lesezeiger, bct, z5);
 	  get_line(puffer, &lesezeiger, bct, z6);
 	} else {
@@ -3703,9 +3702,9 @@ static boolean sort_new_mail3(short unr, char *pattern_, char *rcall1_)
       }
 
       if (!imperr) {
-	if (((1L << ((long)cuttyp)) &
-	     ((1L << ((long)THEBOX_USER)) | (1L << ((long)WAMPES_USER)) |
-	      (1L << ((long)W0RLI_SF)) | (1L << ((long)NOP)))) != 0 ||
+	if (((1L << ((int32_t)cuttyp)) &
+	     ((1L << ((int32_t)THEBOX_USER)) | (1L << ((int32_t)WAMPES_USER)) |
+	      (1L << ((int32_t)W0RLI_SF)) | (1L << ((int32_t)NOP)))) != 0 ||
 	    origin || sfcut) {
 	  if (cuttyp == W0RLI_SF)
 	    get_word(status, zeile);
@@ -3861,7 +3860,7 @@ static boolean sort_new_mail3(short unr, char *pattern_, char *rcall1_)
 
 void sort_new_mail4(void)
 {
-  long		ticks;
+  int32_t	ticks;
   newmailtype	*hp;
 
   ticks		= get_cpuusage();
