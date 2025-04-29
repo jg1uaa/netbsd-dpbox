@@ -48,14 +48,14 @@ typedef struct iface_data {
   int linked;
   int from_box;
   char dest_call[10];
-  boolean boxsf;
+  bool boxsf;
   char buffer[256];
   int buflen;
   time_t bufupdate;
   char rxbuffer[256];
   int rxbuflen;
   int snd_frms;
-  boolean huffcod;
+  bool huffcod;
   char abin_filename[256];
   int fd;
   unsigned short crc;
