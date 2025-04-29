@@ -1220,6 +1220,13 @@ bool check_other_callsyntax(char *syntax)
   return true;
 }
 
+bool compare(char *w, char *cmd)
+{
+  if (w != NULL && *w)
+    return strstr(cmd, w) == cmd;
+
+  return false;
+}
 
 static short iscalpha(char c)
 {
