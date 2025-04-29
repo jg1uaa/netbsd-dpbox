@@ -53,14 +53,14 @@ static void disp_sh(short unr)
 #define blocksize       4096
 
 
-boolean send_file1(short unr, short *kanal, boolean in_send, short force_bin)
+bool send_file1(short unr, short *kanal, bool in_send, short force_bin)
 /* force_bin == 1 -> keep as ascii text, force_bin == 2 -> keep as BIN, force_bin == 0 -> check type */
 {
-  boolean Result;
-  long size, hsize, ct, ctold;
+  bool Result;
+  int32_t size, hsize, ct, ctold;
   char *puffer;
-  long psize;
-  boolean is_bin, werror;
+  int32_t psize;
+  bool is_bin, werror;
   short x;
   unsigned short crc, date, time;
   char hs[256];
@@ -131,7 +131,7 @@ boolean send_file1(short unr, short *kanal, boolean in_send, short force_bin)
       int2hstr(time, STR1);
       while (strlen(STR1) < 4)
         sprintf(STR1, "0%s", strcpy(hs, STR1));
-      sprintf(hs, "#BIN#%ld#|%d#$%s%s#%s",
+      sprintf(hs, "#BIN#%d#|%d#$%s%s#%s",
 	      size, crc, w, STR1, user[unr]->tempbinname);
       str2file(&user[unr]->sendchan, hs, true);
       if (in_send)
@@ -235,7 +235,7 @@ static short line_7p(char * p)
 {
 /* Calculate CRC */
   unsigned short csequence;
-  unsigned long cs;
+  uint32_t cs;
   short i;
   unsigned short crc;
   short slen=strlen(p);
@@ -269,11 +269,11 @@ static short line_7p(char * p)
 /*---------------------------------------------------------------------------*/
 
 
-void send_text3(short unr, boolean first, char *eingabe_, boolean return_)
+void send_text3(short unr, bool first, char *eingabe_, bool return_)
 {
   char eingabe[256];
   short x;
-  boolean invalid, endflag, delmsg, exitflag;
+  bool invalid, endflag, delmsg, exitflag;
   short snmunr;
   char hs[256];
   userstruct *WITH;
@@ -431,7 +431,7 @@ void send_text3(short unr, boolean first, char *eingabe_, boolean return_)
 static void open_sendfile(short unr)
 {
   short k, handle;
-  boolean ackmsg, had_no_bid, reject_it, hold_it;
+  bool ackmsg, had_no_bid, reject_it, hold_it;
   char mtyp;
   short sps;
   userstruct uf;
@@ -638,7 +638,7 @@ static void open_sendfile(short unr)
 	if (!WITH->is_authentic) {
 	  if (holddelay > 0) {
 	    w_btext(unr, 109);
-	    sprintf(w, " %ld", holddelay / 3600);
+	    sprintf(w, " %"PRId64, (int64_t)holddelay / 3600);
 	    wlnuser(unr, w);
 	  }
 	}
@@ -744,7 +744,7 @@ void enter_lifetime(short unr, char *eingabe)
 }
 
 
-void box_txt2(boolean first, short unr, char *betreff1_)
+void box_txt2(bool first, short unr, char *betreff1_)
 {
   char		betreff1[256];
   short		k, handle;
@@ -900,7 +900,7 @@ static void check_acc(short unr, char *b, unsigned short *ac)
 }
 
 
-static boolean testtosys(char *call)
+static bool testtosys(char *call)
 {
   userstruct	rec;
 
@@ -913,10 +913,10 @@ static boolean testtosys(char *call)
 }
 
 
-void send_check(short unr, char *eingabe, boolean is_user, char msgtype)
+void send_check(short unr, char *eingabe, bool is_user, char msgtype)
 {
   unsigned short	acc;
-  boolean		c1isc, errok, ok, db, hadnolt;
+  bool			c1isc, errok, ok, db, hadnolt;
   char			hs[256], hs2[256];
   boardtype		brett1, call1;
   calltype		call2;
@@ -1023,7 +1023,7 @@ void send_check(short unr, char *eingabe, boolean is_user, char msgtype)
 	  }
 	}
       } else
-	acc		= SHORT_MAX;
+	acc		= SHRT_MAX;
       if (WITH->level < acc) {
 	wln_btext(unr, 7);
 	errok		= true;   /* 'Fehlermeldung bereits ausgegeben' */
@@ -1105,10 +1105,10 @@ void send_check(short unr, char *eingabe, boolean is_user, char msgtype)
 }
 
 
-void send_file0(short unr, boolean in_send, char *fname)
+void send_file0(short unr, bool in_send, char *fname)
 {
   short kanal;
-  boolean ok;
+  bool ok;
   char pfad[256], name[256];
 
   if (!boxrange(unr))
