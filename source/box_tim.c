@@ -43,7 +43,7 @@
 void end_boxconnect(short unr)
 {
   short s, e;
-  boolean bbs;
+  bool bbs;
 
   if (!boxrange(unr))
     return;
@@ -143,9 +143,9 @@ void stop_tell(short unr)
 }
 
 
-boolean tell_processing(char *tellfile)
+bool tell_processing(char *tellfile)
 {
-  boolean Result;
+  bool Result;
   short unr, tf, x;
   char telluser[256];
   char request[256];
@@ -200,7 +200,7 @@ void tell_check(void)
 {
   short result;
   DTA dirinfo;
-  boolean okproc;
+  bool okproc;
   char STR1[256];
 
   okproc = true;
@@ -218,7 +218,7 @@ void tell_check(void)
 }
 
 
-void do_quit(short unr, boolean abort, boolean verbose)
+void do_quit(short unr, bool abort, bool verbose)
 {
   char STR1[256];
 
@@ -294,18 +294,18 @@ void timeout_check(short unr)
 static void show_mailbeacon2(char *ofiname)
 {
   short tnc, x;
-  long rp;
+  int32_t rp;
   char *btbuff;
-  long btsize;
+  int32_t btsize;
 
-  boolean found;
+  bool found;
 
   short chan, plen;
   char hs[256], w[256], hs2[256];
   char statustext[256];
   char mailtext[256];
   char adress[256];
-  long rpx;
+  int32_t rpx;
   short iface;
   char qrg[256];
 
@@ -409,7 +409,7 @@ static void show_mailbeacon2(char *ofiname)
 void show_mailbeacon(void)
 {
   short x, ofi, result;
-  boolean noch;
+  bool noch;
   userstruct uf;
   char ofiname[256];
   char ofiname2[256];
@@ -507,7 +507,7 @@ void start_mailbeacon_manually(short unr)
     return;
   }
   sec = clock_.ixtime - laststartbalise;
-  sprintf(hs, "mail beacon generation in process since %ld seconds", sec);
+  sprintf(hs, "mail beacon generation in process since %"PRId64" seconds", (int64_t)sec);
   wlnuser(unr, hs);
 }
 
@@ -586,13 +586,13 @@ void start_crawl(short unr, char *par)
   wlnuser(unr, "OK, will start crawling");
 }
 
-static boolean immediate_zombiecheck;
+static bool immediate_zombiecheck;
 
 #define maxrunargs 50
 static void process_crawl(void)
 {
   boxlogstruct logheader;
-  long last, seek;
+  int32_t last, seek;
   int status;
   short handle;
   char vname[256];
@@ -698,7 +698,7 @@ static void process_crawl(void)
     for (ct = 0; ct < maxrunargs; ct++)
       args[ct] = NULL;
    
-    sprintf(hs, "%ld", header.msgnum);
+    sprintf(hs, "%d", header.msgnum);
     strcpy(command, crawl_args);
     
     args[0] = crawlname;
@@ -817,7 +817,7 @@ void kill_zombies(void)
   zombietype	*zz, *hz, *hz1;
   char	      	*p;
   pathstr      	hs;
-  long		ret;
+  int32_t	ret;
   int		status;
   char	      	crcs[40];
 
@@ -837,7 +837,7 @@ void kill_zombies(void)
       	      	  if (p != NULL) {
 		    *p = '\0';
 		    p++;
-      	      	    snprintf(crcs, 39, "CRC:%d %ld", file_crc(0, zz->killfile, 0xFFFF, 0, 0), sfsize(zz->killfile));
+      	      	    snprintf(crcs, 39, "CRC:%d %d", file_crc(0, zz->killfile, 0xFFFF, 0, 0), sfsize(zz->killfile));
 		    if (strcmp(p, crcs)) p = NULL; /* == CRC is changed, file is edited */
 		  }
 		  if (p == NULL) { /* == CRC is changed, or no CRC was available -> import reply */
@@ -987,7 +987,7 @@ void print_dpboxusage(short unr, dpuaproc outputproc)
 
 void get_dpboxusage(short *u1, short *u5, short *u15)
 {
-  long		m1, m5, m15, last;
+  int32_t	m1, m5, m15, last;
 
   if (dpboxcpufilled == false) {
     *u1		= 100;
@@ -1005,7 +1005,7 @@ void get_dpboxusage(short *u1, short *u5, short *u15)
   *u1		= calc_prozent((last - m1) / TICKSPERSEC, 1*60);
 }
 
-void block_mailbox(boolean block, char *reason)
+void block_mailbox(bool block, char *reason)
 {
   if (block) {
     append_profile(-1, "DPBOX blocked");
@@ -1022,9 +1022,9 @@ void block_mailbox(boolean block, char *reason)
   }
 }
 
-static boolean test_correct_clock(void)
+static bool test_correct_clock(void)
 {
-  static boolean blocked = false;
+  static bool blocked = false;
   
   if (clock_.year4 >= 2000) {
     if (blocked) { /* if date was wrong before... */
@@ -1048,13 +1048,13 @@ static boolean test_correct_clock(void)
 void box_timing2(time_t tct)
 {
   static short		lastbatchhour	= -1;
-  static long	 	ltc1		= 0;
-  static long		ltc2		= 0;
-  static long		ltc3		= 0;
-  static long		ltc4		= 0;
-  static long		ltc5		= 0;
-  static long		ltc6		= 0;
-  static boolean	startup		= true;
+  static int32_t	ltc1		= 0;
+  static int32_t	ltc2		= 0;
+  static int32_t	ltc3		= 0;
+  static int32_t	ltc4		= 0;
+  static int32_t	ltc5		= 0;
+  static int32_t	ltc6		= 0;
+  static bool		startup		= true;
 
   short			unr, x;
   pid_t			ret;

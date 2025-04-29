@@ -7,12 +7,12 @@
 
 typedef void (*dpuaproc)(const short unr, const char *s);
 
-extern void do_quit(short unr, boolean abort, boolean verbose);
+extern void do_quit(short unr, bool abort, bool verbose);
 extern void end_boxconnect(short unr);
 extern void spoolendcheck(short unr);
 extern void tell_command(char *call, char *bid, char *frage);
 extern void stop_tell(short unr);
-extern boolean tell_processing(char *tellfile);
+extern bool tell_processing(char *tellfile);
 extern void tell_check(void);
 extern void timeout_check(short unr);
 extern void show_mailbeacon(void);
@@ -25,7 +25,7 @@ extern void start_crawl(short unr, char *par);
 extern void query_crawl(short unr, char *query);
 extern void get_dpboxusage(short *u1, short *u5, short *u15);
 extern void print_dpboxusage(short unr, dpuaproc outputproc);
-extern void block_mailbox(boolean block, char *reason);
+extern void block_mailbox(bool block, char *reason);
 
 #endif /*BOX_TIM_H*/
 
