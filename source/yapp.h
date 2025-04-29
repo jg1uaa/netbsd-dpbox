@@ -6,21 +6,21 @@
 
 typedef void (*yappchouttype)(const short unr, const char b);
 typedef void (*yapplineouttype)(const short unr, const char *s);
-typedef void (*yappbuffouttype)(short unr, char *base, long size);
+typedef void (*yappbuffouttype)(short unr, char *base, int32_t size);
 
 typedef struct yapptype {
   short			state, filefd, yappc;
-  long			total, filelength;
+  int32_t		total, filelength;
   time_t		touch;
-  boolean		delete_, write_;
-  long			maxfill, seekpos;
+  bool			delete_, write_;
+  int32_t		maxfill, seekpos;
   short			unr;
   yappchouttype		chout;
   yapplineouttype	lineout;
   yappbuffouttype	buffout;
   yapplineouttype	statout;
 
-  long			outlen, outbufptr, buflen;
+  int32_t		outlen, outbufptr, buflen;
   char			outbuffer[512];
   char			buffer[1024];
   unsigned short	fdate, ftime;
@@ -28,10 +28,10 @@ typedef struct yapptype {
   char			yappdir[256];
 } yapptype;
 
-extern boolean yapp_upload(boolean init, boolean abort, yapptype *yapp,
-			   char *buffp, long blen);
-extern boolean yapp_download(boolean init, boolean abort, yapptype *yapp,
-			     char *buffp, long blen);
+extern bool yapp_upload(bool init, bool abort, yapptype *yapp,
+			   char *buffp, int32_t blen);
+extern bool yapp_download(bool init, bool abort, yapptype *yapp,
+			     char *buffp, int32_t blen);
 
 
 #endif /*YAPP_H*/

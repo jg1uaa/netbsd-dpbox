@@ -100,12 +100,12 @@ static void Send_NR(yapptype *yapp, char *reason)
 
 /* Send a Resume Sequence */
 
-static void Send_RS(yapptype *yapp, long laenge)
+static void Send_RS(yapptype *yapp, int32_t laenge)
 {
   char buff[20];
 
   yapp->chout(yapp->unr, NAK);
-  sprintf(buff, "%ld", laenge);
+  sprintf(buff, "%d", laenge);
   yapp->chout(yapp->unr, strlen(buff) + 5);
   yapp->chout(yapp->unr, 'R');
   yapp->chout(yapp->unr, 0);
@@ -131,14 +131,14 @@ static void Send_CN(yapptype *yapp, char *reason)
 }
 
 
-static void Send_HD(yapptype *yapp, char *filename, long laenge)
+static void Send_HD(yapptype *yapp, char *filename, int32_t laenge)
 {
   unsigned short date, time;
   short len;
   char hs[20], w[256];
   char STR1[256];
 
-  sprintf(hs, "%ld", laenge);
+  sprintf(hs, "%d", laenge);
   yapp->chout(yapp->unr, SOH);
   sfgetdatime(filename, &date, &time);
   strcpy(w, filename);
@@ -202,14 +202,14 @@ static char checksum_(char *buf, short len)
 }
 
 
-static boolean yapp_download_data(yapptype *yapp)
+static bool yapp_download_data(yapptype *yapp)
 {
-  boolean Result;
+  bool Result;
   char c;
   char *hptr;
-  long i, x;
+  int32_t i, x;
   char checksum;
-  long seekh, len;
+  int32_t seekh, len;
   char hfield[3][256];
   char hs[256];
   char STR1[256];
@@ -376,12 +376,12 @@ static boolean yapp_download_data(yapptype *yapp)
 }
 
 
-boolean yapp_download(boolean init, boolean abort, yapptype *yapp,
-		      char *buffp, long blen)
+bool yapp_download(bool init, bool abort, yapptype *yapp,
+		      char *buffp, int32_t blen)
 {
-  boolean Result;
-  long len, bminus;
-  boolean used;
+  bool Result;
+  int32_t len, bminus;
+  bool used;
 
   Result = false;
   if (yapp == NULL)
@@ -447,10 +447,10 @@ boolean yapp_download(boolean init, boolean abort, yapptype *yapp,
 }
 
 
-static boolean yapp_upload_data(yapptype *yapp)
+static bool yapp_upload_data(yapptype *yapp)
 {
-  boolean Result;
-  long len, x;
+  bool Result;
+  int32_t len, x;
   char w[256];
 
   Result = false;
@@ -588,12 +588,12 @@ static boolean yapp_upload_data(yapptype *yapp)
 }
 
 
-boolean yapp_upload(boolean init, boolean abort, yapptype *yapp, char *buffp,
-		    long blen)
+bool yapp_upload(bool init, bool abort, yapptype *yapp, char *buffp,
+		    int32_t blen)
 {
-  boolean Result;
-  long bminus, len, fill;
-  boolean used;
+  bool Result;
+  int32_t bminus, len, fill;
+  bool used;
 
   Result = false;
   if (yapp == NULL)
