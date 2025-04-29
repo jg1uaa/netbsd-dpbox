@@ -138,11 +138,11 @@
 
 /* consts for packed forward (special flags for blockcount) */
 
-#define BCMAGIC1        (SHORT_MAX - 0)
-#define BCMAGIC2        (SHORT_MAX - 1)
-#define BCMAGIC3        (SHORT_MAX - 2)
-#define BCMAGIC4        (SHORT_MAX - 3)
-#define BCMAGIC5        (SHORT_MAX - 4)
+#define BCMAGIC1        (SHRT_MAX - 0)
+#define BCMAGIC2        (SHRT_MAX - 1)
+#define BCMAGIC3        (SHRT_MAX - 2)
+#define BCMAGIC4        (SHRT_MAX - 3)
+#define BCMAGIC5        (SHRT_MAX - 4)
 
 /* error codes	*/
 
@@ -225,12 +225,12 @@ typedef struct indexstruct {
   unsigned short	txlifetime;
   char			msgtype;
   char			firstbyte;
-  long			start;
-  long			packsize;
-  long			size;
-  long			rxqrg;
+  int32_t		start;
+  int32_t		packsize;
+  int32_t		size;
+  int32_t		rxqrg;
   calltype		rxfrom;
-  boolean		deleted;
+  bool			deleted;
   char			pmode;
   char			level;
   char			fwdct;
@@ -242,20 +242,20 @@ typedef struct indexstruct {
   char			eraseby;
   calltype		sendbbs;
   char			reserved;
-  long			msgnum;
+  int32_t		msgnum;
   unsigned short	bcastchecksum;
   unsigned short	infochecksum;
   unsigned short	headerchecksum;
 } indexstruct;
 
 typedef struct boxlogstruct {
-  long			msgnum;
+  int32_t		msgnum;
   time_t		date;
   unsigned short	idxnr;
   unsigned short	lifetime;
   unsigned short	msgflags;
-  long			size;
-  boolean		deleted;
+  int32_t		size;
+  bool			deleted;
   char			msgtype;
   char			pmode;
   char			level;
@@ -292,9 +292,9 @@ typedef struct hboxtyp {
   time_t      	      	last_connecttry;
   time_t      	      	last_connectsuccess;
   time_t      	      	last_incoming_connect;
-  unsigned long       	incoming_connects;
-  unsigned long       	sent_direct;
-  unsigned long       	received_direct;
+  uint32_t       	incoming_connects;
+  uint32_t       	sent_direct;
+  uint32_t       	received_direct;
 
   /* wprot */
 
@@ -308,12 +308,12 @@ typedef struct hboxtyp {
   time_t      	      	wprot_routing_update;
   time_t      	      	last_direct_routing_update;
   calltype    	      	routing_neighbour;
-  unsigned long       	routing_quality;
+  uint32_t       	routing_quality;
   short      	      	routing_hops;
   /* second set of routing parms (those ones actually used) */
   time_t      	      	cur_wprot_routing_update;
   calltype    	      	cur_routing_neighbour;
-  unsigned long       	cur_routing_quality;
+  uint32_t       	cur_routing_quality;
   short       	      	cur_routing_hops;
 
   /* autorouting all by R: lines */
@@ -321,10 +321,10 @@ typedef struct hboxtyp {
   calltype		bestfrom_bp;
   calltype		rxfrom_bp;
   time_t		lasttx_bp;
-  unsigned long		msgct_bp;
-  unsigned long		best_bp;
-  unsigned long		aver_bp;
-  unsigned long		bytect_bp;
+  uint32_t		msgct_bp;
+  uint32_t		best_bp;
+  uint32_t		aver_bp;
+  uint32_t		bytect_bp;
   time_t		at_bp;
 
   /* autorouting private by R: lines */
@@ -332,10 +332,10 @@ typedef struct hboxtyp {
   calltype    	      	bestfrom_p;
   calltype    	      	rxfrom_p;
   time_t      	      	lasttx_p;
-  unsigned long	       	msgct_p;
-  unsigned long	      	best_p;
-  unsigned long	      	aver_p;
-  unsigned long	      	bytect_p;
+  uint32_t	       	msgct_p;
+  uint32_t	      	best_p;
+  uint32_t	      	aver_p;
+  uint32_t	      	bytect_p;
   time_t      	      	at_p;
 } hboxtyp;
 
@@ -348,10 +348,10 @@ typedef struct hboxtyp_old {
   calltype		rxfrom;
   char			desc[41];
   time_t		lasttx;
-  long			msgct;
-  long			best;
-  long			aver;
-  long			bytect;
+  int32_t		msgct;
+  int32_t		best;
+  int32_t		aver;
+  int32_t		bytect;
   time_t		at;
 } hboxtyp_old;
 
@@ -360,7 +360,7 @@ typedef struct resumemem {
   bidtype		rbid;
   calltype		rcall;
   char			rfname[13];
-  long			rsize;
+  int32_t		rsize;
   time_t		rdate;
 } resumemem;
 
@@ -399,19 +399,19 @@ typedef enum {
 
 typedef struct bintype {
   short			filefd;
-  boolean		write_;
-  boolean		delete_;
-  boolean		ascii;
-  long			maxfill;
-  long			posi;
-  long			total;
+  bool			write_;
+  bool			delete_;
+  bool			ascii;
+  int32_t		maxfill;
+  int32_t		posi;
+  int32_t		total;
   time_t		touch;
   pathstr		fname;
 } bintype;
 
 typedef struct local_msgnumarrtype {
-  long			msgnum;
-  long			cpos;
+  int32_t		msgnum;
+  int32_t		cpos;
 } local_msgnumarrtype;
 
 typedef local_msgnumarrtype	msgnumarrtype[MAXMSGNUMARR + 1];
@@ -436,13 +436,13 @@ typedef struct rejecttype {
   boardtype		tob;
   mbxtype		mbx;
   bidtype		bid;
-  long			maxsize;
-  boolean		msgtypeneg;
-  boolean		fromneg;
-  boolean		tobneg;
-  boolean		mbxneg;
-  boolean		bidneg;
-  boolean		maxsizeneg;
+  int32_t		maxsize;
+  bool			msgtypeneg;
+  bool			fromneg;
+  bool			tobneg;
+  bool			mbxneg;
+  bool			bidneg;
+  bool			maxsizeneg;
 } rejecttype;
 
 typedef struct sffortype {
@@ -476,18 +476,18 @@ typedef struct routingtype {
   time_t      	      	lastspeed;
   time_t      	      	lasttry;
   time_t      	      	lastconnecttry;
-  unsigned long       	tempspeeds;
-  unsigned long         tempsizes;
-  unsigned long      	speeds[LINKSPEEDS];
-  unsigned long      	sizes[LINKSPEEDS];
+  uint32_t       	tempspeeds;
+  uint32_t		tempsizes;
+  uint32_t      	speeds[LINKSPEEDS];
+  uint32_t      	sizes[LINKSPEEDS];
   short       	      	speedsrow;
   unsigned short      	last_measured;
-  boolean     	      	small_blocks;
-  boolean     	      	file_forward;
-  boolean     	      	send_phantom;
-  boolean     	      	sends_route_bc;
-  boolean     	      	full_partner;
-  boolean     	      	routing_guest;
+  bool	     	      	small_blocks;
+  bool	     	      	file_forward;
+  bool	     	      	send_phantom;
+  bool	     	      	sends_route_bc;
+  bool	     	      	full_partner;
+  bool	     	      	routing_guest;
 } routingtype;
 
 typedef enum {
@@ -500,25 +500,25 @@ typedef enum {
 typedef struct sfdeftype {
   struct sfdeftype	*next;
   calltype		call;
-  boolean		in_routing;
-  boolean		no_sfpropdelay;
-  boolean		no_bullbin;
-  boolean		no_bull7plus;
-  boolean     	      	usersf;
-  boolean     	        routing_guest;
-  boolean     	      	send_em;
+  bool			in_routing;
+  bool			no_sfpropdelay;
+  bool			no_bullbin;
+  bool			no_bull7plus;
+  bool	     	      	usersf;
+  bool	     	        routing_guest;
+  bool	     	      	send_em;
   em_type       	em; /* EM_UNKNOWN, EM_EM, EM_WP, EM_WPROT */
   time_t		lasttry;
   time_t		timeout;
   unsigned short	tnc;
   unsigned short	bedingung;
-  long			intervall;
-  long			pollifnone;
-  long			maxbytes_b;
-  long			maxbytes_u;
-  long			maxbytes_p;
-  long			startutc;
-  long			endutc;
+  int32_t		intervall;
+  int32_t		pollifnone;
+  int32_t		maxbytes_b;
+  int32_t		maxbytes_u;
+  int32_t		maxbytes_p;
+  int32_t		startutc;
+  int32_t		endutc;
   sffortype		*forp;
   sffortype		*notforp;
   sfrubtype		*rubrikp;
@@ -552,7 +552,7 @@ typedef struct bcommandtype {
   struct bcommandtype	*next;
   char			command[LEN_BOXCOMMAND+1];
   short			cnr;
-  boolean		sysop;
+  bool			sysop;
   short			ulev;
 } bcommandtype;
 
@@ -574,16 +574,16 @@ typedef struct blogmem {
   struct blogmem	*vor;
   struct blogmem	*nach;
   time_t		date;
-  long			logidxct;
+  int32_t		logidxct;
 } blogmem;
 
 typedef char firstsixtype[6];
 
 typedef struct binsftyp {
-  long			blockcounter;
-  long			rxbytes;
-  long			offset;
-  long			validbytes;
+  int32_t		blockcounter;
+  int32_t		rxbytes;
+  int32_t		offset;
+  int32_t		validbytes;
   short			wchan;
   short			fbbtitlelen;
   subjecttype		fbbtitle;
@@ -602,15 +602,15 @@ typedef struct fbbproptype {
   char			rname[13];
   unsigned short	nr;
   unsigned short	x_nr;
-  boolean		pack;
+  bool			pack;
   unsigned short	crc;
-  boolean		unpacked;
+  bool			unpacked;
   char			mtype;
 } fbbproptype;
 
 typedef fbbproptype	fbbproparrtype[MAXFBBPROPS];
 typedef char		fbb_montype[12][4];
-typedef boolean		bidchecktype[MAXFBBPROPS];
+typedef bool		bidchecktype[MAXFBBPROPS];
 typedef char		bidarrtype[MAXFBBPROPS][LEN_BID+1];
 
 typedef struct newmailtype {
@@ -622,8 +622,8 @@ typedef struct newmailtype {
 
 typedef struct boxintype {
   struct boxintype	*next;
-  boolean		return_;
-  boolean		in_begruessung;
+  bool			return_;
+  bool			in_begruessung;
   char			line[MAXBOXINPLINE];
 } boxintype;
 
@@ -641,9 +641,9 @@ typedef struct tracetype {
 
 typedef struct unprotoportstype {
   struct unprotoportstype *next;
-  boolean		RequestActive;
-  boolean		ReqDPBOX;
-  long			CurrentSendPos;
+  bool			RequestActive;
+  bool			ReqDPBOX;
+  int32_t		CurrentSendPos;
   time_t		LastReqTime;
   time_t		LastTxTime;
   char			port[LEN_TNTPORT+1];
@@ -653,13 +653,13 @@ typedef struct unprotoportstype {
 
 typedef struct unprotodeftype {
   unprotoportstype	*ports;
-  long			maxback;
+  int32_t		maxback;
   time_t		PollInterval;
   time_t		TxInterval;
-  boolean		fbb;
-  boolean		dpbox;
-  boolean		priv;
-  boolean		sys;
+  bool			fbb;
+  bool			dpbox;
+  bool			priv;
+  bool			sys;
 } unprotodeftype;
 
 typedef struct zombietype {
@@ -673,10 +673,10 @@ typedef struct indexcachetype {
   struct indexcachetype	*next;
   struct indexcachetype	*prev;
   char			*start;
-  long			size;
-  long			CurBufOffs;
+  int32_t		size;
+  int32_t		CurBufOffs;
   short			handle;
-  boolean		vorwaerts;
+  bool			vorwaerts;
 } indexcachetype;
 
 typedef struct mulsearchtype {
@@ -700,7 +700,7 @@ typedef struct clocktype {
   time_t		korrektur;	/* diff between system clock and utc (0 with linux) */
   time_t		daystart;     	/* ixtime of current day 00:00:00     	      	    */
   short			weekday;	/* 1..7 -> Monday..Sunday	      	      	    */
-  long	      	      	ticks;	      	/* 200 Hz counter     	      	      	      	    */
+  int32_t      	      	ticks;	      	/* 200 Hz counter     	      	      	      	    */
   char			zeit[9];      	/* 23:59:59   	      	      	      	      	    */
   char			datum[9];     	/* 17.01.99   	      	      	      	      	    */
   char			datum4[11];   	/* 17.01.1999 	      	      	      	      	    */
@@ -708,14 +708,14 @@ typedef struct clocktype {
 
 typedef struct lmtype { 
   char			*p;
-  long			s;
+  int32_t		s;
 } lmtype;
 
 typedef struct languagetyp {
   struct languagetyp	*next;
   char			sprache[9];
   char			*puffer;
-  long			psize;
+  int32_t		psize;
   lmtype		lct[MAXLANGUAGELINEDEFS];
 } languagetyp;
 
@@ -743,7 +743,7 @@ typedef struct userstruct {
   boardtype		brett;
   boardtype		reply_brett;
   short			reply_nr;
-  boolean		in_reply;
+  bool			in_reply;
   pathstr		tempbinname;
   char			password[81];
   char			input[256];
@@ -754,7 +754,7 @@ typedef struct userstruct {
   calltype		lastsfcall;	/* w0rli sf, send only one mail of this sender at time	*/
   char			promptmacro[256];
   char			logincommands[256];
-  boolean		wantboards;
+  bool			wantboards;
   char			checkboards[LEN_CHECKBOARDS+1];
   char			tracefract[256];
   char			lastroption[256];
@@ -766,116 +766,116 @@ typedef struct userstruct {
   time_t		lastatime;
   short			sfmd2pw;	/* using MD2/MD5 authentication for SF ?		*/
   short			magic2;
-  boolean		login_priv;
+  bool			login_priv;
   short			force_priv;
-  boolean		se_ok;
-  boolean		hidden;
-  boolean		console;
-  boolean		supervisor;
-  boolean		rsysop;
-  boolean		ttl;
-  boolean		undef;
+  bool			se_ok;
+  bool			hidden;
+  bool			console;
+  bool			supervisor;
+  bool			rsysop;
+  bool			ttl;
+  bool			undef;
   time_t		processtime;
-  long			rbytes;
-  long			sbytes;
+  int32_t		rbytes;
+  int32_t		sbytes;
   short			pchan;
   unsigned short	pwmode;
   short			fwdmode;	/* 0..5 */
   indexstruct		*sendheader;
-  boolean		lt_required;
+  bool			lt_required;
   short			tcon;
   short			action;
   short			sendchan;
   short			tell;
   short			sf_level;
   sfdeftype		*sf_ptr;
-  boolean     	      	needs_new_sf_ptr; /* this is only needed for a reload while a running connection, */
+  bool	     	      	needs_new_sf_ptr; /* this is only needed for a reload while a running connection, */
       	      	      	      	      	  /* see reassign_sfinfos_in_userstruct in box_sf.c   	      	  */
-  boolean		f_bbs;
-  boolean		sf_master;
-  boolean		sf_to;
+  bool			f_bbs;
+  bool			sf_master;
+  bool			sf_to;
   short			errors;
   short     	      	sp_input;     	/* for error check on 7plus user send 	      	*/
-  boolean		laterflag;
+  bool			laterflag;
   binsftyp		*binsfptr;
-  boolean		print;
-  boolean		lock_here;
-  boolean		isfirstchar;	/* was there a RETURN before this line ?	*/
+  bool			print;
+  bool			lock_here;
+  bool			isfirstchar;	/* was there a RETURN before this line ?	*/
   unsigned short	umode;
   char			mybbsmode;	/* guessed MyBBS ?				*/
   time_t		mybbsupd;	/* timestamp for MyBBS				*/
   time_t		lastcmdtime;	/* timestamp last input				*/
   time_t		pwsetat;	/* timestamp password activation		*/
   unsigned short	emblockct;	/* for E/M blocks in THEBOX format		*/
-  boolean		no_binpack;
+  bool			no_binpack;
   short			M_pos;		/* index position of userfile in M.IDX		*/
-  boolean		fulltrace;
+  bool			fulltrace;
   short			trace_to;
-  long			convchan;
+  int32_t		convchan;
   short			talk_to;
-  boolean		is_authentic;
-  boolean		newmsg;
+  bool			is_authentic;
+  bool			newmsg;
   unsigned short	msgselection;
-  boolean		in_begruessung;
-  boolean		fbbmode;
-  boolean		unproto_ok;
-  boolean		hidebeacon;
+  bool			in_begruessung;
+  bool			fbbmode;
+  bool			unproto_ok;
+  bool			hidebeacon;
   short			readlock;
   short			paging;		/* paging n lines				*/
   short			pagcount;	/* counter for current line			*/
-  long			fstat_rx_p, fstat_rx_b, fstat_rx_s;
-  long			fstat_tx_p, fstat_tx_b, fstat_tx_s;
+  int32_t		fstat_rx_p, fstat_rx_b, fstat_rx_s;
+  int32_t		fstat_tx_p, fstat_tx_b, fstat_tx_s;
   unsigned short	logins;
-  long			sfstat_rx_p, sfstat_rx_b, sfstat_rx_s;
-  long			sfstat_tx_p, sfstat_tx_b, sfstat_tx_s;
-  long			srbytes, ssbytes, ssrbytes, sssbytes;
+  int32_t		sfstat_rx_p, sfstat_rx_b, sfstat_rx_s;
+  int32_t		sfstat_tx_p, sfstat_tx_b, sfstat_tx_s;
+  int32_t		srbytes, ssbytes, ssrbytes, sssbytes;
   unsigned short	sslogins;
   short			ssf_level;
-  long			dstat_rx_p, dstat_rx_b, dstat_rx_s, dstat_rx_bytes;
-  long			dstat_tx_p, dstat_tx_b, dstat_tx_s, dstat_tx_bytes;
+  int32_t		dstat_rx_p, dstat_rx_b, dstat_rx_s, dstat_rx_bytes;
+  int32_t		dstat_tx_p, dstat_tx_b, dstat_tx_s, dstat_tx_bytes;
   unsigned short	dlogins;
-  long			maxread_day;
-  long			read_today;
+  int32_t		maxread_day;
+  int32_t		read_today;
   short			fileout_handle;
   char			*fileout_name;
   boxintype		*inputroot;	/* pseudo multitasking administration	*/
-  long			cputime;	/*   "                                  */
-  long			lastprocnumber;	/*   "                                  */
-  long			lastprocnumber2; /*  "                                  */
-  long			lastprocnumber3; /*  "                                  */
-  long			lastprocnumber4; /*  "                                  */
-  long			lastprocnumber5; /*  "                                  */
-  long			lastprocnumber6; /*  "                                  */
-  long			lastprocnumber7; /*  "                                  */
+  int32_t		cputime;	/*   "                                  */
+  int32_t		lastprocnumber;	/*   "                                  */
+  int32_t		lastprocnumber2; /*  "                                  */
+  int32_t		lastprocnumber3; /*  "                                  */
+  int32_t		lastprocnumber4; /*  "                                  */
+  int32_t		lastprocnumber5; /*  "                                  */
+  int32_t		lastprocnumber6; /*  "                                  */
+  int32_t		lastprocnumber7; /*  "                                  */
   short			prochandle;	/*   "                                  */
   char			*procbuf;	/*   "                                  */
-  long			procbufsize;	/*   "                                  */
-  long			procbufseek;	/*   "                                  */
+  int32_t		procbufsize;	/*   "                                  */
+  int32_t		procbufseek;	/*   "                                  */
   mbxtype		tellmbx;	/*   "                                  */
   pathstr		tellfname;
-  boolean		smode;		/* User is in server mode		*/
+  bool			smode;		/* User is in server mode		*/
   pathstr		spath;		/* current path in server mode		*/
   short       	      	fsfinhandle;   	/* file input handle for file sf      	*/
   pathstr		sfilname;	/* file in paging mode			*/
       	      	      	      	      	/* (also filename of input file in file sf) */
-  long			sseekp;		/* seek position in paged file		*/
-  boolean		changed_dir;	/* show .index file ?			*/
+  int32_t		sseekp;		/* seek position in paged file		*/
+  bool			changed_dir;	/* show .index file ?			*/
   yapptype		*yapp;
   bintype		*bin;
   short			pty;
   short			ptynum;
   char			ptyid[4];
   time_t		ptytouch;
-  boolean		ptylfcrconv;
+  bool			ptylfcrconv;
   short			ptybuflen;
   char			ptybuffer[LEN_PTYBUF];
   pid_t			wait_pid;	/* pid of child process			*/
   pathstr		wait_file;	/* output file of child process		*/
   char			conpath[81];
-  long      	      	sfspeedtime; /* in TICKSPERSEC */
-  long	      	      	sfspeedsize;
+  int32_t      	      	sfspeedtime; /* in TICKSPERSEC */
+  int32_t      	      	sfspeedsize;
   short       	      	sfspeedprops;
-  boolean     	      	direct_sf;
+  bool	     	      	direct_sf;
   short			magic3;
 } userstruct;
 
@@ -886,64 +886,64 @@ vextern ufcachetyp	ufcache;
 vextern userptrarrtyp	user;
 vextern languagetyp	*langmemroot;
 vextern clocktype	clock_;
-vextern boolean		fast_machine;
+vextern bool		fast_machine;
 vextern double		mylaenge, mybreite;
-vextern boolean		myqthwwlocvalid;
+vextern bool		myqthwwlocvalid;
 vextern short		current_unr;
 vextern unsigned short	wd_while_ext_prg;
-vextern boolean		disk_full;
-vextern long		mindiskavail;
+vextern bool		disk_full;
+vextern int32_t		mindiskavail;
 vextern char		*whichlangmem;
-vextern long		whichlangsize;
-vextern boolean		wd_active;
-vextern boolean		ende;
+vextern int32_t		whichlangsize;
+vextern bool		wd_active;
+vextern bool		ende;
 vextern char		laufwerk;
-vextern boolean		dpboxcpufilled;
-vextern long		dpboxcpu[DPBOXCPUARRSIZE];
+vextern bool		dpboxcpufilled;
+vextern int32_t		dpboxcpu[DPBOXCPUARRSIZE];
 vextern short		dpboxuserct[DPBOXCPUARRSIZE];
 vextern indexcachetype	*indexcacheroot;
 vextern zombietype	*zombieroot;
-vextern boolean		immediate_extcheck;
+vextern bool		immediate_extcheck;
 vextern unsigned short	maxerrors;
 vextern rubriktype	*rubrikroot;
 vextern rejecttype	*rejectroot;
 vextern dirtytype	*badwordroot;
-vextern boolean		tell_waiting;
+vextern bool		tell_waiting;
 vextern unsigned short	boxtimect;
 vextern time_t		lastbalise, balisetime, laststartbalise;
-vextern long		balisenumber;
+vextern int32_t		balisenumber;
 vextern char		*balisebuf;
-vextern long		balisesize;
+vextern int32_t		balisesize;
 vextern short		baliseh1;
-vextern long		ttask;
+vextern int32_t		ttask;
 vextern sfdeftype	*sfdefs;
 vextern routingtype 	*routing_root;
-vextern boolean		tpkbbs;
+vextern bool		tpkbbs;
 vextern transfertype	*transferroot;
 vextern bcommandtype	*bcommandroot;
-vextern boolean		sf_allowed, m_filter, x_garbage_waiting;
+vextern bool		sf_allowed, m_filter, x_garbage_waiting;
 vextern resumemem	*resume_root;
 vextern unsigned short	resume_lifetime, y_lifetime;
 vextern short		debug_level;
-vextern long		debug_size;
+vextern int32_t		debug_size;
 vextern short		usertimeout, sftimeout;
 vextern tcpiptype	*tcpiproot;
-vextern boolean		ufilhide;
+vextern bool		ufilhide;
 vextern unsigned short	max_lt_inc;
-vextern boolean		scan_all_wp, gesperrt;
-vextern long		erasewait, indexcaches;
-vextern boolean		create_syslog, create_userlog, create_usersflog;
-vextern boolean		create_readlog, create_sflog, create_convlog;
-vextern boolean		remoteerasecheck, holdownfiles, authentinfo, forwerr, gttl;
-vextern boolean		add_ex, small_first, sort_props, create_acks;
-vextern boolean		new_remote_erases, new_mybbs_data, valid_in_ram;
-vextern boolean		xcheck_in_ram, check_sffor_in_ram, no_rline_if_exterior;
-vextern boolean		smart_routing, request_lt, multi_master, route_by_private;
-vextern boolean		show_readers_to_everyone, new_7plus;
-vextern long		remerseekp, mybbsseekp;
+vextern bool		scan_all_wp, gesperrt;
+vextern int32_t		erasewait, indexcaches;
+vextern bool		create_syslog, create_userlog, create_usersflog;
+vextern bool		create_readlog, create_sflog, create_convlog;
+vextern bool		remoteerasecheck, holdownfiles, authentinfo, forwerr, gttl;
+vextern bool		add_ex, small_first, sort_props, create_acks;
+vextern bool		new_remote_erases, new_mybbs_data, valid_in_ram;
+vextern bool		xcheck_in_ram, check_sffor_in_ram, no_rline_if_exterior;
+vextern bool		smart_routing, request_lt, multi_master, route_by_private;
+vextern bool		show_readers_to_everyone, new_7plus;
+vextern int32_t		remerseekp, mybbsseekp;
 vextern short		usersftellmode, maxuserconnects, hiscore_connects, sub_bid;
-vextern boolean		ring_bbs, charge_bbs;
-vextern boolean		convtit, allow_direct_sf;
+vextern bool		ring_bbs, charge_bbs;
+vextern bool		convtit, allow_direct_sf;
 vextern convtittype	*convltroot, *convtitroot;
 vextern rsysoptype	*rsysoproot;
 vextern protocalltype	*protocalls;
@@ -953,37 +953,37 @@ vextern time_t		wpcreateinterval, wprotcreateinterval, lastwpcreate, lastwprotcr
 vextern time_t	      	holddelay, returntime;
 vextern time_t		bullsfwait, bullsfmaxage, incominglifetime, fservexpandlt;
 vextern time_t	      	lastxreroute, last_wprot_r;
-vextern long		all_maxread_day, badtimecount, retmailmaxbytes;
+vextern int32_t		all_maxread_day, badtimecount, retmailmaxbytes;
 vextern short		ufcr;
-vextern long		ufchit, ufcmiss;
+vextern int32_t		ufchit, ufcmiss;
 vextern newmailtype	*newmailroot;
-vextern boolean		reduce_lt_after_extract, auto7plusextract, autobinextract;
-vextern boolean		allunproto, guess_mybbs, login_check, nosfpropdelaydefault;
+vextern bool		reduce_lt_after_extract, auto7plusextract, autobinextract;
+vextern bool		allunproto, guess_mybbs, login_check, nosfpropdelaydefault;
 vextern unprotodeftype	*unprotodefroot;
-vextern boolean		unproto_list, md2_only_numbers, private_dirtycheck;
-vextern boolean		import_logs, profile_to_syslog, do_wprot_routing;
-vextern boolean       	log_ping, kill_wp_immediately;
-vextern long		unproto_last, maxsubscriberdisp;
-vextern long		actmsgnum, firstmsgnum, unproto_final_update, request_count;
+vextern bool		unproto_list, md2_only_numbers, private_dirtycheck;
+vextern bool		import_logs, profile_to_syslog, do_wprot_routing;
+vextern bool       	log_ping, kill_wp_immediately;
+vextern int32_t		unproto_last, maxsubscriberdisp;
+vextern int32_t		actmsgnum, firstmsgnum, unproto_final_update, request_count;
 vextern time_t		last_requesttime;
 vextern short		msgnumarrct, maxufcache;
-vextern long		msgnumarrblock;
+vextern int32_t		msgnumarrblock;
 vextern msgnumarrtype	msgnumarr;
 vextern time_t		crawl_started;
-vextern long		crawl_lastchecknum;
+vextern int32_t		crawl_lastchecknum;
 vextern char		crawl_args[256];
 vextern pid_t		crawl_pid;
-vextern boolean		crawl_active, crawler_exists, crawl_private;
-vextern boolean		ana_hpath, check_rheaders, stop_invalid_rcalls, stop_broken_rlines;
-vextern boolean       	stop_invalid_rdates, stop_changed_bids, stop_changed_boards;
-vextern boolean       	stop_changed_mbx, stop_changed_senders;
-vextern boolean		with_rline, box_pw, do_routing_stats, wrong_clock;
+vextern bool		crawl_active, crawler_exists, crawl_private;
+vextern bool		ana_hpath, check_rheaders, stop_invalid_rcalls, stop_broken_rlines;
+vextern bool       	stop_invalid_rdates, stop_changed_bids, stop_changed_boards;
+vextern bool       	stop_changed_mbx, stop_changed_senders;
+vextern bool		with_rline, box_pw, do_routing_stats, wrong_clock;
 vextern unsigned short	sfinpdefault;
-vextern boolean		bcastforward, multiprivate, send_bbsbcast, user_moncut, bulletin_moncut;
+vextern bool		bcastforward, multiprivate, send_bbsbcast, user_moncut, bulletin_moncut;
 vextern unsigned short	default_lifetime;
-vextern boolean		auto_garbage, auto_block, remote_erase;
-vextern boolean		mail_beacon, packed_sf, hold_view, ping_allowed;
-vextern long		maxbullids, bullidseek;
+vextern bool		auto_garbage, auto_block, remote_erase;
+vextern bool		mail_beacon, packed_sf, hold_view, ping_allowed;
+vextern int32_t		maxbullids, bullidseek;
 vextern unsigned short	garbagetime, userlifetime, packdelay, min_lifetime;
 vextern fbb_montype	fbb_month;
 vextern char		e_m_verteiler[9], pacsrv_verteiler[9];
