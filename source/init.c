@@ -5,7 +5,7 @@
    updated: Joachim Schurig DL8HBS 99/09/26
 */
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -49,9 +49,7 @@ extern short box_ssid;
 extern short node_ssid;
 
 /* local variables */
-static int analyse_value(stri1,stri2)
-char stri1[];
-char stri2[];
+static int analyse_value(char stri1[],char stri2[])
 {
   int tmp;
   
@@ -315,11 +313,11 @@ void exit_watch(void)
   unlink(file);
 }
 
-boolean check_watch(void)
+bool check_watch(void)
 {
   char file[256], hs[256];
   struct stat buf;
-  long t1, tct;
+  time_t t1, tct;
 
   strcpy(file,boxstatdir);
   strcat(file,watch_file);
@@ -333,7 +331,7 @@ boolean check_watch(void)
   if (buf.st_mtime - t1 > 300)
     return false; /* watchdog more than 300 seconds in the future -> exit */
 
-  sprintf(hs, "\nfound fresh lock file (%ld seconds old) of another dpbox\nnow checking 30 seconds for activity", tct);
+  sprintf(hs, "\nfound fresh lock file (%"PRId64" seconds old) of another dpbox\nnow checking 30 seconds for activity", (int64_t)tct);
   bootinf(hs);
   
   tct = 30;

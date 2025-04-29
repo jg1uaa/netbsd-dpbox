@@ -33,7 +33,7 @@
 #define DEF_SAVEDIR "save/"
 #define DEF_SERVERDIR "server/"
 
-#if defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
   #define DEF_BOXPROCDIR "/var/run/"
   #define DEF_BOXSOCKDIR "/var/run/"
 #else /* Have to preserve the old setting for running installations */
@@ -77,5 +77,5 @@ extern void init_watch(void);
 extern int init_proc(void);
 extern void exit_proc(void);
 extern void exit_watch(void);
-extern boolean check_watch(void);
+extern bool check_watch(void);
 
