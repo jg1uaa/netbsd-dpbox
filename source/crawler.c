@@ -30,6 +30,7 @@
 #include <ctype.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdint.h>
 #ifdef macos
 #include <console.h>
 #include <stat.h>
@@ -60,15 +61,15 @@
 typedef struct dictentry {
 	unsigned char thischar;
 	unsigned char stopword;
-	unsigned long doccount;
-	long matchseek;
-	long unmatchseek;
-	long liststart;
+	uint32_t doccount;
+	int32_t matchseek;
+	int32_t unmatchseek;
+	int32_t liststart;
 } dictentry;
 
 typedef struct messages {
-	unsigned long msgnum;
-	long next;
+	uint32_t msgnum;
+	int32_t next;
 } messages;
 
 #ifdef compress
@@ -284,9 +285,9 @@ static int convert_the_word(char *outw, char *inw)
 }
 
 #ifdef compress
-static long char24long(unsigned char *b)
+static int32_t char24long(unsigned char *b)
 {
-	long l;
+	int32_t l;
 	unsigned char *p;
 
 	p = (unsigned char *)&l;
@@ -305,7 +306,7 @@ static long char24long(unsigned char *b)
   	return l;
 }
 
-static void long24char(long l, unsigned char *b)
+static void long24char(int32_t l, unsigned char *b)
 {
 	unsigned char *p;
 
@@ -324,10 +325,10 @@ static void long24char(long l, unsigned char *b)
 }
 #endif
 
-static long msgread(int handle, messages *unpacked_data)
+static int32_t msgread(int handle, messages *unpacked_data)
 #ifdef compress
 {
-	long result;
+	int32_t result;
 	diskmsg packed_data;
 	
 	result = read(handle, (char *)packed_data, sizeof(diskmsg));
@@ -341,7 +342,7 @@ static long msgread(int handle, messages *unpacked_data)
 }
 #else
 {
-	long result;
+	int32_t result;
 	
 	result = read(handle, (char *)unpacked_data, sizeof(messages));
 	if (result != sizeof(messages))
@@ -352,10 +353,10 @@ static long msgread(int handle, messages *unpacked_data)
 }
 #endif
 
-static long msgwrite(int handle, messages *unpacked_data)
+static int32_t msgwrite(int handle, messages *unpacked_data)
 #ifdef compress
 {
-	long result;
+	int32_t result;
 	diskmsg packed_data;
 	
 	long24char(unpacked_data->msgnum, packed_data);
@@ -369,7 +370,7 @@ static long msgwrite(int handle, messages *unpacked_data)
 }
 #else
 {
-	long result;
+	int32_t result;
 	
 	result = write(handle, (char *)unpacked_data, sizeof(messages));
 	if (result != sizeof(messages))
@@ -381,10 +382,10 @@ static long msgwrite(int handle, messages *unpacked_data)
 #endif
 
 
-static long dictread(int handle, dictentry *unpacked_data)
+static int32_t dictread(int handle, dictentry *unpacked_data)
 #ifdef compress
 {
-	long result;
+	int32_t result;
 	diskentry packed_data;
 	
 	result = read(handle, (char *)&packed_data, sizeof(diskentry));
@@ -402,7 +403,7 @@ static long dictread(int handle, dictentry *unpacked_data)
 }
 #else
 {
-	long result;
+	int32_t result;
 	
 	result = read(handle, (char *)unpacked_data, sizeof(dictentry));
 	if (result != sizeof(dictentry))
@@ -414,10 +415,10 @@ static long dictread(int handle, dictentry *unpacked_data)
 #endif
 
 
-static long dictwrite(int handle, dictentry *unpacked_data)
+static int32_t dictwrite(int handle, dictentry *unpacked_data)
 #ifdef compress
 {
-	long result;
+	int32_t result;
 	diskentry packed_data;
 	
 	packed_data[0] = unpacked_data->thischar;
@@ -435,7 +436,7 @@ static long dictwrite(int handle, dictentry *unpacked_data)
 }
 #else
 {
-	long result;
+	int32_t result;
 	
 	result = write(handle, (char *)unpacked_data, sizeof(dictentry));
 	if (result != sizeof(dictentry))
@@ -477,7 +478,7 @@ static long dictwrite(int handle, dictentry *unpacked_data)
 		Anzahl Dokumente, in denen dieses Wort vorkommt
 */
 
-static long find_dictentry(int f, char *word, int wordlen,
+static int32_t find_dictentry(int f, char *word, int wordlen,
 							int *complen, int *doccount)
 {
 	int k;
@@ -485,7 +486,7 @@ static long find_dictentry(int f, char *word, int wordlen,
 	int wlen;
 	int hit = 0;
 	int close_file = 0;
-	long seek = 0;
+	int32_t seek = 0;
 	int comp;
 	int step = 0;
 	struct dictentry dentry;
@@ -635,7 +636,7 @@ static void get_totaldocs(int increase, int cur_message)
 	lastscannedmsg = lmsg;
 }
 
-static int open_msglist(int readwrite, char firstchar, long *listsize)
+static int open_msglist(int readwrite, char firstchar, int32_t *listsize)
 {
 	int handle, mode;
 	char listname[256];
@@ -667,7 +668,7 @@ static void close_msglist(int handle)
 }
 
 
-static long add_dictentry(int f, char *word, int wordlen, long listsize, int stop)
+static int32_t add_dictentry(int f, char *word, int wordlen, int32_t listsize, int stop)
 {
 	int k;
 	int bct = 0;
@@ -675,10 +676,10 @@ static long add_dictentry(int f, char *word, int wordlen, long listsize, int sto
 	int wlen;
 	int hit = 0;
 	int close_file = 0;
-	long seek = 0;
-	long lastseek = 0;
-	long retval = -2;
-	long fsize;
+	int32_t seek = 0;
+	int32_t lastseek = 0;
+	int32_t retval = -2;
+	int32_t fsize;
 	int comp;
 	struct dictentry dentry, newentry;
 #ifdef addstopwords
@@ -856,8 +857,8 @@ static long add_dictentry(int f, char *word, int wordlen, long listsize, int sto
 
 
 
-static void add_listentry(int handle, long liststart, long *listsize,
-							unsigned long msgnum)
+static void add_listentry(int handle, int32_t liststart, int32_t *listsize,
+							uint32_t msgnum)
 {
 	struct messages lentry, newentry;
 	
@@ -888,9 +889,9 @@ static void add_listentry(int handle, long liststart, long *listsize,
 
 
 static void add_token(int dhandle, int lhandle,
-						long *listsize,
+						int32_t *listsize,
 						char *word, int wordlen,
-						unsigned long msgnum)
+						uint32_t msgnum)
 {
 	int liststart;
 	
@@ -903,7 +904,7 @@ static void get_database_info(char *outfile)
 {
 }
 
-static void follow_wordlist(FILE *out, int k, long seek, char *word_,
+static void follow_wordlist(FILE *out, int k, int32_t seek, char *word_,
 							int wlen, int mlen, int rct, char sepchar)
 {
 	struct dictentry dentry;
@@ -920,7 +921,7 @@ static void follow_wordlist(FILE *out, int k, long seek, char *word_,
 	strncat(word, (char *)&dentry.thischar, 1);
 	wlen++;
 	if (dentry.liststart >= 0 && dentry.stopword == '\0' && dentry.doccount > 0)
-		fprintf(out, "%.*s:%ld%c", wlen, word, dentry.doccount, sepchar);
+		fprintf(out, "%.*s:%u%c", wlen, word, dentry.doccount, sepchar);
 	follow_wordlist(out, k, dentry.matchseek, word, wlen, mlen, rct, sepchar);
 	follow_wordlist(out, k, dentry.unmatchseek, word_, --wlen, mlen, --rct, sepchar);
 }
@@ -932,7 +933,7 @@ static void get_wordlist(FILE *out, char *word, int wordlen, int maxdepth,
 	int wlen;
 	int hit = 0;
 	int bct = 0;
-	long seek = 0;
+	int32_t seek = 0;
 	int comp;
 	int step = 0;
 	struct dictentry dentry;
@@ -982,7 +983,7 @@ static void get_wordlist(FILE *out, char *word, int wordlen, int maxdepth,
 	
 	if (hit == 1) {
 		if (dentry.liststart >= 0 && dentry.stopword == '\0' && dentry.doccount > 0)
-			fprintf(out, "%.*s:%ld%c", wordlen, word, dentry.doccount, sepchar);
+			fprintf(out, "%.*s:%u%c", wordlen, word, dentry.doccount, sepchar);
 		follow_wordlist(out, k, dentry.matchseek, word, wordlen, maxdepth, 0, sepchar);
 		fprintf(out, "\n");
 	}
@@ -1017,10 +1018,10 @@ static void search_database(int argoffs, char *outfile, int argc, char *argv[])
 	int ct;
 	int doccount;
 	int ret1;
-	long ret;
+	int32_t ret;
 	FILE *out, *sort, *tminus, *tsubst;
 	int lhandle;
-	long lsize;
+	int32_t lsize;
 	int foundwords = 0;
 	int minuswords = 0;
 	int founddocs = 0;
@@ -1107,9 +1108,9 @@ static void search_database(int argoffs, char *outfile, int argc, char *argv[])
 							ret = lseek(lhandle, ret, SEEK_SET);
 							while (ret >= 0 && msgread(lhandle, &lentry)) {
 								if (minus)
-									fprintf(tminus, "%8ld -\n", lentry.msgnum);
+									fprintf(tminus, "%8u -\n", lentry.msgnum);
 								else
-									fprintf(sort, "%8ld\n", lentry.msgnum);
+									fprintf(sort, "%8u\n", lentry.msgnum);
 								ret = lentry.next;
 								if (ret > 0)
 									ret = lseek(lhandle, ret, SEEK_SET);
@@ -1343,23 +1344,22 @@ static void add_stopwords(void)
 
 static void scan_new_file(char *msgnums, char *filename)
 {
-	unsigned long msgnum;
+	uint32_t msgnum;
 	int wordlen;
 	int ct;
 	int fraglen;
 	int tlen;
 	int dhandle = -1;
 	int lhandle = -1;
-	long lsize = 0;
+	int32_t lsize = 0;
 	FILE *in, *out;
-	register char c;
+	char c;
 	char act_dictionary;
 	char line[maxlinesize + 1];
 	char nword[maxlinesize + 1];
 	char fragment[(maxlinesize + 1) * 2];
 	char word[maxwordlen + 5];
 	char *token, *lastpos;
-	long wordcount = 0;
 	char crawltemp[256];
 #ifdef setbuf
 	char inbuf[streambufsize], outbuf[streambufsize];
@@ -1434,7 +1434,6 @@ static void scan_new_file(char *msgnums, char *filename)
 								if (tlen <= maxvalidwordlen) {
 									if ((wordlen = convert_the_word(word, nword))
 											>= minwordlen) {
-										wordcount++;
 										strcat(word, "\n");
 										fputs(word, out);
 									}
