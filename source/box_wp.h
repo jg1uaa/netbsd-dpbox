@@ -27,17 +27,17 @@
 /* when creating phantom broadcasts, lower the timestamp by this value */
 #define WPRPHANTOMSUBST (WPFREQ_R * 3)
 /* worst quality for a direct neighbour */
-#define WPRMAXQUAL SHORT_MAX
+#define WPRMAXQUAL SHRT_MAX
 /* best quality for a direct neighbour */
 #define WPRMINQUAL 1
 /* penalty for neighbours without interactive forward */
-#define WPRADDWIRE (SHORT_MAX / 2)
+#define WPRADDWIRE (SHRT_MAX / 2)
 /* aging per hop (absolute added) */
 #define WPRHOPAGING 100
 /* aging per hop (percent added) */
 #define WPRPHOPAGING 10
 /* invalid neighbour */
-#define WPRINVALID (SHORT_MAX * 2)
+#define WPRINVALID (SHRT_MAX * 2)
 /* how many seconds lives a link after last check ? */
 #define WPRMAXUNCHECKED (WPR_DUMMY * 5 / 2)
 /* how small is a small block ? */
@@ -63,7 +63,7 @@ typedef struct routstattype {
   calltype  call;
   calltype  rxfrom;
   time_t    timestamp;
-  unsigned long quality;
+  uint32_t  quality;
   short     hops;
 } routstattype;
 
@@ -75,8 +75,8 @@ typedef struct wprottype {
   calltype  origin;
   calltype  issuer;
   time_t    timestamp;
-  long	    version;
-  unsigned long quality;
+  int32_t   version;
+  uint32_t  quality;
   mbxtype   bbs; /* also hadr (B) and flood (E) */
   bidtype   bid;
   bidtype   erasebid;
@@ -95,16 +95,16 @@ typedef void (*rsoutputproc)(const short unr, const char *s);
 extern void cleanup_routing_stat(short days);
 extern void show_routing_stat(short unr, char *call, char *options, rsoutputproc out);
 extern void sf_rx_emt(short unr, char *eingabe);
-extern void do_emt(long *seekp);
+extern void do_emt(int32_t *seekp);
 extern void sf_rx_emt1(char *eingabe, char *actwpfilesender);
-extern void write_routes(char *call, char *rxfrom, time_t timestamp, unsigned long quality, short hops);
-extern void add_wprotline(wprottype *wpb, boolean meta);
+extern void write_routes(char *call, char *rxfrom, time_t timestamp, uint32_t quality, short hops);
+extern void add_wprotline(wprottype *wpb, bool meta);
 extern void add_wpline(char *call, char *bbs, time_t time, char *from,
-      	      	       char *zip, char *name, char *qth, boolean is_wp);
+		       char *zip, char *name, char *qth, bool is_wp);
 extern void generate_wprot_files(void);
 extern void generate_wp_files(void);
-extern boolean in_wpservers(char *call);
-extern short process_wprotline(char *hs, char *actsender, boolean meta);
+extern bool in_wpservers(char *call);
+extern short process_wprotline(char *hs, char *actsender, bool meta);
 extern short process_wpline(char *hs, char *actsender);
 extern void create_own_routing_broadcasts(void);
 extern void init_wp_timers(void);

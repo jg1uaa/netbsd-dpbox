@@ -280,16 +280,16 @@ static short set_wprot_m(char *p, wprottype *wpb) {
   nstrcpy(qth, wpb->qth, 80);
   if (!*qth) strcpy(qth, "?");
   else if (count_words(qth) > 1) caps_string(qth);
-printf("DEBUG: wpb->call = %s\n", wpb->call ? wpb->call : "NULL");
-printf("DEBUG: wpb->bbs = %s\n", wpb->bbs ? wpb->bbs : "NULL");
-printf("DEBUG: bid = %s\n", bid ? bid : "NULL");
+printf("DEBUG: wpb->call = %s\n", *wpb->call ? wpb->call : "NULL");
+printf("DEBUG: wpb->bbs = %s\n", *wpb->bbs ? wpb->bbs : "NULL");
+printf("DEBUG: bid = %s\n", *bid ? bid : "NULL");
 printf("DEBUG: wpb->timestamp = %jd\n", (intmax_t) wpb->timestamp);
-printf("DEBUG: origin = %s\n", origin ? origin : "NULL");
+printf("DEBUG: origin = %s\n", *origin ? origin : "NULL");
 printf("DEBUG: wpb->hops = %d\n", wpb->hops);
 printf("DEBUG: wpb->hops+1 = %d\n", wpb->hops+1);
-printf("DEBUG: name = %s\n", name ? name : "NULL");
-printf("DEBUG: zip = %s\n", zip ? zip : "NULL");
-printf("DEBUG: qth = %s\n", qth ? qth : "NULL");
+printf("DEBUG: name = %s\n", *name ? name : "NULL");
+printf("DEBUG: zip = %s\n", *zip ? zip : "NULL");
+printf("DEBUG: qth = %s\n", *qth ? qth : "NULL");
 if (!*wpb->call) strcpy(wpb->call, "?");
 if (!*wpb->bbs) strcpy(wpb->bbs, "?");
 if (!*bid) strcpy(bid, "?");
@@ -533,15 +533,15 @@ void cleanup_routing_stat(short days)
 void show_routing_stat(short unr, char *call, char *options, rsoutputproc out)
 {
   short       	action, x, y;
-  boolean     	mtdefault;
-  time_t      	lasttime, mintime, maxtime, xstep, xtime;
+  bool     	mtdefault;
+  time_t      	lasttime, mintime, maxtime, xstep;
   short       	handle;
-  unsigned long minqual, maxqual, ystep, cury, avgqual, avgct;
+  uint32_t	minqual, maxqual, ystep, cury, avgqual, avgct;
   routstattype	rss;
   pathstr	filename;
   char	      	hs[256], w[256], w2[256];
-  unsigned long ymin[CHARTX], ymax[CHARTX];
-  boolean     	isset[CHARTX];
+  uint32_t	ymin[CHARTX], ymax[CHARTX];
+  bool     	isset[CHARTX];
   char       	viahops[CHARTX];
   calltype    	viacall[CHARTX];
 
@@ -557,7 +557,7 @@ void show_routing_stat(short unr, char *call, char *options, rsoutputproc out)
   mtdefault   	= true;
   lasttime    	= 0;
   maxtime     	= 0;
-  minqual     	= LONG_MAX;
+  minqual     	= INT32_MAX;
   maxqual     	= 1;
 
   action      = 0;  /* show chart   */
@@ -608,7 +608,6 @@ void show_routing_stat(short unr, char *call, char *options, rsoutputproc out)
     }
     avgqual   	= 0;
     avgct     	= 0;
-    xtime     	= mintime;
     xstep     	= (maxtime - mintime) / CHARTX;
     if (xstep < 1) xstep = 1;
     ystep     	= (maxqual - minqual) / (CHARTY-1);
@@ -715,7 +714,7 @@ void show_routing_stat(short unr, char *call, char *options, rsoutputproc out)
 #undef CHARTX
 #undef CHARTY
 
-void write_routes(char *call, char *rxfrom, time_t timestamp, unsigned long quality, short hops)
+void write_routes(char *call, char *rxfrom, time_t timestamp, uint32_t quality, short hops)
 {
   short       	handle;
   routstattype	rss;
@@ -791,10 +790,10 @@ static void create_em_message(wprottype *wpb)
 
 #define wpbhlen 2+LEN_CALL+1+10+1+LEN_CALL+1
 #define wpbhlen1 2+LEN_CALL+1+10+1
-void add_wprotline(wprottype *wpb, boolean meta)
+void add_wprotline(wprottype *wpb, bool meta)
 /* if meta, this goes into a temp file for later processing */
 {
-  static long dummycounter = 0;
+  static int32_t dummycounter = 0;
   static time_t last_ixtime = 0;
   time_t  cur_ixtime;
   char	  hs[1000], sl[1000];
@@ -853,9 +852,9 @@ void add_wprotline(wprottype *wpb, boolean meta)
 
 
 /* this is the background function that processes the formerly received infos */
-void do_emt(long *seekp)
+void do_emt(int32_t *seekp)
 {
-  long		tc;
+  int32_t	tc;
   short		k;
   pathstr	fn;
   char		hs[1000], w1[1000];
@@ -922,7 +921,7 @@ void sf_rx_emt1(char *eingabe, char *actwpfilesender)
   if (wpb.which == 'E') { /* erasebid */
     if (strlen(w) > LEN_BID) return;
     nstrcpy(wpb.erasebid, w, LEN_BID);
-    nstrcpy(wpb.issuer, wpb.call, LEN_BID);
+    nstrcpy(wpb.issuer, wpb.call, LEN_CALL);
   } else { /* mybbs */
     if (strlen(w) > LEN_MBX) return;
     unhpath(w, hs);
@@ -968,8 +967,8 @@ M/DL8HBS  950309342 DL8HBS 66 M DL8HBS DL8HBS.DB0SIF.#HES.DEU.EU FPSFDPDL8HBS 95
 void generate_wprot_files(void)
 {
   short		inf, outf, x;
-  long	      	lct;
-  boolean	send_bc;
+  int32_t	lct;
+  bool		send_bc;
   sfdeftype   	*sfp;
   pathstr     	wpmname, wp2name, wptname;
   char		hs[1000], w[1000], lc[1000], ll[1000], ts[1000];
@@ -1075,7 +1074,7 @@ void generate_wprot_files(void)
 
 
 
-boolean in_wpservers(char *call)
+bool in_wpservers(char *call)
 {
   sfdeftype   	*sfp;
 
@@ -1126,7 +1125,7 @@ M/DL8HBS  950309342 DL8HBS 66 M DL8HBS DL8HBS.DB0SIF.#HES.DEU.EU FPSFDPDL8HBS 95
 void generate_wp_files(void)
 {
   short		inf, outf;
-  boolean	ok;
+  bool		ok;
   sfdeftype   	*sfp;
   pathstr     	wpmname, wp2name, wptname;
   char		hs[256], w[256], lc[256], ll[256], ts[256];
@@ -1199,14 +1198,14 @@ void generate_wp_files(void)
 /*              -1 invalid line       	      	      	  */
 /*              -2 invalid protocol type      	      	  */
 
-short process_wprotline(char *hs, char *actsender, boolean meta) {
+short process_wprotline(char *hs, char *actsender, bool meta) {
 /* meta means that all data is written into a temp file for later processing. */
 /* in fact, for most message lines, this function is called twice. This helps */
 /* limiting process time, as the database operations are performance critical */
   short       	checksum;
-  long	      	version;
+  int32_t	version;
   time_t      	timestamp;
-  unsigned long qual;
+  uint32_t	qual;
   wprottype   	wpb;
   char	      	*p, w[1000];
   
@@ -1223,7 +1222,7 @@ short process_wprotline(char *hs, char *actsender, boolean meta) {
   hs[2] = '\0';
   if (checksum != hatoi(hs)) {
     snprintf(w, 200, "invalid wprot checksum: %s (%jd) != %d (meta=%d, len=%d)",
-      	      	    hs, (intmax_t) hatoi(hs), checksum, meta, strlen(p)+3);
+      	      	    hs, (intmax_t) hatoi(hs), checksum, meta, (int32_t)strlen(p)+3);
     debug(3, -1, 226, w);
     return -1; /* exit if invalid checksum */
   }
@@ -1347,7 +1346,7 @@ short process_wprotline(char *hs, char *actsender, boolean meta) {
 /* should be called periodically every some minutes, times operation itself */
 void create_own_routing_broadcasts(void)
 {
-  boolean     created_phantoms;
+  bool        created_phantoms;
   time_t      timestamp;
   wprottype   wpb;
   routingtype *rp;
