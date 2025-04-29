@@ -65,7 +65,7 @@ savefile      	= /var/tmp/dpbox-saveinst
 tmpinstdir     	= /tmp/dpboxinst
 
 DEFS		= $(NOSHELL)
-CC		= gcc
+CC		= cc
 CPP		= $(CC) -E
 CFLAGS		= -Wall -O2 -funsigned-char -fomit-frame-pointer -fno-strength-reduce
 CRAWLERCFLAGS	= -Wall -O3 -funsigned-char -fomit-frame-pointer -fno-strength-reduce
@@ -88,12 +88,12 @@ OBJS		= filesys.o box.o box_mem.o box_send.o box_sf.o box_sub.o \
 		  box_wp.o box_rout.o box_scan.o md2md5.o
 
 SRCS		= filesys.c box.c box_file.c box_mem.c box_send.c box_sf.c \
-      	      	  box_sub.c box_sys.c boxdbox.c boxbcm.c box_tim.c boxglobl.c \
+	      	  box_sub.c box_sys.c boxdbox.c boxbcm.c box_tim.c boxglobl.c \
 		  boxlocal.c box_inou.c box_serv.c boxbcast.c boxfserv.c \
 		  yapp.c crc.c huffman.c pastrix.c sort.c tools.c status.c \
 		  shell.c init.c linpack.c main.c box_init.c box_garb.c box_logs.c \
 		  box_wp.c box_rout.c box_scan.c md2md5.c
-		
+
 OTHER_SRCS	= dpputlinks.c dpcodeconv.c dpgate.c crawler.c dpmybbs.c
 
 all:		dpbox	crawler	cgi	toolbox
@@ -125,7 +125,7 @@ instexe:	all
 		@$(INSTALL) -s -m a+x dpmybbs $(bindir)
 		@$(INSTALL_SPROGRAM) crawler $(spooldir)/crawler
 		@echo done...
-		
+
 install:      	all
 		@echo Copying files...
 
@@ -211,7 +211,7 @@ endif
 		@$(MKDIR) $(sharedir)/http
 		@$(INSTALL) -m a+r ../cgi/dpboxcgi/dptop.html $(sharedir)/http
 		@$(INSTALL) -m a+r ../cgi/dpboxcgi/dpbottom.html $(sharedir)/http
-		
+
 		@if [ -e ${cgidir} ]; then \
 		  echo "installing cgi-scripts"; \
 		  $(RMDIR) $(tmpinstdir); \
