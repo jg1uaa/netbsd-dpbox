@@ -33,9 +33,7 @@ documentation and/or software.
 The following makes PROTOTYPES default to 0 if it has not already
   been defined with C compiler flags.
  */
-#ifndef PROTOTYPES
-#define PROTOTYPES 0
-#endif
+#define PROTOTYPES 1
 
 /* PROTO_LIST is defined depending on how PROTOTYPES is defined above.
 If using PROTOTYPES, then PROTO_LIST returns the list, otherwise it
@@ -192,9 +190,7 @@ void MD5Final(unsigned char digest[16], MD5_CTX *context)
 
 /* MD5 basic transformation. Transforms state based on block.
  */
-static void MD5Transform (state, block)
-MD5UINT4 state[4];
-unsigned char block[64];
+static void MD5Transform (MD5UINT4 state[4], unsigned char block[64])
 {
   MD5UINT4 a = state[0], b = state[1], c = state[2], d = state[3], x[16];
 
@@ -285,10 +281,7 @@ unsigned char block[64];
 /* Encodes input (MD5UINT4) into output (unsigned char). Assumes len is
   a multiple of 4.
  */
-static void MD5Encode (output, input, len)
-unsigned char *output;
-MD5UINT4 *input;
-unsigned int len;
+static void MD5Encode (unsigned char *output, MD5UINT4 *input, unsigned int len)
 {
   unsigned int i, j;
 
@@ -303,10 +296,7 @@ unsigned int len;
 /* Decodes input (unsigned char) into output (MD5UINT4). Assumes len is
   a multiple of 4.
  */
-static void MD5Decode (output, input, len)
-MD5UINT4 *output;
-unsigned char *input;
-unsigned int len;
+static void MD5Decode (MD5UINT4 *output, unsigned char *input, unsigned int len)
 {
   unsigned int i, j;
 
