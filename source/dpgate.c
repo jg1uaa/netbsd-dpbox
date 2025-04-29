@@ -97,7 +97,7 @@ void cmd_display(char *string,int crlf)
 #define copybuflen 4096
 static void move_file(char *from, char *to)
 {
-  long size;
+  size_t size;
   FILE *in, *out;
   char buf[copybuflen];
   
@@ -165,8 +165,7 @@ void display_buf(char *buf,int len)
 }
 
 /* close iface connection on channel */
-void close_iface_con(deact)
-int deact;
+void close_iface_con(int deact)
 {
   if (if_stat.iface != -1) {
     if (deact) deactivate_program();
@@ -177,8 +176,7 @@ int deact;
 }
 
 /* close the iface-socket */
-static void close_iface(deact)
-int deact;
+static void close_iface(int deact)
 {
   struct queue_entry *oldq_ptr;
   
@@ -200,8 +198,7 @@ int deact;
   }
 }
 
-static void blocking_test(len)
-int len;
+static void blocking_test(int len)
 {
   IFACE_CMDBUF command;
   
@@ -237,12 +234,7 @@ static void unblocking()
 }
 
 /* analysis of received packet via interface */
-static void packet_analysis(indicator,channel,usernr,len,buf)
-char indicator;
-int channel;
-int usernr;
-int len;
-char *buf;
+static void packet_analysis(char indicator,int channel,int usernr,int len,char *buf)
 {
   IFACE_CMDBUF *rec_command;
   IFACE_CMDBUF command;
@@ -456,8 +448,7 @@ void write_iface(int len,char *str)
   }
 }
 
-void flush_buf(forget)
-int forget;
+void flush_buf(int forget)
 {
   struct buf_entry *b_ptr;
   
@@ -686,11 +677,10 @@ static int in_args(int argc, char *argv[], char *searched, char *nextarg)
 
 static void convert_cgi_command(char *s)
 {
-  int x, changed, r;
+  int changed, r;
   char out[256], h[3], *o, *i;
   
   changed = 0;
-  x = 0;
   o = out;
   i = s;
   while (*i) {
