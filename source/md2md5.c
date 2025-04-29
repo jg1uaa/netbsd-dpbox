@@ -405,7 +405,7 @@ void MD2Init(MD2_CTX *context)
 
 static void MD2Transform(char *state, char *checksum, char *block)
 {
-  long i, j, t;
+  int32_t i, j, t;
   char x[48];
 
   /* Form encryption block from state, block, state ^ block. */
@@ -444,9 +444,9 @@ static void MD2Transform(char *state, char *checksum, char *block)
  *  context.
  */
 
-void MD2Update(MD2_CTX *context, char *input, long inputLen)
+void MD2Update(MD2_CTX *context, char *input, int32_t inputLen)
 {
-  long i, index, partLen;
+  int32_t i, index, partLen;
 
   /* Update number of bytes mod 16 */
   index = context->count;
@@ -480,7 +480,7 @@ void MD2Update(MD2_CTX *context, char *input, long inputLen)
 
 void MD2Final(char *digest, MD2_CTX *context)
 {
-  long index, padLen;
+  int32_t index, padLen;
 
   /* Pad out to multiple of 16 */
   index = context->count;

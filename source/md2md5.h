@@ -1,6 +1,8 @@
 #ifndef MD2MD5_H
 #define MD2MD5_H
 
+#include <stdint.h>
+
 /* MD5POINTER defines a generic pointer type */
 typedef unsigned char *MD5POINTER;
 
@@ -8,7 +10,7 @@ typedef unsigned char *MD5POINTER;
 typedef unsigned short int MD5UINT2;
 
 /* MD5UINT4 defines a four byte word */
-typedef unsigned long int MD5UINT4;
+typedef uint32_t MD5UINT4;
 
 /* MD5 context. */
 typedef struct {
@@ -25,13 +27,13 @@ typedef char MD2barr16[16];
 
 typedef struct MD2_CTX {
   MD2barr16 state, checksum;
-  long count;
+  int32_t count;
   MD2barr16 buffer;
 } MD2_CTX;
 
 
 extern void MD2Init(MD2_CTX *context);
-extern void MD2Update(MD2_CTX *context, char *input, long inputLen);
+extern void MD2Update(MD2_CTX *context, char *input, int32_t inputLen);
 extern void MD2Final(char *digest, MD2_CTX *context);
 
 #endif
