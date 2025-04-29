@@ -15,6 +15,7 @@
 #include <ctype.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdint.h>
 #include <sys/stat.h>
 #include <time.h>
 
@@ -47,7 +48,7 @@ typedef struct mybbstyp {
 
 
 
-static long sfsize(char *name)
+static int32_t sfsize(char *name)
 { 
   struct stat buf;
   
@@ -55,13 +56,13 @@ static long sfsize(char *name)
   return buf.st_size;
 }
 
-static int merge(char *outfile, char *name, long recs, int quiet)
+static int merge(char *outfile, char *name, int32_t recs, int quiet)
 {
   FILE *outhandle, *inhandle;
   int write_mode; /* 0 = append, 1 = overwrite, 2 = don't write */
-  long oldsize, oldrecs;
-  long ct, oldct;
-  long outct = 0;
+  int32_t oldsize, oldrecs;
+  int32_t ct, oldct;
+  int32_t outct = 0;
   mybbstyp mybbs, mybbs_o;
 
   oldsize = sfsize(outfile);
@@ -79,11 +80,11 @@ static int merge(char *outfile, char *name, long recs, int quiet)
     fclose(outhandle); return (-1);
   }
   
-  if (!quiet) fprintf(stderr, " %6d of %6ld", 0, recs);
+  if (!quiet) fprintf(stderr, " %6d of %6d", 0, recs);
   for (ct = 0; ct < recs; ct++) {
     if (!quiet) {
       if (ct % 10 == 0) {
-      	fprintf(stderr, "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b%6ld of %6ld", ct, recs);
+      	fprintf(stderr, "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b%6d of %6d", ct, recs);
       }
     }
     write_mode = 0;
@@ -142,7 +143,7 @@ int main(int argc, char *argv[])
   int ct = 0;
   int firstarg = 0;
   int quiet = false;
-  long size, recs, recs2, tsize, trecs;
+  int32_t size, recs, recs2, tsize, trecs;
   char outfile[256], hs[256];
   
   fprintf(stderr, "\nDPBOX mybbs merge utility - v0.1 28.09.1999 J.Schurig, DL8HBS\n\n");
@@ -177,7 +178,7 @@ int main(int argc, char *argv[])
       size  = sfsize(hs);
       if (size > 0) recs = size / sizeof(mybbstyp);
       else recs = -1;
-      fprintf(stderr, "%8ld %8ld %s\n", size, recs, hs);
+      fprintf(stderr, "%8d %8d %s\n", size, recs, hs);
       if (recs <= 0 || size % sizeof(mybbstyp) != 0) op_ok = false;
       if (op_ok) {
       	tsize += size;
@@ -185,7 +186,7 @@ int main(int argc, char *argv[])
       }
     }
     fprintf(stderr, "------------------------------------------\n");
-    fprintf(stderr, "%8ld %8ld\n", tsize, trecs);
+    fprintf(stderr, "%8d %8d\n", tsize, trecs);
   }
   
   if (op_ok) {
@@ -200,10 +201,10 @@ int main(int argc, char *argv[])
       	fprintf(stderr, "\nfile error\n");
 	return 1;
       }
-      fprintf(stderr, " - added %6ld of %6ld records", recs2, recs);
+      fprintf(stderr, " - added %6d of %6d records", recs2, recs);
       trecs += recs2;     
     }
-    fprintf(stderr, "\n%ld total records\n", trecs);
+    fprintf(stderr, "\n%d total records\n", trecs);
   }
   
   if (!op_ok) show_help();
