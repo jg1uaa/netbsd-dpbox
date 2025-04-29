@@ -22,16 +22,16 @@
 
 #define maxages         20
 
-typedef long agearrtype[maxages];
-typedef long logcttype[maxages];
-typedef long fileidarrtype[maxages];
+typedef int32_t agearrtype[maxages];
+typedef int32_t logcttype[maxages];
+typedef int32_t fileidarrtype[maxages];
 typedef char statinfarrtype[maxages][81];
 
 typedef struct bcastdesctype {
   struct bcastdesctype	*next;
   char			tnc, port;
-  boolean		UsePidF0;
-  long			hfbaud;
+  bool			UsePidF0;
+  int32_t		hfbaud;
   unsigned short	msgsel;
   char			level;
   unsigned short	filetype;
@@ -47,9 +47,9 @@ typedef struct bcastdesctype {
 
 static time_t		lastbcastok	= 0;
 static bcastdesctype	*bcastdesc	= NULL;
-static boolean		boxbcastsemaphore= false;
-static long 		bcasttfsize	= 0;
-static long		bcasttfct	= 0;
+static bool		boxbcastsemaphore= false;
+static int32_t 		bcasttfsize	= 0;
+static int32_t		bcasttfct	= 0;
 
 static void increase_filecount(void)
 {
@@ -74,9 +74,9 @@ static void increase_filecount(void)
   if (f < minhandle)
     return;
 
-  sprintf(w, "%ld", bcasttfsize);
+  sprintf(w, "%d", bcasttfsize);
   str2file(&f, w, true);
-  sprintf(w, "%ld", bcasttfct);
+  sprintf(w, "%d", bcasttfct);
   str2file(&f, w, true);
   sfclose(&f);
   bcasttfsize	= 0;
@@ -102,9 +102,9 @@ void free_boxbcastdesc(void)
 }
 
 
-static void add_bcastdesc(char *TxPath_, boolean UsePidF0, short tnc,
-  short port, char *qrg, long hfbaud, unsigned short msgsel, char level,
-  unsigned short filetype, unsigned short timeslices, long *ages)
+static void add_bcastdesc(char *TxPath_, bool UsePidF0, short tnc,
+  short port, char *qrg, int32_t hfbaud, unsigned short msgsel, char level,
+  unsigned short filetype, unsigned short timeslices, int32_t *ages)
 {
   char			TxPath[256];
   bcastdesctype		*hp, *hp2;
@@ -160,16 +160,16 @@ static void add_bcastdesc(char *TxPath_, boolean UsePidF0, short tnc,
 void load_boxbcastparms(char *name)
 {
   char			*puffer;
-  long			psize;
+  int32_t		psize;
   char			hs[256], w[256], w1[256];
-  long			rp;
-  boolean		startdef;
+  int32_t		rp;
+  bool			startdef;
   char			TxPath[256];
   char			qrg[LEN_TNTPORT+1];
-  boolean		UsePidF0;
+  bool			UsePidF0;
   short			tnc, port;
   unsigned short	timeslices;
-  long			hfbaud;
+  int32_t		hfbaud;
   unsigned short	msgsel, filetype;
   char			level;
   agearrtype		ages;
@@ -284,7 +284,7 @@ void load_boxbcastparms(char *name)
 }
 
 
-static boolean true_sel(unsigned short flags, unsigned short sel)
+static bool true_sel(unsigned short flags, unsigned short sel)
 {
   if (sel != 0)
     return ((flags & sel) != 0);
@@ -293,9 +293,9 @@ static boolean true_sel(unsigned short flags, unsigned short sel)
 }
 
 
-static boolean get_nextvalidlog(unsigned short msgsel, char level, long *nr, boxlogstruct *log)
+static bool get_nextvalidlog(unsigned short msgsel, char level, int32_t *nr, boxlogstruct *log)
 {
-  long		logct;
+  int32_t	logct;
   short		handle;
 
   debug0(4, 0, 117);
@@ -324,11 +324,11 @@ static boolean get_nextvalidlog(unsigned short msgsel, char level, long *nr, box
 }
 
 
-static long find_firstvalidlog(long *firstlognr, unsigned short msgsel,
+static int32_t find_firstvalidlog(int32_t *firstlognr, unsigned short msgsel,
 			       char level, boxlogstruct *log)
 {
   short handle;
-  long nr;
+  int32_t nr;
 
   debug0(4, 0, 118);
 
@@ -365,10 +365,10 @@ static long find_firstvalidlog(long *firstlognr, unsigned short msgsel,
 
 
 static void send_lognr(unsigned short ct, bcastdesctype *hp, short nr,
-		       boxlogstruct log, boolean rekursion)
+		       boxlogstruct log, bool rekursion)
 {
   indexstruct		header;
-  long			fid, h;
+  int32_t		fid, h;
   time_t		exptime;
   unsigned short	bodychecksum;
   char			fheader[256], hs[256], bname[256];
@@ -405,7 +405,7 @@ static void send_lognr(unsigned short ct, bcastdesctype *hp, short nr,
 
   fheader[0] = '\0';
 
-  sprintf(hs, "slice:%d board:%s %d size:%ld %s",
+  sprintf(hs, "slice:%d board:%s %d size:%d %s",
 		nr, log.brett, log.idxnr, header.size, header.betreff);
   cut(hs, 80);
   strcpy(hp->statinf[nr - 1], hs);
@@ -425,7 +425,7 @@ static void send_lognr(unsigned short ct, bcastdesctype *hp, short nr,
 
 
 static void bcastlist(bcastdesctype *hp, unsigned short x, unsigned short ct,
-		      boolean rekursion)
+		      bool rekursion)
 {
   boxlogstruct	log;
 
@@ -458,7 +458,7 @@ static void bcastlist(bcastdesctype *hp, unsigned short x, unsigned short ct,
 }
 
 
-void bccallback(long l)
+void bccallback(int32_t l)
 {
   /* der TX teilt uns mit, dass das File mit FID l komplett gesendet worden ist	*/
 
