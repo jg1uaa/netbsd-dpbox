@@ -11,6 +11,7 @@
 
 #include <ctype.h>
 #include <math.h>
+#include <stdint.h>
 #include "box_rout.h"
 #include "boxlocal.h"
 #include "pastrix.h"
@@ -36,8 +37,8 @@
 static void print_bbs_extended(short unr, char *hcall, char *desc_)
 {
   short		waz, itu;
-  boolean	lochit;
-  long		dist;
+  bool		lochit;
+  int32_t	dist;
   double	lon, lat, dl1, db1;
   double	entfernung, richtung, gegenrichtung;
   char		subst[256], name[256], continent[256], lsysop[256];
@@ -83,7 +84,7 @@ static void print_bbs_extended(short unr, char *hcall, char *desc_)
     if (lochit || dist > 500) {
       if (!lochit)
         dist	= (dist / 100) * 100; /* Genauigkeit verschlechtern */
-      sprintf(STR1, "Distance : %ld km (%.0f deg)", dist, richtung);
+      sprintf(STR1, "Distance : %d km (%.0f deg)", dist, richtung);
       if (!lochit)
         strcat(STR1, " (estimated)");
       wlnuser(unr, STR1);
@@ -138,10 +139,10 @@ static void ct8(short unr, char *w, short ct)
 
 #define MAXBBSPATHLAST 15
 #define MAXBBSPATHSTREAM 150
-static void bbspath(short unr, boolean privates, char *box_, char *nachbar)
+static void bbspath(short unr, bool privates, char *box_, char *nachbar)
 {
   short		ct, k, row, x;
-  boolean	first, lp1;
+  bool		first, lp1;
   calltype	box, rxfrom, last[MAXBBSPATHLAST];
   hboxtyp	hbox;
   char		w[256];
@@ -239,7 +240,7 @@ static void bbspath(short unr, boolean privates, char *box_, char *nachbar)
 
 static void get_real_neighbour(char *n1_, char *rn)
 {
-  boolean	ok;
+  bool		ok;
   hboxtyp	hbox;
   char		n1[256];
 
@@ -264,9 +265,9 @@ static void get_real_neighbour(char *n1_, char *rn)
     strcpy(rn, n1);
 }
 
-static long age_local_partners_quality_for_display(long oquality)
+static int32_t age_local_partners_quality_for_display(int32_t oquality)
 {
-  long	    quality;
+  int32_t	quality;
   
   if (oquality >= WPRMAXQUAL) return oquality;
   quality   = oquality * 2 + WPRHOPAGING;
@@ -277,11 +278,11 @@ static long age_local_partners_quality_for_display(long oquality)
 #define psize_          16384
 
 static void get_bbs_info(short unr, char *boxcall, char *hname, char *nachbar,
-			 long *average, long *min, long *cts)
+			 int32_t *average, int32_t *min, int32_t *cts)
 {
   short		ct;
-  boolean	found, multi, namesearch, is_call;
-  long 		size, rp, minutes, days, hours, x, sz, lz;
+  bool		found, multi, namesearch, is_call;
+  int32_t 	size, rp, minutes, days, hours, x, sz, lz;
   char		*puffer, *buff;
   hboxtyp	*hbox, hb;
   mbxtype	w, wcp;
@@ -362,12 +363,12 @@ static void get_bbs_info(short unr, char *boxcall, char *hname, char *nachbar,
 	else {
 	  if (namesearch) {
 	    strcpyupper(hs, hbox->desc);
-	    found	= wildcardcompare(SHORT_MAX, boxcall, hs, wcp);
+	    found	= wildcardcompare(SHRT_MAX, boxcall, hs, wcp);
 	  } else {
 	    strcpy(hs, hbox->call);
 	    if (*hbox->hpath != '\0')
 	      sprintf(hs + strlen(hs), ".%s", hbox->hpath);
-	    found	= wildcardcompare(SHORT_MAX, boxcall, hs, wcp);
+	    found	= wildcardcompare(SHRT_MAX, boxcall, hs, wcp);
 	  }
 	}
 	if (found) {
@@ -418,7 +419,7 @@ static void get_bbs_info(short unr, char *boxcall, char *hname, char *nachbar,
 	  }
       	  if (do_wprot_routing && hbox->cur_wprot_routing_update > 0) {
 	    ix2string4(hbox->cur_wprot_routing_update, hs2);
-	    snprintf(hs1, 200, "ActivRout: %s Quality:%ld Hops:%d Update:%s",
+	    snprintf(hs1, 200, "ActivRout: %s Quality:%d Hops:%d Update:%s",
 	      	     hbox->cur_routing_neighbour, hbox->cur_routing_quality, hbox->cur_routing_hops, hs2);
 	    if (!valid_routing_timestamp(hbox->cur_wprot_routing_update)) strcat(hs1, " (outdated)");
 	    wlnuser(unr, hs1);
@@ -436,41 +437,41 @@ static void get_bbs_info(short unr, char *boxcall, char *hname, char *nachbar,
 	  cut(hs1, 16); /* no seconds */
 	  wuser(unr, "Last Tx  : ");
 	  wlnuser(unr, hs1);
-	  if (hbox->best_bp < maxlonginteger) {
+	  if (hbox->best_bp < INT32_MAX) {
 	    x		= hbox->best_bp;
 	    days	= x / 1440;
 	    hours	= x % 1440;
 	    minutes	= hours % 60;
 	    hours	/= 60;
-	    sprintf(w, "MinTimeB : %ld days %.2ld:%.2ld", days, hours, minutes);
+	    sprintf(w, "MinTimeB : %d days %.2d:%.2d", days, hours, minutes);
 	    wlnuser(unr, w);
 	  }
-	  if (hbox->aver_bp < maxlonginteger) {
+	  if (hbox->aver_bp < INT32_MAX) {
 	    x		= hbox->aver_bp;
 	    days	= x / 1440;
 	    hours	= x % 1440;
 	    minutes	= hours % 60;
 	    hours	/= 60;
-	    sprintf(w, "AverTimeB: %ld days %.2ld:%.2ld", days, hours, minutes);
+	    sprintf(w, "AverTimeB: %d days %.2d:%.2d", days, hours, minutes);
 	    wlnuser(unr, w);
 	  }
 	  if (hbox->lasttx_p > 0) {
-	    if (hbox->best_p < maxlonginteger) {
+	    if (hbox->best_p < INT32_MAX) {
 	      x		= hbox->best_p;
 	      days	= x / 1440;
 	      hours	= x % 1440;
 	      minutes	= hours % 60;
 	      hours	/= 60;
-	      sprintf(w, "MinTimeP : %ld days %.2ld:%.2ld", days, hours, minutes);
+	      sprintf(w, "MinTimeP : %d days %.2d:%.2d", days, hours, minutes);
 	      wlnuser(unr, w);
 	    }
-	    if (hbox->aver_p < maxlonginteger) {
+	    if (hbox->aver_p < INT32_MAX) {
 	      x		= hbox->aver_p;
 	      days	= x / 1440;
 	      hours	= x % 1440;
 	      minutes	= hours % 60;
 	      hours	/= 60;
-	      sprintf(w, "AverTimeP: %ld days %.2ld:%.2ld", days, hours, minutes);
+	      sprintf(w, "AverTimeP: %d days %.2d:%.2d", days, hours, minutes);
 	      wlnuser(unr, w);
 	    }
 	  }
@@ -589,7 +590,7 @@ static void get_bbs_info(short unr, char *boxcall, char *hname, char *nachbar,
 
 static void show_sfdefs(short unr, char *call)
 {
-  boolean     	  all;
+  bool     	  all;
   sfdeftype   	  *hp;
   sffortype   	  *fp1;
   char	      	  hs[256];
@@ -661,7 +662,7 @@ static void show_sfdefs(short unr, char *call)
 
 void show_bbs_info(short unr, char *boxcall)
 {
-  long		aver, min, cts;
+  int32_t	aver, min, cts;
   char		nachbar[80], hname[256];
 
   if (strstr(boxcall, "-CONFIG ") == boxcall) {
@@ -680,7 +681,7 @@ void show_bbs_info(short unr, char *boxcall)
 */
 void find_neighbour(short mode, char *boxcall, char *nachbar)
 {
-  long		aver, min, cts;
+  int32_t	aver, min, cts;
   char		hname[256];
 
   *nachbar	= '\0';
@@ -694,7 +695,7 @@ void find_neighbour(short mode, char *boxcall, char *nachbar)
 /* wird abgetrennt und falls gefunden durch die neue ersetzt. User machen    */
 /* viele falsche Angaben...                                                  */
 
-boolean complete_hierarchical_adress(char *mbx)
+bool complete_hierarchical_adress(char *mbx)
 {
   hboxtyp	hbox;
   mbxtype 	hmbx;
@@ -729,7 +730,7 @@ void add_hpath(char *mbx)
 
 /* Prüft, ob das Callsign eine bekannte Mailbox ist */
 
-boolean is_bbs(char *callsign)
+bool is_bbs(char *callsign)
 {
   hboxtyp    	hbox;
   mbxtype     	hmbx;
@@ -743,7 +744,7 @@ boolean is_bbs(char *callsign)
 
 /* Prüft, ob das Callsign eine bekannte Mailbox fuer direkten S&F ist */
 
-boolean direct_sf_bbs(char *callsign)
+bool direct_sf_bbs(char *callsign)
 {
   hboxtyp    	hbox;
   mbxtype     	hmbx;
@@ -763,7 +764,7 @@ boolean direct_sf_bbs(char *callsign)
 static void convert_hpath(void)
 {
   short		kin_index, kout_index;
-  long		ct, dsize;
+  int32_t	ct, dsize;
   hboxtyp	nheader;
   hboxtyp_old 	oheader;
   pathstr	oidxname, nidxname;
@@ -818,10 +819,10 @@ static void convert_hpath(void)
 
 /* sortiert zu alte Eintraege aus */
 
-void check_hpath(boolean reorg)
+void check_hpath(bool reorg)
 {
   short		kin_index, kout_index;
-  long		ct, dsize;
+  int32_t	ct, dsize;
   hboxtyp	nheader;
   pathstr	oidxname, nidxname;
 
@@ -881,12 +882,12 @@ void check_hpath(boolean reorg)
 }
 
 
-boolean add_wprot_box(char *hpath, time_t update, unsigned short status,
+bool add_wprot_box(char *hpath, time_t update, unsigned short status,
       	      	      char *connectcall, char *sysopcall)
 {
-  long	    seekp;
+  int32_t   seekp;
   short     hbh;
-  boolean   found, newer;
+  bool	    found, newer;
   char	    *p;
   calltype  call;
   hboxtyp   hbox;
@@ -949,8 +950,8 @@ boolean add_wprot_box(char *hpath, time_t update, unsigned short status,
       strcpy(hbox.hpath, hpath);
     }
     hbox.msgct_bp	= 1;
-    hbox.best_bp	= SHORT_MAX;
-    hbox.aver_bp	= SHORT_MAX;
+    hbox.best_bp	= SHRT_MAX;
+    hbox.aver_bp	= SHRT_MAX;
     hbox.bytect_bp	= 1;
   
     seekp		= sfseek(0, hbh, SFSEEKEND);
@@ -968,11 +969,11 @@ boolean add_wprot_box(char *hpath, time_t update, unsigned short status,
 
 /* ***************************************************************************** */
 
-boolean add_wprot_routing(char *callin, char *rxfromin, time_t timestamp, unsigned long quality, short hops)
+bool add_wprot_routing(char *callin, char *rxfromin, time_t timestamp, uint32_t quality, short hops)
 {
-  long	    seekp, rquality;
+  int32_t   seekp, rquality;
   short     hbh;
-  boolean   found, newer, write_back;
+  bool      found, newer, write_back;
   mbxtype   call, rxfrom;
   hboxtyp   hbox;
   
@@ -1040,10 +1041,10 @@ boolean add_wprot_routing(char *callin, char *rxfromin, time_t timestamp, unsign
     hbox.routing_quality = quality;
     strcpy(hbox.call, call);
     hbox.msgct_bp	= 1;
-    hbox.best_bp	= SHORT_MAX;
-    hbox.aver_bp	= SHORT_MAX;
-    hbox.best_p	      	= SHORT_MAX;
-    hbox.aver_p 	= SHORT_MAX;
+    hbox.best_bp	= SHRT_MAX;
+    hbox.aver_bp	= SHRT_MAX;
+    hbox.best_p	      	= SHRT_MAX;
+    hbox.aver_p 	= SHRT_MAX;
     hbox.bytect_bp	= 1;
       
     seekp		= sfseek(0, hbh, SFSEEKEND);
@@ -1078,10 +1079,10 @@ routingtype *find_routtable(char *call)
 /* the last measurement is read from disk,   */
 /* this will be used as an initial value     */
 /* after restart of the bbs 	      	     */
-boolean load_routing_table(void)
+bool load_routing_table(void)
 {
   short       k, x, y, z;
-  long	      l;
+  int32_t     l;
   time_t      thattime;
   unsigned short i;
   routingtype *sfp;
@@ -1182,19 +1183,19 @@ void save_routing_table(void)
 
   append(w, "# Do not touch this file!", true);
   append(w, "# !!!", true);
-  snprintf(hs, 255, "LRB %ld", last_wprot_r);
+  snprintf(hs, 255, "LRB %"PRId64, (int64_t)last_wprot_r);
   append(w, hs, true);  
   
   sfp 	= routing_root;
   while (sfp != NULL) {
-    snprintf(hs, 255, "%s %ld %d %ld %ld", sfp->call, sfp->lastspeed, sfp->last_measured,
-      	      	      	    sfp->lasttry, sfp->lastconnecttry);
+    snprintf(hs, 255, "%s %"PRId64" %d %"PRId64" %"PRId64, sfp->call, (int64_t)sfp->lastspeed, sfp->last_measured,
+      	      	      	    (int64_t)sfp->lasttry, (int64_t)sfp->lastconnecttry);
     append(w, hs, true);
-    snprintf(hs, 255, "LMV %s %ld %d", sfp->call, clock_.ixtime, WPRLINKCHECKBLOCKS);
+    snprintf(hs, 255, "LMV %s %"PRId64" %d", sfp->call, (int64_t)clock_.ixtime, WPRLINKCHECKBLOCKS);
     append(w, hs, false);
     y   = sfp->speedsrow;
     for (x = 0; x < LINKSPEEDS; x++) {
-      sprintf(hs, " %ld %ld", sfp->speeds[y], sfp->sizes[y]);
+      sprintf(hs, " %u %u", sfp->speeds[y], sfp->sizes[y]);
       append(w, hs, false);
       dec_lrow(y);
     }
@@ -1204,10 +1205,10 @@ void save_routing_table(void)
 }
 
 /* aging of link quality  */
-static unsigned short link_aging(unsigned short speed, time_t measured, boolean file_forward)
+static unsigned short link_aging(unsigned short speed, time_t measured, bool file_forward)
 {
   time_t  diff;
-  long	  z, h;
+  int32_t	z, h;
 
   debug0(3, 0, 236);
   diff	  = clock_.ixtime - measured;
@@ -1230,12 +1231,12 @@ static unsigned short link_aging(unsigned short speed, time_t measured, boolean 
 
 /* finally, here, the overall speed of all link checks is computed  */
 /* depending on "next", the current entry is only updated, or the complete table is shifted one round */
-static void calc_linkspeed_result(unsigned long newspeed, unsigned long newsize,
-      	      	      	      	  routingtype *sfp, boolean next)
+static void calc_linkspeed_result(uint32_t newspeed, uint32_t newsize,
+      	      	      	      	  routingtype *sfp, bool next)
 {
   short   x, v, percent;
-  long	  tsize;
-  long	  minspeed;
+  int32_t	tsize;
+  int32_t	minspeed;
   double  tspeed;
 
   debug0(3, 0, 235);
@@ -1283,7 +1284,7 @@ static void calc_linkspeed_result(unsigned long newspeed, unsigned long newsize,
   sfp->kspeed = link_aging(sfp->kspeed, sfp->lastspeed, sfp->file_forward);
 
   if (sfp->file_forward) {
-    /* if this link goes via file forward, age it with SHORT_MAX/2 */
+    /* if this link goes via file forward, age it with SHRT_MAX/2 */
     if (sfp->kspeed >= WPRADDWIRE) sfp->kspeed = WPRMAXQUAL;
     else sfp->kspeed += WPRADDWIRE;
   }
@@ -1292,9 +1293,9 @@ static void calc_linkspeed_result(unsigned long newspeed, unsigned long newsize,
 /* this function computes the "real world" value for the link speed: seconds per 100 kBytes   */
 /* if "clear" is set, the so far collected data is cleared and the table shifted one round    */
 /* this should be done all WPRLINKCHECKBLOCKS seconds  	      	      	      	      	      */
-static void calc_linktable(routingtype *sfp, boolean clear)
+static void calc_linktable(routingtype *sfp, bool clear)
 {
-  long	    speed;
+  int32_t	speed;
 
   debug0(3, 0, 234);
   if (sfp == NULL) return;
@@ -1307,7 +1308,7 @@ static void calc_linktable(routingtype *sfp, boolean clear)
     sfp->lastspeed  = clock_.ixtime;
     sfp->last_measured = speed;
   } else speed = 0;
-  calc_linkspeed_result((unsigned long)speed, sfp->tempsizes, sfp, clear);
+  calc_linkspeed_result((uint32_t)speed, sfp->tempsizes, sfp, clear);
   if (clear) {
     sfp->tempsizes  = 0;
     sfp->tempspeeds = 0;
@@ -1316,9 +1317,9 @@ static void calc_linktable(routingtype *sfp, boolean clear)
 
 /* here we get single results of linktests, no matter */
 /* how often and for how many data    	      	      */
-void calc_linkspeed(routingtype *sfp, long starttime, long size)
+void calc_linkspeed(routingtype *sfp, int32_t starttime, int32_t size)
 {
-  long ticks;
+  int32_t ticks;
 
   debug0(3, 0, 230);
   if (sfp == NULL) return;
@@ -1441,7 +1442,7 @@ void compare_routing_and_sf_pointers(void)
 }
 
 /* init a linktable */
-void init_linkspeeds(sfdeftype *sfp, boolean file_forward)
+void init_linkspeeds(sfdeftype *sfp, bool file_forward)
 {  
   if (sfp == NULL) return;
 
@@ -1469,7 +1470,7 @@ void calc_routing_table(void)
   save_routing_table();
 }
 
-unsigned long get_link_quality(char *call)
+uint32_t get_link_quality(char *call)
 {
   routingtype *sfp;
 
@@ -1478,7 +1479,7 @@ unsigned long get_link_quality(char *call)
   return sfp->kspeed;
 }
 
-unsigned long get_link_quality_and_status(char *call)
+uint32_t get_link_quality_and_status(char *call)
 {
   routingtype *sfp;
 
@@ -1497,7 +1498,7 @@ time_t last_linkcheck(char *call)
   return sfp->lastspeed;
 }
 
-boolean needs_linkcheck(char *call, boolean tryconnect)
+bool needs_linkcheck(char *call, bool tryconnect)
 {
   routingtype *rp;
 
@@ -1519,7 +1520,7 @@ boolean needs_linkcheck(char *call, boolean tryconnect)
   return true;
 }
 
-boolean send_full_routing_bc(char *call)
+bool send_full_routing_bc(char *call)
 {
   routingtype *rp;
   
@@ -1527,7 +1528,7 @@ boolean send_full_routing_bc(char *call)
   return (rp->sends_route_bc || rp->routing_guest);
 }
 
-boolean is_phantom(char *call)
+bool is_phantom(char *call)
 {
   routingtype *rp;
   
@@ -1535,7 +1536,7 @@ boolean is_phantom(char *call)
   return (rp->send_phantom);
 }
 
-boolean is_full_sf_partner_for_routing(char *call)
+bool is_full_sf_partner_for_routing(char *call)
 {
   routingtype *rp;
   
@@ -1544,7 +1545,7 @@ boolean is_full_sf_partner_for_routing(char *call)
 }
 
 /* does this neighbour presents a "W" in its SID ? */
-boolean get_wprot_neighbour(char *call)
+bool get_wprot_neighbour(char *call)
 {
   short       handle;
   pathstr     fname;
@@ -1564,7 +1565,7 @@ boolean get_wprot_neighbour(char *call)
 }
 
 /* does this neighbour presents a "W" in its SID ? */
-void set_wprot_neighbour(char *call, boolean yes)
+void set_wprot_neighbour(char *call, bool yes)
 {
   short       handle, handle2;
   sfdeftype   *sfp;
@@ -1607,10 +1608,10 @@ void set_wprot_neighbour(char *call, boolean yes)
 }
 
 /* this function prints the current linktables */
-boolean get_routing_table(short unr)
+bool get_routing_table(short unr)
 {
   short       	  x, y, z;
-  boolean     	  have_r, have_p;
+  bool     	  have_r, have_p;
   char	      	  action;
   routingtype     *rp;
   pathstr     	  sortname;
@@ -1656,7 +1657,7 @@ boolean get_routing_table(short unr)
       z   = LINKSPEEDS;
       if (z > 10) z = 10;
       for (x = 0; x < z; x++) {
-      	snprintf(w, 20, " %5ld", rp->speeds[y]);
+      	snprintf(w, 20, " %5u", rp->speeds[y]);
 	strcat(hs, w);
 	dec_lrow(y);
       }
@@ -1710,7 +1711,7 @@ void get_routing_targets(short unr, char *prefix)
     lower(hbox.cur_routing_neighbour);
     if (is_phantom_timestamp(hbox.cur_wprot_routing_update)) boxtype = '-';
     else boxtype = '+';
-    snprintf(w, 50, "%-*s %6ld%c%2d>%-*s  ", LEN_CALL, hbox.call, hbox.cur_routing_quality,
+    snprintf(w, 50, "%-*s %6u%c%2d>%-*s  ", LEN_CALL, hbox.call, hbox.cur_routing_quality,
       	      	      	      	      	     boxtype, hbox.cur_routing_hops,
       	      	      	      	      	     LEN_CALL, hbox.cur_routing_neighbour);
     str2file(&sf, w, true);
@@ -1752,12 +1753,12 @@ void get_routing_targets(short unr, char *prefix)
 /* Mit den daraus gewonnenen Informationen wird der BBS-Router gefuettert.   */
 /* Ausserdem wird das Absenderdatum der Nachricht ermittelt.                 */
 
-short scan_hierarchicals(char *from1, char *puffer, long size, time_t *txdate,
-			 boolean sfpartner, char msgtyp, char *lastvias)
+short scan_hierarchicals(char *from1, char *puffer, int32_t size, time_t *txdate,
+			 bool sfpartner, char msgtyp, char *lastvias)
 {
   short		k, i, btc, hops, lct, lastrl, hbh, loops, lviact;
-  boolean	found;
-  long		lastminutes, minutes, alterfakt, hmsgct, seekp, rp;
+  bool		found;
+  int32_t	lastminutes, minutes, alterfakt, hmsgct, seekp, rp;
   hboxtyp	hbox;
   calltype	neighbour, lastfrom;
   char		hs[256], hcall[256], htime[256], w1[256], adesc[256];
@@ -1976,8 +1977,8 @@ short scan_hierarchicals(char *from1, char *puffer, long size, time_t *txdate,
 			hbox.best_bp	= minutes + hops * 3;
 			hbox.aver_bp	= hbox.best_bp;
 		      } else {
-			hbox.best_bp	= SHORT_MAX;
-			hbox.aver_bp	= SHORT_MAX;
+			hbox.best_bp	= SHRT_MAX;
+			hbox.aver_bp	= SHRT_MAX;
 		      }
 		      hbox.bytect_bp	= size - rp;
 		      
@@ -1990,8 +1991,8 @@ short scan_hierarchicals(char *from1, char *puffer, long size, time_t *txdate,
 			  hbox.best_p   = minutes + hops * 3;
 			  hbox.aver_p   = hbox.best_p;
 			} else {
-			  hbox.best_p	= SHORT_MAX;
-			  hbox.aver_p	= SHORT_MAX;
+			  hbox.best_p	= SHRT_MAX;
+			  hbox.aver_p	= SHRT_MAX;
 			}
 			hbox.bytect_p 	= size - rp;
 			hbox.at_p     	= clock_.ixtime;
