@@ -17,29 +17,29 @@ extern void close_outfile2(short unr);
 	&& (user[unr]->umode == UM_FILEOUT || user[unr]->umode == UM_SINGLEREQ)) \
 	close_outfile2(unr)
 extern void abort_useroutput(short unr);
-extern void x_show_puffer(short unr, char *base, long size, boolean in_trace, boolean transparent);
+extern void x_show_puffer(short unr, char *base, int32_t size, bool in_trace, bool transparent);
 #define show_puffer(unr, base, size) x_show_puffer(unr, base, size, false, false)
 #define trans_show_puffer(unr, base, size) x_show_puffer(unr, base, size, false, true)
 extern void wuser(const short unr, const char *s);
 extern void wlnuser(const short unr, const char *s);
 extern void wlnuser0(const short unr);
 extern void chwuser(const short unr, char c);
-extern void lwuser(const short unr, const long value);
+extern void lwuser(const short unr, const int32_t value);
 extern void swuser(const short unr, const short value);
 extern void box_rawinput(short unr, unsigned short infosize, unsigned short *infstart, char *info);
 extern void fbbpack(short unr, unsigned short infosize, unsigned short *infstart, char *info);
 extern void fbb2pack(short unr, unsigned short infosize, unsigned short *infstart, char *info);
 extern void sort_new_mail(short unr, char *pattern, char *rcall);
-extern void box_timing(long tct);
-extern void melde_user_ab(short unr, boolean sav);
-extern void abort_box(short unr, boolean save);
-extern short melde_user_an(char *calls1, short cons, short chan, short mode, boolean reconnect);
+extern void box_timing(int32_t tct);
+extern void melde_user_ab(short unr, bool sav);
+extern void abort_box(short unr, bool save);
+extern short melde_user_an(char *calls1, short cons, short chan, short mode, bool reconnect);
 extern void box_get_next_input(void);
 extern void clear_immediately_input(short unr);
-extern void box_input(short unr, boolean inbegruessung, char *cmd, boolean return_);
-extern void trace_string(boolean userinp, short unr, short trace, const char *s1, boolean cr);
+extern void box_input(short unr, bool inbegruessung, char *cmd, bool return_);
+extern void trace_string(bool userinp, short unr, short trace, const char *s1, bool cr);
 extern void raw_unproto_request(short pid, short callcount, short heardfrom,
-  char *port, char (*calls)[10], long len, char *buf);
+  char *port, char (*calls)[10], int32_t len, char *buf);
 
 
 

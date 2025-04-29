@@ -69,9 +69,9 @@ void close_outfile2(short unr)
 
 /* ************************** Die Trace-Rueckkopplung ************************ */
 
-static void x_Vwuser(const short unr, const char *s, const boolean crlf, const boolean in_trace);
+static void x_Vwuser(const short unr, const char *s, const bool crlf, const bool in_trace);
 
-static void fill_traceheader(boolean userinp, short unr, char *hs, boolean cr)
+static void fill_traceheader(bool userinp, short unr, char *hs, bool cr)
 {
   char direction;
 
@@ -87,8 +87,8 @@ static void fill_traceheader(boolean userinp, short unr, char *hs, boolean cr)
 }
 
 
-void trace_string(boolean userinp, short unr, short trace, const char *s,
-		  boolean cr)
+void trace_string(bool userinp, short unr, short trace, const char *s,
+		  bool cr)
 {
   char hs[256], s2[256];
 
@@ -141,8 +141,8 @@ void trace_string(boolean userinp, short unr, short trace, const char *s,
 }
 
 
-static void trace_buf(boolean userinp, short unr, short trace, char *p1,
-		      long s1)
+static void trace_buf(bool userinp, short unr, short trace, char *p1,
+		      int32_t s1)
 {
   char hs[256], w[256];
 
@@ -157,7 +157,7 @@ static void trace_buf(boolean userinp, short unr, short trace, char *p1,
 
   if (!user[trace]->fulltrace) {
     fill_traceheader(userinp, unr, hs, false);
-    sprintf(w, "%ld", s1);
+    sprintf(w, "%d", s1);
     sprintf(hs + strlen(hs), "<%s>", w);
     x_Vwuser(trace, hs, true, true);
     return;
@@ -186,10 +186,10 @@ void abort_useroutput(short unr)
 /* gibt einen Speicherbereich auf den Spooler aus. Sucht nach dem #BIN#- */
 /* Start, um den Wechsel von Strip-LF zu LF-Sendung mitzubekommen        */
 
-void x_show_puffer(short unr, char *base, long size, boolean in_trace,
-		   boolean transparent)
+void x_show_puffer(short unr, char *base, int32_t size, bool in_trace,
+		   bool transparent)
 {
-  long err;
+  int32_t err;
   short k;
   char hs[256];
   userstruct *WITH;
@@ -241,10 +241,10 @@ void x_show_puffer(short unr, char *base, long size, boolean in_trace,
 
 /* zeilenweise Ausgabe ueber den Spooler  */
 
-void x_Vwuser(const short unr, const char *s, const boolean crlf, const boolean in_trace)
+void x_Vwuser(const short unr, const char *s, const bool crlf, const bool in_trace)
 {
   short k;
-  long l;
+  int32_t l;
   userstruct *WITH;
 
   if (!boxrange(unr))
@@ -269,7 +269,7 @@ void x_Vwuser(const short unr, const char *s, const boolean crlf, const boolean 
     } else if (WITH->umode == UM_FILESF) { /* this happens after forward conversion */
       if (strlen(WITH->spath) + strlen(s) < LEN_PATH) strcat(WITH->spath, s);
       else strcpy(WITH->spath, s);
-      immediate_extcheck = WITH->spath != '\0';
+      immediate_extcheck = *WITH->spath != '\0';
     }
     return;
   }
@@ -296,11 +296,11 @@ void wlnuser0(const short unr)
   x_Vwuser(unr, "", true, false);
 }
 
-void lwuser(const short unr, const long value)
+void lwuser(const short unr, const int32_t value)
 {
   char s[50];
 
-  sprintf(s, "%ld", value);
+  sprintf(s, "%d", value);
   x_Vwuser(unr, s, false, false);
 }
 
@@ -346,7 +346,7 @@ void chwuser(const short unr, char c)
       sprintf(s, "%c", c);    
       if (strlen(WITH->spath) + 1 < LEN_PATH) strcat(WITH->spath, s);
       else strcpy(WITH->spath, s);
-      immediate_extcheck = WITH->spath != '\0';
+      immediate_extcheck = *WITH->spath != '\0';
     }
     return;
   }
@@ -368,7 +368,7 @@ void chwuser(const short unr, char c)
 /* Die Abbruchroutine fuer die Box. Wird benutzt bei Disconnect oder  */
 /* auch geschlossenem Terminal, aufgerufen vom PR-Terminal            */
 
-void abort_box(short unr, boolean save)
+void abort_box(short unr, bool save)
 {
   userstruct *WITH;
 
@@ -383,7 +383,7 @@ void abort_box(short unr, boolean save)
 }
 
 
-void box_timing(long tct)
+void box_timing(int32_t tct)
 {
   box_timing2(tct);
 }
@@ -399,7 +399,7 @@ void box_rawinput(short unr, unsigned short infosize,
 		  unsigned short *infstart, char *info)
 {
   char *p;
-  long hsize;
+  int32_t hsize;
   userstruct *WITH;
 
   current_unr = unr;
@@ -408,7 +408,7 @@ void box_rawinput(short unr, unsigned short infosize,
 
   if (infosize > 256 || infosize < *infstart || *infstart <= 0) {
     debug(0, unr, 83, "infosize/infstart invalid");
-    *infstart = SHORT_MAX;
+    *infstart = SHRT_MAX;
     return;
   }
 
@@ -417,7 +417,7 @@ void box_rawinput(short unr, unsigned short infosize,
   strcpy(current_user, user[unr]->call);
   if ((unsigned)user[unr]->action < 32 &&
       ((1L << user[unr]->action) & 0xc000L) != 0) {
-    *infstart = SHORT_MAX;
+    *infstart = SHRT_MAX;
     return;
   }
 
@@ -470,7 +470,7 @@ void fbbpack(short unr, unsigned short infosize, unsigned short *infstart,
 
   if (infosize > 256 || infosize < *infstart || *infstart <= 0) {
     debug(0, unr, 83, "infosize/infstart invalid");
-    *infstart = SHORT_MAX;
+    *infstart = SHRT_MAX;
     return;
   }
 
@@ -480,7 +480,7 @@ void fbbpack(short unr, unsigned short infosize, unsigned short *infstart,
   strcpy(current_user, user[unr]->call);
   if ((unsigned)user[unr]->action < 32 &&
       ((1L << user[unr]->action) & 0xc000L) != 0) {
-    *infstart = SHORT_MAX;
+    *infstart = SHRT_MAX;
     return;
   }
 
@@ -509,7 +509,7 @@ void fbb2pack(short unr, unsigned short infosize, unsigned short *infstart,
 
   if (infosize > 256 || infosize < *infstart || *infstart <= 0) {
     debug(0, unr, 84, "infosize/infstart invalid");
-    *infstart = SHORT_MAX;
+    *infstart = SHRT_MAX;
     return;
   }
 
@@ -517,7 +517,7 @@ void fbb2pack(short unr, unsigned short infosize, unsigned short *infstart,
     strcpy(current_user, user[unr]->call);
     if ((unsigned)user[unr]->action < 32 &&
 	((1L << user[unr]->action) & 0xc000L) != 0) {
-      *infstart = SHORT_MAX;
+      *infstart = SHRT_MAX;
       return;
     }
 
@@ -539,7 +539,7 @@ void fbb2pack(short unr, unsigned short infosize, unsigned short *infstart,
 
 
 void raw_unproto_request(short pid, short callcount, short heardfrom,
-			 char *port, char (*calls)[10], long len, char *buf)
+			 char *port, char (*calls)[10], int32_t len, char *buf)
 {
   short x;
   char path[256];
@@ -591,7 +591,7 @@ void box_get_next_input(void)
 {
   boxintype *hpbi;
   short unr, olda;
-  boolean was_server;
+  bool was_server;
   userstruct *WITH;
   char STR1[256];
 
@@ -728,7 +728,7 @@ void clear_immediately_input(short unr)
   boxintype *hpbi;
   short olda;
 
-  boolean was_server;
+  bool was_server;
   userstruct *WITH;
   char STR1[256];
 
@@ -845,11 +845,11 @@ void clear_immediately_input(short unr)
 
 /* Die Haupteingabe der Box. Zusaetzlich gibt es noch fbbpack und fbb2pack   */
 
-void box_input(short unr, boolean inbegruessung, char *cmd,
-	       boolean return_)
+void box_input(short unr, bool inbegruessung, char *cmd,
+	       bool return_)
 {
   char p[256];
-  long l;
+  int32_t l;
   boxintype *hpbi, *hpb2;
   userstruct *WITH;
 
@@ -958,13 +958,13 @@ UM_FILESF   =   8;
 */
 
 short melde_user_an(char *calls1, short cons, short chan, short mode,
-		    boolean reconnect)
+		    bool reconnect)
 {
   short Result;
   short x, y, z, newchan;
-  boolean double_;
+  bool double_;
   short dct;
-  long count;
+  int32_t count;
   char calls[256];
   char hs[256], path[256];
   char lan[256];
@@ -1300,10 +1300,10 @@ short melde_user_an(char *calls1, short cons, short chan, short mode,
 }
 
 
-void melde_user_ab(short unr, boolean sav)
+void melde_user_ab(short unr, bool sav)
 {
   short x;
-  boolean is_proto;
+  bool is_proto;
   char hs[256];
   boxintype *hpbi;
   userstruct *WITH;
