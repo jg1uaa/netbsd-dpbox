@@ -26,6 +26,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <unistd.h>
+#include <stdint.h>
 #include "filesys.h"
 #include "boxlocal.h"
 #include "box_logs.h"
@@ -36,11 +37,11 @@
 
 static int in_memory, out_memory;
 FILE *infile, *outfile;
-static unsigned long int  textsize, codesize;
+static uint32_t  textsize, codesize;
 static char *srcbuf, *destbuf;
 static char *srcbufptr, *destbufptr;
-static long srclen, destlen;
-static long srcbuflen, destbuflen;
+static int32_t srclen, destlen;
+static int32_t srcbuflen, destbuflen;
 
 /* read byte from input */
 static int read_char()
@@ -86,8 +87,7 @@ static unsigned int read_char1()
 }
 
 /* write byte to output */
-static int wri_char(chr)
-int chr;
+static int wri_char(int chr)
 {
   if (out_memory) {
     if (destlen < destbuflen) {
@@ -126,7 +126,7 @@ static unsigned char    same[N4K + 1];
 /* Initialize Tree */
 static void InitTree () 
 {
-    register int *p, *e;
+    int *p, *e;
 
     for (p = rson + N2K + 1, e = rson + N4K + N4K; p <= e; )
         *p++ = NIL;
@@ -135,14 +135,13 @@ static void InitTree ()
 }
 
 /* Insert to node */
-static void InsertNode (r)
-    register int r;
+static void InsertNode (int r)
 {
-    register int        p;
+    int        p;
     int         cmp;
-    register unsigned char  *key;
-    register unsigned int   c;
-    register unsigned int   i, j;
+    unsigned char  *key;
+    unsigned int   c;
+    unsigned int   i, j;
 
     cmp = 1;
     key = &text_buf[r];
@@ -212,10 +211,9 @@ static void InsertNode (r)
     dad[p] = NIL;  /* remove p */
 }
 
-static void llink (n, p, q)
-    int n, p, q;
+static void llink (int n, int p, int q)
 {
-    register unsigned char *s1, *s2, *s3;
+    unsigned char *s1, *s2, *s3;
     if (p >= NIL) {
         same[q] = 1;
         return;
@@ -233,8 +231,7 @@ static void llink (n, p, q)
 }
 
 
-static void linknode (p, q, r)
-    int p, q, r;
+static void linknode (int p, int q, int r)
 {
     int cmp;
 
@@ -245,10 +242,9 @@ static void linknode (p, q, r)
     }
 }
 
-static void DeleteNode (p)
-    register int p;
+static void DeleteNode (int p)
 {
-    register int  q;
+    int  q;
 
     if (dad[p] == NIL)
         return;         /* has no linked */
@@ -414,8 +410,8 @@ static char getlen = 0;
 /* returning in Bit 0 */
 static int GetBit ()
 {
-    register unsigned int dx = getbuf;
-    register unsigned int c;
+    unsigned int dx = getbuf;
+    unsigned int c;
 
     if (getlen <= 8)
         {
@@ -432,8 +428,8 @@ static int GetBit ()
 /* returning in Bit7...0 */
 static int GetByte ()
 {
-    register unsigned int dx = getbuf;
-    register unsigned c;
+    unsigned int dx = getbuf;
+    unsigned c;
 
     if (getlen <= 8) {
         c = read_char1();
@@ -447,11 +443,10 @@ static int GetByte ()
 
 /* get N bit */
 /* returning in Bit(N-1)...Bit 0 */
-static int GetNBits (n)
-    register unsigned int n;
+static int GetNBits (unsigned int n)
 {
-    register unsigned int dx = getbuf;
-    register unsigned int c;
+    unsigned int dx = getbuf;
+    unsigned int c;
     static int mask[17] = {
         0x0000,
         0x0001, 0x0003, 0x0007, 0x000f,
@@ -476,12 +471,10 @@ static unsigned putbuf = 0;
 static char putlen = 0;
 
 /* output C bits */
-static int Putcode (l, c)
-    register int l;
-    register unsigned int c;
+static int Putcode (int l, unsigned int c)
 {
-    register int len = putlen;
-    register unsigned int b = putbuf;
+    int len = putlen;
+    unsigned int b = putbuf;
     b |= c >> len;
     if ((len += l) >= 8) {
         if (wri_char(b >> 8) == EOF) return(1);
@@ -505,7 +498,7 @@ static int Putcode (l, c)
 
 static void StartHuff ()
 {
-    register int i, j;
+    int i, j;
 
     for (i = 0; i < N_CHAR; i++) {
         freq[i] = 1;
@@ -529,8 +522,8 @@ static void StartHuff ()
 /* reconstruct tree */
 static void reconst ()
 {
-    register int i, j, k;
-    register unsigned f;
+    int i, j, k;
+    unsigned f;
 
     /* correct leaf node into of first half,
        and set these freqency to (freq+1)/2       */
@@ -548,12 +541,12 @@ static void reconst ()
         f = freq[j] = freq[i] + freq[k];
         for (k = j - 1; f < freq[k]; k--);
         k++;
-        {   register unsigned *p, *e;
+        {   unsigned *p, *e;
             for (p = &freq[j], e = &freq[k]; p > e; p--)
                 p[0] = p[-1];
             freq[k] = f;
         }
-        {   register int *p, *e;
+        {   int *p, *e;
             for (p = &son[j], e = &son[k]; p > e; p--)
                 p[0] = p[-1];
             son[k] = i;
@@ -572,11 +565,10 @@ static void reconst ()
 
 /* update given code's frequency, and update tree */
 
-static void update (c)
-    unsigned int    c;
+static void update (unsigned int c)
 {
-    register unsigned *p;
-    register int i, j, k, l;
+    unsigned *p;
+    int i, j, k, l;
 
     if (freq[R] == MAX_FREQ) {
         reconst();
@@ -610,12 +602,11 @@ static void update (c)
 
 /* static unsigned code, len; */
 
-static int Encodechar (c)
-    unsigned c;
+static int Encodechar (unsigned c)
 {
-    register int *p;
-    register unsigned long i;
-    register int j, k;
+    int *p;
+    uint32_t i;
+    int j, k;
 
     i = 0;
     j = 0;
@@ -643,8 +634,7 @@ static int Encodechar (c)
     return(0);
 }
 
-static int EncodePosition (c)
-    unsigned c;
+static int EncodePosition (unsigned c)
 {
     unsigned i;
 
@@ -669,7 +659,7 @@ static int EncodeEnd()
 
 static int Decodechar ()
 {
-    register unsigned c;
+    unsigned c;
 
     c = son[R];
 
@@ -703,7 +693,7 @@ static int DecodePosition ()
 
 static int Encode ()
 {
-    register int  i, c, len, r, s, last_match_length;
+    int  i, c, len, r, s, last_match_length;
 
     textsize = 0;
     StartHuff();
@@ -752,11 +742,10 @@ static int Encode ()
     return(0);
 }
 
-static int Decode(textsize)  /* recover */
-unsigned long int textsize;
+static int Decode(uint32_t textsize)  /* recover */
 {
-    register int    i, j, k, r, c;
-    register unsigned long int count;
+    int    i, j, k, r, c;
+    uint32_t count;
 
     StartHuff();
     r = N4K - F;
@@ -796,10 +785,7 @@ static void init_huf()
   putlen = 0;
 }
 
-int enchuf(gzip,preserve_original,inputfile,outputfile,crlfconv)
-char *inputfile;
-char *outputfile;
-int crlfconv, gzip, preserve_original;
+int enchuf(int gzip,int preserve_original,char *inputfile,char *outputfile,int crlfconv)
 {
   int error;
   char tempname[80], hs[256];
@@ -937,10 +923,7 @@ int crlfconv, gzip, preserve_original;
   return(error);
 }
 
-int dechuf(gzip,preserve_original,inputfile,outputfile,crlfconv)
-char *inputfile;
-char *outputfile;
-int crlfconv, gzip, preserve_original;
+int dechuf(int gzip,int preserve_original,char *inputfile,char *outputfile,int crlfconv)
 {
   int error;
   char tempname[80], tempname2[80], hs[256], oname[256];
@@ -1085,21 +1068,15 @@ int crlfconv, gzip, preserve_original;
   return(error);
 }
 
-int enchufmem(gzip,membase,osize,outbase,outsize,outputfile,crlfconv)
-char *membase;
-long osize;
-char **outbase;
-long *outsize;
-char *outputfile;
-int crlfconv, gzip;
+int enchufmem(int gzip,char *membase,int32_t osize,char **outbase,int32_t *outsize,char *outputfile,int crlfconv)
 {
   int error;
   char *ptr;
   int i;
-  long size;
+  int32_t size;
   int conv;
   char *tmpbuf = NULL;
-  long tmplen;
+  int32_t tmplen;
   int bin;
   int prebin;
   int bintest;
@@ -1271,23 +1248,17 @@ int crlfconv, gzip;
   return(error);
 }
 
-int dechufmem(gzip,membase,size,outbase,outsize,outputfile,crlfconv)
-char *membase;
-long size;
-char **outbase;
-long *outsize;
-char *outputfile;
-int crlfconv, gzip;
+int dechufmem(int gzip,char *membase,int32_t size,char **outbase,int32_t *outsize,char *outputfile,int crlfconv)
 {
   int error;
   char *ptr;
   int i;
-  long packsize;
+  int32_t packsize;
   char tempname[80];
   char *outputfptr;
   int conv;
-  long worlen;
-  long tmplen;
+  int32_t worlen;
+  int32_t tmplen;
   char *tmpbuf;
   int bin;
   int prebin;

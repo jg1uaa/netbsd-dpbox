@@ -10,10 +10,10 @@
 extern short enchuf(int gzip, int preserve_original, char *inf, char *outf, int crlfconv);
 extern short dechuf(int gzip, int preserve_original, char *inf, char *outf, int crlfconv);
 
-extern short enchufmem(int gzip, void *membase, long size, void **outbase,
-		       long *outsize, char *outf, int crlfconv);
-extern short dechufmem(int gzip, void *membase, long size, void **outbase,
-		       long *outsize, char *outf, int crlfconv);
+extern short enchufmem(int gzip, void *membase, int32_t size, void **outbase,
+		       int32_t *outsize, char *outf, int crlfconv);
+extern short dechufmem(int gzip, void *membase, int32_t size, void **outbase,
+		       int32_t *outsize, char *outf, int crlfconv);
 
 #endif /*HUFFMAN_H*/
 
