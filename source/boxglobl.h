@@ -16,48 +16,48 @@ typedef void (*boxproc1type)(char *s);
 typedef void (*boxproc2type)(short i);
 typedef void (*boxproc0type)(void);
 typedef void (*boxproc3type)(short i, char *s);
-typedef void (*boxproc5type)(short i, char *s, boolean b);
+typedef void (*boxproc5type)(short i, char *s, bool b);
 typedef void (*boxproc6type)(short i, short t);
-typedef void (*boxproc7type)(short i, boolean b);
+typedef void (*boxproc7type)(short i, bool b);
 typedef void (*boxproc8type)
-  (short i, char *s1, char *s2, boolean b1, boolean b2, boolean b3);
+  (short i, char *s1, char *s2, bool b1, bool b2, bool b3);
 typedef void (*boxproc9type)
-  (boolean b, char *s1, short i, short k, long l1, long l2, long l3, char *s2);
-typedef void (*boxproc10type)(long l);
-typedef void (*boxproc11type)(char *s, boolean b);
+  (bool b, char *s1, short i, short k, int32_t l1, int32_t l2, int32_t l3, char *s2);
+typedef void (*boxproc10type)(int32_t l);
+typedef void (*boxproc11type)(char *s, bool b);
 typedef void (*boxproc12type)
-  (char *s, char *p, long l1, long l2, boolean b1, boolean b2, boolean b3);
-typedef void (*boxproc13type)(short i, boolean b, char *s);
-typedef void (*boxproc14type)(char *s, char **p, long *l, long k);
+  (char *s, char *p, int32_t l1, int32_t l2, bool b1, bool b2, bool b3);
+typedef void (*boxproc13type)(short i, bool b, char *s);
+typedef void (*boxproc14type)(char *s, char **p, int32_t *l, int32_t k);
 typedef void (*boxproc15type)(char *s);
 typedef void (*boxproc16type)(char *s);
 typedef void (*boxproc17type)(short i1, short i2, short i3);
 typedef void (*boxproc18type)
-  (short i1, short i2, short i3, boolean b, char *p, long l);
+  (short i1, short i2, short i3, bool b, char *p, int32_t l);
 typedef void (*boxproc19type)
-  (short i1, short i2, short i3, const char *s, boolean b);
+  (short i1, short i2, short i3, const char *s, bool b);
 typedef void (*boxproc20type)(short i, char *s);
 typedef void (*boxproc20atype)(short i, char *s, short iface, char *qrg);
-typedef void (*boxproc21type)(short i, char *s, boolean b);
-typedef void (*boxproc21atype)(short i, char *s, boolean b, short iface);
+typedef void (*boxproc21type)(short i, char *s, bool b);
+typedef void (*boxproc21atype)(short i, char *s, bool b, short iface);
 typedef void (*boxproc22type)(short i, char *s);
 typedef void (*boxproc23type)(short i, char *s);
-typedef void (*boxproc24type)(boolean b);
+typedef void (*boxproc24type)(bool b);
 
 typedef unsigned short (*boxfunc3type)(short x);
 typedef short (*boxfunc2type)(short x);
 typedef short (*boxfunc1type)(void);
-typedef boolean (*boxfunc0type)(void);
-typedef long (*boxfunc4type)(void);
-typedef long (*boxfunc5type)(short i);
-typedef boolean (*boxfunc6type)(short i, char *s1, char *s2);
+typedef bool (*boxfunc0type)(void);
+typedef int32_t (*boxfunc4type)(void);
+typedef int32_t (*boxfunc5type)(short i);
+typedef bool (*boxfunc6type)(short i, char *s1, char *s2);
 typedef unsigned short (*boxfunc7type)(void);
-typedef boolean (*boxfunc8type)(short x);
+typedef bool (*boxfunc8type)(short x);
 typedef short (*boxfunc9type)(char *s1, char *s2);
-typedef boolean (*boxfunc10type)(char *s1, char *s2, char *s3);
-typedef boolean (*boxfunc11type)(boolean b);
-typedef long (*boxfunc12type)(short i1, short i2, short i3);
-typedef void (*boxgetstatustype)(boolean sysop, char **p, long *sz);
+typedef bool (*boxfunc10type)(char *s1, char *s2, char *s3);
+typedef bool (*boxfunc11type)(bool b);
+typedef int32_t (*boxfunc12type)(short i1, short i2, short i3);
+typedef void (*boxgetstatustype)(bool sysop, char **p, int32_t *sz);
 typedef void (*boxfreestatptype)(char **p);
 
 extern void boxpushmonstat(short tnc);
@@ -72,33 +72,33 @@ extern void boxsetcompwait(short chan, short v);
 extern void boxreadallbuffers(void);
 extern void boxsaveallbuffers(void);
 extern short boxmodemport(void);
-extern long boxaktqrg(void);
-extern long boxtncqrg(short i);
+extern int32_t boxaktqrg(void);
+extern int32_t boxtncqrg(short i);
 extern void boxsetbox(short i, short t);
 extern void boxsetwasbox(short i, short t);
-extern void boxsetnode(short i, boolean b);
-extern void boxstartconnect(short i, char *s1, char *s2, boolean b1,
-			    boolean b2, boolean b3);
+extern void boxsetnode(short i, bool b);
+extern void boxstartconnect(short i, char *s1, char *s2, bool b1,
+			    bool b2, bool b3);
 extern short boxcallgemprg(char *s1, char *s2);
 extern void boxsgdial1(void);
 extern void boxegdial1(void);
 extern void boxsgdial(void);
 extern void boxegdial(void);
-extern void boxwait(long l);
+extern void boxwait(int32_t l);
 extern void boxrgdial1(char *s);
 extern void boxendbusy(void);
-extern void boxprprefix(short i, boolean b, char *s);
+extern void boxprprefix(short i, bool b, char *s);
 extern unsigned short boxruntime(void);
-extern void boxfreemostram(boolean b);
-extern void boxstartedit(char *s, char *p, long l1, long l2, boolean b1,
-			 boolean b2, boolean b3);
-extern void boxedit(char *s, char **p, long *l, long k);
+extern void boxfreemostram(bool b);
+extern void boxstartedit(char *s, char *p, int32_t l1, int32_t l2, bool b1,
+			 bool b2, bool b3);
+extern void boxedit(char *s, char **p, int32_t *l, int32_t k);
 extern void boxcancelmultibox(void);
 extern void boxprreset(char *s);
 extern void boxprkill(short i, char *s);
 extern void boxprdir(short i, char *s);
-extern boolean boxinitmodem(boolean b);
-extern boolean boxexitmodem(boolean b);
+extern bool boxinitmodem(bool b);
+extern bool boxexitmodem(bool b);
 extern void boxendmodem(void);
 extern void boxspoolfend(short chan);
 

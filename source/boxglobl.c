@@ -84,13 +84,13 @@ short boxmodemport(void)
 }
 
 
-long boxaktqrg(void)
+int32_t boxaktqrg(void)
 {
   return 438300L;
 }
 
 
-long boxtncqrg(short i)
+int32_t boxtncqrg(short i)
 {
   return 438300L;
 }
@@ -106,13 +106,13 @@ void boxsetwasbox(short i, short t)
 }
 
 
-void boxsetnode(short i, boolean b)
+void boxsetnode(short i, bool b)
 {
 }
 
 
-void boxstartconnect(short i, char *s1, char *s2, boolean b1, boolean b2,
-		     boolean b3)
+void boxstartconnect(short i, char *s1, char *s2, bool b1, bool b2,
+		     bool b3)
 {
 }
 
@@ -143,7 +143,7 @@ void boxegdial(void)
 }
 
 
-void boxwait(long l)
+void boxwait(int32_t l)
 {
 }
 
@@ -158,7 +158,7 @@ void boxendbusy(void)
 }
 
 
-void boxprprefix(short i, boolean b, char *s)
+void boxprprefix(short i, bool b, char *s)
 {
 }
 
@@ -169,18 +169,18 @@ unsigned short boxruntime(void)
 }
 
 
-void boxfreemostram(boolean b)
+void boxfreemostram(bool b)
 {
 }
 
 
-void boxstartedit(char *s, char *p, long l1, long l2, boolean b1, boolean b2,
-		  boolean b3)
+void boxstartedit(char *s, char *p, int32_t l1, int32_t l2, bool b1, bool b2,
+		  bool b3)
 {
 }
 
 
-void boxedit(char *s, char **p, long *l, long k)
+void boxedit(char *s, char **p, int32_t *l, int32_t k)
 {
 }
 
@@ -205,13 +205,13 @@ void boxprdir(short i, char *s)
 }
 
 
-boolean boxinitmodem(boolean b)
+bool boxinitmodem(bool b)
 {
   return false;
 }
 
 
-boolean boxexitmodem(boolean b)
+bool boxexitmodem(bool b)
 {
   return false;
 }
