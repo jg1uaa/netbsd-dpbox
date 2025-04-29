@@ -41,7 +41,7 @@ static void get_options(char *eingabe, char *options)
 }
 
 
-static boolean expand_path(short unr, char *path)
+static bool expand_path(short unr, char *path)
 {
   char	w[256];
   char	STR1[256];
@@ -60,12 +60,12 @@ static boolean expand_path(short unr, char *path)
 }
 
 
-static short call_7plus(boolean priv, short unr, char *fn, char *options, char *original1, char *board)
+static short call_7plus(bool priv, short unr, char *fn, char *options, char *original1, char *board)
 {
   short			k;
   pid_t			pid;
   time_t		tct;
-  boolean     	      	changed_to_longname = false;
+  bool     	      	changed_to_longname = false;
   unsigned short	date, time;
   char			hs[256], sd[256], ld[256], ofi[256], w[256], bd[256], resfile[256];
   char			original[256], splockfile[256], short_original[256];
@@ -211,7 +211,7 @@ static short call_7plus(boolean priv, short unr, char *fn, char *options, char *
 }
 
 
-static boolean expand_number(short unr, char *fn)
+static bool expand_number(short unr, char *fn)
 {
   short		nr;
   char		hs[256], s[256];
@@ -343,7 +343,7 @@ static void show_shelp(short unr)
 }
 
 
-static void copy_file(short unr, char *eingabe_, boolean del_src)
+static void copy_file(short unr, char *eingabe_, bool del_src)
 {
   char	eingabe[256];
   short	y, u, ret;
@@ -402,7 +402,7 @@ static void copy_file(short unr, char *eingabe_, boolean del_src)
 
 static void put_file2(short unr, char *eingabe, short mode);
 
-static void add_ascii(short unr, char *eingabe, boolean return_)
+static void add_ascii(short unr, char *eingabe, bool return_)
 {
   char	hs[256], w[256];
   short	x, ctrl_z;
@@ -520,7 +520,7 @@ static void put_file(short unr, char *eingabe_, short mode)
 {
   char		eingabe[256], fn[256], hs[256], inp[256], STR1[256];
   short		k, x;
-  boolean	is_upl, is_index;
+  bool		is_upl, is_index;
 
   strcpy(eingabe, eingabe_);
   if (!user[unr]->se_ok) {
@@ -607,7 +607,7 @@ static void put_file(short unr, char *eingabe_, short mode)
 static void page_file(short unr, char *eingabe)
 {
   short		k;
-  boolean	abo;
+  bool		abo;
   char		hs[256];
 
   k	= nohandle;
@@ -650,7 +650,7 @@ static void page_file(short unr, char *eingabe)
 }
 
 
-static void get_file(short unr, char *eingabe_, short mode, boolean paging)
+static void get_file(short unr, char *eingabe_, short mode, bool paging)
 {
   char eingabe[256], fn[256], hs[256], s[256], STR1[256];
 
@@ -830,9 +830,9 @@ static void expand_first_arg(short unr, char *eingabe, char *fname)
   else *fname = '\0';
 }
 
-void analyse_smode_command(short unr, char *eingabe, boolean return_)
+void analyse_smode_command(short unr, char *eingabe, bool return_)
 {
-  boolean	onlysys;
+  bool		onlysys;
   short		cnr;
   char		w[256], fname[256];
   userstruct	*WITH;
@@ -996,7 +996,7 @@ void analyse_smode_command(short unr, char *eingabe, boolean return_)
 
 
 
-void sig_7plus_incoming(boolean priv, char *name, char *original, char *board)
+void sig_7plus_incoming(bool priv, char *name, char *original, char *board)
 {
   char	hs[256], w[256];
 

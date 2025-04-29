@@ -4,8 +4,8 @@
 
 #include "pastrix.h"
 
-extern void analyse_smode_command(short unr, char *eingabe, boolean return_);
-extern void sig_7plus_incoming(boolean priv, char *name, char *original, char *board);
+extern void analyse_smode_command(short unr, char *eingabe, bool return_);
+extern void sig_7plus_incoming(bool priv, char *name, char *original, char *board);
 extern void smode_timer(void);
 
 #endif /*BOXFSERV_H*/
