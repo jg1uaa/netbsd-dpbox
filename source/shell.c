@@ -1,6 +1,6 @@
 /* ---- shell functs, stolen from TNT / Mark Wahl, DL4YBG ----- */
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -163,9 +163,7 @@ static void pty_check_timeout(short unr)
   }
 }
 
-static int read_data_pty(unr, buffer)
-short unr;
-char buffer[];
+static int read_data_pty(short unr, char buffer[])
 {
 
 #ifndef __macos__
@@ -210,7 +208,7 @@ void shell_receive(fd_set *fdmask)
 #endif
 }
 
-boolean close_shell(short unr)
+bool close_shell(short unr)
 {
   char buffer[256];
 
@@ -231,7 +229,7 @@ boolean close_shell(short unr)
       	trans_show_puffer(unr,user[unr]->ptybuffer,user[unr]->ptybuflen);
     }
     if (user[unr]->pty >= minhandle) {
-#if defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
       ioctl(user[unr]->pty, TCIOFLUSH, 2);
 #else
       ioctl(user[unr]->pty, TCFLSH, 2);
@@ -270,7 +268,7 @@ void set_dpbox_environment(short unr)
     setenv("DPBOXBOARD", WITH->brett, true);
     ix2string(WITH->lastdate, w);
     setenv("DPBOXLASTDATE", w, true);
-    sprintf(w, "%ld", WITH->lastdate);
+    sprintf(w, "%"PRId64, (int64_t)WITH->lastdate);
     setenv("DPBOXIXLASTDATE", w, true);
     if (WITH->se_ok)
       strcpy(w, "1");
@@ -372,7 +370,8 @@ int my_exec1(char *s, int hang)
     	strcpy(fname, token);
 	args[0] = fname;
     	ct = 1;
-	while ((args[ct] = strtok(NULL, " \t")) != NULL && ct++ < maxrunargs);
+	while ((args[ct] = strtok(NULL, " \t")) != NULL && ct++ < maxrunargs)
+		;
     	execvp(fname, args);
         sprintf(command, "exec: %s not found", fname);
         append_profile(-1, command);
@@ -384,7 +383,7 @@ int my_exec1(char *s, int hang)
 
 
 /* open a shell */
-boolean cmd_shell(short unr, boolean transparent)
+bool cmd_shell(short unr, bool transparent)
 {
 
 #ifndef NO_SHELL
@@ -415,7 +414,7 @@ boolean cmd_shell(short unr, boolean transparent)
     if (user[unr]->ptylfcrconv) {
       memset((char *) &termios, 0, sizeof(termios));
       termios.c_iflag = ICRNL | IXOFF;
-#if defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
       termios.c_oflag = OPOST | OXTABS | ONLRET;
 #else
       termios.c_oflag = OPOST | TAB3 | ONLRET;
@@ -439,7 +438,7 @@ boolean cmd_shell(short unr, boolean transparent)
     printf("\n"); /* leading newline nun ueber tty */
     execl("/bin/sh","/bin/sh","-login",(char *) 0);
     sprintf(slave, "shell (/bin/sh) not found (!?)\n");
-    printf(slave);
+    printf("%s", slave);
     append_profile(-1, slave);
     exit(1);
   }
@@ -451,7 +450,7 @@ boolean cmd_shell(short unr, boolean transparent)
 
 
 /* run a program on the current channel */
-boolean cmd_run(short unr, boolean transparent, char *command, char *ofi, char *add_environment)
+bool cmd_run(short unr, bool transparent, char *command, char *ofi, char *add_environment)
 {
 #ifndef __macos__
   char slave[80];
@@ -485,7 +484,7 @@ boolean cmd_run(short unr, boolean transparent, char *command, char *ofi, char *
     if (user[unr]->ptylfcrconv) {
       memset((char *) &termios, 0, sizeof(termios));
       termios.c_iflag = ICRNL | IXOFF;
-#if defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
       termios.c_oflag = OPOST | OXTABS | ONLRET;
 #else
       termios.c_oflag = OPOST | TAB3 | ONLRET;
@@ -549,7 +548,7 @@ boolean cmd_run(short unr, boolean transparent, char *command, char *ofi, char *
 }
 
 #define maxbuf 300
-boolean write_pty(short unr, int len, char *str)
+bool write_pty(short unr, int len, char *str)
 {
   char buffer[maxbuf];
 

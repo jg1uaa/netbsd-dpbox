@@ -2,10 +2,10 @@
 #define SHELL_H
 
 extern void shell_receive(fd_set *fdmask);
-extern boolean close_shell(short unr);
-extern boolean cmd_shell(short unr, boolean transparent);
-extern boolean cmd_run(short unr, boolean transparent, char *command, char *ofi, char *add_environment);
-extern boolean write_pty(short unr, int len, char *str);
+extern bool close_shell(short unr);
+extern bool cmd_shell(short unr, bool transparent);
+extern bool cmd_run(short unr, bool transparent, char *command, char *ofi, char *add_environment);
+extern bool write_pty(short unr, int len, char *str);
 extern void shell_fdset(int *max_fd, fd_set *fdmask);
 extern int my_exec1(char *s, int hang);
   
