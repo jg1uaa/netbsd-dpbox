@@ -24,7 +24,7 @@
 #include "box_file.h"
 
 
-static short start_extract(boolean priv, short what, char *s, char *subject,
+static short start_extract(bool priv, short what, char *s, char *subject,
 			   char *sender, char *board, char *name)
 {
   short		Result, k, x;
@@ -215,7 +215,7 @@ void check_accepted_bad_rcalls_syntax(char *s)
   }
 }
 
-static boolean accepted_bad_rcall(char *s)
+static bool accepted_bad_rcall(char *s)
 {
   short l;
   char *p;
@@ -270,7 +270,7 @@ void create_my_rline(time_t rxdate, char *bid, char *rline)
 012345678901
 */
 
-static boolean check_rdate(char *rdate)
+static bool check_rdate(char *rdate)
 {
   short l;
   
@@ -308,7 +308,7 @@ time_t get_headerdate(char *timestr)
 {
   int 	      	      	fbby2kbug = 0;
   unsigned short	l, dd, mm, yy, hh, mi, ss;
-  boolean     	      	only_date = false;
+  bool     	      	only_date = false;
 
   l = strlen(timestr);
   if (l < 10 || !check_rdate(&timestr[2])) return 0;
@@ -378,7 +378,7 @@ void get_rcall(char *rline, char *rcall)
   if (get_rtoken(rline, "@:", rcall, LEN_MBX) == NULL) get_w0rli_call(rline, rcall);
 }
 
-static boolean analyze_address_headline(char *line, char *token, char *para, short maxlen)
+static bool analyze_address_headline(char *line, char *token, char *para, short maxlen)
 {
   char	*p;
   char	w[256];
@@ -400,7 +400,7 @@ static boolean analyze_address_headline(char *line, char *token, char *para, sho
   return (*para != '\0');
 }
 
-static boolean strip_invalid_chars(char *s)
+static bool strip_invalid_chars(char *s)
 {
   char	*p;
   
@@ -410,7 +410,7 @@ static boolean strip_invalid_chars(char *s)
   return p == s;
 }
 
-static boolean call_in_hpath(char *s)
+static bool call_in_hpath(char *s)
 {
   short   count;
   char	  *p;
@@ -434,7 +434,7 @@ static boolean call_in_hpath(char *s)
   return false;
 }
 
-static boolean accepted_distchange(char *olddist, char *newdist)
+static bool accepted_distchange(char *olddist, char *newdist)
 {
   if (	 !strcmp(olddist, "WWW")
       || !strcmp(olddist, "ALLBBS")
@@ -450,13 +450,13 @@ static boolean accepted_distchange(char *olddist, char *newdist)
   return false;
 }
 
-static boolean check_sanity(char *puffer, long size, char *absender, char *board,
+static bool check_sanity(char *puffer, int32_t size, char *absender, char *board,
       	      	      	    char *mbx, char *bid, char *subject, char msgtype,
 			    char *reason)
 {
-  long	    rp, ct, ctb;
+  int32_t   rp, ct, ctb;
   short     bidchanges;
-  boolean   blankline, rline, atcall, fromok, took, bidchange;
+  bool	    blankline, rline, atcall, fromok, took, bidchange;
   char	    *p;
   calltype  fromcall, call, lastbidokat;
   boardtype toboard;
@@ -635,17 +635,17 @@ static boolean check_sanity(char *puffer, long size, char *absender, char *board
 /* Ab v5.08.11 erweiterter Test auf korrekte R:-Zeilen	      	      	 */
 /* Ab v5.08.14 Scan nach WPROT-Infos  	      	      	      	      	 */
 
-boolean scan_for_ack(char *puffer, long size, boolean wpupdate,
-      	      	     boolean wprotupdate, boolean part,
+bool scan_for_ack(char *puffer, int32_t size, bool wpupdate,
+      	      	     bool wprotupdate, bool part,
                      char *absender, char *board, char *subject, char *mbx,
-		     char *bid, char msgtype, char *ackcall, boolean *is_binary,
-		     boolean *is_dirty, boolean *is_html, char *dirtystring,
-		     boolean *is_7plus, boolean *is_broken)
+		     char *bid, char msgtype, char *ackcall, bool *is_binary,
+		     bool *is_dirty, bool *is_html, char *dirtystring,
+		     bool *is_7plus, bool *is_broken)
 {
   short		x, lct, lastrl, a, extracthandle;
-  boolean	rok, priv, is_ack;
-  long		binstart; /* now a dummy value */
-  long		rp, lp, lp2, li;
+  bool		rok, priv, is_ack;
+  int32_t	binstart __attribute__((unused)); /* now a dummy value */
+  int32_t	rp, lp, lp2, li;
   time_t	txdate;
   pathstr	extractname;
   char		hs[1000], w[256], shs[256], hsu[256];

@@ -10,11 +10,11 @@ extern char *get_rtoken(char *rline, char *token, char *para, short maxlen);
 extern char *get_w0rli_call(char *rline, char *para);
 extern void get_rcall(char *rline, char *rcall);
 extern time_t get_headerdate(char *timestr);
-extern boolean scan_for_ack(char *puffer, long size, boolean wpupdate,
-      	      	     boolean wprotupdate, boolean part,
+extern bool scan_for_ack(char *puffer, int32_t size, bool wpupdate,
+		     bool wprotupdate, bool part,
                      char *absender, char *board, char *subject, char *mbx,
-		     char *bid, char msgtype, char *ackcall, boolean *is_binary,
-		     boolean *is_dirty, boolean *is_html, char *dirtystring,
-		     boolean *is_7plus, boolean *is_broken);
+		     char *bid, char msgtype, char *ackcall, bool *is_binary,
+		     bool *is_dirty, bool *is_html, char *dirtystring,
+		     bool *is_7plus, bool *is_broken);
 
 #endif
