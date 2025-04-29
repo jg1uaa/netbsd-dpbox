@@ -19,49 +19,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <stdint.h>
+#include <stdbool.h>
+#include <inttypes.h>
+#if defined(__linux__)
 #include <limits.h>
-
-
-/* The following definitions work only on twos-complement machines */
-#ifndef SHORT_MAX
-# define SHORT_MAX  ((short)(((unsigned short) -1) >> 1))
-# define SHORT_MIN  (~SHORT_MAX)
+#else
+#include <sys/limits.h>
 #endif
 
-#if !defined(__NetBSD__) && !defined(__DragonFly__)
-#ifndef INT_MAX
-# define INT_MAX    ((int)(((unsigned int) -1) >> 1))
-# define INT_MIN    (~INT_MAX)
-#endif
-
-#ifndef LONG_MAX
-# define LONG_MAX   ((long)(((unsigned long) -1) >> 1))
-# define LONG_MIN   (~LONG_MAX)
-#endif
-#endif
-
-#ifndef SEEK_SET
-# define SEEK_SET   0
-# define SEEK_CUR   1
-# define SEEK_END   2
-#endif
-
-#define maxlonginteger LONG_MAX
-
-#ifndef boolean
-  typedef unsigned char boolean;
-#endif
-
-#ifndef true
-# define true    1
-# define false   0
-#endif
-
-#ifndef TRUE
-# define TRUE    1
-# define FALSE   0
-#endif
 
 /* end of needed p2c.h definitions */
 
@@ -78,7 +44,7 @@
 #include <sys/time.h>
 #endif
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 #include <signal.h>
 #define DP_SIGHUP SIGHUP
 #define DP_SIGTSTP SIGTSTP
@@ -106,18 +72,18 @@
 #endif
 
 extern short dp_randomize(short low, short hiw);
-extern long searchbyte(char what, char *start, long size);
-extern long maxavail__(void);
+extern int32_t searchbyte(char what, char *start, int32_t size);
+extern int32_t maxavail__(void);
 extern void RESETA(void);
 extern void RESTART(void);
 extern void WATCHDOG(short mode, short timer);
 extern void VBLTIMER(short mode);
-extern long GETVBLTIMER(void);
-extern void NOCRITIC(boolean on);
+extern int32_t GETVBLTIMER(void);
+extern void NOCRITIC(bool on);
 extern char RAM_INIT(unsigned short size);
 extern void RAM_EXIT(void);
 extern void klang(short nr);
-extern long statclock(void);
+extern int32_t statclock(void);
 extern void mtpause(void);
 
 #ifdef __macos__
@@ -127,13 +93,13 @@ extern void setsid();
 extern int waitpid(pid_t pid, int *res, int flag);
 #endif
 
-extern char *mymemmem(register char *haystack, register long haystacksize,
-      	      	      register char *needle, register long needlesize);
-extern char *strsub(register char *ret, register char *s, register int pos, register int len);
-extern int strpos2(char *s, register char *pat, register int pos);
-extern void strdelete(register char *s, register int pos, register int len);
-extern void strinsert(register char *src, register char *dst, register int pos);
-extern void del_allblanks(register char *s);
+extern char *mymemmem(char *haystack, int32_t haystacksize,
+      	      	      char *needle, int32_t needlesize);
+extern char *strsub(char *ret, char *s, int pos, int len);
+extern int strpos2(char *s, char *pat, int pos);
+extern void strdelete(char *s, int pos, int len);
+extern void strinsert(char *src, char *dst, int pos);
+extern void del_allblanks(char *s);
 extern void del_leadblanks(char *s);
 extern void del_lastblanks(char *s);
 extern void lspacing(char *txt, short l);
@@ -144,48 +110,48 @@ extern void upper(char *s);
 extern void lower(char *s);
 extern void strcpyupper(char *outs, char *ins);
 extern void strcpylower(char *outs, char *ins);
-extern boolean zahl(char *s);
-extern boolean azahl(char *s);
-extern boolean rzahl(char *s);
-extern long hatoi(char *s);
-extern long batoi(char *s);
-extern void int2hstr(long i, char *s);
+extern bool zahl(char *s);
+extern bool azahl(char *s);
+extern bool rzahl(char *s);
+extern int32_t hatoi(char *s);
+extern int32_t batoi(char *s);
+extern void int2hstr(int32_t i, char *s);
 extern void int2hchar(short i, char *c1, char *c2);
 extern void hstr2str(char *h, char *s);
 extern void str2hstr(char *s, char *h);
 extern void del_mulblanks(char *s);
 extern short count_words(char *s);
-extern void get_quoted(register char *inp, register char *outp);
-extern void get_pquoted(register char **inp, register char *outp);
-extern void get_word(char *inp, register char *outp);
-extern void get_pword(char **inp, register char *outp);
+extern void get_quoted(char *inp, char *outp);
+extern void get_pquoted(char **inp, char *outp);
+extern void get_word(char *inp, char *outp);
+extern void get_pword(char **inp, char *outp);
 extern char *del_comment(char *z, char c);
-extern void get_lline(char *buf, long *posi, long ende, char *zeile, short maxlen);
+extern void get_lline(char *buf, int32_t *posi, int32_t ende, char *zeile, short maxlen);
 #define get_line(a, b, c, d) get_lline(a, b, c, d, 255)
-extern void next_line(char *buf, long *posi, long ende);
-extern void prev_line(char *buf, long *posi);
-extern void put_line(char *buf, long *posi, const char *zeile);
+extern void next_line(char *buf, int32_t *posi, int32_t ende);
+extern void prev_line(char *buf, int32_t *posi);
+extern void put_line(char *buf, int32_t *posi, const char *zeile);
 extern void umlaut1(char *txt);
 extern void umlaut2(char *txt);
 extern void ersetze(char *oldstr, char *newstr, char *txt);
 extern void gkdeutsch(char *name);
-extern void sfbread(boolean aslongaspossible, char *name, char **puffer, long *size);
+extern void sfbread(bool aslongaspossible, char *name, char **puffer, int32_t *size);
 
 #define cut(string, size) string[size] = '\0'
 #define nstrcpy(a, b, n) if (strncpy(a, b, n) != NULL) a[n] = '\0'
 #define nstrcat(a, b, n) if (strncat(a, b, n) != NULL) a[n] = '\0'
 #define maxram() 0x7fffffffL
 #ifdef __macos__
-extern long memavail__(void);
+extern int32_t memavail__(void);
 #else
 #define memavail__() 8000000L
 #define maxavail__() 8000000L
 #endif
 #define move_b(quelle, ziel, size) memmove(ziel, quelle, size)
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
-extern long get_cpuusage(void);
-extern long get_memusage(void);
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
+extern int32_t get_cpuusage(void);
+extern int32_t get_memusage(void);
 #else
 #define get_cpuusage() statclock()
 #define get_memusage() 0

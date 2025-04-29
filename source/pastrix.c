@@ -19,7 +19,7 @@
 #include "boxlocal.h"
 #include "tools.h"
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 #include <ctype.h>
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -32,17 +32,17 @@
 #endif
 
 #ifdef __macos__
-long memavail__(void)
+int32_t memavail__(void)
 {
-  long total, cont;
+  int32_t total, cont;
   
   PurgeSpace(&total, &cont);
   return(total);
 }
 
-long maxavail__(void)
+int32_t maxavail__(void)
 {
-  long total, cont;
+  int32_t total, cont;
   
   PurgeSpace(&total, &cont);
   return(cont);
@@ -60,7 +60,7 @@ long maxavail__(void)
 /* Mittlerweile ist das oben geschriebene obsolet. Abgefragt wird ein 1MHZ-  */
 /* Zähler, das Ergebnis wird in TICKSPERSEC Hz angegeben.		     */
 
-long statclock(void)
+int32_t statclock(void)
 {
 #ifdef __macos__
   struct UnsignedWide microTickCount;
@@ -75,28 +75,28 @@ long statclock(void)
   struct timezone tz;
 
   gettimeofday(&tv,&tz);
-  return(((tv.tv_sec % ((LONG_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
+  return(((tv.tv_sec % ((INT32_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
 	+ (tv.tv_usec / (1000000 / TICKSPERSEC)));
 #endif
 }
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 
-long get_cpuusage(void)
+int32_t get_cpuusage(void)
 {
   struct rusage usage;
 
   if (!getrusage(RUSAGE_SELF, &usage))
-    return (((usage.ru_utime.tv_sec % ((LONG_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
+    return (((usage.ru_utime.tv_sec % ((INT32_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
 	   + (usage.ru_utime.tv_usec / (1000000 / TICKSPERSEC))
-    	  + ((usage.ru_stime.tv_sec % ((LONG_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
+    	  + ((usage.ru_stime.tv_sec % ((INT32_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
 	   + (usage.ru_stime.tv_usec / (1000000 / TICKSPERSEC)));
   else
     return statclock();
 }
 
 
-long get_memusage(void)
+int32_t get_memusage(void)
 {
   struct rusage usage;
 
@@ -117,11 +117,11 @@ void mtpause(void)
 }
 
 
-long searchbyte(char what, register char *p, long size)
+int32_t searchbyte(char what, char *p, int32_t size)
 {
 #ifdef HAS_MEMCHR
 
-  register char *p2;
+  char *p2;
 
   p2 = memchr(p, what, size);
   if (p2 == NULL) return 0;
@@ -129,7 +129,7 @@ long searchbyte(char what, register char *p, long size)
 
 #else
 
-  register long z = 0;
+  int32_t z = 0;
 
   if (p == NULL)
     return 0;
@@ -265,10 +265,10 @@ void gkdeutsch(char *name)
 /* Liest ein File in PUFFER und beachtet dabei die maximal moeglichen */
 /* Memory Blocks                                                      */
 
-void sfbread(boolean aslongaspossible, char *name, char **puffer, long *size)
+void sfbread(bool aslongaspossible, char *name, char **puffer, int32_t *size)
 {
-  long fs, err;
-  long hsz;
+  int32_t fs, err;
+  int32_t hsz;
   char *fp;
   short k;
 
@@ -316,14 +316,14 @@ void sfbread(boolean aslongaspossible, char *name, char **puffer, long *size)
 /* the memmem function is broken in most linux libs. Here´s my own version  */
 /* (limitation: needle may not contain zero bytes)    	      	      	    */
 
-char *mymemmem(register char *haystack, register long haystacksize,
-      	      	register char *needle, register long needlesize)
+char *mymemmem(char *haystack, int32_t haystacksize,
+      	      	char *needle, int32_t needlesize)
 {
-  register char	*ret;
+  char	*ret;
 
   if (needlesize <= 0 || haystacksize < needlesize) return (NULL);
   while ((ret = memchr(haystack, *needle, haystacksize)) != NULL) {
-    haystacksize -= ((long)ret - (long)haystack);
+    haystacksize -= ((intptr_t)ret - (intptr_t)haystack);
     if (haystacksize < needlesize) return (NULL);
     haystacksize--;
     haystack = ret;
@@ -339,11 +339,9 @@ char *mymemmem(register char *haystack, register long haystacksize,
 /* Store in "ret" the substring of length "len" starting from "pos" (1-based).
    Store a shorter or null string if out-of-range.  Return "ret". */
 
-char *strsub(ret, s, pos, len)
-register char *ret, *s;
-register int pos, len;
+char *strsub(char *ret, char *s, int pos, int len)
 {
-    register char *s2;
+    char *s2;
 
     if (--pos < 0 || len <= 0) {
         *ret = 0;
@@ -369,13 +367,10 @@ register int pos, len;
 /* Return the index of the first occurrence of "pat" as a substring of "s",
    starting at index "pos" (1-based).  Result is 1-based, 0 if not found. */
 
-int strpos2(s, pat, pos)
-char *s;
-register char *pat;
-register int pos;
+int strpos2(char *s, char *pat, int pos)
 {
-    register char *cp, ch;
-    register int slen;
+    char *cp, ch;
+    int slen;
 
     if (--pos < 0)
         return 0;
@@ -395,11 +390,9 @@ register int pos;
 
 /* Delete the substring of length "len" at index "pos" from "s".
    Delete less if out-of-range. */
-void strdelete(s, pos, len)
-register char *s;
-register int pos, len;
+void strdelete(char *s, int pos, int len)
 {
-    register int slen;
+    int slen;
 
     if (--pos < 0)
         return;
@@ -417,11 +410,9 @@ register int pos, len;
 
 /* Insert string "src" at index "pos" of "dst". */
 
-void strinsert(src, dst, pos)
-register char *src, *dst;
-register int pos;
+void strinsert(char *src, char *dst, int pos)
 {
-    register int slen, dlen;
+    int slen, dlen;
 
     if (--pos < 0)
         return;
@@ -447,10 +438,10 @@ register int pos;
 
 
 
-static void del_lead0(register char *s)
+static void del_lead0(char *s)
 {
   /*Loescht fuehrende '00' in "s"*/
-  register char *p;
+  char *p;
 
   p = s;
   while (*s == '0') s++;
@@ -463,11 +454,11 @@ static void del_lead0(register char *s)
   while ((*p++ = *s++));
 }
 
-void del_allblanks(register char *s)
+void del_allblanks(char *s)
 {
   /* loescht alle Leerzeichen in s */
-  register char *p;
-  register char c;
+  char *p;
+  char c;
 
   p = s;
   while ((c = *p++)) {
@@ -476,10 +467,10 @@ void del_allblanks(register char *s)
   *s = '\0';
 }
 
-void del_leadblanks(register char *s)
+void del_leadblanks(char *s)
 {
   /*Loescht fuehrende Leerzeichen in "s"*/
-  register char *p;
+  char *p;
 
   p = s;
   while (*s == ' ' || *s == tab) s++;
@@ -488,10 +479,10 @@ void del_leadblanks(register char *s)
 }
 
 
-void del_lastblanks(register char *s)
+void del_lastblanks(char *s)
 {
   /*Loescht letzte Leerzeichen*/
-  register char *p;
+  char *p;
   
   p = s;
   if (*s++ == '\0') return;
@@ -513,11 +504,11 @@ void del_blanks(char *s)
 }
 
 
-void lspacing(register char *txt, register short l)
+void lspacing(char *txt, short l)
 {
-  register short i = 0;
-  register char *p;
-  register char *s;
+  short i = 0;
+  char *p;
+  char *s;
   
   p = txt;
   while (*txt++ != '\0') i++;
@@ -531,9 +522,9 @@ void lspacing(register char *txt, register short l)
 }
 
 
-void rspacing(register char *txt, short l)
+void rspacing(char *txt, short l)
 {
-  register char *e;
+  char *e;
   
   e = txt + l;
   while (*txt++ != '\0');
@@ -543,7 +534,7 @@ void rspacing(register char *txt, short l)
 }
 
 
-char lowcase(register char ch)
+char lowcase(char ch)
 {
   switch (ch) {
 
@@ -562,7 +553,7 @@ char lowcase(register char ch)
 }
 
 
-char upcase_(register char ch)
+char upcase_(char ch)
 {
   switch (ch) {
 
@@ -583,7 +574,7 @@ char upcase_(register char ch)
 
 void upper(char *s)
 {
-  while ((*s++ = upcase_(*s)));
+  for (; *s; s++) *s = upcase_(*s);
 }
 
 void strcpyupper(char *outs, char *ins)
@@ -593,7 +584,7 @@ void strcpyupper(char *outs, char *ins)
 
 void lower(char *s)
 {
-  while ((*s++ = lowcase(*s)));
+  for (; *s; s++) *s = lowcase(*s);
 }
 
 void strcpylower(char *outs, char *ins)
@@ -605,7 +596,7 @@ void strcpylower(char *outs, char *ins)
 /* --------------------------------------------------------------------- */
 
 
-boolean zahl(register char *s)
+bool zahl(char *s)
 {
   /* nur dez               */
 
@@ -622,7 +613,7 @@ boolean zahl(register char *s)
   return true;
 }
 
-boolean azahl(char *s)
+bool azahl(char *s)
 {
   /* auch bin und hex      */
 
@@ -656,9 +647,9 @@ boolean azahl(char *s)
 }
 
 
-boolean rzahl(char *s)
+bool rzahl(char *s)
 {
-  boolean digit;
+  bool digit;
 
   if (*s == '\0')
     return false;
@@ -711,10 +702,10 @@ static short makehexdigit(char c)
 }
 
 
-long hatoi(char *s)
+int32_t hatoi(char *s)
 {
   /* "Hex-String to Integer", String wird unbedingt als Hex-Zahl interpretiert */
-  long erg;
+  int32_t erg;
 
   erg = 0;
   if (*s == '$')
@@ -725,10 +716,10 @@ long hatoi(char *s)
 }
 
 
-long batoi(char *s)
+int32_t batoi(char *s)
 {
   /* "Bin-String to Integer", String wird unbedingt als Bin-Zahl interpretiert */
-  long erg;
+  int32_t erg;
 
   erg = 0;
   if (*s == '%')
@@ -748,16 +739,16 @@ static char hextab[16] = {
 
 #define digits 8
 
-void int2hstr(long i, char *s)
+void int2hstr(int32_t i, char *s)
 {
   /* "Integer to Hex-String", Zahl als Hex-Zahl dargestellt */
-  register short ct;
-  register char *p = hextab;
+  short ct;
+  char *p = hextab;
 
   s[digits] = '\0';
   for (ct = 1; ct <= digits; ct++) {
     s[digits - ct] = p[i & 0xf];
-    i = ((unsigned long)i) >> 4;
+    i = ((uint32_t)i) >> 4;
   }
   del_lead0(s);
 }
@@ -781,7 +772,7 @@ void int2hchar(short i, char *c1, char *c2)
 
 void hstr2str(char *h, char *s)
 {
-  sprintf(s, "%ld", hatoi(h));
+  sprintf(s, "%d", hatoi(h));
 }
 
 
@@ -801,10 +792,10 @@ void del_mulblanks(char *s)
   while ((x = strpos2(s, dspace, x)) > 0) strdelete(s, x, 1);
 }
 
-short count_words(register char *s)
+short count_words(char *s)
 {
-  register short      erg   = 0;
-  register boolean    space = true;
+  short      erg   = 0;
+  bool    space = true;
   
   while (*s != '\0') {
     if (*s == ' ' || *s == tab) space = true;
@@ -821,9 +812,9 @@ short count_words(register char *s)
 /* Holt naechstes Wort aus "inp" und loescht   */
 /* dieses dort, Leerzeichen werden ueberlesen  */
 
-void get_word(register char *inp, register char *outp)
+void get_word(char *inp, char *outp)
 {
-  register char       	*p;
+  char       	*p;
 
   p   	    = inp;
   while (*p == tab || *p == ' ') p++;
@@ -836,9 +827,9 @@ void get_word(register char *inp, register char *outp)
 /* Holt naechstes Wort aus "inp"  */
 /* Leerzeichen werden ueberlesen  */
 
-void get_pword(register char **inp, register char *outp)
+void get_pword(char **inp, char *outp)
 {
-  register char       	*p;
+  char       	*p;
 
   p   	    = *inp;
   while (*p == tab || *p == ' ') p++;
@@ -853,9 +844,9 @@ void get_pword(register char **inp, register char *outp)
 /* Wenn das Wort mit " beginnt, wird bis zum   */
 /* nächsten " gelesen.	      	      	       */
 
-void get_quoted(register char *inp, register char *outp)
+void get_quoted(char *inp, char *outp)
 {
-  register char       	*p;
+  char       	*p;
 
   p   	    = inp;
   while (*p == tab || *p == ' ') p++;
@@ -876,9 +867,9 @@ void get_quoted(register char *inp, register char *outp)
 /* Wenn das Wort mit " beginnt, wird bis zum   */
 /* nächsten " gelesen.	      	      	       */
 
-void get_pquoted(register char **inp, register char *outp)
+void get_pquoted(char **inp, char *outp)
 {
-  register char       	*p;
+  char       	*p;
 
   p   	    = *inp;
   while (*p == tab || *p == ' ') p++;
@@ -918,9 +909,9 @@ char *del_comment(char *z, char c)
 #define lf '\012'
 #define cr '\015'
 
-void get_lline(register char *buf, register long *posi, long ende, register char *zeile, register short maxlen)
+void get_lline(char *buf, int32_t *posi, int32_t ende, char *zeile, short maxlen)
 {
-  register char *p, *e;
+  char *p, *e;
   
   p = &buf[*posi];
   if (ende - *posi > maxlen)
@@ -932,42 +923,42 @@ void get_lline(register char *buf, register long *posi, long ende, register char
   *zeile = '\0';
   if (p < e && *p == cr) p++;
   if (p < e && *p == lf) p++;
-  *posi = (long)p - (long)buf;
+  *posi = (intptr_t)p - (intptr_t)buf;
 }
 
 
-void next_line(register char *buf, register long *posi, long ende)
+void next_line(char *buf, int32_t *posi, int32_t ende)
 {
-  register char *p, *e;
+  char *p, *e;
 
   p = &buf[*posi];
   e = &buf[ende];
   while (p < e && *p != lf && *p != cr) p++;
   if (p < e && *p == cr) p++;
   if (p < e && *p == lf) p++;
-  *posi = (long)p - (long)buf;
+  *posi = (intptr_t)p - (intptr_t)buf;
 }
 
-void prev_line(register char *buf, register long *posi)
+void prev_line(char *buf, int32_t *posi)
 {
-  register char *p;
+  char *p;
 
   p = &buf[*posi];
   while (p > buf && *p != lf && *p != cr) p--;
   if (p > buf && *p == lf) p--;
   if (p > buf && *p == cr) p--;
   while (p > buf && *p != lf && *p != cr) p--;
-  *posi = (long)p - (long)buf;
+  *posi = (intptr_t)p - (intptr_t)buf;
 }
 
-void put_line(register char *buf, register long *posi, register const char *zeile)
+void put_line(char *buf, int32_t *posi, const char *zeile)
 {
-  register char *p;
+  char *p;
 
   p = &buf[*posi];
   while ((*p++ = *zeile++));
   p[-1] = 10;
-  *posi = (long)p - (long)buf;
+  *posi = (intptr_t)p - (intptr_t)buf;
 }
 
 #undef lf
@@ -978,7 +969,7 @@ void put_line(register char *buf, register long *posi, register const char *zeil
 
 short dp_randomize(short low, short hiw)
 {
-  static boolean  initialized = false;
+  static bool  initialized = false;
   
   /* We check the initialization here and not at program start	*/
   /* because this leads to unpredictable initial values for   	*/
