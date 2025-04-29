@@ -67,7 +67,7 @@ static void iwlnuser(short unr, char *s)
 
 
 
-static boolean cverr, idel;
+static bool cverr, idel;
 
 
 static void filemove2(char *n1, char *n2)
@@ -79,16 +79,16 @@ static void filemove2(char *n1, char *n2)
 }
 
 
-static void printtime(short unr, long t)
+static void printtime(short unr, int32_t t)
 {
   char hs[256];
   char STR7[256];
 
   t /= TICKSPERSEC;
-  sprintf(hs, "%ld", t / 60);
+  sprintf(hs, "%d", t / 60);
   sprintf(STR7, "used time: %s minutes, ", hs);
   iwuser(unr, STR7);
-  sprintf(hs, "%ld", t % 60);
+  sprintf(hs, "%d", t % 60);
   sprintf(STR7, "%s seconds.", hs);
   iwlnuser(unr, STR7);
 }
@@ -115,11 +115,11 @@ static void conv_pname_rel(char *w, char *p)
 }
 
 
-static boolean check_cpath(char *w_)
+static bool check_cpath(char *w_)
 {
-  boolean Result;
+  bool Result;
   char w[256];
-  boolean ok;
+  bool ok;
 
   strcpy(w, w_);
   strcat(w, "init.bcm");
@@ -130,7 +130,7 @@ static boolean check_cpath(char *w_)
   return Result;
 }
 
-static void conv_comment(char *fn, boolean delcom)
+static void conv_comment(char *fn, bool delcom)
 {
   short fli, flo, x;
   char fno[256], hs[256];
@@ -169,7 +169,7 @@ static void dop(const short unr, const char *s)
 }
 
 
-static long convert_diebox_mails(short unr, boolean userarea, char *p)
+static int32_t convert_diebox_mails(short unr, bool userarea, char *p)
 {
   char w[256], board[256];
   char boardpath[256];
@@ -179,11 +179,11 @@ static long convert_diebox_mails(short unr, boolean userarea, char *p)
   short flh, flh1, flh2;
   char fmn[256], fmn1[256], fmn2[256];
   DTA dirinfo;
-  boolean improper;
+  bool improper;
   short result, ph, mh, mnh, ct, x;
-  long mct;
+  int32_t mct;
   char *pp;
-  long ps, err, fp1, fp2;
+  int32_t ps, err, fp1, fp2;
   char rxbox[256];
   char STR1[256], STR7[256];
 
@@ -480,10 +480,9 @@ static void convert_sfw(short unr, char *sfw)
   char	*p;
   short ih, oh;
   char ina[256], ona[256];
-  boolean ok, firstline;
+  bool firstline;
   short lasttyp;
 
-  ok = false;
   iwuser(unr, "opening fwd.bcm ...");
   strcpy(ina, sfw);
   sprintf(w, "%sfwd.tmp", boxsfdir);
@@ -518,7 +517,6 @@ static void convert_sfw(short unr, char *sfw)
       if (oh < minhandle)
         iwlnuser(unr, "cannot create outfile");
       else {
-        ok = true;
         upper(w1);
         *hs = '\0';
         str2file(&oh, hs, true);
@@ -615,7 +613,7 @@ static void convert_sfw(short unr, char *sfw)
 static void conv3(short unr, char *w)
 {
   /* SF-Definitionen konvertieren */
-  long t;
+  int32_t t;
   char cp[256];
 
   if (cverr)
@@ -657,7 +655,7 @@ static void conv3(short unr, char *w)
 static void conv4(short unr, char *improotdir)
 {
   short ifn;
-  long t, tctu, tctb;
+  int32_t t, tctu, tctb;
   char cp[256], pu[256], pi[256], ww[256];
   char w[256], hs[256], STR7[256];
 
@@ -721,13 +719,13 @@ static void conv4(short unr, char *improotdir)
 
   tctu = convert_diebox_mails(unr, true, pu);
   iwuser(unr, "all user files imported. total files: ");
-  sprintf(ww, "%ld", tctu);
+  sprintf(ww, "%d", tctu);
   iwlnuser(unr, ww);
   iwlnuser(unr, "importing all info files");
   
   tctb = convert_diebox_mails(unr, false, pi);
   iwuser(unr, "all info files imported. total files: ");
-  sprintf(ww, "%ld", tctb);
+  sprintf(ww, "%d", tctb);
   iwlnuser(unr, ww);
 
   iwlnuser(unr, "recreating boxlog (check-list) ...");
@@ -735,7 +733,7 @@ static void conv4(short unr, char *improotdir)
   iwlnuser(unr, "done.");
 
   tctu += tctb;
-  sprintf(ww, "%ld", tctu);
+  sprintf(ww, "%d", tctu);
   sprintf(ww, "file import over all: %s files.", strcpy(STR7, ww));
   iwlnuser(unr, ww);
 
@@ -771,18 +769,18 @@ typedef struct drect
   time_t   lastboxlogin;            /*  4 letzter Login (UNIX) */
 /*time_t   lastdirnews;            / *  4 letztes DIR NEWS / Check (UNIX) */
 /*time_t   lastquit;               / *  4 letztes QUIT */
-/*long     mailsent;               / *  4 gesendete Nachrichten */
-/*long     mailgot;                / *  4 erhaltene Nachrichten */
-/*long     mailread;               / *  4 gelesene Nachrichten */
-/*long unsigned logins;            / *  4 logins */
+/*int32_t  mailsent;               / *  4 gesendete Nachrichten */
+/*int32_t  mailgot;                / *  4 erhaltene Nachrichten */
+/*int32_t  mailread;               / *  4 gelesene Nachrichten */
+/*uint32_t logins;                 / *  4 logins */
   char     mybbsok;                 /*  1 MYBBS selbst eingegeben (1) */
-/*long unsigned  opt[8];           / * 32 eingestellte Optionen */
+/*uint32_t opt[8];                 / * 32 eingestellte Optionen */
 /*short unsigned lf;               / *  2 A LF */
 /*char     umlaut;                 / *  1 A UMLAUT (nicht impl) */
   time_t   mybbstime;               /*  4 Datum des letzten MYBBS (UNIX) */
 /*char     ttypw[9];               / *  9 A TTYPW (TTY-Password) */
-/*long     lastload;               / *  4 interner Merker für Verwaltung */
-/*long unsigned  daybytes;         / *  4 gelesene Bytes heute */
+/*int32_t  lastload;               / *  4 interner Merker für Verwaltung */
+/*uint32_t daybytes;               / *  4 gelesene Bytes heute */
   short unsigned status;            /*  2 A STATUS */
 /*char     uplink[10];             / * 10 uplink-Digi */
 /*char     readlock;               / *  1 Privatmails nicht lesbar (") */
@@ -802,7 +800,7 @@ typedef struct drect
 
 static void getcs(char *p, short max, char *s)
 {
-  long x;
+  int32_t x;
 
   *s = '\0';
   x = 0;
@@ -813,10 +811,10 @@ static void getcs(char *p, short max, char *s)
 }
 
 
-static boolean convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
-                	     char *dbuff3_, drect *drec, boolean lxbcm)
+static bool convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
+                	     char *dbuff3_, drect *drec, bool lxbcm)
 {
-  boolean Result;
+  bool Result;
   dbufft1 dbuff1;
   dbufft2 dbuff2;
   dbufft3 dbuff3;
@@ -891,19 +889,19 @@ static boolean convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
       switch (y) {
 
       case 1:
-        drec->lastboxlogin = (long)dbuff1[x];
+        drec->lastboxlogin = (int32_t)dbuff1[x];
         break;
 
       case 2:
-        drec->lastboxlogin += (long)dbuff1[x] * 256;
+        drec->lastboxlogin += (int32_t)dbuff1[x] * 256;
         break;
 
       case 3:
-        drec->lastboxlogin += (long)dbuff1[x] * 65536;
+        drec->lastboxlogin += (int32_t)dbuff1[x] * 65536;
         break;
 
       case 4:
-        drec->lastboxlogin += (long)dbuff1[x] * 16777216;
+        drec->lastboxlogin += (int32_t)dbuff1[x] * 16777216;
         break;
       }
       y++;
@@ -913,19 +911,19 @@ static boolean convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
       switch (y) {
 
       case 1:
-        drec->lastboxlogin = (long)dbuff2[x];
+        drec->lastboxlogin = (int32_t)dbuff2[x];
         break;
 
       case 2:
-        drec->lastboxlogin += (long)dbuff2[x] * 256;
+        drec->lastboxlogin += (int32_t)dbuff2[x] * 256;
         break;
 
       case 3:
-        drec->lastboxlogin += (long)dbuff2[x] * 65536;
+        drec->lastboxlogin += (int32_t)dbuff2[x] * 65536;
         break;
 
       case 4:
-        drec->lastboxlogin += (long)dbuff2[x] * 16777216;
+        drec->lastboxlogin += (int32_t)dbuff2[x] * 16777216;
         break;
       }
       y++;
@@ -950,19 +948,19 @@ static boolean convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
       switch (y) {
 
       case 1:
-        drec->mybbstime = (long)dbuff1[x];
+        drec->mybbstime = (int32_t)dbuff1[x];
         break;
 
       case 2:
-        drec->mybbstime += (long)dbuff1[x] * 256;
+        drec->mybbstime += (int32_t)dbuff1[x] * 256;
         break;
 
       case 3:
-        drec->mybbstime += (long)dbuff1[x] * 65536;
+        drec->mybbstime += (int32_t)dbuff1[x] * 65536;
         break;
 
       case 4:
-        drec->mybbstime += (long)dbuff1[x] * 16777216;
+        drec->mybbstime += (int32_t)dbuff1[x] * 16777216;
         break;
       }
       y++;
@@ -972,19 +970,19 @@ static boolean convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
       switch (y) {
 
       case 1:
-        drec->mybbstime = (long)dbuff3[x];
+        drec->mybbstime = (int32_t)dbuff3[x];
         break;
 
       case 2:
-        drec->mybbstime += (long)dbuff3[x] * 256;
+        drec->mybbstime += (int32_t)dbuff3[x] * 256;
         break;
 
       case 3:
-        drec->mybbstime += (long)dbuff3[x] * 65536;
+        drec->mybbstime += (int32_t)dbuff3[x] * 65536;
         break;
 
       case 4:
-        drec->mybbstime += (long)dbuff3[x] * 16777216;
+        drec->mybbstime += (int32_t)dbuff3[x] * 16777216;
         break;
       }
       y++;
@@ -1025,13 +1023,13 @@ static void conv2(short unr, char *p_)
   char cp[256], p[256], w1[256];
   char dn[256];
   short dh;
-  boolean ok, linuxbcm;
-  long t, ct;
+  bool ok, linuxbcm;
+  int32_t t, ct;
   dbufft1 dbuff1;
   dbufft2 dbuff2;
   dbufft3 dbuff3;
   drect drec;
-  long dsize;
+  int32_t dsize;
   userstruct urec;
   char STR1[256], STR7[256];
 
@@ -1062,7 +1060,7 @@ static void conv2(short unr, char *p_)
       dh = sfopen(dn, FO_READ);
       if (dh >= 0) {
 	iwuser(unr, "now converting ");
-	sprintf(w1, "%ld", dsize / 512);
+	sprintf(w1, "%d", dsize / 512);
 	iwuser(unr, w1);
 	iwlnuser(unr, " user settings");
 
@@ -1120,7 +1118,7 @@ static void conv2(short unr, char *p_)
         ok = true;
 	sfclose(&dh);
 	wlnuser0(unr);
-	sprintf(w1, "%ld", ct);
+	sprintf(w1, "%d", ct);
 	strcat(w1, " user settings converted");
 	iwlnuser(unr, w1);
       } else
@@ -1149,7 +1147,7 @@ static void conv1(short unr, char *ipath)
   char f[256], hs[256];
   DTA dirinfo;
   short result, ifn, ofn;
-  long t;
+  int32_t t;
   char STR1[256], STR7[256];
 
   if (cverr)
@@ -1197,7 +1195,7 @@ static void conv1(short unr, char *ipath)
            "original baybox-maxbull-setting is too high, will insert 200000");
           strcpy(w1, "200000");
         } else
-          sprintf(w1, "%ld", atol(w1) + 10000);
+	sprintf(w1, "%"PRId64, (int64_t)atol(w1) + 10000);
         sprintf(p, "MAXBULLIDS %s", strcpy(STR7, w1));
         iwlnuser(unr, p);
         replace_keyline(f, "MAXBULLIDS", false, p);
