@@ -27,7 +27,7 @@
 #include <utsname.h>
 #endif
 
-#if defined(__NetBSD__)  || defined(__DragonFly__)
+#if defined(__NetBSD__)  || defined(__DragonFly__) || defined(__OpenBSD__)
 #include <sys/utsname.h>
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -46,7 +46,7 @@ void free_statp(char **p)
 
 
 static char	*pp;
-static long	szz;
+static int32_t	szz;
 static short	lcc;
 static char	tl[256];
 
@@ -78,15 +78,15 @@ static void spp2(char *s)
     strcat(tl, s);
 }
 
-static void sppi(char *s, long l, char *r)
+static void sppi(char *s, int32_t l, char *r)
 {
   char hs[256];
   
-  sprintf(hs, "%-17s: %ld%s", s, l, r);
+  sprintf(hs, "%-17s: %d%s", s, l, r);
   spp2(hs);
 }
 
-static void sppb(char *s, boolean b)
+static void sppb(char *s, bool b)
 {
   char hs[256];
   
@@ -105,12 +105,12 @@ static void spps(char *s, char *p, char *r)
   spp2(hs);
 }
 
-long get_sysruntime(void)
+int32_t get_sysruntime(void)
 {
   static time_t lastsysrunt	= 0;
   static time_t lastsysrunres	= 0;
 
-#if !defined(__NetBSD__) && !defined(__DragonFly__)
+#if !(defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__))
   short k;
   char hs[256], w[256];
   short x, y;
@@ -145,7 +145,7 @@ void get_sysload(char *s)
   static time_t lastsysltime	= 0;
   static char lastsysload[21]	= "";
 
-#if defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
   double loadavg[3];
 #else
   short k;
@@ -185,7 +185,7 @@ void get_sysload(char *s)
 
   } else
 #endif
-#if defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
   if (getloadavg(loadavg, 3))
     sprintf(s,"load averages: %.2f%%, %.2f%%, %.2f%%\n",
             loadavg[0], loadavg[1], loadavg[2]);
@@ -205,7 +205,7 @@ void get_cpuinf(char *cpu, char *bmips)
 
   short k;
   char *hp;
-#if defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
   int mib[2];
   size_t len;
 #else
@@ -258,7 +258,7 @@ void get_cpuinf(char *cpu, char *bmips)
       free(hp);
     }
 #endif
-#if defined(__NetBSD__)
+#if defined(__NetBSD__) || defined(__OpenBSD__)
     mib[0] = CTL_HW;
     mib[1] = HW_MODEL;
     sysctl(mib, 2, NULL, &len, NULL, 0);
@@ -311,7 +311,7 @@ void get_linpack(char *s)
 
 void get_sysversion(char *s)
 {
-#if defined(__macos__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__macos__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
   struct utsname name;
 
   strcpy(s, "?");
@@ -320,7 +320,7 @@ void get_sysversion(char *s)
 
 #else
   short k, x, y;
-  boolean nok;
+  bool nok;
 
   strcpy(s, "?");
   k = sfopen("/proc/version", FO_READ);
@@ -367,11 +367,10 @@ static void get_mallocstats(int *total, int *free, int *release)
 #endif
 #endif
 
-void get_status(boolean sysop, char **p, long *sz)
+void get_status(bool sysop, char **p, int32_t *sz)
 {
   char hs[256], w[256], STR1[256];
   short s1, s2, s3;
-  boolean owner;
 
 #ifdef DPDEBUG
 #ifdef __GLIBC__
@@ -383,9 +382,7 @@ void get_status(boolean sysop, char **p, long *sz)
 
   if (*p == NULL) {
     *p = malloc(statbufsize);
-    owner = true;
-  } else
-    owner = false;
+  }
 
   if (*p == NULL)
     return;
@@ -420,7 +417,7 @@ void get_status(boolean sysop, char **p, long *sz)
   pl("");
   sprintf(hs, "date             : %s %s", clock_.datum4, clock_.zeit);
   pl(hs);
-  sprintf(hs, "ixtime           : %ld sec. since 1.1.1970", clock_.ixtime);
+  sprintf(hs, "ixtime           : %"PRId64" sec. since 1.1.1970", (int64_t)clock_.ixtime);
   pl(hs);
   get_boxruntime_s(1, STR1);
   sprintf(hs, "dpbox runtime    : %s", STR1);
@@ -467,9 +464,9 @@ void get_status(boolean sysop, char **p, long *sz)
   sprintf(hs, "bogomips         : %s", STR1);
   pl(hs);
 */
-  sprintf(hs, "cpu speed index1 : %ld%% (68000/8Mhz = 100%%)", get_cpu_speed(1));
+  sprintf(hs, "cpu speed index1 : %d%% (68000/8Mhz = 100%%)", get_cpu_speed(1));
   pl(hs);
-  sprintf(hs, "cpu speed index2 : %ld%% (68000/8Mhz = 100%%)", get_cpu_speed(2));
+  sprintf(hs, "cpu speed index2 : %d%% (68000/8Mhz = 100%%)", get_cpu_speed(2));
   pl(hs);
   get_linpack(w);
   if (*w) {
