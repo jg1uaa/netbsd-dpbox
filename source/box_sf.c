@@ -30,7 +30,7 @@
 #include "box_wp.h"
 #include "box_scan.h"
 
-static boolean gen_sftest3(short unr, char *frombox, char *board, char *mbx);
+static bool gen_sftest3(short unr, char *frombox, char *board, char *mbx);
 
 
 
@@ -51,7 +51,7 @@ static void start_linkcheck(short unr, short prop)
 
 static void stop_linkcheck(short unr, short prop)
 {
-  long	realsize;
+  int32_t	realsize;
   
   debug0(3, unr, 232);
   if (!boxrange(unr)) return;
@@ -75,12 +75,12 @@ static void stop_linkcheck(short unr, short prop)
 
 
 
-static boolean calc_prop_crc(short unr, char *crcstr)
+static bool calc_prop_crc(short unr, char *crcstr)
 {
-  boolean		Result;
+  bool			Result;
   short			x, z;
   unsigned short	crc16;
-  boolean		true_crc;
+  bool			true_crc;
   char			hs[256];
   userstruct		*WITH;
   short			FORLIM1;
@@ -149,7 +149,7 @@ static void send_ascii_linkcheck_data(short unr)
 }
 
 /* these data are generated for a link test, if we had no tests for a longer time */
-static boolean generate_linkcheck_data(short unr)
+static bool generate_linkcheck_data(short unr)
 {
   short   x;
   bidtype bid;
@@ -355,9 +355,9 @@ void kill_resume(void)
 /* Offset zurueckgeliefert. Sollte da was inkonsistent sein (File geloescht  */
 /* oder andere Laenge) werden Eintrag und File geloescht.                    */
 
-static long check_resume(char *bid, char *call, char *fname)
+static int32_t check_resume(char *bid, char *call, char *fname)
 {
-  long		Result;
+  int32_t	Result;
   resumemem	*hr;
   pathstr	STR1;
 
@@ -425,7 +425,7 @@ short bbs_pack(short unr)
 #define chwuser1(unr, ch, chksum) chksum = (chksum + ch) & 0xff; chwuser(unr, ch)
 
 static void boxmemspool1(short unr, short tcon, short pchan, short prn,
-      	      	      	  boolean strip_lf, boolean add_bcrc, char *puffer, long blen,
+      	      	      	  bool strip_lf, bool add_bcrc, char *puffer, int32_t blen,
       	      	      	  unsigned short *chksum, unsigned short *bcrc)
 {
   checksum8_buf(puffer, blen, chksum);
@@ -444,14 +444,14 @@ static void boxmemspool1(short unr, short tcon, short pchan, short prn,
 
 /* 'Send packed fbb' in RAM */
 
-void send_pfbbram(short mode, short unr, char *puffer, long size,
-		  long offset, char *betreff)
+void send_pfbbram(short mode, short unr, char *puffer, int32_t size,
+		  int32_t offset, char *betreff)
 {
   char			b1, b2;
   short			x, FORLIM;
   unsigned short	sf_crc, bcrc, sf_chksum;
-  boolean		blockcrc;
-  long			blen, ct;
+  bool			blockcrc;
+  int32_t		blen, ct;
   userstruct		*WITH;
   char			hs[256];
 
@@ -471,7 +471,7 @@ void send_pfbbram(short mode, short unr, char *puffer, long size,
 
   blockcrc	= (mode == 5);
 
-  sprintf(hs, "%6ld", offset);
+  sprintf(hs, "%6d", offset);
 
   chwuser(unr, 1);
   chwuser(unr, strlen(betreff) + strlen(hs) + 2);
@@ -613,14 +613,14 @@ void send_pfbbram(short mode, short unr, char *puffer, long size,
 
 /* 'Send packed fbb' from disk */
 
-void send_pfbbdisk(short mode, short unr, long offset, char *tempname,
+void send_pfbbdisk(short mode, short unr, int32_t offset, char *tempname,
 		   char *betreff)
 {
   char			b1, b2;  
   short			x, FORLIM, fhandle;
   unsigned short	sf_crc, bcrc, sf_chksum;
-  long			blen, size, ct;
-  boolean		blockcrc;
+  int32_t		blen, size, ct;
+  bool			blockcrc;
   char			*puffer;
   userstruct		*WITH;
   char			hs[256];
@@ -644,7 +644,7 @@ void send_pfbbdisk(short mode, short unr, long offset, char *tempname,
 
   blockcrc	= (mode == 5);
 
-  sprintf(hs, "%6ld", offset);
+  sprintf(hs, "%6d", offset);
 
   chwuser(unr, 1);
   chwuser(unr, strlen(betreff) + strlen(hs) + 2);
@@ -820,12 +820,12 @@ void send_pfbbdisk(short mode, short unr, long offset, char *tempname,
 
 #undef chwuser1
 
-boolean resend_userfile(boolean redirect, char *brett, char *newmbx)
+bool resend_userfile(bool redirect, char *brett, char *newmbx)
 {
   pathstr	index;
   indexstruct	header;
   short		k, list, lv;
-  boolean	has_mails;
+  bool		has_mails;
   mbxtype	umbx;
   char		hs[256];
 
@@ -886,7 +886,7 @@ boolean resend_userfile(boolean redirect, char *brett, char *newmbx)
 }
 
 
-static boolean not_while_connected(char *absender, char *ziel, long date)
+static bool not_while_connected(char *absender, char *ziel, int32_t date)
 {
   short	y;
 
@@ -909,7 +909,7 @@ static boolean not_while_connected(char *absender, char *ziel, long date)
 }
 
 
-static boolean not_multiprivprop(short unr, char *bid)
+static bool not_multiprivprop(short unr, char *bid)
 {
   short	z, y;
 
@@ -929,7 +929,7 @@ static boolean not_multiprivprop(short unr, char *bid)
 }
 
 
-static boolean not_in_prop_list(short unr, short x, char *bid)
+static bool not_in_prop_list(short unr, short x, char *bid)
 {
   short	z, y;
 
@@ -951,8 +951,8 @@ static boolean not_in_prop_list(short unr, short x, char *bid)
 }
 
 
-static boolean not_double_same_sender(char *absender, char *lastsender,
-				      boolean *dflag)
+static bool not_double_same_sender(char *absender, char *lastsender,
+				      bool *dflag)
 {
   if (strcmp(absender, lastsender)) {
     strcpy(lastsender, absender);
@@ -1050,10 +1050,10 @@ static void setbinlt(indexstruct *hpointer, char *rubrik)
 }
 
 
-static boolean conv_to_7plus(short unr, char *board, char *bid)
+static bool conv_to_7plus(short unr, char *board, char *bid)
 {
   short		lv2, x, y, k;
-  long		pid;
+  int32_t	pid;
   indexstruct	header;
   pathstr	fname, STR1;
   char		w[256], w1[256], hs1[256];
@@ -1271,14 +1271,14 @@ static boolean conv_to_7plus(short unr, char *board, char *bid)
 }
 
 
-static boolean valid_entry(indexstruct hpointer, char *rubrik,
-			   boolean spec_sf, long maxu, long maxb,
-			   boolean send_pack, short *ct, char *origrub)
+static bool valid_entry(indexstruct hpointer, char *rubrik,
+			   bool spec_sf, int32_t maxu, int32_t maxb,
+			   bool send_pack, short *ct, char *origrub)
 {
   pathstr	fname;
   short		rlist, lv2;
   indexstruct	header1, *rpointer;
-  boolean	valid;
+  bool		valid;
 
   valid		= false;
 
@@ -1336,7 +1336,7 @@ static boolean valid_entry(indexstruct hpointer, char *rubrik,
 #define maxsyscount     50
 
 typedef struct proprectype {
-  boolean	filled, is_sys, specsf;
+  bool		filled, is_sys, specsf;
   indexstruct	pheader;
   short		x_nr, r_nr;
   boardtype	porigrubrik, pmyrubrik;
@@ -1346,11 +1346,11 @@ typedef proprectype	parrtyp[msg_system - msg_nil + 1][MAXFBBPROPS];
 typedef short		pcttyp[msg_system - msg_nil + 1];
 typedef char		lastsendertyp[msg_system - msg_nil + 1][LEN_CALL+1];
 
-static short smaller_than_in_props(boolean is_system, indexstruct *hpointer, boolean send_pack,
+static short smaller_than_in_props(bool is_system, indexstruct *hpointer, bool send_pack,
       	      	      	      	   short msg_type, proprectype (*pa)[MAXFBBPROPS], short *pct)
 {
   short		a, b;
-  long		sizea, sizeb, sizec;
+  int32_t	sizea, sizeb, sizec;
   short		FORLIM;
 
   sizec		= 0;
@@ -1398,7 +1398,7 @@ static short smaller_than_in_props(boolean is_system, indexstruct *hpointer, boo
 static void sort_pa(short maxprop, short msg_type, proprectype (*pa)[MAXFBBPROPS])
 {
   short		a, b, c, d, loopc;
-  long		s1, s2;
+  int32_t	s1, s2;
   proprectype	p1;
 
   for (d = 1; d <= 2; d++) {
@@ -1445,7 +1445,7 @@ static void sort_pa(short maxprop, short msg_type, proprectype (*pa)[MAXFBBPROPS
 }
 
 
-static boolean not_in_own_props(short x, char *bid, short msg_type,
+static bool not_in_own_props(short x, char *bid, short msg_type,
 				proprectype (*pa)[MAXFBBPROPS], short *pct)
 {
   short		a, FORLIM;
@@ -1493,18 +1493,18 @@ static char fwtype(char pmode, char *rubrik, char *absender)
 static short propose_sf_sending(short unr)
 {
   short			Result;
-  boolean		doublesamesenderflag;
+  bool			doublesamesenderflag;
   lastsendertyp		lastsender;
   indexstruct		*hpointer, header;
   short			k, lv, sel, sel2, list, ct, is_what, newlt;
-  boolean		is_ack, send_pack, valid, delete_it, spec_sf, boxbin;
-  long			selsize;
+  bool			is_ack, send_pack, valid, delete_it, spec_sf, boxbin;
+  int32_t		selsize;
   short			prop, x, y, maxprop;
-  long			maxb, maxu, maxp;
-  boolean		loopex, nothing, dpflag, theboxflag, invalid, again;
-  boolean		is_system, flood, file_forward;
+  int32_t		maxb, maxu, maxp;
+  bool			loopex, nothing, dpflag, theboxflag, invalid, again;
+  bool			is_system, flood, file_forward;
   short			is_smaller;
-  long			TotalSize;
+  int32_t		TotalSize;
   parrtyp		pa;
   pcttyp		pct;
   char			msgchar;
@@ -1891,10 +1891,10 @@ _L2:
 	    sprintf(hs + strlen(hs), " %c", msgchar);
 
 	    if (strchr(WITH->SID, 'H') != NULL)
-	      sprintf(hs + strlen(hs), " %s %s %s %s %ld",
+	      sprintf(hs + strlen(hs), " %s %s %s %s %d",
 		      header.absender, header.verbreitung, fbs, header.id, header.size);
 	    else
-	      sprintf(hs + strlen(hs), " %s %s %s %s %ld",
+	      sprintf(hs + strlen(hs), " %s %s %s %s %d",
 		      header.absender, hmbx, fbs, header.id, header.size);
 		      
 	    if (is_what != msg_system) {
@@ -2110,7 +2110,7 @@ _L3:
 		  break;
 		}
 
-		sprintf(hs + strlen(hs), " %c %s %s %s %s %ld",
+		sprintf(hs + strlen(hs), " %c %s %s %s %s %d",
 			msgchar, header.absender, WITH->call, user[unr]->call,
 			header.id, header.size);
 
@@ -2188,9 +2188,9 @@ _L3:
 }
 
 
-static boolean sf_for(char *box)
+static bool sf_for(char *box)
 {
-  boolean	mail;
+  bool		mail;
   indexstruct	*hpointer, header;
   short		list, k, lv;
 
@@ -2234,7 +2234,7 @@ void change_sfentries(short von, short bis, char *forcall, char typ, char *newca
   short		list, k, lv;
   char		mtyp;
   char		w[256], w1[256];
-  boolean	delet;
+  bool		delet;
 
   debug(2, 0, 75, forcall);
 
@@ -2426,12 +2426,12 @@ static void set_reject_call(indexstruct *header, char *rc_)
 }
 
 
-static void received_sf_sending(char condition, short unr, short prop, boolean abgelehnt)
+static void received_sf_sending(char condition, short unr, short prop, bool abgelehnt)
 {
   short		inr;
   indexstruct	header;
   short 	lv, list, rindex, newlt;
-  boolean	inc_fwd, spec_sf, abg2, rerr;
+  bool		inc_fwd, spec_sf, abg2, rerr;
   userstruct	*WITH;
   fbbproptype	*WITH1;
   pathstr	index;
@@ -2723,10 +2723,10 @@ static void get_title(char *brett, short nr, char *title)
 }
 
 
-void ok_sf_sending(short unr, short prop, long offset)
+void ok_sf_sending(short unr, short prop, int32_t offset)
 {
   short		kx;
-  long		rps, nsize;
+  int32_t	rps, nsize;
   char		*rp, *nmem;
   fbbproptype	*WITH;
   indexstruct	lheader;
@@ -2825,10 +2825,10 @@ void ok_sf_sending(short unr, short prop, long offset)
 
 static void change_filesf_direction(short unr);
 
-void look_for_mail(short unr, boolean not_last, boolean immediate)
+void look_for_mail(short unr, bool not_last, bool immediate)
 {
   short		x;
-  boolean	nobbs;
+  bool		nobbs;
   userstruct	*WITH;
 
   if (!boxrange(unr))
@@ -2933,10 +2933,10 @@ void look_for_mail(short unr, boolean not_last, boolean immediate)
 
 
 
-void send_fbb_proposals(short unr, boolean disc_if_none)
+void send_fbb_proposals(short unr, bool disc_if_none)
 {
   short		x;
-/*  boolean	nobbs; */
+/*  bool	nobbs; */
   userstruct	*WITH;
   char		crcstr[256];
   char		STR1[256];
@@ -3098,7 +3098,7 @@ void prepare_for_next_fbb(short unr)
 
 /* FB B DL8HBS ALL ATARI $123456123456 9124 */
 
-boolean check_prop_crc(short unr, char *eingabe_)
+bool check_prop_crc(short unr, char *eingabe_)
 {
   char	eingabe[256];
   char	crcstr[256];
@@ -3115,7 +3115,7 @@ boolean check_prop_crc(short unr, char *eingabe_)
 }
 
 
-static boolean routing_ok(char *call, char *board, char *mbx)
+static bool routing_ok(char *call, char *board, char *mbx)
 {
   char	hs[256];
 
@@ -3129,10 +3129,10 @@ static boolean routing_ok(char *call, char *board, char *mbx)
 
 /* (Sx) DL8HBS @ DB0GR < DL7XYZ */
 
-static boolean allowed_rlisf(short unr, char msgtype, char *fline_)
+static bool allowed_rlisf(short unr, char msgtype, char *fline_)
 {
   short		k;
-  boolean	from, b, p, ok, insfp, reject_it, db, tome;
+  bool		from, b, p, ok, insfp, reject_it, db, tome;
   char	      	*p1;
   char		fline[256], sender[256], hs[256];
   char		board[256], mbx[256], bid[256], hmbx[256];
@@ -3243,11 +3243,11 @@ static boolean allowed_rlisf(short unr, char msgtype, char *fline_)
 
 /* FB B DL8HBS ALL ATARI $123456123456 9124 */
 
-static boolean allowed_fbbsf(short unr, char *sender, char *board, char *mbx,
+static bool allowed_fbbsf(short unr, char *sender, char *board, char *mbx,
 			     char *bid, char *size)
 {
-  boolean	from, b, tome;
-  boolean	p, ok, insfp;
+  bool		from, b, tome;
+  bool		p, ok, insfp;
   char		hs[256], hmbx[256];
 
   if (!valid_boardname(board))
@@ -3332,11 +3332,11 @@ void send_fbb_answer(short unr)
   char		tsender[256], tsize[256];
   char	      	rejectreason[256];
   short		propct, x, y, w, z;
-  long		roffset;
-  boolean	ok, no_sf, double_prop, disk_full_abort;
+  int32_t	roffset;
+  bool		ok, no_sf, double_prop, disk_full_abort;
   bidchecktype	bidcheck;
   bidarrtype	bidarr;
-  boolean	extended_proto, reject_it;
+  bool		extended_proto, reject_it;
   char		mtype;
   userstruct	*WITH;
 
@@ -3440,7 +3440,7 @@ void send_fbb_answer(short unr)
 		  roffset	= check_resume(bidarr[x - 1], WITH->call,
 						WITH->fbbprop[x - 1].rname);
 		  if (roffset > 0) {  /* ja! */
-		    sprintf(hs2, "%ld", roffset);
+		    sprintf(hs2, "%d", roffset);
 		    sprintf(answer + strlen(answer), "!%s", hs2);
 		  } else {
 		    if (no_sf)
@@ -3645,9 +3645,9 @@ void set_packsf(short unr)
 }
 
 
-static boolean check_firstsix(short unr)
+static bool check_firstsix(short unr)
 {
-  long		err;
+  int32_t	err;
   firstsixtype	fs2;
   short		x;
   binsftyp	*WITH;
@@ -3695,16 +3695,16 @@ static unsigned short dpi16integer(unsigned short l)
 
 static void add_bpacksf(short unr)
 {
-  boolean crc_ok;
+  bool crc_ok;
   short mode, k;
   unsigned short soll_crc;
   short x;
   char w[256], hs[256];
-  boolean abort;
+  bool abort;
   char *puffer;
-  long size;
+  int32_t size;
   char *nmem;
-  long nsize;
+  int32_t nsize;
   userstruct *WITH;
   char STR1[256];
   short FORLIM;
@@ -3915,20 +3915,20 @@ void fbbpack2(short unr, unsigned short infosize, unsigned short *infstart, char
 {
   short       	  ct, hx, hy, hlen, oinfs;
   unsigned short  hsize;
-  long	      	  count;
+  int32_t	  count;
   binsftyp    	  *WITH;
 
   debug0(4, unr, 83);
   hsize       	      	      = infosize - *infstart + 1;
   if (!boxrange(unr)) {
-    *infstart 	      	      = SHORT_MAX;
+    *infstart 	      	      = SHRT_MAX;
     abort_sf(unr, true, "invalid unr");
     return;
   }
   count       	      	      = get_cpuusage();
   oinfs       	      	      = *infstart;
   if (user[unr]->binsfptr == NULL) {
-    *infstart 	      	      = SHORT_MAX;
+    *infstart 	      	      = SHRT_MAX;
     abort_sf(unr, true, "no binsfptr");
     return;
   }
@@ -3959,7 +3959,7 @@ void fbbpack2(short unr, unsigned short infosize, unsigned short *infstart, char
     
     else if (WITH->blockcounter == BCMAGIC1) {
       if (info[*infstart - 1] != 1) {
-	*infstart     	      = SHORT_MAX;
+	*infstart     	      = SHRT_MAX;
 	abort_sf(unr, false, "invalid block identifier");
 	return;
       }
@@ -4005,7 +4005,7 @@ void fbbpack2(short unr, unsigned short infosize, unsigned short *infstart, char
     }
     
     else {
-      *infstart       	      = SHORT_MAX;
+      *infstart       	      = SHRT_MAX;
       abort_sf(unr, true, "invalid bcount");
       return;
     }
@@ -4019,7 +4019,7 @@ static void put_data(short unr, unsigned short infosize,
 		     unsigned short *infstart, char *info)
 {
   short       	  z;
-  boolean     	  error;
+  bool     	  error;
   unsigned short  y;
   unsigned short  hsize;
   char	      	  *buff;
@@ -4051,7 +4051,7 @@ static void put_data(short unr, unsigned short infosize,
 	if (hsize - y > 0) {
 	  if (WITH->wchan < minhandle) {
 	    abort_sf(unr, true, "no handle");
-	    *infstart = SHORT_MAX;
+	    *infstart = SHRT_MAX;
 	    return;
 
 	  }
@@ -4066,7 +4066,7 @@ static void put_data(short unr, unsigned short infosize,
     if (buff != NULL && hsize > 0) {
       if (WITH->wchan < minhandle) {
 	abort_sf(unr, true, "no handle");
-	*infstart = SHORT_MAX;
+	*infstart = SHRT_MAX;
 	return;
       }
       sfwrite(WITH->wchan, hsize, buff);
@@ -4102,7 +4102,7 @@ static void put_data(short unr, unsigned short infosize,
     return;
   }
 
-  *infstart   	  = SHORT_MAX;
+  *infstart   	  = SHRT_MAX;
   del_resume(user[unr]->resumebid, user[unr]->call);
   abort_sf(unr, false, "*** unmatching CRC in resume, file deleted");
 }
@@ -4126,13 +4126,13 @@ void fbb2pack2(short unr, unsigned short infosize, unsigned short *infstart, cha
 {
   short       	  oinfs, mode;
   unsigned short  isize;
-  long	      	  count;
+  int32_t	  count;
   binsftyp    	  *WITH;
 
   debug0(4, unr, 84);
   
   if (!boxrange(unr)) {
-    *infstart 	      	    = SHORT_MAX;
+    *infstart 	      	    = SHRT_MAX;
     return;
   }
   
@@ -4158,7 +4158,7 @@ void fbb2pack2(short unr, unsigned short infosize, unsigned short *infstart, cha
 	    WITH->blockcounter = 256;
 	  *infstart   	    += 2;
 	  put_data(unr, infosize, infstart, info);
-	  if (*infstart == SHORT_MAX)
+	  if (*infstart == SHRT_MAX)
 	    return;
 	} else {
 	  WITH->blockcounter = BCMAGIC1;
@@ -4193,7 +4193,7 @@ void fbb2pack2(short unr, unsigned short infosize, unsigned short *infstart, cha
 	  (*infstart)++;
 	}
       } else {
-	*infstart     	    = SHORT_MAX;
+	*infstart     	    = SHRT_MAX;
 	abort_sf(unr, false, "invalid block identifier");
 	return;
       }
@@ -4205,7 +4205,7 @@ void fbb2pack2(short unr, unsigned short infosize, unsigned short *infstart, cha
 	WITH->blockcounter  = 256;
       (*infstart)++;
       put_data(unr, infosize, infstart, info);
-      if (*infstart == SHORT_MAX)
+      if (*infstart == SHRT_MAX)
 	return;
     } else if (WITH->blockcounter == BCMAGIC2) {
       if (mode == 2) {
@@ -4239,7 +4239,7 @@ void fbb2pack2(short unr, unsigned short infosize, unsigned short *infstart, cha
 	WITH->crc2    	    = info[*infstart];
 	WITH->crc2    	    = (WITH->crc2 << 8) + info[*infstart - 1];
 	if (WITH->crc2 != WITH->blockcrc) {
-	  *infstart   	    = SHORT_MAX;
+	  *infstart   	    = SHRT_MAX;
 	  abort_sf(unr, false, "invalid block crc");
 	  return;
 	}
@@ -4255,7 +4255,7 @@ void fbb2pack2(short unr, unsigned short infosize, unsigned short *infstart, cha
     } else if (WITH->blockcounter == BCMAGIC5) {
       WITH->crc2      	    += info[*infstart - 1] << 8;
       if (WITH->crc2 != WITH->blockcrc) {
-	*infstart     	    = SHORT_MAX;
+	*infstart     	    = SHRT_MAX;
 	abort_sf(unr, false, "invalid block crc");
 	return;
       }
@@ -4264,7 +4264,7 @@ void fbb2pack2(short unr, unsigned short infosize, unsigned short *infstart, cha
       (*infstart)++;
     } else {
       put_data(unr, infosize, infstart, info);
-      if (*infstart == SHORT_MAX)
+      if (*infstart == SHRT_MAX)
 	return;
     }
 
@@ -4337,7 +4337,7 @@ void check_frag_sf(short unr)
 }
 
 
-void abort_sf(short unr, boolean immediate, char *txt)
+void abort_sf(short unr, bool immediate, char *txt)
 {
   char	      STR1[256];
 
@@ -4391,7 +4391,7 @@ sfdeftype *find_sf_pointer(char *call)
   return NULL;
 }
 
-boolean in_real_sf(char *call)
+bool in_real_sf(char *call)
 {
  sfdeftype *sftptr;
 
@@ -4400,9 +4400,9 @@ boolean in_real_sf(char *call)
  return !sftptr->usersf;
 }
 
-static long calc_aclock(void)
+static int32_t calc_aclock(void)
 {
-  long h, m, s;
+  int32_t h, m, s;
 
   utc_clock();   /* Uhr stellen */
   h = clock_.hour;
@@ -4412,7 +4412,7 @@ static long calc_aclock(void)
 }
 
 
-static void set_sf_timer(boolean routing, char *call, long timeout)
+static void set_sf_timer(bool routing, char *call, int32_t timeout)
 {
   sfdeftype *sftptr;
 
@@ -4524,7 +4524,7 @@ void close_filesf_input(short unr)
   }
 }
 
-static boolean check_for_singleliner(char *hs)
+static bool check_for_singleliner(char *hs)
 {
   char *p;
   
@@ -4536,9 +4536,9 @@ static boolean check_for_singleliner(char *hs)
 }
 
 #define binbuf 1000
-static long bincopy(short inh, short outh, long size, boolean dummy_write)
+static int32_t bincopy(short inh, short outh, int32_t size, bool dummy_write)
 { 
-  long	count;
+  int32_t	count;
   char	buf[binbuf];
   
   while (size > 0) {
@@ -4556,10 +4556,10 @@ static long bincopy(short inh, short outh, long size, boolean dummy_write)
 
 void do_filesf_input(short unr)
 {
-  boolean   eol;
-  boolean   formaterr = false;
-  boolean   got_ex = false;
-  long	    binsize;
+  bool      eol;
+  bool      formaterr = false;
+  bool      got_ex = false;
+  int32_t   binsize;
   pathstr   inp;
   char	    hs[256];
 
@@ -4771,7 +4771,7 @@ static void start_filesf(short unr, char *call, char *args_)
 void start_sf(short unr, char *call_, char *parameter_)
 {
   sfcpathtype 	*hp;
-  boolean     	fchk, tofile, toexec;
+  bool     	fchk, tofile, toexec;
   short       	outtnc, k;
   sfdeftype   	*sfp;
   char	      	call[256], parameter[256], hs[256], w[256], fpath[256], qrgstr[256];
@@ -4901,17 +4901,17 @@ static short total_connects(char *call)
 }
 
 
-static long last_sftimer    = 0;
+static int32_t last_sftimer    = 0;
 
 
 void check_sftimer(void)
 {
   sfdeftype *sftptr;
-  long aclock, ival, ival2, zsum1, zsum2;
-  boolean has_mail, try, try1, try2, do_linkcheck;
+  int32_t aclock, ival, ival2, zsum1, zsum2;
+  bool has_mail, try, try1, try2, do_linkcheck;
   short x;
   char w[256];
-  boolean tcheck;
+  bool tcheck;
   sfdeftype *WITH;
 
   aclock = calc_aclock();
@@ -5009,8 +5009,8 @@ void check_sftimer(void)
 }
 
 
-void set_sftimer(char *box, short min, short stnc, short sfcase, long maxb,
-		 long maxu, long maxp, long pifnone, long sutc, long eutc)
+void set_sftimer(char *box, short min, short stnc, short sfcase, int32_t maxb,
+		 int32_t maxu, int32_t maxp, int32_t pifnone, int32_t sutc, int32_t eutc)
 {
   sfdeftype   *sfptr;
 
@@ -5074,7 +5074,7 @@ void set_sftimer(char *box, short min, short stnc, short sfcase, long maxb,
 }
 
 
-static long gwli(char *h)
+static int32_t gwli(char *h)
 {
   char w[256];
 
@@ -5089,9 +5089,9 @@ static short gwi(char *h)
 }
 
 
-static long gwutc(char *h)
+static int32_t gwutc(char *h)
 {
-  long	  hl, erg;
+  int32_t	hl, erg;
   char	  w[256], w2[256];
 
   get_word(h, w);
@@ -5109,7 +5109,7 @@ static long gwutc(char *h)
 void set_sfparms(char *box, char *hs_)
 {
   short     min, tnc, sfcase, which, wc;
-  long	    pifnone, sutc, eutc, hl, maxb, maxu, maxp, val;
+  int32_t   pifnone, sutc, eutc, hl, maxb, maxu, maxp, val;
   char	    hs[256], w[256], w2[256];
 
   strcpy(hs, hs_);
@@ -5211,7 +5211,7 @@ void set_sfparms(char *box, char *hs_)
 static void form_utc(time_t time, char *out)
 {
   time /= 60;
-  sprintf(out, "%.2ld%.2ld", time / 60, time % 60);
+  sprintf(out, "%.2"PRId64"%.2"PRId64, (int64_t)time / 60, (int64_t)time % 60);
 }
 
 
@@ -5230,12 +5230,12 @@ static void form_nextutc(time_t time, time_t start, time_t ende, char *out)
 }
 
 
-static void add_hs(long v, short spc, short blanks, char *hs)
+static void add_hs(int32_t v, short spc, short blanks, char *hs)
 {
   short     x;
   char	    w[256];
 
-  sprintf(w, "%*ld", spc, v);
+  sprintf(w, "%*d", spc, v);
   strcat(hs, w);
   for (x = 1; x <= blanks; x++)
     strcat(hs, " ");
@@ -5244,7 +5244,7 @@ static void add_hs(long v, short spc, short blanks, char *hs)
 
 void show_sfparms(short unr, char *box)
 {
-  boolean     	ok;
+  bool     	ok;
   sfdeftype   	*WITH, *sfptr;
   sfcpathtype 	*cp1;
   char	      	hs[256], sutcs[256], eutcs[256], nutcs[256];
@@ -5413,7 +5413,7 @@ void dispose_sfinfos(void)
 void load_sfinfos(void)
 {
   short       	  k, result;
-  boolean     	  ok, owncall, file_forward;
+  bool     	  ok, owncall, file_forward;
   sfdeftype   	  *hp, *hp2;
   sfcpathtype 	  *cp1;
   sffortype   	  *fp1;
@@ -5666,12 +5666,12 @@ void load_sfinfos(void)
 /* im Zusammenhang mit dem automatischen Router, welcher immer dann in Aktion tritt, wenn die fest  */
 /* vorgegebenen Definitionen keine Partnerbox fuer eine Zielmailbox angeben.          	      	    */
 
-static boolean check_sfdeffile(boolean look_FOR, boolean only_rubrik,
-  boolean is_7plus, boolean is_bin,
+static bool check_sfdeffile(bool look_FOR, bool only_rubrik,
+  bool is_7plus, bool is_bin,
   sfdeftype *sfp, char *rubrik, char *orubrik, char *mbx, char *hiermbx, char *frombox,
-  char *bid, boolean *rubrik_transfer, char *lastvias)
+  char *bid, bool *rubrik_transfer, char *lastvias)
 {
-  boolean Result, ok, flood, direct_neighbour, check_rubriken, is_wp;
+  bool Result, ok, flood, direct_neighbour, check_rubriken, is_wp;
   char s[256];
   short k;
   sffortype *fp1;
@@ -5711,14 +5711,14 @@ static boolean check_sfdeffile(boolean look_FOR, boolean only_rubrik,
       if (strcmp(mbx, Console_call) || !strcmp(sfp->call, Console_call)) {
 	fp1 = sfp->forp;
 	while (fp1 != NULL && !ok) {
-	  ok = wildcardcompare(SHORT_MAX, fp1->pattern, mbx, s);
+	  ok = wildcardcompare(SHRT_MAX, fp1->pattern, mbx, s);
 	  fp1 = fp1->next;
 	}
 
 	if (*hiermbx != '\0' && !ok) {
 	  fp1 = sfp->forp;
 	  while (fp1 != NULL && !ok) {
-	    ok = wildcardcompare(SHORT_MAX, fp1->pattern, hiermbx, s);
+	    ok = wildcardcompare(SHRT_MAX, fp1->pattern, hiermbx, s);
 	    fp1 = fp1->next;
 	  }
 	}
@@ -5730,14 +5730,14 @@ static boolean check_sfdeffile(boolean look_FOR, boolean only_rubrik,
 
     fp1 = sfp->notforp;
     while (fp1 != NULL && ok) {
-      ok = !wildcardcompare(SHORT_MAX, fp1->pattern, mbx, s);
+      ok = !wildcardcompare(SHRT_MAX, fp1->pattern, mbx, s);
       fp1 = fp1->next;
     }
 
     if (*hiermbx != '\0' && ok) {
       fp1 = sfp->notforp;
       while (fp1 != NULL && ok) {
-	ok = !wildcardcompare(SHORT_MAX, fp1->pattern, hiermbx, s);
+	ok = !wildcardcompare(SHRT_MAX, fp1->pattern, hiermbx, s);
 	fp1 = fp1->next;
       }
     }
@@ -5745,8 +5745,8 @@ static boolean check_sfdeffile(boolean look_FOR, boolean only_rubrik,
     if (check_rubriken) {
       rp1 = sfp->notrubrikp;
       while (rp1 != NULL && ok) {
-      	ok = !wildcardcompare(SHORT_MAX, rp1->pattern, rubrik, s);
-      	if (ok && *orubrik) ok = !wildcardcompare(SHORT_MAX, rp1->pattern, orubrik, s);
+      	ok = !wildcardcompare(SHRT_MAX, rp1->pattern, rubrik, s);
+      	if (ok && *orubrik) ok = !wildcardcompare(SHRT_MAX, rp1->pattern, orubrik, s);
       	rp1 = rp1->next;
       }
     }
@@ -5754,7 +5754,7 @@ static boolean check_sfdeffile(boolean look_FOR, boolean only_rubrik,
     if (flood) {
       nf1 = sfp->notfromp;
       while (nf1 != NULL && ok) {
-	ok = !wildcardcompare(SHORT_MAX, nf1->pattern, frombox, s);
+	ok = !wildcardcompare(SHRT_MAX, nf1->pattern, frombox, s);
 	nf1 = nf1->next;
       }
     }
@@ -5765,8 +5765,8 @@ static boolean check_sfdeffile(boolean look_FOR, boolean only_rubrik,
 
   rp1 = sfp->rubrikp;
   while (rp1 != NULL && !ok) {
-    ok = wildcardcompare(SHORT_MAX, rp1->pattern, rubrik, s);
-    if (!ok && *orubrik) ok = wildcardcompare(SHORT_MAX, rp1->pattern, orubrik, s);
+    ok = wildcardcompare(SHRT_MAX, rp1->pattern, rubrik, s);
+    if (!ok && *orubrik) ok = wildcardcompare(SHRT_MAX, rp1->pattern, orubrik, s);
     rp1 = rp1->next;
     if (ok) {
       if (callsign(mbx))
@@ -5795,10 +5795,10 @@ static boolean check_sfdeffile(boolean look_FOR, boolean only_rubrik,
 
 
 /* checks if a partner bbs should get a specific bulletin */
-boolean forward_ok(char *box, char *rubrik, char *hiermbx, char *frombox, char *bid,
-      	      	    boolean splus, boolean bin)
+bool forward_ok(char *box, char *rubrik, char *hiermbx, char *frombox, char *bid,
+      	      	    bool splus, bool bin)
 {
-  boolean db, ok;
+  bool db, ok;
   sfdeftype *sfp;
   mbxtype mbx;
   
@@ -5812,11 +5812,11 @@ boolean forward_ok(char *box, char *rubrik, char *hiermbx, char *frombox, char *
 }
 
 /* checks if a partner bbs should _not_at_all_ get a specific bulletin */
-static boolean valid_partner(boolean is_7plus, boolean is_bin,
+static bool valid_partner(bool is_7plus, bool is_bin,
 			     char *box, char *rubrik, char *orubrik, char *mbx,
 			     char *hiermbx, char *frombox, char *bid)
 {
-  boolean ok, db;
+  bool ok, db;
   sfdeftype *sfp;
 
   debug(5, -1, 148, box);
@@ -5857,7 +5857,7 @@ static void new_sfentry(indexstruct *xheader)
   if (exist(sflist)) {
     k2 = sfopen(sflist, FO_RW);
     /* ans Ende der Datei */
-    if (sfseek(0, k2, SFSEEKEND) >= ((SHORT_MAX * sizeof(indexstruct)) - 100)) {
+    if (sfseek(0, k2, SFSEEKEND) >= ((SHRT_MAX * sizeof(indexstruct)) - 100)) {
       sfclose(&k2);
       debug(0, -1, 140, "forward list overflow (board X)");
       return;
@@ -5893,8 +5893,8 @@ static void new_sfentry(indexstruct *xheader)
 
 
 static void set_fwd(short unr_msg, indexstruct header1, short *routct,
-		    boolean routtest, boolean rubrik_transfer,
-		    boolean spec_sf, char *to_box, char *rubrik)
+		    bool routtest, bool rubrik_transfer,
+		    bool spec_sf, char *to_box, char *rubrik)
 {
   char w[256];
   indexstruct header;
@@ -5953,7 +5953,7 @@ static void set_fwd(short unr_msg, indexstruct header1, short *routct,
 
 
 static void check_if_err(short unr_msg, char *rubrik, char *mbx,
-			 boolean routtest, indexstruct header1, short routct, char *ret)
+			 bool routtest, indexstruct header1, short routct, char *ret)
 {
   if (	     (!routtest || !strcmp(mbx, Console_call))
 	 && !(callsign(mbx) && strcmp(mbx, Console_call))) {
@@ -5978,13 +5978,13 @@ static void check_if_err(short unr_msg, char *rubrik, char *mbx,
 }
 
 
-unsigned short vermerke_sf(short unr_msg, boolean routtest, char *rubrik,
+unsigned short vermerke_sf(short unr_msg, bool routtest, char *rubrik,
 			   char *from_box, char *to_box_, indexstruct header1,
 			   char *lastvias)
 {
   short			k, routct;
-  boolean		fout, fchk, rubrik_transfer, spec_sf, iscall, mirror, check_defs;
-  boolean		hierarchical_mess, was_local, is_7plus, is_bin;
+  bool			fout, fchk, rubrik_transfer, spec_sf, iscall, mirror, check_defs;
+  bool			hierarchical_mess, was_local, is_7plus, is_bin;
   sfdeftype		*sfp;
   userstruct		ufil;
   char			ret;
@@ -6165,7 +6165,7 @@ _L1:
 }
 
 
-static boolean gen_sftest3(short unr, char *frombox, char *board, char *mbx)
+static bool gen_sftest3(short unr, char *frombox, char *board, char *mbx)
 {
   indexstruct		header;
 
@@ -6190,7 +6190,7 @@ static boolean gen_sftest3(short unr, char *frombox, char *board, char *mbx)
 }
 
 
-boolean gen_sftest2(short unr, char *board, char *mbx)
+bool gen_sftest2(short unr, char *board, char *mbx)
 {
   char		frombox[256];
 
@@ -6199,7 +6199,7 @@ boolean gen_sftest2(short unr, char *board, char *mbx)
 }
 
 
-boolean gen_sftest(short unr, char *eingabe)
+bool gen_sftest(short unr, char *eingabe)
 {
   boardtype	rubrik;
   char		hs[256];
@@ -6212,15 +6212,15 @@ boolean gen_sftest(short unr, char *eingabe)
       user_mybbs(rubrik, mbx);
   }
   add_hpath(mbx);
-  snprintf(STR7, 255, "%s @ %s", rubrik, mbx);
+  snprintf(STR7, 100, "%s @ %s", rubrik, mbx);
   wlnuser(unr, STR7);
   return (gen_sftest2(unr, rubrik, mbx));
 }
 
 
-static boolean check_tpk_request(short unr, char *eingabe)
+static bool check_tpk_request(short unr, char *eingabe)
 {
-  long msgnum;
+  int32_t msgnum;
   short idx;
   indexstruct header;
   boardtype board;
@@ -6235,7 +6235,7 @@ static boolean check_tpk_request(short unr, char *eingabe)
       return true;
     }
   }
-  sprintf(w, "Msg #%ld does not exist !\r", msgnum + MSGNUMOFFSET);
+  sprintf(w, "Msg #%d does not exist !\r", msgnum + MSGNUMOFFSET);
   chwuser(unr, 24); /* CANCEL */
   chwuser(unr, strlen(w));
   wuser(unr, w);
@@ -6277,7 +6277,7 @@ void create_my_sid(char *sid, char *password)
 }
 
 
-void analyse_sid(boolean request, short unr, char *w)
+void analyse_sid(bool request, short unr, char *w)
 {
   short       k, x;
   userstruct  *WITH;
@@ -6351,7 +6351,7 @@ void analyse_sid(boolean request, short unr, char *w)
 }
 
 
-static boolean check_for_double_connect(short unr)
+static bool check_for_double_connect(short unr)
 {
   short     x;
 
@@ -6387,10 +6387,10 @@ static short errorcondition(char *eingabe)
 }
 
 
-void analyse_sf_command(short unr, char *eingabe, boolean return_)
+void analyse_sf_command(short unr, char *eingabe, bool return_)
 {
   short       	k, x, ec, ct;
-  boolean     	has_bid, plus;
+  bool     	has_bid, plus;
   userstruct  	*WITH;
   char	      	*p;
   char	      	msgtype;
@@ -6601,7 +6601,7 @@ void analyse_sf_command(short unr, char *eingabe, boolean return_)
     }
     msgtype = '\0';
     get_word(eingabe, w);
-    if ((unsigned long)strlen(w) < 32 && ((1L << strlen(w)) & 0x6) != 0) { /* !!!CHECK */
+    if ((uint32_t)strlen(w) < 32 && ((1L << strlen(w)) & 0x6) != 0) { /* !!!CHECK */
       if (!strcmp(w, "F<")) {
 	if (!check_tpk_request(unr, eingabe))
 	  abort_sf(unr, false, "***invalid message number");
