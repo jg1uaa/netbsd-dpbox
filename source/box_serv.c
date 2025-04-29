@@ -28,7 +28,7 @@
 #include "box_scan.h"
 
 
-static boolean valid_servername(char *n_)
+static bool valid_servername(char *n_)
 {
   short i;
   calltype n;
@@ -66,7 +66,7 @@ static void strip_call(char *c1_, char *c2, char *c)
 }
 
 
-boolean in_servers(char *board)
+bool in_servers(char *board)
 {
   char s[256];
 
@@ -80,7 +80,7 @@ boolean in_servers(char *board)
 static short in_abonnees(char *sender, char *board)
 {
   short ifl, unr;
-  boolean ok, sflag;
+  bool ok, sflag;
   char c;
   char hs[256], c1[256];
   char STR1[256];
@@ -122,10 +122,10 @@ static short in_abonnees(char *sender, char *board)
   return 1;
 }
 
-static boolean is_public(char *board)
+static bool is_public(char *board)
 {
   short ifl;
-  boolean ok;
+  bool ok;
   char c;
   char hs[256], c1[256];
   char STR1[256];
@@ -146,19 +146,19 @@ static boolean is_public(char *board)
   return ok;
 }
 
-static boolean u_subscribe(char *sender_, char *board_, char *betreff_);
+static bool u_subscribe(char *sender_, char *board_, char *betreff_);
 
 #define blocksize       16384
 
-boolean do_server(char *sender_, char *board_, char *betreff_, char *tname_,
-		  long offset)
+bool do_server(char *sender_, char *board_, char *betreff_, char *tname_,
+		  int32_t offset)
 {
-  boolean Result;
+  bool Result;
   short ifl, ifs, ifc, k, x, y, kanal, pmh, ct;
   char *tb;
-  long tbs, rp, lrp, lrp2;
-  boolean ok;
-  long cntmsg, cntabonnees;
+  int32_t tbs, rp, lrp, lrp2;
+  bool ok;
+  int32_t cntmsg, cntabonnees;
   char c;
   char svname[256];
   char sublist[256];
@@ -224,7 +224,7 @@ boolean do_server(char *sender_, char *board_, char *betreff_, char *tname_,
 	  cntmsg = 0;
 	cntmsg++;
 	ifc = sfcreate(svcnt, FC_FILE);
-	sprintf(w, "%ld", cntmsg);
+	sprintf(w, "%d", cntmsg);
 	str2file(&ifc, w, true);
 	sfclose(&ifc);
 
@@ -265,7 +265,7 @@ boolean do_server(char *sender_, char *board_, char *betreff_, char *tname_,
 	  if (y > x)
 	    strdelete(betreff1, x, y - x + 2);
 	}
-	sprintf(betreff1, "(%s %ld) %s", board, cntmsg, strcpy(STR7, betreff1));
+	sprintf(betreff1, "(%s %d) %s", board, cntmsg, strcpy(STR7, betreff1));
 
 
 	if ((pmh = sfcreate(protomsg, FC_FILE)) >= minhandle) {
@@ -278,7 +278,7 @@ boolean do_server(char *sender_, char *board_, char *betreff_, char *tname_,
             str2file(&pmh, "Subscriber list:", true);
             app_file(sublist, pmh, true);
 	  } else {
-            sprintf(STR7, "There are %ld users on the list", cntabonnees);
+            sprintf(STR7, "There are %d users on the list", cntabonnees);
 	    str2file(&pmh, STR7, true);
           }
           str2file(&pmh, "", true);
@@ -414,7 +414,7 @@ static void list_abonnees(short unr, char *sname, char *call_)
       strcpy(w, hs);
       if (w[0] == '!')
         strdelete(w, 1, 1);
-      if (wildcardcompare(SHORT_MAX, call, w, w0))
+      if (wildcardcompare(SHRT_MAX, call, w, w0))
         wlnuser(unr, hs);
     }
     sfclose(&ifl);
@@ -423,9 +423,9 @@ static void list_abonnees(short unr, char *sname, char *call_)
 }
 
 
-static boolean add_abonnee(short unr, char *sname, char *call, boolean public)
+static bool add_abonnee(short unr, char *sname, char *call, bool public)
 {
-  boolean Result;
+  bool Result;
   short ifl, ofl;
   char c;
   char svname[256];
@@ -482,9 +482,9 @@ static boolean add_abonnee(short unr, char *sname, char *call, boolean public)
 }
 
 
-static boolean sub_abonnee(short unr, char *sname, char *call, boolean public)
+static bool sub_abonnee(short unr, char *sname, char *call, bool public)
 {
-  boolean Result;
+  bool Result;
   short ifl, ofl, ct;
   char c;
   char svname[256];
@@ -712,9 +712,9 @@ static void gen_svackmail(char *sender_,char *server_, short Subscribe)
 }
 
 /* DL3NEU: Subscribe bzw. Unsubscribe per Mail */
-static boolean u_subscribe(char *sender_, char *board_, char *betreff_)
+static bool u_subscribe(char *sender_, char *board_, char *betreff_)
 {
-  boolean ok;
+  bool ok;
   char betreff1[256];
   char sender1[256];
   char board1[256];
@@ -811,7 +811,7 @@ static boolean u_subscribe(char *sender_, char *board_, char *betreff_)
 }
 
 
-static void list_servers(short unr, boolean All, boolean Subscribed)
+static void list_servers(short unr, bool All, bool Subscribed)
 {
   DTA dirinfo;
   short result, k, ifl;
@@ -890,9 +890,9 @@ static void list_servers(short unr, boolean All, boolean Subscribed)
     wlnuser(unr, "------------------------------");
 }
 
-static boolean lock_abonnee(short unr, char *sname, char *call)
+static bool lock_abonnee(short unr, char *sname, char *call)
 {
-  boolean Result;
+  bool Result;
   char call1[256];
   char STR1[256];
   Result = false;
@@ -912,10 +912,10 @@ static boolean lock_abonnee(short unr, char *sname, char *call)
 
 
 /* set public flag and infotext of a listserver */
-static boolean toggle_pubserv(short unr, char *sname, char mode,
+static bool toggle_pubserv(short unr, char *sname, char mode,
                 	      char *eingabe)
 {
-  boolean ok, Result;
+  bool ok, Result;
   char svname[256], ausgabe[256];
   char hs[256], c1[256];
   char c;
@@ -979,9 +979,9 @@ static boolean toggle_pubserv(short unr, char *sname, char mode,
 }
 
 
-boolean config_server(short unr, char *eingabe_)
+bool config_server(short unr, char *eingabe_)
 {
-  boolean Result;
+  bool Result;
   char eingabe[256];
   char sname[256];
   char w[256], w1[256];
@@ -1018,7 +1018,7 @@ boolean config_server(short unr, char *eingabe_)
      switch (w[1]) {
 
      case '+':
-       if (toggle_pubserv(unr, sname, 1, '\0')) {
+       if (toggle_pubserv(unr, sname, 1, NULL)) {
          sprintf(STR1, "OK, server %s is now public", sname);
          wlnuser(unr, STR1); 
        } else {
@@ -1029,7 +1029,7 @@ boolean config_server(short unr, char *eingabe_)
        break;
 
      case '-':
-       if (toggle_pubserv(unr, sname, 2, '\0')) {
+       if (toggle_pubserv(unr, sname, 2, NULL)) {
          sprintf (STR1, "OK, server %s is now private", sname);
          wlnuser(unr, STR1);      
        } else {
@@ -1123,13 +1123,13 @@ boolean config_server(short unr, char *eingabe_)
 /* Die Absender-R:-Line wird an die neue Mail    */
 /* angehaengt                                    */
 
-boolean do_redist(char *absender, char *dest, char *betreff_, char *tname, long offset)
+bool do_redist(char *absender, char *dest, char *betreff_, char *tname, int32_t offset)
 {
-  boolean Result;
+  bool Result;
   char betreff[256];
 
   short k, h, x;
-  long seekp;
+  int32_t seekp;
   char hs[256], newb[256], newmbx[256];
   char lastr[256], sendbbs[256];
   char STR7[256];
@@ -1271,12 +1271,12 @@ boolean do_redist(char *absender, char *dest, char *betreff_, char *tname, long 
 /* der PING - Server...                          */
 /* Sx PING@CONSOLE_CALL, Sx P1NG@CONSOLE_CALL    */
 
-boolean do_ping(char *absender, char msgtype, char *subject, char *bid, char *tname,
-      	      	long offset, time_t rxtime)
+bool do_ping(char *absender, char msgtype, char *subject, char *bid, char *tname,
+      	      	int32_t offset, time_t rxtime)
 {
   short   k, l;
-  long	  filesize;
-  boolean has_eol, was_eol;
+  int32_t	  filesize;
+  bool    has_eol, was_eol;
   char	  hs[256], lastr[256];
   mbxtype tobbs, atbbs;
 

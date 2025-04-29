@@ -4,13 +4,13 @@
 
 #include "pastrix.h"
 
-extern boolean in_servers(char *board);
-extern boolean do_server(char *sender, char *board, char *betreff,
-			 char *tname, long offset);
-extern boolean config_server(short unr, char *eingabe);
-extern boolean do_redist(char *absender, char *dest, char *betreff,
-			 char *tname, long offset);
-extern boolean do_ping(char *absender, char msgtype, char *subject, char *bid, char *tname,
-      	      	       long offset, time_t rxtime);
+extern bool in_servers(char *board);
+extern bool do_server(char *sender, char *board, char *betreff,
+		      char *tname, int32_t offset);
+extern bool config_server(short unr, char *eingabe);
+extern bool do_redist(char *absender, char *dest, char *betreff,
+		      char *tname, int32_t offset);
+extern bool do_ping(char *absender, char msgtype, char *subject, char *bid, char *tname,
+		    int32_t offset, time_t rxtime);
 #endif /*BOX_SERV_H*/
 
