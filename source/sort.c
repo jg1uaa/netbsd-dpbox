@@ -9,12 +9,12 @@
 typedef struct strmem {
   struct strmem *left, *right;
   char *zeile;
-  long hits;
+  int32_t hits;
 } strmem;
 
 
   /*----------------------------------*/
-static void fuege_ein(strmem **s, strmem *entry_, boolean single)
+static void fuege_ein(strmem **s, strmem *entry_, bool single)
 {
   /*Fuegt den String in den Baum ein  */
   /*----------------------------------*/
@@ -37,8 +37,8 @@ static void fuege_ein(strmem **s, strmem *entry_, boolean single)
 
 
   /*-------------------------------------*/
-static void ordne_ein(char *instr, strmem **lroot, boolean *no_mem,
-			boolean single)
+static void ordne_ein(char *instr, strmem **lroot, bool *no_mem,
+			bool single)
 {
   /*Findet die richtige Stelle wo instr  */
   /*im Baum einzusortieren ist.          */
@@ -64,8 +64,8 @@ static void ordne_ein(char *instr, strmem **lroot, boolean *no_mem,
 }
 
 
-static void lese_file_ein(char *name, strmem **lroot, boolean *no_mem,
-				boolean single)
+static void lese_file_ein(char *name, strmem **lroot, bool *no_mem,
+				bool single)
 {
   char instr[sortstrsize+1];
   short workfile;
@@ -107,10 +107,10 @@ static void schreibe_file(char *name, strmem **lroot)
 }
 
 
-static void lese_mem_ein(char *start, long size, strmem **lroot,
-			 boolean *no_mem, boolean single)
+static void lese_mem_ein(char *start, int32_t size, strmem **lroot,
+			 bool *no_mem, bool single)
 {
-  long lz;
+  int32_t lz;
   char instr[sortstrsize+1];
 
   lz = 0;
@@ -125,7 +125,7 @@ static void lese_mem_ein(char *start, long size, strmem **lroot,
 
 
   /*----------------------------------*/
-static void schreibe_mem2(char *start, long *lz, strmem *s)
+static void schreibe_mem2(char *start, int32_t *lz, strmem *s)
 {
   /*Rekursiver Schreibalgr.           */
   /*----------------------------------*/
@@ -139,9 +139,9 @@ static void schreibe_mem2(char *start, long *lz, strmem *s)
 }
 
 
-static void schreibe_mem(char *start, long *size, strmem **lroot)
+static void schreibe_mem(char *start, int32_t *size, strmem **lroot)
 {
-  long lz;
+  int32_t lz;
 
   lz = 0;
   if (*lroot != NULL)
@@ -150,10 +150,10 @@ static void schreibe_mem(char *start, long *size, strmem **lroot)
 }
 
 
-static void sort_it(char *name, char *start, long *size, boolean single)
+static void sort_it(char *name, char *start, int32_t *size, bool single)
 {
   strmem *lroot;
-  boolean no_mem;
+  bool no_mem;
 
   no_mem = false;
   lroot = NULL;
@@ -185,18 +185,18 @@ void gnusort(char *name, char *options1, char *options2)
   sfrename(tmp, name);
 }
 
-void sort_file(char *name, boolean single)
+void sort_file(char *name, bool single)
 {
   if (single) gnusort(name, "-u", "");
   else gnusort(name, "", "");
-/*  long h;
+/*  int32_t h;
 
   sort_it(name, NULL, &h, single);
 */
 }
 
 
-void sort_mem(char *start, long *size, boolean single)
+void sort_mem(char *start, int32_t *size, bool single)
 {
   sort_it("", start, size, single);
 }

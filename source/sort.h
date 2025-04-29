@@ -5,8 +5,8 @@
 #include "pastrix.h"
 
 extern void gnusort(char *name, char *options1, char *options2);
-extern void sort_file(char *name, boolean single);
-extern void sort_mem(char *start, long *size, boolean single);
+extern void sort_file(char *name, bool single);
+extern void sort_mem(char *start, int32_t *size, bool single);
 
 #endif /*SORT_H*/
 
