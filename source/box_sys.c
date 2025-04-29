@@ -35,7 +35,7 @@
 /* der tempbinname wird hier als Zwischenspeicher fuer den #BIN#-Header  */
 /* verwendet...                                                          */
 
-void box_rtitle(boolean set_it, short unr, char *rtitle)
+void box_rtitle(bool set_it, short unr, char *rtitle)
 {
   char	hs[256];
 
@@ -65,14 +65,14 @@ void box_ttouch(short unr)
 }
 
 /* make some assumptions on the default user language */
-boolean is_german(char *w)
+bool is_german(char *w)
 {
   return (   (w[0] == 'D' && w[1] != 'U')
 	  || (w[0] == 'O' && w[1] == 'E')
 	  || (w[0] == 'H' && w[1] == 'B')  );
 }
 
-boolean for_german_readers(char *call1, char *call2, char *mbx)
+bool for_german_readers(char *call1, char *call2, char *mbx)
 {
   mbxtype hs;
   
@@ -140,8 +140,8 @@ void show_prefix_information(short unr, char *call_, char *loc)
 {
   double	lon, lat, l1, b1;
   double	entfernung, richtung, gegenrichtung;
-  long		dist;
-  boolean	userloc;
+  int32_t	dist;
+  bool		userloc;
   short		waz, itu;
   char		subst[256], name[256], continent[256], hs[256], call[256];
   char		mbsysop[80], allsysops[80], qthloc[80], qthname[80];
@@ -208,7 +208,7 @@ void show_prefix_information(short unr, char *call_, char *loc)
         dist	= entfernung;
         if (dist > 500) {
           dist	= (dist / 100) * 100; /* Genauigkeit heruntersetzen */
-	  sprintf(hs, "Distance    : %ld km (estimated)", dist);
+	  sprintf(hs, "Distance    : %d km (estimated)", dist);
 	  wlnuser(unr, hs);
         }
       }
@@ -393,9 +393,9 @@ void check_sysanswer(short unr, char *eingabe_)
 }
 
 
-void answer_sysrequest(short unr, boolean MD2, boolean MD5)
+void answer_sysrequest(short unr, bool MD2, bool MD5)
 {
-  boolean	okpw;
+  bool		okpw;
   userstruct	*WITH;
   char		nstr[256], pw[256], hs[256], STR1[256];
 
@@ -470,7 +470,7 @@ static char s_on[]	= " ON";
 static char s_off[]	= " OFF";
 static char s_dash[]	= "-";
 
-static void p_ix(short unr, long time, char *ts)
+static void p_ix(short unr, int32_t time, char *ts)
 {
   char	hs[256];
 
@@ -483,7 +483,7 @@ static void p_ix(short unr, long time, char *ts)
     wlnuser(unr, s_dash);
 }
 
-void par_onoff(short unr, const char *par, boolean on)
+void par_onoff(short unr, const char *par, bool on)
 {
   wuser(unr, par);
   if (on) wlnuser(unr, s_on);
@@ -498,7 +498,7 @@ void par_s(short unr, const char *par, short value)
   wlnuser0(unr);
 }
 
-void par_l(short unr, const char *par, long value)
+void par_l(short unr, const char *par, int32_t value)
 {
   wuser(unr, par);
   wuser(unr, s_space);
@@ -508,7 +508,7 @@ void par_l(short unr, const char *par, long value)
 
 static void calc_timestring(time_t seconds, char *hs)
 {
-  sprintf(hs, "%ld h %ld min %ld", seconds / 3600, seconds % 3600 / 60, seconds % 60);
+  sprintf(hs, "%"PRId64" h %"PRId64" min %"PRId64, (int64_t)seconds / 3600, (int64_t)seconds % 3600 / 60, (int64_t)seconds % 60);
 }
 
 
@@ -530,17 +530,17 @@ void show_stat(short unr, short x)
   seconds1	= WITH->processtime / 200;
   seconds2	= (WITH->processtime % 200) >> 1;
   calc_timestring(seconds1, w);
-  sprintf(hs, "CPU-Time    : %s.%.2ld sec", w, seconds2);
+  sprintf(hs, "CPU-Time    : %s.%.2"PRId64" sec", w, (int64_t)seconds2);
   wlnuser(unr, hs);
-  sprintf(hs, "Bytecount   : RX %ld / TX %ld", WITH->rbytes, WITH->sbytes);
+  sprintf(hs, "Bytecount   : RX %d / TX %d", WITH->rbytes, WITH->sbytes);
   wlnuser(unr, hs);
   if (seconds0 < 1)
     seconds0	= 1;
   if (seconds1 < 1)
     seconds1	= 1;
-  sprintf(hs, "Speed       : %ld bps (HF) / %ld bps (CPU)",
-		(WITH->rbytes + WITH->sbytes) * 8 / seconds0,
-		(WITH->rbytes + WITH->sbytes) * 8 / seconds1);
+  sprintf(hs, "Speed       : %"PRId64" bps (HF) / %"PRId64" bps (CPU)",
+		(int64_t)(WITH->rbytes + WITH->sbytes) * 8 / seconds0,
+		(int64_t)(WITH->rbytes + WITH->sbytes) * 8 / seconds1);
   wlnuser(unr, hs);
 }
 
@@ -576,8 +576,8 @@ static void show_u_ct(short unr, char *call)
 static void show_single_user(short unr, char *call)
 {
   short		x;
-  boolean	owner;
-  long		sb, rb, l;
+  bool		owner;
+  int32_t	sb, rb, l;
   userstruct	uf;
   char		hs[256], w[256];
 
@@ -644,7 +644,7 @@ static void show_single_user(short unr, char *call)
 	l	= user[x]->read_today;
       else
 	l	= uf.read_today;
-	if (l > 0 && uf.maxread_day > 0) {
+      if (l > 0 && uf.maxread_day > 0) {
 	wuser(unr, "Total/day   : ");
 	lwuser(unr, l);
 	wuser(unr, " of max. ");
@@ -877,10 +877,10 @@ void show_user(short unr, char *call, char *option)
 /* Functions for changing user settings					*/
 /************************************************************************/
 
-void set_password(short unr, boolean superv, char *eingabe_)
+void set_password(short unr, bool superv, char *eingabe_)
 {
   short		x;
-  long		t2;
+  int32_t	t2;
   short		l1;
   userstruct	ufil;
   char		eingabe[256], w[256], hs[256], STR1[32];
@@ -965,7 +965,7 @@ void set_password(short unr, boolean superv, char *eingabe_)
     }
   } else if (ufil.pwmode != 0 || user[unr]->pchan > 0 ||
 	     user[unr]->console != false) {
-    sprintf(w, "%d", strlen(ufil.password));
+    sprintf(w, "%d", (int32_t)strlen(ufil.password));
     w_btext(unr, 144);
     chwuser(unr, 32);
     wlnuser(unr, w);
@@ -1043,7 +1043,7 @@ void import_pw(short unr, char *eingabe_)
 }
 
 
-static boolean local_prepare_change(short unr, char *eingabe, char *outpar, userstruct *ufil)
+static bool local_prepare_change(short unr, char *eingabe, char *outpar, userstruct *ufil)
 {
   char		w[256], c[256];
 
@@ -1062,7 +1062,7 @@ static boolean local_prepare_change(short unr, char *eingabe, char *outpar, user
   return true;
 }
 
-static void adjust_and_save_userstructs(userstruct *ufil, long offset, long size)
+static void adjust_and_save_userstructs(userstruct *ufil, int32_t offset, int32_t size)
 {
   short		x;
 
@@ -1095,12 +1095,12 @@ void set_maxread(short unr, char *w, char *eingabe)
   ufil.maxread_day	= (atol(eingabe) + MAXREADDIVISOR - 1) / MAXREADDIVISOR * MAXREADDIVISOR;
   if (ufil.maxread_day > MAXREADDIVISOR * 255) ufil.maxread_day = MAXREADDIVISOR * 255;
 
-  adjust_and_save_userstructs(&ufil, (long)&ufil.maxread_day - (long)&ufil, sizeof(ufil.maxread_day));
+  adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.maxread_day - (intptr_t)&ufil, sizeof(ufil.maxread_day));
 
   if (ufil.maxread_day == 0)
     strcpy(w1, "infinite");
   else
-    sprintf(w1, "%ld", ufil.maxread_day);
+    sprintf(w1, "%d", ufil.maxread_day);
 
   sprintf(w2, "OK, max. read/day (%s) = %s bytes", w, w1);
   wlnuser(unr, w2);
@@ -1116,7 +1116,7 @@ void change_prompt(short unr, char *eingabe)
     return;
 
   strcpy(ufil.promptmacro, par);
-  adjust_and_save_userstructs(&ufil, (long)&ufil.promptmacro - (long)&ufil, sizeof(ufil.promptmacro));
+  adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.promptmacro - (intptr_t)&ufil, sizeof(ufil.promptmacro));
   wlnuser(unr, "OK");
 }
 
@@ -1130,7 +1130,7 @@ void change_startup(short unr, char *eingabe)
     return;
 
   strcpy(ufil.logincommands, par);
-  adjust_and_save_userstructs(&ufil, (long)&ufil.logincommands - (long)&ufil, sizeof(ufil.logincommands));
+  adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.logincommands - (intptr_t)&ufil, sizeof(ufil.logincommands));
   wlnuser(unr, "OK");
 }
 
@@ -1145,7 +1145,7 @@ void change_ttl(short unr, char *eingabe)
 
   if (*par != '\0') {
     ufil.ttl = positive_arg(par);
-    adjust_and_save_userstructs(&ufil, (long)&ufil.ttl - (long)&ufil, sizeof(ufil.ttl));
+    adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.ttl - (intptr_t)&ufil, sizeof(ufil.ttl));
   }
 
   par_onoff(unr, "TTL", ufil.ttl);
@@ -1162,14 +1162,14 @@ void change_unprotomode(short unr, char *eingabe)
 
   if (*par != '\0') {
     ufil.unproto_ok = positive_arg(par);
-    adjust_and_save_userstructs(&ufil, (long)&ufil.unproto_ok - (long)&ufil, sizeof(ufil.unproto_ok));
+    adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.unproto_ok - (intptr_t)&ufil, sizeof(ufil.unproto_ok));
   }
 
   par_onoff(unr, "UNPROTO", ufil.unproto_ok);
 }
 
 
-void change_md2sf(short unr, char *eingabe, boolean MD5)
+void change_md2sf(short unr, char *eingabe, bool MD5)
 {
   userstruct	ufil;
   char		par[256];
@@ -1185,7 +1185,7 @@ void change_md2sf(short unr, char *eingabe, boolean MD5)
       else
         ufil.sfmd2pw = 1;
     }
-    adjust_and_save_userstructs(&ufil, (long)&ufil.sfmd2pw - (long)&ufil, sizeof(ufil.sfmd2pw));
+    adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.sfmd2pw - (intptr_t)&ufil, sizeof(ufil.sfmd2pw));
   }
 
   switch (ufil.sfmd2pw) {
@@ -1212,7 +1212,7 @@ void change_fbbmode(short unr, char *eingabe)
 
   if (*par != '\0') {
     ufil.fbbmode = positive_arg(par);
-    adjust_and_save_userstructs(&ufil, (long)&ufil.fbbmode - (long)&ufil, sizeof(ufil.fbbmode));
+    adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.fbbmode - (intptr_t)&ufil, sizeof(ufil.fbbmode));
   }
 
   par_onoff(unr, "FBBMODE", ufil.fbbmode);
@@ -1247,9 +1247,10 @@ void change_readlock(short unr, char *eingabe)
 
       for (x = 1; x <= MAXUSER; x++) {
 	if (user[x] != NULL) {
-	  if (!strcmp(user[x]->call, ufil.call))
+	  if (!strcmp(user[x]->call, ufil.call)) {
 	    user[x]->readlock = ufil.readlock;
 	    user[x]->login_priv = ufil.login_priv;
+          }
 	}
       }
       save_userfile(&ufil);
@@ -1271,7 +1272,7 @@ void change_mailbeacon(short unr, char *eingabe)
 
   if (*par != '\0') {
     ufil.hidebeacon = !positive_arg(par);
-    adjust_and_save_userstructs(&ufil, (long)&ufil.hidebeacon - (long)&ufil, sizeof(ufil.hidebeacon));
+    adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.hidebeacon - (intptr_t)&ufil, sizeof(ufil.hidebeacon));
   }
 
   par_onoff(unr, "MailBeacon", !ufil.hidebeacon);
@@ -1357,7 +1358,7 @@ void change_name(short unr, char *callx, char *w_)
   gkdeutsch(w);
   load_userinfo_for_change(false, callx, &ufil);
   strcpy(ufil.name, w);
-  adjust_and_save_userstructs(&ufil, (long)&ufil.name - (long)&ufil, sizeof(ufil.name));
+  adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.name - (intptr_t)&ufil, sizeof(ufil.name));
 
   if (!strcmp(callx, user[unr]->call)) {
     w_btext(unr, 58);
@@ -1372,14 +1373,14 @@ void change_name(short unr, char *callx, char *w_)
 }
 
 
-static boolean chmbxsemaphore;
+static bool chmbxsemaphore;
 
 
-void change_mybbs(short unr, char *callx_, char *bbs_, long updatetime,
-		  char *level_, char mybbsmode, boolean update, boolean fwd)
+void change_mybbs(short unr, char *callx_, char *bbs_, time_t updatetime,
+		  char *level_, char mybbsmode, bool update, bool fwd)
 {
   short		x, mssid;
-  boolean	found, iscall;
+  bool		found, iscall;
   userstruct	ufil;
   calltype	callx;
   char	      	*p;
@@ -1492,8 +1493,8 @@ void change_mybbs(short unr, char *callx_, char *bbs_, long updatetime,
 	if (!update) { /* hmm... that's ok. This is for locally entered infos (21.01.2000) */
 	  get_word(uname, w); /* sorry, but WP only accepts one word for the name */
 	  if (!*w) strcpy(w, "?");
-      	  snprintf(hs, 255, "M @ %s < %s $%s %s %ld ? %s ?",
-      	      	    e_m_verteiler, callx, WPDUMMYBID, bbs, updatetime+1, w);
+      	  snprintf(hs, 255, "M @ %s < %s $%s %s %"PRId64" ? %s ?",
+      	      	    e_m_verteiler, callx, WPDUMMYBID, bbs, (int64_t)updatetime+1, w);
       	  sf_rx_emt1(hs, Console_call);
 	}
       }
@@ -1518,7 +1519,7 @@ void change_mybbs(short unr, char *callx_, char *bbs_, long updatetime,
 
 
 
-boolean valid_language(char *lan)
+bool valid_language(char *lan)
 {
   languagetyp *hptr;
 
@@ -1567,7 +1568,7 @@ void change_language(short unr, char *callx, char *w_)
 
   strcpyupper(w, w_);
 
-  if ((unsigned long)strlen(w) >= 32 || ((1L << strlen(w)) & 0xe) == 0) { /* CHECK!!! */
+  if ((uint32_t)strlen(w) >= 32 || ((1L << strlen(w)) & 0xe) == 0) { /* CHECK!!! */
     wln_btext(unr, 62);
     show_languages(unr);
     return;
@@ -1581,7 +1582,7 @@ void change_language(short unr, char *callx, char *w_)
 
   load_userinfo_for_change(false, callx, &ufil);
   strcpy(ufil.language, w);
-  adjust_and_save_userstructs(&ufil, (long)&ufil.language - (long)&ufil, sizeof(ufil.language));
+  adjust_and_save_userstructs(&ufil, (intptr_t)&ufil.language - (intptr_t)&ufil, sizeof(ufil.language));
 
   if (strcmp(callx, user[unr]->call)) {
     sprintf(w, "OK, %s -> %s", callx, ufil.language);
@@ -1647,10 +1648,10 @@ void new_login(short unr, char *times_)
 }
 
 
-void show_version(short unr, boolean extended)
+void show_version(short unr, bool extended)
 {
   char		*p;
-  long		sz, rp;
+  int32_t	sz, rp;
   short		s1, s2, s3;
   short		x, y;
   char		hs[256];
@@ -1754,7 +1755,7 @@ void show_version(short unr, boolean extended)
 void disc_user(short unr, char *eingabe_)
 {
   short		x, lo, hi;
-  boolean	allsf, alluser, all;
+  bool		allsf, alluser, all;
   char		eingabe[256];
   char		hs[256];
 
@@ -1886,9 +1887,9 @@ void enter_ctext(short unr)
 }
 
 
-void search_bull(short unr, char *w, boolean kill, boolean add)
+void search_bull(short unr, char *w, bool kill, bool add)
 {
-  long		pos;
+  int32_t	pos;
   char		hs[256];
 
   if (*w != '\0') {
@@ -1896,7 +1897,7 @@ void search_bull(short unr, char *w, boolean kill, boolean add)
     wlnuser(unr, w);
     pos	= bull_mem(w, kill);
     if (pos >= 0) {
-      sprintf(hs, "found at position %ld", pos);
+      sprintf(hs, "found at position %d", pos);
       if (kill)
         strcat(hs, "  - now deleted");
       wlnuser(unr, hs);
@@ -1950,7 +1951,7 @@ void set_talk_mode(short unr, char *w)
 }
 
 
-void end_talk_mode(short unr, boolean prompt)
+void end_talk_mode(short unr, bool prompt)
 {
   short		ssid;
 
@@ -1975,7 +1976,7 @@ void end_talk_mode(short unr, boolean prompt)
 
 void talk_line(short unr, char *eingabe)
 {
-  boolean	endtalk;
+  bool		endtalk;
   char		*p;
 
   if (!boxrange(unr))
@@ -2005,7 +2006,7 @@ void talk_line(short unr, char *eingabe)
 }
 
 
-void msgwuser(short unr, boolean immediate, char *s, boolean cr)
+void msgwuser(short unr, bool immediate, char *s, bool cr)
 {
   char		STR1[256];
 
@@ -2027,7 +2028,7 @@ void msgwuser(short unr, boolean immediate, char *s, boolean cr)
 void send_msg(short unr, char *w, char *eingabe)
 {
   short		xchan, fp, ct, umb;
-  boolean	noprompt, allf, immediate;
+  bool		noprompt, allf, immediate;
   short		lastchan;
   char		hs[256], z2[256];
 
@@ -2155,7 +2156,7 @@ void set_comp_mode(short unr, char *w)
 }
 
 
-void reset_to_term(short unr, boolean to_sat, boolean to_node)
+void reset_to_term(short unr, bool to_sat, bool to_node)
 {
   debug0(2, unr, 100);
   wln_btext(unr, 1);
@@ -2247,7 +2248,7 @@ void show_ext_command_result(short unr)
 
 static unsigned short lastrunnum;
 
-boolean open_shell(short unr, boolean transparent)
+bool open_shell(short unr, bool transparent)
 {
   short		olda;
   userstruct	*WITH;
@@ -2274,8 +2275,8 @@ boolean open_shell(short unr, boolean transparent)
 }
 
 
-void call_runprg(boolean extern_, short unr, char *fname_, char *rkommando_,
-		 boolean full_gem, char *add_environment)
+void call_runprg(bool extern_, short unr, char *fname_, char *rkommando_,
+		 bool full_gem, char *add_environment)
 {
   short		olda;
   userstruct	*WITH;
@@ -2334,11 +2335,10 @@ void call_runprg(boolean extern_, short unr, char *fname_, char *rkommando_,
 
 typedef char est[2];
 
-void stelle_uhr(char *eingabe, boolean datum)
+void stelle_uhr(char *eingabe, bool datum)
 {
   static est est1 = ".", est2 = "/", est3 = ":", est4 = "-";
 
-  short	h, m, s;
   char	w[256];
   char	datestr[256];
 
@@ -2348,19 +2348,6 @@ void stelle_uhr(char *eingabe, boolean datum)
   ersetze(est3, "  ", datestr);
   ersetze(est4, "  ", datestr);
   get_word(datestr, w);
-  if (*w != '\0') {
-    h = atoi(w);
-    get_word(datestr, w);
-    m = atoi(w);
-    get_word(datestr, w);
-    s = atoi(w);
-/*
-    if (datum)
-      dpsetdate(s + 1900, m, h);
-    else
-      dpsettime(h, m, s);
-*/
-  }
 
   utc_clock();
 }
@@ -2369,7 +2356,7 @@ void stelle_uhr(char *eingabe, boolean datum)
 void calc_boxactivity(short unr, cbaproc outputproc)
 {
   short		x;
-  long		isec;
+  int32_t	isec;
   userstruct	*WITH;
   char		hs[512], w[256];
 
@@ -2397,14 +2384,14 @@ void calc_boxactivity(short unr, cbaproc outputproc)
 	strcpy(w, "   ");
       else
 	strcpy(w, "TRM");
-      sprintf(hs + strlen(hs), " %s %6ld", w, boxspoolstatus(WITH->tcon, WITH->pchan, -1));
+      sprintf(hs + strlen(hs), " %s %6d", w, boxspoolstatus(WITH->tcon, WITH->pchan, -1));
       isec = clock_.ixtime - WITH->lastcmdtime;
       if (isec > 5999)
 	isec = 5999;
-      sprintf(hs + strlen(hs), " %.2ld:%.2ld", isec / 60, isec % 60);
+      sprintf(hs + strlen(hs), " %.2d:%.2d", isec / 60, isec % 60);
       
       isec = cpu_usage(x);
-      sprintf(w, "%ld.%.2ld", isec / 200, (isec % 200) >> 1);
+      sprintf(w, "%d.%.2d", isec / 200, (isec % 200) >> 1);
       lspacing(w, 7);
       strcat(hs, w);
       
@@ -2428,7 +2415,7 @@ void show_boxactivity(short unr)
 }
 
 
-void yapp_responses(short unr, char *info, long infosize)
+void yapp_responses(short unr, char *info, int32_t infosize)
 {
   short		olda;
   userstruct	*WITH;
@@ -2466,10 +2453,10 @@ void yapp_responses(short unr, char *info, long infosize)
 
 #define BUFLEN	4096
 
-boolean read_filepart(short unr)
+bool read_filepart(short unr)
 {
-  boolean	Result, abort;
-  long		len, fill;
+  bool		Result, abort;
+  int32_t	len, fill;
   char		buff[BUFLEN];
   userstruct	*WITH;
 
@@ -2611,7 +2598,7 @@ static void yappprotokoll(const short unr, const char *s)
 }
 
 
-static void yappbufout(short unr, char *base, long size)
+static void yappbufout(short unr, char *base, int32_t size)
 {
   upd_statistik(unr, 0, size, 0, 0);
   boxmemspool(user[unr]->tcon, user[unr]->pchan, -1, false, base, size);
@@ -2621,12 +2608,12 @@ static void yappbufout(short unr, char *base, long size)
 #define psize_          16384
 #define ymaxfill        20000
 
-boolean read_file(boolean delete_afterwards, short unr, char *eingabe_)
+bool read_file(bool delete_afterwards, short unr, char *eingabe_)
 {
   unsigned short	crc, date, time;
   short			k;
-  boolean		ascii, yapp_, pack, transparent, gzip, on_linestart;
-  long			size, tail, fsize, start;
+  bool			ascii, yapp_, pack, transparent, gzip, on_linestart;
+  int32_t		size, tail, fsize, start;
   userstruct		*WITH;
   char			eingabe[256], hs[256], w[256], fname[256], pname[256], dname[256];
   char			STR1[256], STR7[256];
@@ -2720,7 +2707,7 @@ boolean read_file(boolean delete_afterwards, short unr, char *eingabe_)
       sprintf(STR7, "0%s", strcpy(STR1, STR7));
     del_path(dname);
     if (gzip) strcat(dname, ".gz");
-    sprintf(hs, "#BIN#%ld#|%d#$%s%s#%s", size, crc, w, STR7, dname);
+    sprintf(hs, "#BIN#%d#|%d#$%s%s#%s", size, crc, w, STR7, dname);
     wlnuser(unr, hs);
   } else if (!transparent)
     wlnuser0(unr);
@@ -2799,7 +2786,7 @@ boolean read_file(boolean delete_afterwards, short unr, char *eingabe_)
 #undef ymaxfill
 
 
-void read_file_immediately(boolean delete_afterwards, short unr, char *eingabe)
+void read_file_immediately(bool delete_afterwards, short unr, char *eingabe)
 {
   if (read_file(delete_afterwards, unr, eingabe)) {
     do {
@@ -2853,7 +2840,7 @@ void write_file2(short unr, char *eingabe_)
 }
 
 
-void yapp_input(short unr, char *info, long infosize)
+void yapp_input(short unr, char *info, int32_t infosize)
 {
   userstruct	*WITH;
 
@@ -2893,7 +2880,7 @@ void yapp_input(short unr, char *info, long infosize)
 
 void write_file(short unr, char *eingabe_)
 {
-  boolean	yapp_;
+  bool		yapp_;
   userstruct	*WITH;
   char		eingabe[256], fname[256], STR1[256];
 
@@ -2990,7 +2977,7 @@ void update_dp(short unr, char *eingabe)
 
 void show_file_dir(short unr, char *eingabe_)
 {
-  boolean	err;
+  bool		err;
   short		x;
   char		eingabe[256], fn[256], cmd[256];
 
@@ -3022,7 +3009,7 @@ void show_file_dir(short unr, char *eingabe_)
 void calc_pwdb(char *call_, char *code, char *pw)
 {
   short		spalte, min, k, zeile, dat;
-  long		fsize;
+  int32_t	fsize;
   calltype	call;
   char		d[256], t[256], fname[256];
 
@@ -3065,7 +3052,7 @@ void gimme_five_pw_numbers(char *pw, char *numbers)
 {
   short		x, y, z, d, ct, dubarr[5];
   char		dubcharr[5], c;
-  boolean	dub, dub1;
+  bool		dub, dub1;
 
   *numbers	= '\0';
   y		= strlen(pw);
@@ -3145,7 +3132,7 @@ void generate_dbpwfile(short unr, char *fname_, char *options)
 {
   short		k, x;
   char		c;
-  boolean	fwd;
+  bool		fwd;
   char		fname[256];
   char		fcall[256];
   char		hs[256];
@@ -3202,7 +3189,7 @@ void generate_dbpwfile(short unr, char *fname_, char *options)
 
 
 
-static void idis(boolean ident, short unr)
+static void idis(bool ident, short unr)
 {
   char		hs[256];
 
@@ -3231,16 +3218,16 @@ typedef struct stt {
   unsigned short	uh, bh, u;
   unsigned short	b, s, bin;
   unsigned short	d;
-  long			size;
+  int32_t		size;
 } stt;
 
 
 void create_sfstat(short unr, char *eingabe_)
 {
   short		k, lv, x, list, oh, bf;
-  long		tli, ttuh, ttbh, ttu, ttb, tts, ttsize, rtu, rtb, rts, urtsize;
-  long		uttsize, utli, tu, urtsize2, uttsize2, utli2, tbn, td, rtsize;
-  boolean	ident, ttofl, readjust, is_superv;
+  int32_t	tli, ttuh, ttbh, ttu, ttb, tts, ttsize, rtu, rtb, rts, urtsize;
+  int32_t	uttsize, utli, tu, urtsize2, uttsize2, utli2, tbn, td, rtsize;
+  bool		ident, ttofl, readjust, is_superv;
   stt		*st, *hp, *hp1;
   sfdeftype	*sfptr;
   indexstruct	*hpointer, header;
@@ -3381,7 +3368,7 @@ void create_sfstat(short unr, char *eingabe_)
 	  td		+= hp->d;
 	  tbn		+= hp->bin;
 	  ttsize	+= hp->size;
-          sprintf(hs, "%-*s%6d%6d%6d%6d%6d%6d%6d%9ld", LEN_CALL,
+          sprintf(hs, "%-*s%6d%6d%6d%6d%6d%6d%6d%9d", LEN_CALL,
 			hp->call, hp->u, hp->b, hp->s, hp->bin, hp->uh, hp->bh, hp->d, hp->size);
 	  idis(ident, unr);
 	  wlnuser(unr, hs);
@@ -3390,7 +3377,7 @@ void create_sfstat(short unr, char *eingabe_)
 	idis(ident, unr);
 	wlnuser(unr, "---------------------------------------------------------");
 
-        sprintf(hs, "%-*s%6ld%6ld%6ld%6ld%6ld%6ld%6ld%9ld", LEN_CALL,
+        sprintf(hs, "%-*s%6d%6d%6d%6d%6d%6d%6d%9d", LEN_CALL,
 			"Total", ttu, ttb, tts, tbn, ttuh, ttbh, td, ttsize);
 	idis(ident, unr);
 	wlnuser(unr, hs);
@@ -3588,7 +3575,7 @@ void create_sfstat(short unr, char *eingabe_)
 		  else
 		    sprintf(w, "%5d", rec.logins - rec.dlogins);
 
-		  sprintf(hs, "%-*s%8ld%8ld%8ld%10ld%8ld%8ld%8ld%10ld%s", LEN_CALL,
+		  sprintf(hs, "%-*s%8d%8d%8d%10d%8d%8d%8d%10d%s", LEN_CALL,
 				rec.call,
 				rec.sfstat_rx_p - rec.dstat_rx_p,
 				rec.sfstat_rx_b - rec.dstat_rx_b,
@@ -3617,9 +3604,9 @@ void create_sfstat(short unr, char *eingabe_)
       if (tli > 9999)
 	strcpy(w, " >>>>");
       else
-	sprintf(w, "%5ld", tli);
+	sprintf(w, "%5d", tli);
 
-      sprintf(hs, "%-*s%8ld%8ld%8ld%10ld%8ld%8ld%8ld%10ld%s", LEN_CALL,
+      sprintf(hs, "%-*s%8d%8d%8d%10d%8d%8d%8d%10d%s", LEN_CALL,
 			"Total", rtu, rtb, rts, rtsize, ttu, ttb, tts, ttsize, w);
       op(unr, &oh, hs);
 
@@ -3694,7 +3681,7 @@ void create_sfstat(short unr, char *eingabe_)
 		else
 		  sprintf(w, "%5d", rec.logins);
 
-		sprintf(hs, "%-*s%8ld%8ld%8ld%10ld%8ld%8ld%8ld%10ld%s", LEN_CALL,
+		sprintf(hs, "%-*s%8d%8d%8d%10d%8d%8d%8d%10d%s", LEN_CALL,
 				rec.call,
 				rec.sfstat_rx_p,
 				rec.sfstat_rx_b,
@@ -3735,9 +3722,9 @@ void create_sfstat(short unr, char *eingabe_)
     if (tli > 9999)
       strcpy(w, " >>>>");
     else
-      sprintf(w, "%5ld", tli);
+      sprintf(w, "%5d", tli);
 
-    sprintf(hs, "%-*s%8ld%8ld%8ld%10ld%8ld%8ld%8ld%10ld%s", LEN_CALL,
+    sprintf(hs, "%-*s%8d%8d%8d%10d%8d%8d%8d%10d%s", LEN_CALL,
 			"Total", rtu, rtb, rts, rtsize, ttu, ttb, tts, ttsize, w);
     op(unr, &oh, hs);
     rtu		+= rtb + rts;
@@ -3750,39 +3737,39 @@ void create_sfstat(short unr, char *eingabe_)
       op(unr, &oh, "");
       op(unr, &oh, "forward this month:");
       op(unr, &oh, "-------------------------------------");
-      sprintf(STR1, "Total connects in s&f   : %11ld", tli);
+      sprintf(STR1, "Total connects in s&f   : %11d", tli);
       op(unr, &oh, STR1);
-      sprintf(STR1, "Total received files    : %11ld", rtu);
+      sprintf(STR1, "Total received files    : %11d", rtu);
       op(unr, &oh, STR1);
-      sprintf(STR1, "Total transmitted files : %11ld", ttu);
+      sprintf(STR1, "Total transmitted files : %11d", ttu);
       op(unr, &oh, STR1);
-      sprintf(STR1, "Total exchanged files   : %11ld", ttb);
+      sprintf(STR1, "Total exchanged files   : %11d", ttb);
       op(unr, &oh, STR1);
-      sprintf(STR1, "Total exchanged bytes   : %11ld", ttsize);
+      sprintf(STR1, "Total exchanged bytes   : %11d", ttsize);
       op(unr, &oh, STR1);
       op(unr, &oh, "-------------------------------------");
       op(unr, &oh, "");
       op(unr, &oh, "users this month:");
       op(unr, &oh, "-------------------------------------");
-      sprintf(STR1, "Total rx from users     : %11ld", urtsize);
+      sprintf(STR1, "Total rx from users     : %11d", urtsize);
       op(unr, &oh, STR1);
-      sprintf(STR1, "Total tx to users       : %11ld", uttsize);
+      sprintf(STR1, "Total tx to users       : %11d", uttsize);
       op(unr, &oh, STR1);
-      sprintf(STR1, "Total logins of users   : %11ld", utli);
+      sprintf(STR1, "Total logins of users   : %11d", utli);
       op(unr, &oh, STR1);
-      sprintf(STR1, "Total count of users    : %11ld", tu);
+      sprintf(STR1, "Total count of users    : %11d", tu);
       op(unr, &oh, STR1);
       op(unr, &oh, "-------------------------------------");
       op(unr, &oh, "");
       op(unr, &oh, "users and forward:");
       op(unr, &oh, "-------------------------------------");
       if (!ttofl) {
-	sprintf(STR1, "Total rx since install. : %11ld", urtsize2);
+	sprintf(STR1, "Total rx since install. : %11d", urtsize2);
 	op(unr, &oh, STR1);
-	sprintf(STR1, "Total tx since install. : %11ld", uttsize2);
+	sprintf(STR1, "Total tx since install. : %11d", uttsize2);
 	op(unr, &oh, STR1);
       }
-      sprintf(STR1, "Total logins since ever : %11ld", utli2);
+      sprintf(STR1, "Total logins since ever : %11d", utli2);
       op(unr, &oh, STR1);
       op(unr, &oh, "-------------------------------------");
 
