@@ -82,7 +82,7 @@ void conv_string_to_local(char *s)
     *s = conv_umlaut_to_local(*s);
 }
 
-boolean conv_file_umlaut(boolean to_local, char *fname)
+bool conv_file_umlaut(bool to_local, char *fname)
 {
   short k, l;
   char	hs[256], tmp[256];
@@ -113,7 +113,7 @@ boolean conv_file_umlaut(boolean to_local, char *fname)
 
 /* end of code conversion *********************************/
 
-boolean positive_arg(char *s)
+bool positive_arg(char *s)
 {
   return (useq(s, "ON")  || useq(s, "YES") || useq(s, "+")    ||
 	  useq(s, "OUI") || useq(s, "JA")  || useq(s, "TRUE") ||
@@ -124,9 +124,9 @@ boolean positive_arg(char *s)
 /* Ruft den Watchdog auf     */
 void dp_watchdog(short what, short value)
 {
-  static long	lastwdreset	= 0;
+  static int32_t	lastwdreset	= 0;
 
-  long	t;
+  int32_t	t;
 
   if (what == 2) {  /*reset angefordert*/
     t			= statclock();
@@ -170,7 +170,7 @@ short call_prg(char *prog, char *par, char *redir)
 #ifdef __macos__
   return (status);
 #endif
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
   return (statusconvert(status));
 #endif
 }
@@ -206,8 +206,8 @@ short exec_prg(char *prog, char *par, char *redir)
 
 /* Ruft den LZH/GZIP auf, Ein/Ausgabe ueber Dateien s1/s2 */
 
-short packer(boolean gzip, boolean preserve_original, boolean encode,
-		char *s1, char *s2, boolean crlfconv)
+short packer(bool gzip, bool preserve_original, bool encode,
+		char *s1, char *s2, bool crlfconv)
 {
   dp_watchdog(2, 4711);   /*watchdog resetten*/
   if (encode)
@@ -220,8 +220,8 @@ short packer(boolean gzip, boolean preserve_original, boolean encode,
 /* Ruft den LZH/GZIP auf, Eingabe im Speicher, Ausgabe bei genug RAM ebenfalls im */
 /* RAM, ansonsten in Datei f2                                                */
 
-short mempacker(boolean gzip, boolean encode, char *mem, long size, char **rmem,
-		    long *rsize, char *f2, boolean crlfconv)
+short mempacker(bool gzip, bool encode, char *mem, int32_t size, char **rmem,
+		    int32_t *rsize, char *f2, bool crlfconv)
 {
   dp_watchdog(2, 4711);   /* watchdog resetten */
   if (encode)
@@ -231,11 +231,11 @@ short mempacker(boolean gzip, boolean encode, char *mem, long size, char **rmem,
 }
 
 
-static long cpuspeed = 0, cpuspeed2, cattime, cpudd;
+static int32_t cpuspeed = 0, cpuspeed2, cattime, cpudd;
 
 void quick_speed(void)
 {
-  long	x, z, erg;
+  int32_t	x, z, erg;
 
   erg	= get_cpuusage();
   z	= 0;
@@ -250,7 +250,7 @@ static void utc_clock_test(void);
 
 static void calc_speed(void)
 {
-  long		x, z, erg;
+  int32_t		x, z, erg;
 
   erg		= get_cpuusage();
   z		= 0;
@@ -269,7 +269,7 @@ static void calc_speed(void)
   cpudd		= z;	/* this prevents the compiler from skipping the loop (hopefully) */
 }
 
-long get_cpu_speed(short mode)
+int32_t get_cpu_speed(short mode)
 {
   if (cpuspeed == 0 || clock_.ixtime - cattime > SECPERDAY / 4)
     calc_speed();
@@ -286,7 +286,7 @@ long get_cpu_speed(short mode)
 }
 
 
-boolean insecure(char *s)
+bool insecure(char *s)
 {
   char hs[256];
 
@@ -317,7 +317,7 @@ boolean insecure(char *s)
 }
 
 
-short calc_prozent(long v1, long v2)
+short calc_prozent(int32_t v1, int32_t v2)
 {
   if (v2 > 100000L)
     return (v1 / (v2 / 100));
@@ -373,30 +373,30 @@ static void process_backspaces(char *hs)
 }
 
 
-boolean give_cookie(short x, fdoutproctype outproc, char *fname)
+bool give_cookie(short x, fdoutproctype outproc, char *fname)
 {
-  long fs, a, b, sp, faktor;
+  int32_t fs, a, b, sp, faktor;
   short k, y, lc;
   char delimiter;
-  boolean ok;
+  bool ok;
   char hs[256];
 
   fs = sfsize(fname);
   if (fs <= 0)
     return false;
   
-  if (fs >= SHORT_MAX) {
-    faktor = (fs / SHORT_MAX);
-    if (faktor >= SHORT_MAX)
-      faktor = SHORT_MAX - 1;  
+  if (fs >= SHRT_MAX) {
+    faktor = (fs / SHRT_MAX);
+    if (faktor >= SHRT_MAX)
+      faktor = SHRT_MAX - 1;  
     do {
-      a = (long)dp_randomize(0, faktor);
-      b = (long)dp_randomize(0, SHORT_MAX - 1);
-      sp = a * SHORT_MAX + b;
+      a = (int32_t)dp_randomize(0, faktor);
+      b = (int32_t)dp_randomize(0, SHRT_MAX - 1);
+      sp = a * SHRT_MAX + b;
     } while (sp < 0 || sp >= fs);
   }
   else
-    sp = (long)dp_randomize(0, fs);
+    sp = (int32_t)dp_randomize(0, fs);
     
   k = sfopen(fname, FO_READ);
   if (k < minhandle)
@@ -444,7 +444,7 @@ boolean give_cookie(short x, fdoutproctype outproc, char *fname)
 
 void calc_ixsecs_to_string(time_t l, char *hs)
 {
-  long d, h, m, s;
+  int32_t d, h, m, s;
 
   d = l / SECPERDAY;
   l -= d * SECPERDAY;
@@ -452,7 +452,7 @@ void calc_ixsecs_to_string(time_t l, char *hs)
   l -= h * 3600;
   m = l / 60;
   s = l - m * 60;
-  sprintf(hs, "%ldd, %.2ld:%.2ld:%.2ld", d, h, m, s);
+  sprintf(hs, "%dd, %.2d:%.2d:%.2d", d, h, m, s);
 }
 
 
@@ -504,7 +504,7 @@ void file_delete(short x, char *cmd, fdoutproctype outproc)
 
 
 #ifdef HAS_NO_STRCASECMP
-boolean useq(char *s1, char *s2)
+bool useq(char *s1, char *s2)
 /* stolen from p2c.c of David Gillespie */
 {
     char c1, c2;
@@ -547,7 +547,7 @@ static void spdputs(short d, short m, short y, char sep, char *s)
 }
 
 
-static void conc_date(boolean datum, char sep, unsigned short date, char *s)
+static void conc_date(bool datum, char sep, unsigned short date, char *s)
 {
   short d, m, y;
 
@@ -561,13 +561,13 @@ static void conc_date(boolean datum, char sep, unsigned short date, char *s)
 
 static void make_sortdate(unsigned short date, unsigned short time, char *s)
 {
-  sprintf(s, "%.10ld", dos2ixtime(date, time));
+  sprintf(s, "%.10"PRId64, (int64_t)dos2ixtime(date, time));
 }
 
 
-static void make_sortsize(long size, char *s)
+static void make_sortsize(int32_t size, char *s)
 {
-  sprintf(s, "%.10ld", size);
+  sprintf(s, "%.10d", size);
 }
 
 
@@ -579,7 +579,7 @@ static void make_sortext(char *ins, char *s)
 }
 
 
-static boolean shorten_dirstring(char *hs, short maxct)
+static bool shorten_dirstring(char *hs, short maxct)
 {
   short x, y, todel;
 
@@ -608,17 +608,17 @@ static boolean shorten_dirstring(char *hs, short maxct)
 #define SBSIZE          2
 #define SBEXT           3
 
-void file_dir(boolean supervisor, char *path, char *options, short x,
+void file_dir(bool supervisor, char *path, char *options, short x,
 	      fdoutproctype outproc)
 {
 
   DTA dirinfo;
   short result, l;
-  boolean longdir, xdir, fnums, count, shortened;
+  bool longdir, xdir, fnums, count, shortened;
   short sortby, countfor;
   char *sbuf, *longname;
   short maxc, sct;
-  long sbs, rbs;
+  int32_t sbs, rbs;
   short h, ct, cct;
   char hs[256], dn[256], s[256], ds[256], out[256], pn[256];
 
@@ -744,7 +744,7 @@ void file_dir(boolean supervisor, char *path, char *options, short x,
 	  if (!count) shortened = shorten_dirstring(dn, 25);
 	  else shortened = false;
 	  rspacing(dn, 25);
-	  sprintf(hs, "%ld", dirinfo.d_length);
+	  sprintf(hs, "%d", dirinfo.d_length);
 	  lspacing(hs, 8);
 	  sprintf(out, "    %s %s", dn, hs);
 	  rspacing(out, 40);
@@ -901,12 +901,12 @@ void file_dir(boolean supervisor, char *path, char *options, short x,
 #undef SBEXT
 
 
-short filecp(char *filea, char *fileb, char *root, boolean del_source,
+short filecp(char *filea, char *fileb, char *root, bool del_source,
 	     short x, fdoutproctype outproc)
 {
   short Result;
   short err;
-  boolean dest_set_dir, dest_is_dir;
+  bool dest_set_dir, dest_is_dir;
   DTA dirinfo;
   short result, loopct;
   char fpath[256], fa[256], fb[256], fx[256];
@@ -1003,10 +1003,10 @@ char calccs(char *s)
 
 /* Kopiert und errechnet eine Checksumme ueber einen String       */
 
-char strcpycs(register char *s2, register char *s1)
+char strcpycs(char *s2, char *s1)
 {
-  register char erg;
-  register char ch;
+  char erg;
+  char ch;
 
   erg = 0;
 
@@ -1025,11 +1025,11 @@ char strcpycs(register char *s2, register char *s1)
 /* Errechnet eine CRC ueber ein File                 */
 
 unsigned short file_crc(short methode, char *name, unsigned short preload,
-			long start, long size)
+			int32_t start, int32_t size)
 {
   unsigned short crc;
   short k;
-  long fsize, done, cstep, psize, hsize;
+  int32_t fsize, done, cstep, psize, hsize;
   char *buf;
 
   crc = preload;
@@ -1179,10 +1179,10 @@ void get_callextender(char *callin, char *callout)
 }
 
 /* check for correct input of "callsyntax" */
-boolean check_other_callsyntax(char *syntax)
+bool check_other_callsyntax(char *syntax)
 {
   int 	  len;
-  boolean error = false;
+  bool error = false;
   char	  *p;
   
   if (*syntax == '\0') return true;
@@ -1250,7 +1250,7 @@ static void normalize_call(char *inp, char *outp)
 }
 
 /* check additional syntaxes (CB, MARS) */
-static boolean compare_other_callsyntax(char *norm)
+static bool compare_other_callsyntax(char *norm)
 {
   char	w[LEN_CALL+1]; /* limitation OK, word length is checked in check_other_callsyntax */
   char  *p;
@@ -1267,7 +1267,7 @@ static boolean compare_other_callsyntax(char *norm)
 }
 
 /* callsign check of dpbox */
-boolean callsign(char *input)
+bool callsign(char *input)
 {
   short l, i;
   char	norm[LEN_CALL+1];
@@ -1313,7 +1313,7 @@ boolean callsign(char *input)
 }
 
 /* accepts hierarchical callsigns */
-boolean hcallsign(char *input)
+bool hcallsign(char *input)
 {
   calltype  call;
   
@@ -1494,7 +1494,7 @@ void ix2string4(time_t zeit, char *timestring)
 unsigned short str2datum(char *datestring)
 {
   short day, mon, year, x;
-  boolean reverse;
+  bool reverse;
   char sep;
   char hs[256];
   char STR1[256];
@@ -1806,8 +1806,8 @@ static void utc_clock_test(void)
 void get_language(short nr, languagetyp *root, char *which, char *s)
 {
   languagetyp *lptr;
-  boolean found;
-  long rp;
+  bool found;
+  int32_t rp;
   char w2[9];
 
   if (nr <= 0 || nr > MAXLANGUAGELINEDEFS) {
@@ -1876,9 +1876,9 @@ void free_languages(languagetyp **root)
 
 /* Ordnet ein Call einer Sprachanpassung zu */
 
-void user_language(char **root, long *size, char *fname, char *call_, char *lan)
+void user_language(char **root, int32_t *size, char *fname, char *call_, char *lan)
 {
-  long	lz;
+  int32_t	lz;
   char	call[256], zl[256], w[256];
 
   strcpyupper(call, call_);
@@ -1906,7 +1906,7 @@ void user_language(char **root, long *size, char *fname, char *call_, char *lan)
 void load_languages(languagetyp **root, char *pfad)
 {
   short x;
-  long sz, l;
+  int32_t sz, l;
   char *p1;
   languagetyp *hptr, *lptr;
   short result;
@@ -1969,9 +1969,9 @@ void stripcr(char *fn)
 {
   short k, h;
   char l[256], fn2[256];
-  boolean bin, ok;
+  bool bin, ok;
   char *p;
-  long ps, err, fp1, fp2;
+  int32_t ps, err, fp1, fp2;
 
   ok = false;
 
@@ -2018,7 +2018,7 @@ void stripcr(char *fn)
 }
 
 
-boolean get_fileline(char *fn, short line, char *l)
+bool get_fileline(char *fn, short line, char *l)
 {
   short k, c;
 
@@ -2034,11 +2034,11 @@ boolean get_fileline(char *fn, short line, char *l)
 }
 
 
-boolean get_keyline(char *fn, char *key, boolean casesense, char *l)
+bool get_keyline(char *fn, char *key, bool casesense, char *l)
 {
-  boolean Result;
+  bool Result;
   short k;
-  boolean ok;
+  bool ok;
   char l1[256], l2[256], k1[256];
 
   Result = false;
@@ -2066,11 +2066,11 @@ boolean get_keyline(char *fn, char *key, boolean casesense, char *l)
 }
 
 
-boolean replace_keyline(char *fn, char *key, boolean casesense, char *e)
+bool replace_keyline(char *fn, char *key, bool casesense, char *e)
 {
-  boolean Result;
+  bool Result;
   short k, h;
-  boolean ok;
+  bool ok;
   char l[256], l1[256], l2[256], k1[256];
   char fn2[256];
 
@@ -2194,7 +2194,7 @@ void calc_MD2_pw(char *MD2prompt, char *MD2pw, char *MD2result)
   lower(MD2result);
 }
 
-void calc_MD_prompt(boolean only_numbers, char *MDprompt)
+void calc_MD_prompt(bool only_numbers, char *MDprompt)
 {
   short x;
   char c;
@@ -2320,7 +2320,7 @@ void loc_dist(double o1, double n1, double o2, double n2,
 
 
 /* Wandeln des WW-Locators in Laengen- und Breitengrad mit Formatueberpruefung */
-boolean calc_qth(char *loc_, double *l, double *b)
+bool calc_qth(char *loc_, double *l, double *b)
 {
   char loc[256];
   
@@ -2342,7 +2342,7 @@ boolean calc_qth(char *loc_, double *l, double *b)
 }
 
 
-boolean get_wwloc(char *inp, char *outp)
+bool get_wwloc(char *inp, char *outp)
 {
   double  lon, lat;
   char	  *p, *s, hs[256];
@@ -2373,10 +2373,10 @@ static void substitute(char *call, char *subst)
 {
   short k;
   char hs1[256];
-  boolean found;
-  long subsize;
+  bool found;
+  int32_t subsize;
   char *buff;
-  long lz;
+  int32_t lz;
   
   strcpy(subst, call);
   sprintf(hs1, "%sprefix%csub", boxsysdir, extsep);
@@ -2414,13 +2414,13 @@ static void substitute(char *call, char *subst)
 }
 
 
-boolean prefix(char *call_, char *subst, char *name, double *lon, double *lat,
+bool prefix(char *call_, char *subst, char *name, double *lon, double *lat,
 		short *waz, short *itu, char *continent)
 {
   char hs[256], call[256];
-  boolean found, Result;
+  bool found, Result;
   short k;
-  long infsize, lz;
+  int32_t infsize, lz;
   char *buff;
   
   Result = false;
@@ -2496,13 +2496,13 @@ static void mystrtok(char **inp1, char *outp, char delim)
   if (*outp) del_blanks(outp);
 }
 
-boolean get_digimap_data(boolean bbs, char *call_, char *sysop, char *mbsysop, char *qthloc,
+bool get_digimap_data(bool bbs, char *call_, char *sysop, char *mbsysop, char *qthloc,
 			 char *qthname, char *mbsystem, char *digisystem, char *remarks,
 			 char *updatetime)
 {
   short k, ret, state;
-  long size, pos, interval;
-  boolean is_mb;
+  int32_t size, pos, interval;
+  bool is_mb;
   char hs[256], call[256], filename[256], line[256];
   char tcall[80], tstate[80], ttyp[80], tsoft[80], thard[80], tfreq[80],
        tbaud[80], tsysop[80], tloc[80], tqth[80], trem[80], ti[80], tupdate[80];
@@ -2711,9 +2711,9 @@ static short prepare_digimap_update(char *updfile, char *addfile, char *delfile)
   return 0;
 }
 
-static boolean get_next_dm(short handle, char *out, char *outs, char *lasts)
+static bool get_next_dm(short handle, char *out, char *outs, char *lasts)
 {
-  boolean meof;
+  bool meof;
   
   *outs = '\0';
   *out	= '\0';
@@ -2737,7 +2737,7 @@ static void put_dm(short *handle, char *out)
 
 short merge_digimap_data(char *base, char *updfile)
 {
-  boolean infok, addfok, delfok, delok;
+  bool infok, addfok, delfok, delok;
   short   addf, delf, origf, outf, comp;
   char	  orig[256], add[256], del[256], adds[256], dels[256], origs[256];
   char	  lastorigs[256], lastadds[256], lastdels[256];
@@ -2836,7 +2836,7 @@ short merge_digimap_data(char *base, char *updfile)
 
 /* Grossbuchstaben in Kleinbuchstaben, Satzzeichen und div.  */
 /* Sonderzeichen in Leerzeichen umwandeln, Laenge ermitteln  */
-static long PrepareTheString(char* ConvStr, char* OriginStr)
+static int32_t PrepareTheString(char* ConvStr, char* OriginStr)
 {
   char*  TmpPtr;
 
