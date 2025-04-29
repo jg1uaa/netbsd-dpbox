@@ -18,11 +18,11 @@
 
 /* liefert neue Laenge des Files zurueck */
 
-static long ap_sysfile(boolean to_syslog, short unr, char *txt, char *fname)
+static int32_t ap_sysfile(bool to_syslog, short unr, char *txt, char *fname)
 {
-  long		Result;
+  int32_t	Result;
   short		x;
-  boolean	first;
+  bool		first;
   char		hs[256];
   char		d2[256], t2[256], c2[256];
   char		s[256], w[256], ww[256];
@@ -213,7 +213,7 @@ static void print_memusage(char *hs)
 #endif
 #endif
 
-boolean get_debug_func(short pn, char *p)
+bool get_debug_func(short pn, char *p)
 {
   switch (pn) {
 

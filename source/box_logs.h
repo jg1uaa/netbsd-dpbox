@@ -11,7 +11,7 @@ extern void append_usersflog(short unr, char *sender, char *board, char *mbx, ch
 extern void append_protolog(short unr);
 extern void append_sflog(short unr);
 extern void append_convlog(short unr, char *txt);
-extern boolean get_debug_func(short pn, char *p);
+extern bool get_debug_func(short pn, char *p);
 extern void debug_2(short level, short unr, short pn, char *txt);
 
 #define debug(level, unr, pn, txt)	if (level <= debug_level) debug_2(level, unr, pn, txt); \
