@@ -25,15 +25,15 @@ vextern void tnt_command(short unr,char *eingabe);
 vextern int find_socket(char *qrg, short *socket);
 vextern void blocking_on(void);
 vextern void blocking_off(void);
-vextern void boxisbusy(boolean busy);
-vextern boolean bcast_file(char stnc,char sport,char *qrg,
-                   long fid,unsigned short ftype,
+vextern void boxisbusy(bool busy);
+vextern bool bcast_file(char stnc,char sport,char *qrg,
+                   int32_t fid,unsigned short ftype,
                    char *name1,char *adress,char *bbs_source,
                    char *bbs_destination,char *bbs_ax25uploader,
                    time_t bbs_upload_time,time_t bbs_expire_time,
                    char bbs_compression,char *bbs_bid,char bbs_msgtype,
                    char *bbs_title,char *bbs_fheader,
-                   unsigned short bodychecksum,boolean delete_after_tx);
+                   unsigned short bodychecksum,bool delete_after_tx);
 
 #undef vextern
 

@@ -13,22 +13,30 @@
 #define DP_VNR_SUB	".00"
 
 
-#ifdef __macos__
+#if defined(__macos__)
 #undef IFACE_DEBUG
-#endif
-#ifdef __linux__
+#define OS_NAME "MacOS"
+#elif defined(__linux__)
 #undef IFACE_DEBUG
-#endif
-#ifdef __NetBSD__
+#define OS_NAME "Linux"
 #undef IFACE_DEBUG
-#endif
-#ifdef __DragonFly__
+#elif defined(__NetBSD__)
 #undef IFACE_DEBUG
+#define OS_NAME "NetBSD"
+#undef IFACE_DEBUG
+#elif defined(__DragonFly__)
+#undef IFACE_DEBUG
+#define OS_NAME "DragonFly"
+#undef IFACE_DEBUG
+#elif defined(__OpenBSD__)
+#define OS_NAME "OpenBSD"
+#else
+#undef OS_NAME
 #endif
 
 #define MAIN_G
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -125,15 +133,15 @@ static int no_blocking_flag;
 short box_ssid;
 short node_ssid;
 
-void write_iface();
-void write_iface_packet();
-static void write_iface_unproto();
-static void send_command_packet();
-static void send_command_iface();
-static void exit_iface_user();
-static void close_iface();
+void write_iface(short usernr,int32_t len,char *str);
+void write_iface_packet(short usernr);
+static void write_iface_unproto(int32_t iface,char *cmdbuffer,int cmdlen);
+static void send_command_packet(short usernr,unsigned short len,char *buf);
+static void send_command_iface(short iface,unsigned short len,char *buf);
+static void exit_iface_user(short usernr);
+static void close_iface(short iface);
 static void queue_iface_cmd(short usernr, char *cmdbuffer, int cmdKulen);
-static void queue_iface_unproto();
+static void queue_iface_unproto(int32_t iface,char *cmdbuffer,int cmdlen,int isaddress);
 
 /* convert result of 'system()' to exit-value */
 short statusconvert(int status)
@@ -279,7 +287,7 @@ static int add_cr(char *filename,unsigned short *bodychecksum)
   }
 }
 
-short calc_usernr(console,channel)
+short calc_usernr(short console,short channel)
 {
   short usernr;
   
@@ -306,11 +314,7 @@ short calc_usernr(console,channel)
 
 
 /* reception of an autobin-file */
-void abin_rcv(usernr,pos,len,buf)
-short usernr;
-unsigned short *pos;
-unsigned short len;
-char *buf;
+void abin_rcv(short usernr,unsigned short *pos,unsigned short len,char *buf)
 {
   int end_abin;
   int wrklen;
@@ -320,8 +324,8 @@ char *buf;
   short unr;
   char ans_str[80];
   char binheader[256];
-  long stc;
-  long filelen;
+  int32_t stc;
+  int32_t filelen;
   int error;
   char binheadrest[259];
   
@@ -434,7 +438,7 @@ void iboxpacketendbox(short channel)
 }
 
 /* in boxglobl.c */
-long iboxaktqrg()
+int32_t iboxaktqrg()
 {
   return 438300;
 }
@@ -482,7 +486,7 @@ void iboxsetunproto(short tnc,char *str,short iface,char *qrg)
   queue_iface_unproto(iface,(char *)&command,len,1);
 }
 
-void iboxsendpline(short channel,char *str,boolean withcr,short iface)
+void iboxsendpline(short channel,char *str,bool withcr,short iface)
 {
   char *buf;
   
@@ -601,11 +605,11 @@ void iboxsetrwmode(short usernr,short mode)
   }
 }
 
-void iboxsetboxbin(short channel,boolean nodisplay)
+void iboxsetboxbin(short channel,bool nodisplay)
 {
 }
 
-void iboxpabortsf(short channel,boolean flag)
+void iboxpabortsf(short channel,bool flag)
 {
   IFACE_CMDBUF command;
   
@@ -615,7 +619,7 @@ void iboxpabortsf(short channel,boolean flag)
   exit_iface_user(channel);
 }
 
-boolean iboxpboxsf(short tnc,char *console_call,char *path)
+bool iboxpboxsf(short tnc,char *console_call,char *path)
 {
   int len;
   int timeout;
@@ -651,7 +655,7 @@ boolean iboxpboxsf(short tnc,char *console_call,char *path)
 }
 
 /* in boxglobl.c */
-long iboxtncqrg(short tnc)
+int32_t iboxtncqrg(short tnc)
 {
   switch (tnc) {
   case 0:
@@ -684,7 +688,7 @@ short iboxnodessid()
   return(node_ssid);
 }
 
-boolean iboxgetcompmode(short channel)
+bool iboxgetcompmode(short channel)
 {
   if (iface_user[channel].active)
     return (iface_user[channel].data->huffcod);
@@ -692,7 +696,7 @@ boolean iboxgetcompmode(short channel)
     return(0);
 }
 
-void iboxsetcompmode(short channel,boolean mode)
+void iboxsetcompmode(short channel,bool mode)
 {
   IFACE_CMDBUF buffer;
   
@@ -704,7 +708,7 @@ void iboxsetcompmode(short channel,boolean mode)
   }
 }
 
-void iboxsetboxsf(short usernr,boolean flag)
+void iboxsetboxsf(short usernr,bool flag)
 {
   if (iface_user[usernr].active) {
     iface_user[usernr].data->boxsf = flag;
@@ -719,12 +723,12 @@ void iboxsetwasbox(short channel,short value)
 {
 }
 
-void iboxsetnode(short channel,boolean flag)
+void iboxsetnode(short channel,bool flag)
 {
 }
 
 void iboxstartconnect(short channel,char *stri1,char *stri2,
-                      boolean *flag1,boolean *flag2,boolean *flag3)
+                      bool *flag1,bool *flag2,bool *flag3)
 {
 }
 
@@ -732,7 +736,7 @@ void iboxcancelmultibox()
 {
 }
 
-boolean iboxhoststarted()
+bool iboxhoststarted()
 {
   return false;
 }
@@ -745,7 +749,7 @@ void iboxprkill(short channel,char *str)
 {
 }
 
-void iboxprprefix(short channel,boolean flag,char *str)
+void iboxprprefix(short channel,bool flag,char *str)
 {
 }
 
@@ -765,7 +769,7 @@ void iatarisetbmouse()
 {
 }
 
-boolean iboxgbstop()
+bool iboxgbstop()
 {
   return false;
 }
@@ -783,8 +787,8 @@ void iboxegdial1()
 {
 }
 
-void iboxsetgdial(boolean flag,char *stri1,short wert1,short wert2,
-                  long lwert1,long lwert2,long lwert3,char *stri2)
+void iboxsetgdial(bool flag,char *stri1,short wert1,short wert2,
+                  int32_t lwert1,int32_t lwert2,int32_t lwert3,char *stri2)
 {
   if (dpbox_debug) {
     fprintf(error_fp,"%s\n",stri2);
@@ -804,11 +808,11 @@ void iboxegdial()
 {
 }
 
-void iboxwait(long wert)
+void iboxwait(int32_t wert)
 {
 }
  
-void iboxalert2(char *str,boolean flag)
+void iboxalert2(char *str,bool flag)
 {
   if (dpbox_debug) {
     fprintf(error_fp,"%s\n",str);
@@ -828,7 +832,7 @@ void iboxendbusy()
 {
 }
 
-boolean iboxgetfilename(char *pfad,char *name,char *dummy)
+bool iboxgetfilename(char *pfad,char *name,char *dummy)
 {
   
   if (filestring[0] == '\0') return false;
@@ -850,7 +854,7 @@ void iboxfreemostram()
 {
 }
 
-long iboxspoolstatus(short console,short channel,short printer)
+int32_t iboxspoolstatus(short console,short channel,short printer)
 {
   short usernr;
 
@@ -881,7 +885,7 @@ void iboxspoolabort(short console,short channel,short printer)
 }
 
 void iboxmemspool(short console,short channel,short printer,
-                  boolean strip_lf,char *start,long length)
+                  bool strip_lf,char *start,int32_t length)
 {
   short usernr;
   int i;
@@ -910,7 +914,7 @@ void iboxspoolread()
   }
 }
 
-void iboxspool(short console,short channel,short printer,const char *str,boolean cr)
+void iboxspool(short console,short channel,short printer,const char *str,bool cr)
 {
   short usernr;
   char *buf;
@@ -930,12 +934,12 @@ void iboxspool(short console,short channel,short printer,const char *str,boolean
   free(buf);
 }
 
-void iboxedit(char *str,void **dummy,long wert1,long wert2)
+void iboxedit(char *str,void **dummy,int32_t wert1,int32_t wert2)
 {
 }
 
-void iboxstartedit(char *str,void *dummy,long wert1,long wert2,
-                   boolean flag1,boolean flag2,boolean flag3)
+void iboxstartedit(char *str,void *dummy,int32_t wert1,int32_t wert2,
+                   bool flag1,bool flag2,bool flag3)
 {
   pathstr w2;
   char	  w1[256];
@@ -964,14 +968,14 @@ void bcast_timing()
 {
 }
 
-boolean bcast_file(char stnc,char sport,char *qrg,
-                   long fid,unsigned short ftype,
+bool bcast_file(char stnc,char sport,char *qrg,
+                   int32_t fid,unsigned short ftype,
                    char *name1,char *adress,char *bbs_source,
                    char *bbs_destination,char *bbs_ax25uploader,
                    time_t bbs_upload_time,time_t bbs_expire_time,
                    char bbs_compression,char *bbs_bid,char bbs_msgtype,
                    char *bbs_title,char *bbs_fheader,
-                   unsigned short bodychecksum,boolean delete_after_tx)
+                   unsigned short bodychecksum,bool delete_after_tx)
 {
   IFACE_CMDBUF command;
   BCAST_HEADINFO bh;
@@ -1028,7 +1032,7 @@ boolean bcast_file(char stnc,char sport,char *qrg,
   return(true);     
 }
 
-void boxisbusy(boolean busy)
+void boxisbusy(bool busy)
 {
   IFACE_CMDBUF command;
   int iface;
@@ -1047,9 +1051,7 @@ void boxisbusy(boolean busy)
 
 /* end of interface-procedures */
 
-static int init_box(argc,argv)
-int argc;
-char *argv[];
+static int init_box(int argc,char *argv[])
 {
   int i;
   char hs[80];
@@ -1147,10 +1149,7 @@ char *argv[];
   return(0);
 }
 
-static void send_command_packet(usernr,len,buf)
-short usernr;
-unsigned short len;
-char *buf;
+static void send_command_packet(short usernr,unsigned short len,char *buf)
 {
   char buffer[MAX_LEN];
   IFACE_HEADER header;
@@ -1175,10 +1174,7 @@ char *buf;
   }
 }
 
-static void send_command_iface(iface,len,buf)
-short iface;
-unsigned short len;
-char *buf;
+static void send_command_iface(short iface,unsigned short len,char *buf)
 {
   char buffer[MAX_LEN];
   IFACE_HEADER header;
@@ -1200,11 +1196,7 @@ char *buf;
   }
 }
 
-static void send_command_channel_if(channel,len,buf,iface)
-short channel;
-unsigned short len;
-char *buf;
-short iface;
+static void send_command_channel_if(short channel,unsigned short len,char *buf,short iface)
 {
   char buffer[MAX_LEN];
   IFACE_HEADER header;
@@ -1230,12 +1222,7 @@ short iface;
   }
 }
 
-static void send_command_all(usernr,channel,len,buf,iface)
-short usernr;
-short channel;
-unsigned short len;
-char *buf;
-short iface;
+static void send_command_all(short usernr,short channel,unsigned short len,char *buf,short iface)
 {
   char buffer[MAX_LEN];
   IFACE_HEADER header;
@@ -1257,9 +1244,7 @@ short iface;
   }
 }
 
-static void blocking_test(size,iface)
-int size;
-short iface;
+static void blocking_test(int size,short iface)
 {
   IFACE_CMDBUF command;
 
@@ -1272,8 +1257,7 @@ short iface;
   }
 }
 
-static void unblocking(iface)
-short iface;
+static void unblocking(short iface)
 {
   struct queue_entry *oldq_ptr;
   int usernr;
@@ -1334,9 +1318,7 @@ short iface;
 
 
 /* find a free entry in iface_user */
-static short find_iface_user(iface,channel)
-short iface;
-short channel;
+static short find_iface_user(short iface,short channel)
 {
   IFACE_DATA *dataptr;
   short usernr;
@@ -1375,8 +1357,7 @@ short channel;
 }
 
 /* delete entry iface_user */
-static void exit_iface_user(usernr)
-short usernr;
+static void exit_iface_user(short usernr)
 {
   struct queue_entry *oldq_ptr;
   
@@ -1446,9 +1427,7 @@ static void start_connect(short usernr,short iface,int timeout,
   send_command_all(usernr,NO_CHANNEL,len,(char *)&command,iface);
 }
 
-static void box_reconnect(usernr,message)
-short usernr;
-int message;
+static void box_reconnect(short usernr,int message)
 {
   int errlen;
   char error_text[256-LEN_SIMPLE];
@@ -1521,13 +1500,7 @@ int message;
 }
 
 /* analysis of received packet via interface */
-static void packet_analysis(iface,indicator,channel,usernr,len,buf)
-short iface;
-char indicator;
-short channel;
-short usernr;
-unsigned short len;
-char *buf;
+static void packet_analysis(short iface,char indicator,short channel,short usernr,unsigned short len,char *buf)
 {
   unsigned short i,ix;
   char *bufptr;
@@ -1547,7 +1520,7 @@ char *buf;
   short nl_type;
   int call_len;
   unsigned short comlen;
-  boolean result;
+  bool result;
   int errlen;
   char leflag;
   char error_text[256-LEN_SIMPLE];
@@ -1769,7 +1742,7 @@ char *buf;
       if ((usernr) && (usernr != NO_USERNR) && (usernr <= MAXUSER)) {
         if (iface_user[usernr].active) {
           iface_user[usernr].data->huffcod = 
-                               (boolean)(rec_command->data.huffstat);
+                               (bool)(rec_command->data.huffstat);
         }
       }
       break;
@@ -1846,7 +1819,7 @@ char *buf;
       iface_list[iface].unproto_rxheader.heardfrom =
           rec_command->data.rxunprotohead.heardfrom;
       nstrcpy(iface_list[iface].unproto_rxheader.qrg,
-          rec_command->data.rxunprotohead.qrg,20);
+	  rec_command->data.rxunprotohead.qrg,19);
       memcpy(iface_list[iface].unproto_rxheader.calls,
           rec_command->data.rxunprotohead.calls,DAT_PATHINFO);
       break;
@@ -1966,11 +1939,7 @@ char *buf;
 }
 
 /* send unproto packet via interface */
-static void queue_iface_unproto(iface,cmdbuffer,cmdlen,isaddress)
-long iface;
-char *cmdbuffer;
-int cmdlen;
-int isaddress;
+static void queue_iface_unproto(int32_t iface,char *cmdbuffer,int cmdlen,int isaddress)
 {
   char buffer[MAX_LEN];
   int len;
@@ -2031,20 +2000,13 @@ int isaddress;
 }
 
 /* send unproto packet via interface */
-static void write_iface_unproto(iface,cmdbuffer,cmdlen)
-long iface;
-char *cmdbuffer;
-int cmdlen;
+static void write_iface_unproto(int32_t iface,char *cmdbuffer,int cmdlen)
 {
   queue_iface_unproto(iface,cmdbuffer,cmdlen,0);
 }
 
 /* send packet on channel via interface */
-static void write_iface_packet2(usernr,cmdflag,cmdbuffer,cmdlen)
-short usernr;
-short cmdflag;
-char *cmdbuffer;
-int cmdlen;
+static void write_iface_packet2(short usernr,short cmdflag,char *cmdbuffer,int cmdlen)
 {
   char buffer[MAX_LEN];
   int len;
@@ -2117,8 +2079,7 @@ int cmdlen;
 }
 
 /* send packet on channel via interface */
-void write_iface_packet(usernr)
-short usernr;
+void write_iface_packet(short usernr)
 {
   write_iface_packet2(usernr,0,NULL,0);
 }
@@ -2138,7 +2099,7 @@ static void queue_iface_cmd(short usernr, char *cmdbuffer, int cmdlen)
 void write_iface_timeout()
 {
   short i;
-  long timeout;
+  int32_t timeout;
   
   for(i=1;i<=MAXUSER;i++) {
     if (iface_user[i].active) {
@@ -2152,10 +2113,7 @@ void write_iface_timeout()
   }
 }
 
-void write_iface_seg(usernr,len,str)
-short usernr;
-unsigned short len;
-char *str;
+void write_iface_seg(short usernr,unsigned short len,char *str)
 {
   char *bufptr;
   int max;
@@ -2189,12 +2147,9 @@ char *str;
 }
 
 /* write data to interface */
-void write_iface(usernr,len,str)
-short usernr;
-long len;
-char *str;
+void write_iface(short usernr,int32_t len,char *str)
 {
-  long len_cur;
+  int32_t len_cur;
   char *ptr;
 
   if (!iface_user[usernr].active) return;
@@ -2214,8 +2169,7 @@ char *str;
 }
 
 /* read data from interface */
-static int read_data_iface(iface)
-short iface;
+static int read_data_iface(short iface)
 {
   char buffer[MAX_LEN];
   char *bufptr;
@@ -2278,9 +2232,7 @@ short iface;
   return(0);
 }
 
-static int find_qrg(qrg,socket)
-char *qrg;
-short socket;
+static int find_qrg(char *qrg,short socket)
 {
   int found;
   int qrgnr;
@@ -2341,8 +2293,7 @@ static void init_iface()
 }
 
 
-static void open_iface(nsockfd)
-int nsockfd;
+static void open_iface(int nsockfd)
 {
   short iface;
   char helpstr[80];
@@ -2371,8 +2322,7 @@ int nsockfd;
 }
 
 
-static void close_iface(iface)
-short iface;
+static void close_iface(short iface)
 {
   short usernr;
   char helpstr[80];
@@ -2673,9 +2623,7 @@ void blocking_off(void)
   no_blocking_flag = 1;
 }
 
-static void get_dpbox_ugid(uid,gid)
-int *uid;
-int *gid;
+static void get_dpbox_ugid(int *uid,int *gid)
 {
 #ifndef __macos__
   struct passwd *pstp;
@@ -2697,9 +2645,7 @@ int *gid;
 #endif
 }
 
-static void drop_priv(uid,gid)
-int *uid;
-int *gid;
+static void drop_priv(int *uid,int *gid)
 {
 #ifndef __macos__
   struct passwd *pstp;
@@ -2727,9 +2673,7 @@ int *gid;
 #endif
 }
 
-static void rest_priv(uid,gid)
-int uid;
-int gid;
+static void rest_priv(int uid,int gid)
 {
 #ifndef __macos__
   if (uid == -1) return;
@@ -2837,19 +2781,17 @@ static void sigsegv()
   exit(1);
 }
 
-static boolean show_bootinf;
+static bool show_bootinf;
 
 void bootinf(char *s)
 {
   if (!show_bootinf) return;
-  printf(s);
+  printf("%s", s);
   fflush(0);
 }
 
 int 
-main(argc,argv)
-int argc;
-char *argv[];
+main(int argc,char *argv[])
 {
   int clilen;
   int servlen;
@@ -2917,36 +2859,15 @@ char *argv[];
   listen(sockfd,5);
 
   /* fcntl(sockfd,F_SETFL,O_NONBLOCK); */
-  
+#endif  
  
-#ifdef __NetBSD__ 
-  printf("DigiPoint Box v%s%s %s (NetBSD) successfully started\n",
+#if defined(OS_NAME)
+  printf("DigiPoint Box v%s%s %s (" OS_NAME ") successfully started\n",
           dp_vnr, dp_vnr_sub, dp_date);
-#define __dp_version_done
-#endif
-#ifdef __DragonFly__ 
-  printf("DigiPoint Box v%s%s %s (DragonFly) successfully started\n",
-          dp_vnr, dp_vnr_sub, dp_date);
-#define __dp_version_done
-#endif
-#ifdef __linux__
-  printf("DigiPoint Box v%s%s %s (Linux) successfully started\n",
-          dp_vnr, dp_vnr_sub, dp_date);
-#define __dp_version_done
-#endif
-
-#endif
-#ifdef __macos__
-  printf("DigiPoint Box v%s%s %s (MacOS) successfully started\n",
-          dp_vnr, dp_vnr_sub, dp_date);
-#define __dp_version_done
-#endif
-
-#ifndef __dp_version_done
+#else
   printf("DigiPoint Box v%s%s %s successfully started\n",
           dp_vnr, dp_vnr_sub, dp_date);
 #endif
-#undef __dp_version_done
 
 #ifndef __macos__
   switch (dpbox_debug) {
@@ -3090,7 +3011,7 @@ char *argv[];
       exit_proc();
       if (dpbox_debug == 2)
         fclose(error_fp);
-#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__)
+#if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
       delete_dirlist();
       unlink(serv_addr.sun_path);
 #endif
