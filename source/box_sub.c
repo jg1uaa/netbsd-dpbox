@@ -60,8 +60,8 @@
 /* #define	MAX_UNPROTO_PACKET_SIZE	256	// This is now defined in boxlocal.h */
 
 
-static void send_unproto_line(char *path, char *port, boolean fbb,
-			      boolean dpbox, char *line)
+static void send_unproto_line(char *path, char *port, bool fbb,
+			      bool dpbox, char *line)
 {
   short iface, chan;
   char hs[256];
@@ -86,7 +86,7 @@ static void send_unproto_line(char *path, char *port, boolean fbb,
   boxsendpline(chan, line, false, iface); /* don't add CR */
 }
 
-static void print_messageheader(boolean fbb, boxlogstruct header, char *buf)
+static void print_messageheader(bool fbb, boxlogstruct header, char *buf)
 {
   char w[256], w1[256], w2[256], w3[256];
   
@@ -103,12 +103,12 @@ static void print_messageheader(boolean fbb, boxlogstruct header, char *buf)
     strcpy(w1, header.obrett);
     rspacing(w1, 6);
     cut(w1, 6);
-    sprintf(w2, "%ld", header.size);
+    sprintf(w2, "%d", header.size);
     lspacing(w2, 6);
     unhpath(header.verbreitung, w3);
     rspacing(w3, 6);
     cut(w3, 6);
-    sprintf(buf, "%ld %c %s %s@%s %-6s %c%c%c%c%c%c %s",
+    sprintf(buf, "%d %c %s %s@%s %-6s %c%c%c%c%c%c %s",
                  header.msgnum + MSGNUMOFFSET, header.msgtype,
     		 w2, w1, w3, header.absender,
     		 w[6], w[7], w[3], w[4], w[0], w[1], header.betreff);
@@ -121,7 +121,7 @@ static void print_messageheader(boolean fbb, boxlogstruct header, char *buf)
 */
     unhpath(header.verbreitung, w3);
     cut(w3, 6);
-    sprintf(buf, "%ld %s %d %c %ld %s@%s %s %c%c%c%c%c%c %s",
+    sprintf(buf, "%d %s %d %c %d %s@%s %s %c%c%c%c%c%c %s",
     		  header.msgnum + MSGNUMOFFSET, header.bid, header.lifetime, header.msgtype,
     		  header.size, header.obrett, w3, header.absender,
     		  w[6], w[7], w[3], w[4], w[0], w[1], header.betreff);
@@ -144,7 +144,7 @@ void send_final_unproto()
     return;
 
   hp = unprotodefroot->ports;
-  sprintf(hs, "%ld !!\r", unproto_last + MSGNUMOFFSET);
+  sprintf(hs, "%d !!\r", unproto_last + MSGNUMOFFSET);
 
   while (hp != NULL) {
     if (!hp->RequestActive)
@@ -160,7 +160,7 @@ void send_final_unproto()
 /* this function gets called every time a new message was received */
 void send_new_unproto_header(boxlogstruct header)
 {
-  long ct;
+  int32_t ct;
   unprotoportstype *hp;
   char hs[256], buff[MAX_UNPROTO_PACKET_SIZE+1], buff2[MAX_UNPROTO_PACKET_SIZE+1];
   
@@ -199,7 +199,7 @@ void send_new_unproto_header(boxlogstruct header)
         for (ct = hp->CurrentSendPos + 1; ct < header.msgnum; ct++) {
 	  if (ct % 50 == 0)
 	    dp_watchdog(2, 4711);
-	  sprintf(hs, "%ld #\r", ct + MSGNUMOFFSET);
+	  sprintf(hs, "%d #\r", ct + MSGNUMOFFSET);
 	  if (strlen(buff) + strlen(hs) > MAX_UNPROTO_PACKET_SIZE) {
 	    send_unproto_line(hp->path, hp->port, unprotodefroot->fbb, unprotodefroot->dpbox, buff);
 	    *buff = '\0';
@@ -260,14 +260,14 @@ void send_new_unproto_header(boxlogstruct header)
  ****************************************************
  */ 
  
-static void send_unproto_header_packed(unprotoportstype *hp, short handle, long nr)
+static void send_unproto_header_packed(unprotoportstype *hp, short handle, int32_t nr)
 {
   boxlogstruct header;                /* buffer for checklist data  */
-  long ct;                            /* Counter for empty messages */
+  int32_t ct;                            /* Counter for empty messages */
   char hs[256];                       /* buffers                    */
   char packed_h[MAX_UNPROTO_PACKET_SIZE+1]; /* The actual sent line */
-  boolean invalid;                    /* hidden line                */
-  boolean exit = false;               /* flag for the main loop     */
+  bool invalid;                    /* hidden line                */
+  bool exit = false;               /* flag for the main loop     */
   
   debug0(5, -1, 166);
 
@@ -298,7 +298,7 @@ static void send_unproto_header_packed(unprotoportstype *hp, short handle, long 
     /* newer gcc versions don't like modified for - loops. Changed to a while loop instead. */
         ct = hp->CurrentSendPos + 1;
         while (ct < header.msgnum) {
-          sprintf(hs, "%ld #\r", ct + MSGNUMOFFSET);
+          sprintf(hs, "%d #\r", ct + MSGNUMOFFSET);
           /* not enough buffer space? then flush it. */
           if (strlen(packed_h) + strlen(hs) > MAX_UNPROTO_PACKET_SIZE) {
             send_unproto_line(hp->path, hp->port, !hp->ReqDPBOX, hp->ReqDPBOX, packed_h);
@@ -339,7 +339,7 @@ static void send_unproto_header_packed(unprotoportstype *hp, short handle, long 
 
         if (invalid) {
           /* ok, send the "<nnnn> #", the header is not valid for transmission */    
-          sprintf(hs, "%ld #\r", header.msgnum + MSGNUMOFFSET);
+          sprintf(hs, "%d #\r", header.msgnum + MSGNUMOFFSET);
           /* check if the buffer would overflow */
           if (strlen(packed_h) + strlen(hs) > MAX_UNPROTO_PACKET_SIZE) {
             /* yes, flush it */
@@ -387,7 +387,7 @@ static void send_unproto_header_packed(unprotoportstype *hp, short handle, long 
   } /* while (!exit) */
   
   if (unproto_last == header.msgnum) { /* check for unproto_last */
-    sprintf(hs, "%ld !!\r", header.msgnum + MSGNUMOFFSET);
+    sprintf(hs, "%d !!\r", header.msgnum + MSGNUMOFFSET);
     /* check if buffer would overflow */
     if (strlen(packed_h) + strlen(hs) > MAX_UNPROTO_PACKET_SIZE) {
       /* yes, flush it */
@@ -437,12 +437,12 @@ static void send_unproto_header_packed(unprotoportstype *hp, short handle, long 
  ****************************************************
  */
 
-boolean private_mail_exist(long From, long To, char *User, unprotoportstype *hp)
+bool private_mail_exist(int32_t From, int32_t To, char *User, unprotoportstype *hp)
 {
   short k;
-  long cpos;
+  int32_t cpos;
   boxlogstruct header;
-  boolean RetValue = false;
+  bool RetValue = false;
   char hs[256];
   char packed_hs[257];
 
@@ -474,7 +474,7 @@ boolean private_mail_exist(long From, long To, char *User, unprotoportstype *hp)
             if (!strcmp(User, header.brett))
             {
                 /* Prepare the resync string */
-                sprintf(packed_hs, "%ld ! %s\r", (header.msgnum - 1) + MSGNUMOFFSET, User);
+                sprintf(packed_hs, "%d ! %s\r", (header.msgnum - 1) + MSGNUMOFFSET, User);
                 /* Format the MSg header */
                 print_messageheader(!hp->ReqDPBOX, header, hs);
                 /* Build and send the unproto lines */
@@ -496,7 +496,7 @@ boolean private_mail_exist(long From, long To, char *User, unprotoportstype *hp)
 void send_requested_unproto(unprotoportstype *hp)
 {
   short k;
-  long cpos, maxc;
+  int32_t cpos, maxc;
   boxlogstruct log;
 
   if (hp == NULL)
@@ -545,13 +545,13 @@ void send_requested_unproto(unprotoportstype *hp)
 
 void unproto_request1(char *call, char *port, char *path, char *s)
 {
-  boolean ok;
+  bool ok;
   userstruct ufil;
-  long mnum;
+  int32_t mnum;
   short x;
   unprotoportstype *hp;
-  boolean dpboxmode, align;
-  long cs, cs1;
+  bool dpboxmode, align;
+  int32_t cs, cs1;
   char hs[256], w[256], w1[256];
   char STR1[256];
 
@@ -642,7 +642,7 @@ void unproto_request1(char *call, char *port, char *path, char *s)
   }
 
   if (!ok) {  /* nein -> fehlermeldung auf entsprechendem pfad ausgeben */
-    sprintf(w, "%ld / %s\r", mnum, call);
+    sprintf(w, "%d / %s\r", mnum, call);
     send_unproto_line(hp->path, hp->port, !dpboxmode,
 		      dpboxmode, w);
     return;
@@ -672,11 +672,11 @@ void unproto_request1(char *call, char *port, char *path, char *s)
   *hp->buff = '\0';
   
   if (align)
-    sprintf(hp->buff, "%ld ! %s\r", mnum + MSGNUMOFFSET, call);
+    sprintf(hp->buff, "%d ! %s\r", mnum + MSGNUMOFFSET, call);
     /* we will send that in one frame with the remaining answer */
   
   if (mnum >= unproto_last) { /* Last message reached. */
-    sprintf(hs, "%ld !!\r", unproto_last + MSGNUMOFFSET);
+    sprintf(hs, "%d !!\r", unproto_last + MSGNUMOFFSET);
     send_unproto_line(hp->path, hp->port, !dpboxmode,
 		      dpboxmode, hs);
     hp->LastReqTime = clock_.ixtime;
@@ -711,7 +711,7 @@ void clear_msgnumarr(void)
 void fill_msgnumarr(void)
 {
   short k;
-  long bsize, bct, mct, cpos, cct;
+  int32_t bsize, bct, mct, cpos, cct;
   boxlogstruct log;
 
   clear_msgnumarr();
@@ -757,7 +757,7 @@ void fill_msgnumarr(void)
 }
 
 
-static long msgnum2cposstart(long msgnum, long *end)
+static int32_t msgnum2cposstart(int32_t msgnum, int32_t *end)
 {
   short x;
 
@@ -780,9 +780,9 @@ static long msgnum2cposstart(long msgnum, long *end)
 }
 
 
-long msgnum2centry(long msgnum, boxlogstruct *log, boolean fuzzy)
+int32_t msgnum2centry(int32_t msgnum, boxlogstruct *log, bool fuzzy)
 {
-  long start, seekp, end;
+  int32_t start, seekp, end;
   short k;
 
   start = msgnum2cposstart(msgnum, &end);
@@ -816,7 +816,7 @@ long msgnum2centry(long msgnum, boxlogstruct *log, boolean fuzzy)
 }
 
 
-short msgnum2board(long msgnum, char *board)
+short msgnum2board(int32_t msgnum, char *board)
 {
   boxlogstruct log;
 
@@ -843,9 +843,9 @@ short actual_connects(void)
   return z;
 }
 
-long cpu_usage(short unr)
+int32_t cpu_usage(short unr)
 {
-  long ll;
+  int32_t ll;
   
   if (!boxrange(unr)) return 0;
   if (user[unr]->cputime <= 0) ll = 0;
@@ -891,8 +891,8 @@ long cpu_usage(short unr)
 void expand_macro(short unr, char *hs)
 {
   short x, l;
-  long ll;
-  boolean brange;
+  int32_t ll;
+  bool brange;
   char w[256], r[256], h[256];
 
   *r = '\0';
@@ -941,7 +941,7 @@ void expand_macro(short unr, char *hs)
 	  break;
 	  
 	case 'g':
-	  sprintf(w, "%ld", sfsize(boxlog) / sizeof(boxlogstruct));
+	  sprintf(w, "%d", (int32_t)(sfsize(boxlog) / sizeof(boxlogstruct)));
 	  break;
 
 	case 'h':
@@ -978,7 +978,7 @@ void expand_macro(short unr, char *hs)
 	case 'p':
 	  if (brange) {
 	    ll = cpu_usage(unr);
-	    sprintf(w, "%ld.%.2ld", ll / 200, (ll % 200) >> 1);
+	    sprintf(w, "%d.%.2d", ll / 200, (ll % 200) >> 1);
 	  }
 	  break;
 
@@ -1003,11 +1003,11 @@ void expand_macro(short unr, char *hs)
 	  break;
 	
 	case 'w':
-	  sprintf(w, "%ld/%ld", user[unr]->rbytes / 1024, user[unr]->sbytes / 1024);
+	  sprintf(w, "%d/%d", user[unr]->rbytes / 1024, user[unr]->sbytes / 1024);
 	  break;
 
 	case 'x':
-	  sprintf(w, "%ld", get_boxruntime_l() / SECPERDAY);
+	  sprintf(w, "%"PRId64, (int64_t)get_boxruntime_l() / SECPERDAY);
 	  break;
 
 	case 'z':
@@ -1035,10 +1035,10 @@ void expand_macro(short unr, char *hs)
 }
 
 
-boolean in_rsysops_boards(char *call, char *board)
+bool in_rsysops_boards(char *call, char *board)
 {
   rsysoptype *hp;
-  boolean ok;
+  bool ok;
   unsigned short lt, acc;
   char w[256];
 
@@ -1082,7 +1082,7 @@ short in_tracecalls(char *call)
 void delete_trace_from(short unr)
 {
   tracetype *hp, *hpa;
-  boolean found;
+  bool found;
   short x;
 
   for (x = 1; x <= MAXUSER; x++) {
@@ -1223,7 +1223,7 @@ void trace_cmd(short unr, char *w, char *w1)
 }
 
 
-boolean in_protocalls(char *call)
+bool in_protocalls(char *call)
 {
   protocalltype *hp;
   char cs1;
@@ -1389,7 +1389,7 @@ static time_t maxruntime = 0;
 static time_t lastboxabort = 0;
 static time_t lastgarbagetime = 0;
 static short sane_shutdown_last = -1;
-static boolean shutdown_value = false;
+static bool shutdown_value = false;
 
 void reset_boxruntime(void)
 {
@@ -1499,7 +1499,7 @@ static time_t get_startuptime_l(void)
   return startuptime;
 }
 
-static void set_sane_shutdown(boolean sane)
+static void set_sane_shutdown(bool sane)
 {
   char w[80], hs[80];
 
@@ -1514,7 +1514,7 @@ static void set_sane_shutdown(boolean sane)
   }
 }
 
-boolean was_sane_shutdown(void)
+bool was_sane_shutdown(void)
 {
   return (lastboxabort == 0 || sane_shutdown_last == 1);
 }
@@ -1560,18 +1560,18 @@ void flush_bidseek(void)
   k = sfcreate(bidseekfile, FC_FILE);
   if (k < minhandle) return;
 
-  sfwrite(k, sizeof(long), (char *)(&bullidseek));
+  sfwrite(k, sizeof(int32_t), (char *)(&bullidseek));
   sfwrite(k, sizeof(short), (char *)(&hiscore_connects));
-  sfwrite(k, sizeof(long), (char *)(&actmsgnum));
-  sfwrite(k, sizeof(boolean), (char *)(&crawl_active));
-  sfwrite(k, sizeof(boolean), (char *)(&crawl_private));
+  sfwrite(k, sizeof(int32_t), (char *)(&actmsgnum));
+  sfwrite(k, sizeof(bool), (char *)(&crawl_active));
+  sfwrite(k, sizeof(bool), (char *)(&crawl_private));
   runtime = get_totalruntime_l();
   sfwrite(k, sizeof(time_t), (char *)(&runtime));
   runtime = get_maxruntime_l();
   sfwrite(k, sizeof(time_t), (char *)(&runtime));
   runtime = clock_.ixtime;
   sfwrite(k, sizeof(time_t), (char *)(&runtime));
-  sfwrite(k, sizeof(boolean), (char *)(&shutdown_value));
+  sfwrite(k, sizeof(bool), (char *)(&shutdown_value));
   runtime = get_lastgarbagetime();
   sfwrite(k, sizeof(time_t), (char *)(&runtime));
   runtime = get_last_wprot_r();
@@ -1598,29 +1598,29 @@ void flush_bidseek_immediately(void)
 }
 
 
-boolean load_bidseek(void)
+bool load_bidseek(void)
 {
   short k;
-  long li;
+  int32_t li;
   short i;
   time_t runtime;
-  boolean b, result;
+  bool b, result;
 
   result = false;
   bullidseek = sfsize(msgidlog) / 13;
   k = sfopen(bidseekfile, FO_READ);
   if (k < minhandle)
     return result;
-  if (sfread(k, sizeof(long), (char *)(&li)) == sizeof(long)) {
+  if (sfread(k, sizeof(int32_t), (char *)(&li)) == sizeof(int32_t)) {
     bullidseek = li;
     result = true;
     if (sfread(k, sizeof(short), (char *)(&i)) == sizeof(short)) {
       hiscore_connects = i;
-      if (sfread(k, sizeof(long), (char *)(&li)) == sizeof(long)) {
+      if (sfread(k, sizeof(int32_t), (char *)(&li)) == sizeof(int32_t)) {
 	if (li > 0) actmsgnum = li;
-	if (sfread(k, sizeof(boolean), (char *)(&b)) == sizeof(boolean)) {
+	if (sfread(k, sizeof(bool), (char *)(&b)) == sizeof(bool)) {
 	  crawl_active = b;
-	  if (sfread(k, sizeof(boolean), (char *)(&b)) == sizeof(boolean)) {
+	  if (sfread(k, sizeof(bool), (char *)(&b)) == sizeof(bool)) {
 	    crawl_private = b;
 	    if (sfread(k, sizeof(time_t), (char *)(&runtime)) == sizeof(time_t)) {
 	      set_totalruntime(runtime);
@@ -1628,7 +1628,7 @@ boolean load_bidseek(void)
 	      	set_maxruntime(runtime);
 	      	if (sfread(k, sizeof(time_t), (char *)(&runtime)) == sizeof(time_t)) {
 	      	  set_lastboxabort(runtime);
-	      	  if (sfread(k, sizeof(boolean), (char *)(&b)) == sizeof(boolean)) {
+	      	  if (sfread(k, sizeof(bool), (char *)(&b)) == sizeof(bool)) {
 	      	    set_sane_shutdown(b);
 	      	    if (sfread(k, sizeof(time_t), (char *)(&runtime)) == sizeof(time_t)) {
 	      	      set_lastgarbagetime(runtime);
@@ -1667,7 +1667,7 @@ void create_hcs(indexstruct *h)
 }
 
 
-boolean check_hcs(indexstruct h)
+bool check_hcs(indexstruct h)
 {
   unsigned short zs;
   char STR1[36];
@@ -1689,7 +1689,7 @@ boolean check_hcs(indexstruct h)
 }
 
 
-boolean boxrange(short unr)
+bool boxrange(short unr)
 {
 
   if (unr < 1)
@@ -1712,8 +1712,8 @@ boolean boxrange(short unr)
 }
 
 
-void upd_statistik(short unr, long txbytes, long rxbytes, long start,
-		   long stop)
+void upd_statistik(short unr, int32_t txbytes, int32_t rxbytes, int32_t start,
+		   int32_t stop)
 {
   userstruct *WITH;
 
@@ -1747,7 +1747,7 @@ void get_btext(short unr, short nr, char *s)
 }
 
 
-void x_w_btext(short unr, short nr, boolean lf)
+void x_w_btext(short unr, short nr, bool lf)
 {
   char s[256];
 
@@ -1816,7 +1816,7 @@ short find_buser(short tnr, short pchan)
 short actual_user(char *calls)
 {
   short     x, first;
-  boolean   ok;
+  bool      ok;
 
   x   	    = 1;
   first     = 0;
@@ -1850,7 +1850,7 @@ short actual_user(char *calls)
 }
 
 
-void fill_logline(boolean full, short unr, char *hs)
+void fill_logline(bool full, short unr, char *hs)
 {
   userstruct  *WITH;
   char	      hw1[256], hw2[256], hw3[256];
@@ -1887,10 +1887,10 @@ void fill_logline(boolean full, short unr, char *hs)
     sprintf(hs + strlen(hs), " %s", hw2);
   }
 
-  sprintf(hw2, "%ld", WITH->rbytes);
+  sprintf(hw2, "%d", WITH->rbytes);
   lspacing(hw2, 9);
   strcat(hs, hw2);
-  sprintf(hw2, "%ld", WITH->sbytes);
+  sprintf(hw2, "%d", WITH->sbytes);
   lspacing(hw2, 9);
   strcat(hs, hw2);
 }
@@ -1916,10 +1916,10 @@ void box_logbuch(short unr)
 }
 
 
-boolean wildcardcompare(short fangraster, char *w, char *t, char *wr)
+bool wildcardcompare(short fangraster, char *w, char *t, char *wr)
 {
   short     x, y, l, k, z, r, v, hz;
-  boolean   first;
+  bool      first;
   char	    lastc;
   char	    wc[256], tc[256], t1[256], STR7[256];
 
@@ -1952,7 +1952,7 @@ boolean wildcardcompare(short fangraster, char *w, char *t, char *wr)
 
 _LOOP:
   first = true;
-  if (fangraster == SHORT_MAX)
+  if (fangraster == SHRT_MAX)
     fangraster--;
 
   while (l > 0) {
@@ -2069,7 +2069,7 @@ static void setup_dwrstring(void)
 }
 
 
-boolean check_for_dirty(char *hs)
+bool check_for_dirty(char *hs)
 {
   dirtytype *hp;
   char	    w[256];
@@ -2089,14 +2089,14 @@ boolean check_for_dirty(char *hs)
 }
 
 
-boolean check_for_dirty2(char *bs, char *hs)
+bool check_for_dirty2(char *bs, char *hs)
 {
   return (wildcardcompare(50, bs, hs, dwr_string));
 }
 
 static char rnegcs1[2] = "";
 static char rnegcs2[2] = "~";
-static char *rnegc(boolean b)
+static char *rnegc(bool b)
 {
   if (b) return rnegcs1;
   return rnegcs2;
@@ -2105,7 +2105,7 @@ static char *rnegc(boolean b)
 static void print_rejectreason(rejecttype *hp, char *reason)
 {
   if (hp == NULL) return;
-  snprintf(reason, 100, "%c %s%c %s%s %s%s %s%s %s%s %s%ld",
+  snprintf(reason, 100, "%c %s%c %s%s %s%s %s%s %s%s %s%d",
       	    hp->what,
 	    rnegc(hp->msgtypeneg), hp->msgtype,
 	    rnegc(hp->fromneg), hp->from,
@@ -2115,7 +2115,7 @@ static void print_rejectreason(rejecttype *hp, char *reason)
 	    rnegc(hp->maxsizeneg), hp->maxsize);
 }
 
-static boolean private_distribution(char msgtype, char *ziel, char *mbx, char *absender, long size)
+static bool private_distribution(char msgtype, char *ziel, char *mbx, char *absender, int32_t size)
 {
   if (msgtype != 'P') return false;
   if (!hcallsign(mbx)) return false;
@@ -2126,8 +2126,8 @@ static boolean private_distribution(char msgtype, char *ziel, char *mbx, char *a
 
 void check_reject(char *frombox, char msgchar, char *ziel, char *mbx,
 		  char *absender, char *lifetime, char *betreff, char *bid,
-		  long laenge, boolean is_local, boolean is_privlocal,
-		  boolean *reject_it, boolean *no_sf, char *rejectreason)
+		  int32_t laenge, bool is_local, bool is_privlocal,
+		  bool *reject_it, bool *no_sf, char *rejectreason)
 {
   rejecttype *hp;
 
@@ -2138,10 +2138,10 @@ void check_reject(char *frombox, char msgchar, char *ziel, char *mbx,
   while (hp != NULL) {
     if ((hp->msgtype == msgchar) == hp->msgtypeneg || hp->msgtype == '*') {
       if ((hp->maxsize <= laenge) == hp->maxsizeneg) {
-	if (wildcardcompare(SHORT_MAX, hp->from, absender, "") == hp->fromneg) {
-	  if (wildcardcompare(SHORT_MAX, hp->mbx, mbx, "") == hp->mbxneg) {
-	    if (wildcardcompare(SHORT_MAX, hp->tob, ziel, "") == hp->tobneg) {
-	      if (wildcardcompare(SHORT_MAX, hp->bid, bid, "") == hp->bidneg) {
+	if (wildcardcompare(SHRT_MAX, hp->from, absender, "") == hp->fromneg) {
+	  if (wildcardcompare(SHRT_MAX, hp->mbx, mbx, "") == hp->mbxneg) {
+	    if (wildcardcompare(SHRT_MAX, hp->tob, ziel, "") == hp->tobneg) {
+	      if (wildcardcompare(SHRT_MAX, hp->bid, bid, "") == hp->bidneg) {
 		switch (hp->what) {
 
 		case 'R':
@@ -2185,15 +2185,15 @@ void check_reject(char *frombox, char msgchar, char *ziel, char *mbx,
 
 
 
-static boolean convtit2(boolean iscall, boolean ltconv, convtittype *hp,
+static bool convtit2(bool iscall, bool ltconv, convtittype *hp,
 			char *ziel, char *mbx, char *absender1,
 			char *lifetime1, char *betreff1)
 {
   unsigned short  olt;
   boardtype   	  orub;
-  boolean     	  ok, ok2, frag;
+  bool     	  ok, ok2, frag;
   short       	  k;
-  boolean     	  einbuch;
+  bool     	  einbuch;
   char	      	  s[256], s2[256], hs[256], w[256], w2[256];
 
   if (hp == NULL)
@@ -2282,11 +2282,11 @@ static boolean convtit2(boolean iscall, boolean ltconv, convtittype *hp,
 
 void do_convtit(char *frombox, char msgchar, char *ziel, char *mbx,
 		char *absender1, char *lifetime1, char *betreff1, char *bid,
-		long laenge, boolean is_local, boolean is_privlocal,
-		boolean *reject_it, boolean *no_sf)
+		int32_t laenge, bool is_local, bool is_privlocal,
+		bool *reject_it, bool *no_sf)
 {
   convtittype *hp;
-  boolean ok, ok3, iscall;
+  bool ok, ok3, iscall;
   char ob[256], olt[256];
   char hs[256];
 
@@ -2340,12 +2340,12 @@ void do_convtit(char *frombox, char msgchar, char *ziel, char *mbx,
 }
 
 
-void show_rfile(short unr, char *base, long size, boolean mit_r, boolean sf,
-		boolean only_headers)
+void show_rfile(short unr, char *base, int32_t size, bool mit_r, bool sf,
+		bool only_headers)
 {
-  long lesezeiger, bodystart;
+  int32_t lesezeiger, bodystart;
   short lct, k;
-  boolean nop, is_r;
+  bool nop, is_r;
   char zeile[256];
   char hs[256], zl[256], lr[256];
   char STR7[256];
@@ -2498,7 +2498,7 @@ void show_rfile(short unr, char *base, long size, boolean mit_r, boolean sf,
 
 void show_textfile(short unr, char *name)
 {
-  long size, lz;
+  int32_t size, lz;
   char *rp;
   char hs[256];
 
@@ -2520,11 +2520,11 @@ void show_textfile(short unr, char *name)
 }
 
 
-static boolean show_allhelp(short unr, char *fn_, char *defhelp, char *hw)
+static bool show_allhelp(short unr, char *fn_, char *defhelp, char *hw)
 {
   short k;
   char *tb;
-  long tbs, rp;
+  int32_t tbs, rp;
   char hs[256], h2[256], fn[256];
   char STR7[256];
 
@@ -2682,9 +2682,9 @@ void show_help(short unr, char *w_)
 
 /* boardnamen (und calls) duerfen nur aus 0..9 / A..Z - _ bestehen, und mindestens ein Buchstabe... */
 
-boolean valid_boardname(char *rubrik)
+bool valid_boardname(char *rubrik)
 {
-  boolean   notnum;
+  bool   notnum;
   short     x, l;
 
   l   	    = strlen(rubrik);
@@ -2727,10 +2727,10 @@ void extend_6_to_8(char *rubr)
 }
 
 
-boolean defined_board(char *rubr)
+bool defined_board(char *rubr)
 {
   rubriktype *hp;
-  boolean ok;
+  bool ok;
 
   ok = (callsign(rubr) || strlen(rubr) == 1);
   if (!ok) {
@@ -2772,12 +2772,10 @@ void switch_to_default_fserv_board(char *rubr)
   }
 }
 
-boolean strip_invalid_boardname_chars(char *rubrik)
+bool strip_invalid_boardname_chars(char *rubrik)
 {
-  short x;
   char	*p, *p2, c;
   
-  x   = 0;
   p   = rubrik;
   p2  = rubrik;
   while ((c = upcase_(*p++))) {
@@ -2805,7 +2803,7 @@ void check_transfers(char *rubr)
 
 void check_verteiler(char *rubr)
 {
-  boolean loop = false;
+  bool loop = false;
 
   extend_6_to_8(rubr);   /*bei S&F-Namensbegrenzung auf 6 Bytes...*/
 
@@ -2874,7 +2872,7 @@ void check_lt_acc(char *rubr, unsigned short *lt, unsigned short *acc)
 }
 
 
-boolean may_sysaccess(short unr, char *board)
+bool may_sysaccess(short unr, char *board)
 {
   unsigned short lt, acc;
 
@@ -2909,9 +2907,9 @@ void check_msgtype(char *msgtype, char *ziel, char *betreff)
 }
 
 
-long truesize(indexstruct rec)
+int32_t truesize(indexstruct rec)
 {
-  long sz;
+  int32_t sz;
 
   if (strcmp(rec.dest, "M")) {
     sz = rec.size + strlen(rec.betreff) + 64;   /* Laenge des Headers */
@@ -2959,8 +2957,8 @@ char separate_status(char *status_, char *ziel, char *absender, char *mbx,
   *laenge     = '\0';
   *lifetime   = '\0';
 
-  if (((1L << ((long)typ)) &
-       ((1L << ((long)THEBOX_USER)) | (1L << ((long)NOP)))) != 0) {
+  if (((1L << ((int32_t)typ)) &
+       ((1L << ((int32_t)THEBOX_USER)) | (1L << ((int32_t)NOP)))) != 0) {
     if (count_words(status) != 8)
       return mtype;
     get_word(status, hs);
@@ -3096,7 +3094,7 @@ char separate_status(char *status_, char *ziel, char *absender, char *mbx,
 }
 
 
-void create_status(long additional, boolean hierarchicals, char *name,
+void create_status(int32_t additional, bool hierarchicals, char *name,
 		   indexstruct header, char *status)
 {
   char hs[256], w[256];
@@ -3116,7 +3114,7 @@ void create_status(long additional, boolean hierarchicals, char *name,
   sprintf(status + strlen(status), "%s ", hs);
   sprintf(hs, "%d", header.lifetime);   /* war mal header.lifetime */
   lspacing(hs, 3);
-  sprintf(w, "%ld", truesize(header) + additional);
+  sprintf(w, "%d", truesize(header) + additional);
   lspacing(w, 6);
   sprintf(hs + strlen(hs), " %s Bytes", w);
   if (hierarchicals && header.msgtype != '\0')
@@ -3127,12 +3125,12 @@ void create_status(long additional, boolean hierarchicals, char *name,
 
 /* Dies ist speziell fuer den Broadcast - Empfang */
 
-void create_status2(boolean hierarchicals, char *dest, char *absender,
-		    long rxdate, long expire_time, long size, char msgtype,
+void create_status2(bool hierarchicals, char *dest, char *absender,
+		    int32_t rxdate, int32_t expire_time, int32_t size, char msgtype,
 		    char *status)
 {
   short k, lifetime;
-  long hl;
+  int32_t hl;
   char hs[256], w[256];
 
   debug(4, 0, 112, dest);
@@ -3185,7 +3183,7 @@ void create_status2(boolean hierarchicals, char *dest, char *absender,
   sprintf(hs, "%d", lifetime);
   lspacing(hs, 3);
 
-  sprintf(w, "%ld", size + 180);   /* 180 Bytes fuer Header... */
+  sprintf(w, "%d", size + 180);   /* 180 Bytes fuer Header... */
   lspacing(w, 6);
   sprintf(hs + strlen(hs), " %s Bytes", w);
 
@@ -3227,7 +3225,7 @@ void create_userid(char *call, char *absender, char *datum, char *zeit,
 static time_t lastmailixtime  = 0;
 
 /* this function ensures that each message in the bbs has a different create time */
-long messagerxtime(void)
+int32_t messagerxtime(void)
 {
   time_t      	  ti;
   
@@ -3246,10 +3244,10 @@ long messagerxtime(void)
   return ti;
 }
 
-long new_msgnum(void)
+int32_t new_msgnum(void)
 {
   actmsgnum++;
-  if (actmsgnum < 1 || actmsgnum + MSGNUMOFFSET >= maxlonginteger - 10)
+  if (actmsgnum < 1 || actmsgnum + MSGNUMOFFSET >= INT32_MAX - 10)
     actmsgnum = 1;
   return actmsgnum;
 }
@@ -3260,9 +3258,9 @@ static time_t lastbidtick   = 0;
 void new_bid(char *bid)
 {
   short     x;
-  boolean   ccl;
+  bool      ccl;
   char	    c1;
-  long	    st, lb, nib;
+  int32_t   st, lb, nib;
 
   debug0(3, 0, 113);
   ccl 	    = (LEN_BID - strlen(Console_call) < 7);
@@ -3312,7 +3310,7 @@ void new_bid(char *bid)
 /* Split S(end)line ... Sucht aus der Send-Angabe des Users (oder der W0RLI- */
 /* S&F - Mailbox) die noetigen Angaben heraus                                */
 
-static boolean ordne_sparm_zu(char *inp_, char *inp1_, char *mbx, char *lt,
+static bool ordne_sparm_zu(char *inp_, char *inp1_, char *mbx, char *lt,
 			      char *bid, char *call2)
 {
   char inp[256], inp1[256];
@@ -3346,7 +3344,7 @@ static boolean ordne_sparm_zu(char *inp_, char *inp1_, char *mbx, char *lt,
     return true;
 
   case '#':
-    if ((unsigned long)strlen(inp) < 32 && /* !!!CHECK */
+    if ((uint32_t)strlen(inp) < 32 && /* !!!CHECK */
 	((1L << strlen(inp)) & 0x1c) != 0 && isdigit((u_char) inp[1])) {
       strdelete(inp, 1, 1);
       strcpy(lt, inp);
@@ -3355,7 +3353,7 @@ static boolean ordne_sparm_zu(char *inp_, char *inp1_, char *mbx, char *lt,
       return false;
 
   case '<':
-    if ((unsigned long)strlen(inp) < 32 && ((1L << strlen(inp)) & 0xfc) != 0) { /* !!!CHECK */
+    if ((uint32_t)strlen(inp) < 32 && ((1L << strlen(inp)) & 0xfc) != 0) { /* !!!CHECK */
       strdelete(inp, 1, 1);
       strcpy(call2, inp);
       return true;
@@ -3375,7 +3373,7 @@ static boolean ordne_sparm_zu(char *inp_, char *inp1_, char *mbx, char *lt,
 }
 
 
-static void normalisiere_send(char ch, char *inp, boolean correct, short *p)
+static void normalisiere_send(char ch, char *inp, bool correct, short *p)
 {
   short k, l;
 
@@ -3439,7 +3437,7 @@ void split_sline(char *eingabe_, char *call1, char *call2, char *mbx,
   normalisiere_send('#', eingabe, false, &p);
 
   get_word(eingabe, hs);
-  if ((unsigned long)strlen(hs) >= 32 || ((1L << strlen(hs)) & 0x1fe) == 0) /* !!!CHECK */
+  if ((uint32_t)strlen(hs) >= 32 || ((1L << strlen(hs)) & 0x1fe) == 0) /* !!!CHECK */
     return;
   upper(hs);
   if (hs[0] == '\032' || hs[0] == '$' || hs[0] == '<' || hs[0] == '#' ||
@@ -3609,11 +3607,11 @@ void check_replytitle(char *reply)
 }
 
 
-void get_numbers(short unr, boolean plong, char *eingabe, long *start, long *ende, short *threshold,
+void get_numbers(short unr, bool plong, char *eingabe, int32_t *start, int32_t *ende, short *threshold,
 		 char *option, char *search)
 {
-  boolean alphab, numbers, fbb;
-  long li;
+  bool alphab, numbers, fbb;
+  int32_t li;
   short slashct, x, t, y, z;
   char *p;
   char ein[256], hs[256];
@@ -3696,7 +3694,7 @@ void get_numbers(short unr, boolean plong, char *eingabe, long *start, long *end
 	sprintf(hs + strlen(hs), "%c", eingabe[y - 1]);
 	y++;
       }
-      if ((unsigned long)strlen(hs) < 32 && ((1L << strlen(hs)) & 0xe) != 0) {
+      if ((uint32_t)strlen(hs) < 32 && ((1L << strlen(hs)) & 0xe) != 0) {
 	strdelete(eingabe, x, strlen(hs) + 1);
 	while (strlen(hs) < 3)
 	  sprintf(hs, "0%s", strcpy(STR1, hs));
@@ -3794,7 +3792,7 @@ void get_numbers(short unr, boolean plong, char *eingabe, long *start, long *end
 		   strlen(ein) - strpos2(ein, "-", 1));
 	    *ende = atol(hs);
 	  } else
-	    *ende = LONG_MAX;
+	    *ende = INT32_MAX;
 	} else if (ein[0] == '-') {
 	  strdelete(ein, 1, 1);
 	  *ende = atol(ein);
@@ -3818,7 +3816,7 @@ void get_numbers(short unr, boolean plong, char *eingabe, long *start, long *end
     strcat(opt2, "!");
 
   if (*ende < 1)
-    *ende = LONG_MAX;
+    *ende = INT32_MAX;
   if (*start < 1)
     *start = 1;
   if (*start > *ende)
@@ -3835,27 +3833,27 @@ void get_numbers(short unr, boolean plong, char *eingabe, long *start, long *end
     if (x > 0) {
       strdelete(opt2, x, 1);
       *start = 1;
-      *ende = LONG_MAX;
+      *ende = INT32_MAX;
     }
   }
   cut(opt2, 12);
   strcpy(option, opt2);
 
   if (!plong) {
-    if (*ende > SHORT_MAX) *ende = SHORT_MAX;
-    if (*start > SHORT_MAX) *start = SHORT_MAX;
+    if (*ende > SHRT_MAX) *ende = SHRT_MAX;
+    if (*start > SHRT_MAX) *start = SHRT_MAX;
   }
 
 }
 
 
-static short find_command_x(short unr, char *kommando_, boolean *onlysys,
+static short find_command_x(short unr, char *kommando_, bool *onlysys,
 			    char *cname)
 {
   short Result;
   char kommando[256];
   bcommandtype *hp;
-  boolean found;
+  bool found;
   short cnr, scnr;
 
   strcpyupper(kommando, kommando_);
@@ -3927,7 +3925,7 @@ static short find_command_x(short unr, char *kommando_, boolean *onlysys,
 }
 
 
-short find_command(short unr, char *kommando, boolean *onlysys)
+short find_command(short unr, char *kommando, bool *onlysys)
 {
   char hs[256];
 
@@ -3938,7 +3936,7 @@ short find_command(short unr, char *kommando, boolean *onlysys)
 void expand_command(short unr, char *kommando)
 {
   char hs[256];
-  boolean onlysys;
+  bool onlysys;
 
   find_command_x(unr, kommando, &onlysys, hs);
   strcpy(kommando, hs);
@@ -4000,7 +3998,7 @@ static void check_for_gzip(void)
   sfdelfile(tempname2);
 }
 
-boolean use_gzip(long size)
+bool use_gzip(int32_t size)
 {
   if (gzip_ok == 0) check_for_gzip();
   return (gzip_ok == 2 && size > 2000);
@@ -4296,7 +4294,7 @@ Titel      : info > FT 530
 
 /* ******** der Boxconvers ************** */
 
-static boolean valid_convchan(short unr, long newchan)
+static bool valid_convchan(short unr, int32_t newchan)
 {
   return (newchan >= 0 &&
 	  (newchan < 100000L || (user[unr]->rsysop && newchan < 200000L) ||
@@ -4308,7 +4306,7 @@ static boolean valid_convchan(short unr, long newchan)
 static void send_convers(short unr, char *zeile)
 {
   short x;
-  long uch;
+  int32_t uch;
   char hs[256], hs2[256];
   char acall[256];
   char STR7[256];
@@ -4359,7 +4357,7 @@ static void conv_help(short unr)
 }
 
 
-static void conv_who(short unr, long cn)
+static void conv_who(short unr, int32_t cn)
 {
   short x;
   char hs[256];
@@ -4379,7 +4377,7 @@ static void conv_who(short unr, long cn)
 	  strcpylower(acall, WITH->call);
 	  rspacing(acall, LEN_CALL+3);
 	  if (cn < 0) {
-	    sprintf(hs, "%ld", WITH->convchan);
+	    sprintf(hs, "%d", WITH->convchan);
 	    lspacing(hs, 7);
 	  } else
 	    *hs = '\0';
@@ -4402,7 +4400,7 @@ static void conv_quit(short unr)
 }
 
 
-static void conv_channel(short unr, long newchan)
+static void conv_channel(short unr, int32_t newchan)
 {
   char hs[256];
   char STR1[256];
@@ -4411,7 +4409,7 @@ static void conv_channel(short unr, long newchan)
     wln_btext(unr, 137);
     return;
   }
-  sprintf(hs, "%ld", newchan);
+  sprintf(hs, "%d", newchan);
   if (newchan >= 100000L)
     strcpy(hs, "*** logging off");
   else
@@ -4419,7 +4417,7 @@ static void conv_channel(short unr, long newchan)
   send_convers(unr, hs);
   user[unr]->convchan = newchan;
   send_convers(unr, "*** logging on");
-  sprintf(hs, "%ld", newchan);
+  sprintf(hs, "%d", newchan);
   w_btext(unr, 136);
   chwuser(unr, 32);
   wlnuser(unr, hs);
@@ -4427,7 +4425,7 @@ static void conv_channel(short unr, long newchan)
 }
 
 
-static boolean check_for_conv_command(short unr, char *zeile)
+static bool check_for_conv_command(short unr, char *zeile)
 {
   char w[256];
   char hs[256];
@@ -4470,7 +4468,7 @@ void send_conv(short unr, char *s)
 
 void box_convers(short unr, char *cmd)
 {
-  long i;
+  int32_t i;
   char hs[256];
 
   if (!boxrange(unr))
@@ -4484,7 +4482,7 @@ void box_convers(short unr, char *cmd)
   user[unr]->action = 90;
   w_btext(unr, 138);
   chwuser(unr, 32);
-  sprintf(hs, "%ld", i);
+  sprintf(hs, "%d", i);
   wlnuser(unr, hs);
   conv_who(unr, i);
   send_conv(unr, "*** logging on");
