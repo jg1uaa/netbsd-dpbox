@@ -27,7 +27,7 @@
 #define hashsize	1023
 
 typedef struct hashrecord {
-  long			offset;
+  int32_t		offset;
   struct hashrecord	*next;
 } hashrecord;
 
@@ -41,7 +41,7 @@ static hashrecord     	**bidhash   = NULL;
 
 static void clear_hash(hashrecord ***hash)
 {
-  long		x;
+  int32_t	x;
   hashrecord	*p1, *p2;
 
   debug0(5, -1, 128);
@@ -60,10 +60,10 @@ static void clear_hash(hashrecord ***hash)
 }
 
 
-static long calc_hashcs(char *token)
+static int32_t calc_hashcs(char *token)
 {
   short		x, y;
-  long		cs;
+  int32_t	cs;
 
   cs		= 0;
   y		= strlen(token);
@@ -90,9 +90,9 @@ static long calc_hashcs(char *token)
 }
 
 
-static boolean add_hash(hashrecord **hash, long offs, char *token, boolean deb)
+static bool add_hash(hashrecord **hash, int32_t offs, char *token, bool deb)
 {
-  long		cs;
+  int32_t	cs;
   hashrecord	*p1, *p2;
 
   if (deb) {
@@ -131,9 +131,9 @@ static boolean add_hash(hashrecord **hash, long offs, char *token, boolean deb)
 }
 
 
-static void delete_hash_offset(hashrecord **hash, long offset)
+static void delete_hash_offset(hashrecord **hash, int32_t offset)
 {
-  long		ct;
+  int32_t	ct;
   hashrecord	*p1, *p2;
 
   debug0(5, 0, 131);
@@ -160,7 +160,7 @@ static void delete_hash_offset(hashrecord **hash, long offset)
 }
 
 
-static void update_hash(hashrecord **hash, char *token, long offset)
+static void update_hash(hashrecord **hash, char *token, int32_t offset)
 {
   debug0(5, 0, 132);
 
@@ -173,9 +173,9 @@ static void update_hash(hashrecord **hash, char *token, long offset)
 
 static void disp_hash(hashrecord **hash, short unr)
 {
-  long		x, z;
+  int32_t	x, z;
   hashrecord	*p;
-  long		ct;
+  int32_t	ct;
   char		w[256];
 
   debug0(5, unr, 144);
@@ -192,7 +192,7 @@ static void disp_hash(hashrecord **hash, short unr)
       wuser(unr, "hashpos: ");
       for (z = 0; z <= 16; z++) {
 	if (x + z <= hashsize) {
-	  sprintf(w, "%4ld", x + z);
+	  sprintf(w, "%4d", x + z);
 	  wuser(unr, w);
 	}
       }
@@ -205,7 +205,7 @@ static void disp_hash(hashrecord **hash, short unr)
       ct++;
       p		= p->next;
     }
-    sprintf(w, "%4ld", ct);
+    sprintf(w, "%4d", ct);
     wuser(unr, w);
   }
   wlnuser0(unr);
@@ -214,7 +214,7 @@ static void disp_hash(hashrecord **hash, short unr)
 
 /* ---------------------------------------------------------------------- */
 
-long bidhash_active(void)
+int32_t bidhash_active(void)
 {
   if (bidhash != NULL)
     return (sfsize(msgidlog) / sizeof(bidtype) * sizeof(hashrecord) + sizeof(hasharr));
@@ -223,7 +223,7 @@ long bidhash_active(void)
 }
 
 
-long hboxhash_active(void)
+int32_t hboxhash_active(void)
 {
   if (hboxhash != NULL)
     return (sfsize(hpath_box) / sizeof(hboxtyp) * sizeof(hashrecord) + sizeof(hasharr));
@@ -250,7 +250,7 @@ void clear_bidhash(void)
 }
 
 
-static boolean	bptr_loaded  = false;
+static bool	bptr_loaded  = false;
 
 void clear_hboxhash(void)
 {
@@ -263,10 +263,10 @@ void clear_hboxhash(void)
 static void load_bidhash(void)
 {
   char		*buf, *p;
-  long		filled;
-  boolean     	error = false;
+  int32_t	filled;
+  bool     	error = false;
   short		k;
-  long		ct, a, b, c, needed_mem;
+  int32_t	ct, a, b, c, needed_mem;
   bidtype	bid;
 
   clear_bidhash();
@@ -336,9 +336,9 @@ static void load_bidhash(void)
 
 #undef bsize
 
-static long find_bidhash(char *bid)
+static int32_t find_bidhash(char *bid)
 {
-  long		cs;
+  int32_t	cs;
   hashrecord	*p1;
   short		k;
   bidtype	bid2;
@@ -372,9 +372,9 @@ static long find_bidhash(char *bid)
 }
 
 
-void write_msgid(long nr, char *ibuf)
+void write_msgid(int32_t nr, char *ibuf)
 {
-  long		seek;
+  int32_t	seek;
   short		k;
 
   debug(2, 0, 62, ibuf);
@@ -419,7 +419,7 @@ void write_msgid(long nr, char *ibuf)
 
 /* local for bid_mem ****************************************************** */
 
-static void kill_id(short *k, boolean openfile, long at)
+static void kill_id(short *k, bool openfile, int32_t at)
 {
   bidtype id;
 
@@ -438,12 +438,12 @@ static void kill_id(short *k, boolean openfile, long at)
 }
 
 
-static long search_in_ram(boolean mul, short lnid, char *new_id,
-  bidchecktype bidcheck, bidarrtype bidarr, short panz, boolean *ok,
-  boolean delet, short *k, char *id, boolean openfile, char *puf, long psiz,
-  long offset)
+static int32_t search_in_ram(bool mul, short lnid, char *new_id,
+  bidchecktype bidcheck, bidarrtype bidarr, short panz, bool *ok,
+  bool delet, short *k, char *id, bool openfile, char *puf, int32_t psiz,
+  int32_t offset)
 {
-  long Result, rpos, ct;
+  int32_t Result, rpos, ct;
   short x, y;
   char *mp;
 
@@ -489,13 +489,13 @@ static long search_in_ram(boolean mul, short lnid, char *new_id,
 }
 
 
-static long search_in_hash(boolean mul, char *new_id, short panz,
+static int32_t search_in_hash(bool mul, char *new_id, short panz,
 			   bidarrtype bidarr, bidchecktype bidcheck,
-			   boolean delet, short *k)
+			   bool delet, short *k)
 {
-  long Result;
+  int32_t Result;
   short x;
-  long ct;
+  int32_t ct;
 
   debug0(5, -1, 146);
   Result = -1;
@@ -515,17 +515,17 @@ static long search_in_hash(boolean mul, char *new_id, short panz,
 
 #define blocksize       sizeof(bidtype)*315
 
-static long bid_mem(boolean mul, boolean delet, short panz, bidchecktype bidcheck,
+static int32_t bid_mem(bool mul, bool delet, short panz, bidchecktype bidcheck,
 		    bidarrtype bidarr_, char *new_id_)
 {
-  long Result;
+  int32_t Result;
   bidarrtype bidarr;
   bidtype new_id;
   short k, x, y;
-  long anz, err, ct, dsize, bct;
+  int32_t anz, err, ct, dsize, bct;
   char *puffer;
   bidtype id;
-  boolean ok;
+  bool ok;
   short l1, l2, lnid;
 
   memcpy(bidarr, bidarr_, sizeof(bidarrtype));
@@ -636,7 +636,7 @@ static long bid_mem(boolean mul, boolean delet, short panz, bidchecktype bidchec
 #undef blocksize
 
 
-boolean check_double(char *new_id)
+bool check_double(char *new_id)
 {
   bidchecktype bidcheck;
   bidarrtype bidarr;
@@ -648,11 +648,11 @@ boolean check_double(char *new_id)
 }
 
 
-long bull_mem(char *new_id, boolean delet)
+int32_t bull_mem(char *new_id, bool delet)
 {
   bidchecktype bidcheck;
   bidarrtype bidarr;
-  long ct;
+  int32_t ct;
 
   if (bidhash != NULL && !delet) {
     ct = find_bidhash(new_id);
@@ -685,7 +685,7 @@ void multiple_bullcheck(short ct, bidchecktype bidcheck, bidarrtype bidarr)
 static void load_bptr(void)
 {
   short		k;
-  long		l, x, rps, rpr, rpb;
+  int32_t	l, x, rps, rpr, rpb;
   char		*rb;
   hboxtyp	hbox, *hboxp;
 
@@ -753,10 +753,10 @@ void load_initial_hbox(void)
 }
 
 
-void add_bptr(char *call, long bpos)
+void add_bptr(char *call, int32_t bpos)
 {
   debug(4, -1, 159, call);
-  if (bpos >= 0 && (unsigned long)strlen(call) < 32 &&
+  if (bpos >= 0 && (uint32_t)strlen(call) < 32 &&
       ((1L << strlen(call)) & 0x7e) != 0) {
     /*   if hboxhash = NIL then load_bptr; doesn´t work, file is already open for write */
     add_hash(hboxhash, bpos, call, true);
@@ -764,10 +764,10 @@ void add_bptr(char *call, long bpos)
 }
 
 
-long load_hbox(short hboxhandle, char *call, hboxtyp *hbox)
+int32_t load_hbox(short hboxhandle, char *call, hboxtyp *hbox)
 {
   short		k;
-  long		Result, cs;
+  int32_t	Result, cs;
   hashrecord	*p1;
 
   debug(4, -1, 160, call);
@@ -816,11 +816,11 @@ long load_hbox(short hboxhandle, char *call, hboxtyp *hbox)
 /*************************************************************************/
 
 
-long true_bin(char *zeile)
+int32_t true_bin(char *zeile)
 {
   short k, ct;
   char	c;
-  long	size;
+  int32_t	size;
 
   if (zeile[0] != '#')
     return -1;
@@ -852,14 +852,14 @@ long true_bin(char *zeile)
 	  return size;
       }
       return -1;
-    } else size = size*10 + (long)(c - '0');
+    } else size = size*10 + (int32_t)(c - '0');
   }
 
   return size;
 }
 
 
-long get_binstart(char *puffer, long size, char *fname)
+int32_t get_binstart(char *puffer, int32_t size, char *fname)
 {
 
   /* unfortunately, memmem() can´t be used because of erroneus library	*/
@@ -867,7 +867,7 @@ long get_binstart(char *puffer, long size, char *fname)
   /* so we use memchr and then a less sophisticated algorithm		*/
 
   char		*rp1, *rp2;
-  long		remainder, i, ct, binstart, eol;
+  int32_t	remainder, i, ct, binstart, eol;
 
   debug0(4, 0, 60);
 
@@ -940,12 +940,12 @@ long get_binstart(char *puffer, long size, char *fname)
 }
 
 
-void add_line_to_buff(char **buf1, long *size1, long inspos, char *srline)
+void add_line_to_buff(char **buf1, int32_t *size1, int32_t inspos, char *srline)
 {
   char	        *buf2;
-  long	        size2, offset, err;
+  int32_t	size2, offset, err;
   short       	k;
-  long	      	ll;
+  int32_t	ll;
   char	      	tname[256];
  
   debug0(5, -1, 147);
@@ -1004,11 +1004,11 @@ void add_line_to_buff(char **buf1, long *size1, long inspos, char *srline)
 
 
 
-void pack_entry(char **puffer, long *size, short *pmode)
+void pack_entry(char **puffer, int32_t *size, short *pmode)
 {
   short		h1, packresult;
-  boolean	ugzip;
-  long		nasize, nsize;
+  bool		ugzip;
+  int32_t	nasize, nsize;
   char		*nmem;
   pathstr	archiv;
 
