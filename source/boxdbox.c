@@ -63,7 +63,7 @@ static void iwlnuser(short unr, char *s)
 
 
 
-static boolean cverr, idel;
+static bool cverr, idel;
 
 
 static void filemove2(char *n1, char *n2)
@@ -75,16 +75,16 @@ static void filemove2(char *n1, char *n2)
 }
 
 
-static void printtime(short unr, long t)
+static void printtime(short unr, int32_t t)
 {
   char hs[256];
   char STR7[256];
 
   t /= TICKSPERSEC;
-  sprintf(hs, "%ld", t / 60);
+  sprintf(hs, "%d", t / 60);
   sprintf(STR7, "used time: %s minutes, ", hs);
   iwuser(unr, STR7);
-  sprintf(hs, "%ld", t % 60);
+  sprintf(hs, "%d", t % 60);
   sprintf(STR7, "%s seconds.", hs);
   iwlnuser(unr, STR7);
 }
@@ -109,11 +109,11 @@ static void conv_pname_rel(char *w, char *p)
 }
 
 
-static boolean check_cpath(char *w_)
+static bool check_cpath(char *w_)
 {
-  boolean Result;
+  bool Result;
   char w[256];
-  boolean ok;
+  bool ok;
 
   strcpy(w, w_);
   strcat(w, "config.box");
@@ -132,11 +132,11 @@ static void dop(const short unr, const char *s)
 
 /* holt die neue lifetime aus show.box */
 
-static short get_sblt(char *sbp, long sbs, char *bid)
+static short get_sblt(char *sbp, int32_t sbs, char *bid)
 {
   short Result;
   char hs[256], b2[256];
-  long rp;
+  int32_t rp;
 
   Result = -1;
   rp = 0;
@@ -154,7 +154,7 @@ static short get_sblt(char *sbp, long sbs, char *bid)
 }
 
 
-static long convert_diebox_mails(short unr, boolean userarea, char *p,
+static int32_t convert_diebox_mails(short unr, bool userarea, char *p,
 				 char *sb)
 {
   char w[256], board[256];
@@ -162,15 +162,15 @@ static long convert_diebox_mails(short unr, boolean userarea, char *p,
   char mn[256], w1[256];
   char mnn[256], mn3[256];
   char *sbp;
-  long sbs;
+  int32_t sbs;
   short flh;
   char fmn[256];
   DTA dirinfo;
-  boolean improper;
+  bool improper;
   short result, ph, mh, mnh, ct, x;
-  long mct;
+  int32_t mct;
   char *pp;
-  long ps, err, fp1, fp2;
+  int32_t ps, err, fp1, fp2;
   short nlt;
   char rxbox[256];
   char STR1[256], STR7[256];
@@ -368,7 +368,7 @@ static void conv5(short unr, char *w_)
 {
   /* BIDs draufhauen */
   char w[256];
-  long t, tct, bs;
+  int32_t t, tct, bs;
   char cp[256], p[256], hs[256], ww[256], w1[256], w2[256];
   short ih, oh;
   char STR1[256], STR7[256];
@@ -402,7 +402,7 @@ static void conv5(short unr, char *w_)
     sfdelfile(STR1);
   }
   sprintf(ww, "%sbullid.txt", p);
-  sprintf(hs, "%ld", sfsize(ww) / 19);
+  sprintf(hs, "%d", sfsize(ww) / 19);
   sprintf(hs, "now trying to import %s BIDs", strcpy(STR7, hs));
   iwlnuser(unr, hs);
   iwuser(unr, "opening bullid.txt... ");
@@ -417,12 +417,12 @@ static void conv5(short unr, char *w_)
       sfseek(0, oh, SFSEEKEND);
       while (file2str(ih, hs)) {
 	get_word(hs, w1);
-	if ((unsigned long)strlen(w1) >= 32 ||
+	if ((uint32_t)strlen(w1) >= 32 ||
 	    ((1L << strlen(w1)) & 0x1ff8) == 0)
 	  continue;
 	tct++;
 	if (tct % 100 == 0) {
-	  sprintf(w2, "%ld", tct);
+	  sprintf(w2, "%d", tct);
 	  strcat(w2, " ");
 	  if (tct % 1000 == 0)
 	    wlnuser(unr, w2);
@@ -446,7 +446,7 @@ static void conv5(short unr, char *w_)
     if (idel)
       sfdelfile(ww);
     wlnuser0(unr);
-    sprintf(w2, "%ld", tct);
+    sprintf(w2, "%d", tct);
     sprintf(w2, "converted %s BIDs", strcpy(STR1, w2));
     iwlnuser(unr, w2);
   } else {
@@ -506,7 +506,7 @@ static void convert_sfw(short unr, char *p, char *sfw)
   short ih, oh;
   char *p1;
   char ina[256], ona[256];
-  boolean ok;
+  bool ok;
   short lasttyp;
   char STR7[256];
 
@@ -643,7 +643,7 @@ static void convert_sfw(short unr, char *p, char *sfw)
 static void conv3(short unr, char *w)
 {
   /* SFW konvertieren */
-  long t;
+  int32_t t;
   char cp[256], p[256];
   DTA dirinfo;
   short result;
@@ -695,7 +695,7 @@ static void conv3(short unr, char *w)
 
 static void conv4(short unr, char *w)
 {
-  long t, tctu, tctb;
+  int32_t t, tctu, tctb;
   char cp[256], p[256], sb[256], ww[256];
   char STR7[256];
 
@@ -726,14 +726,14 @@ static void conv4(short unr, char *w)
   strcat(sb, "show.box");
   tctu = convert_diebox_mails(unr, true, p, sb);
   iwuser(unr, "all user files imported. total files: ");
-  sprintf(ww, "%ld", tctu);
+  sprintf(ww, "%d", tctu);
   iwlnuser(unr, ww);
   iwlnuser(unr, "importing all info files");
   if (get_fileline(cp, 37, p)) {  /* pfad auf INFO */
     conv_pname_rel(w, p);
     tctb = convert_diebox_mails(unr, false, p, sb);
     iwuser(unr, "all info files imported. total files: ");
-    sprintf(ww, "%ld", tctb);
+    sprintf(ww, "%d", tctb);
     iwlnuser(unr, ww);
     if (idel)   /* show.box loeschen */
       sfdelfile(sb);
@@ -747,7 +747,7 @@ static void conv4(short unr, char *w)
   }
 
   tctu += tctb;
-  sprintf(ww, "%ld", tctu);
+  sprintf(ww, "%d", tctu);
   sprintf(ww, "file import over all: %s files.", strcpy(STR7, ww));
   iwlnuser(unr, ww);
 
@@ -766,23 +766,23 @@ typedef char dbufft[48];
 
 typedef struct irect {
   char call[7];
-  long offset;
+  int32_t offset;
 } irect;
 
 typedef struct drect {
   char call[7];
   char lan[4];
-  long last;
+  int32_t last;
   char mybbs[7];
   char name[16];
   short level, pwmode;
-  long mybbsupd;
+  time_t mybbsupd;
 } drect;
 
 
 static void getcs(char *p, short max, char *s)
 {
-  long x;
+  int32_t x;
 
   *s = '\0';
   x = 0;
@@ -793,7 +793,7 @@ static void getcs(char *p, short max, char *s)
 }
 
 
-static boolean convert_ibuff(char *ibuff_, irect *irec)
+static bool convert_ibuff(char *ibuff_, irect *irec)
 {
   ibufft ibuff;
   short x, y;
@@ -809,19 +809,19 @@ static boolean convert_ibuff(char *ibuff_, irect *irec)
     switch (y) {
 
     case 1:
-      irec->offset = (long)ibuff[x];
+      irec->offset = (int32_t)ibuff[x];
       break;
 
     case 2:
-      irec->offset += (long)ibuff[x] * 256;
+      irec->offset += (int32_t)ibuff[x] * 256;
       break;
 
     case 3:
-      irec->offset += (long)ibuff[x] * 65536;
+      irec->offset += (int32_t)ibuff[x] * 65536;
       break;
 
     case 4:
-      irec->offset += (long)ibuff[x] * 16777216;
+      irec->offset += (int32_t)ibuff[x] * 16777216;
       break;
     }
     y++;
@@ -831,9 +831,9 @@ static boolean convert_ibuff(char *ibuff_, irect *irec)
 }
 
 
-static boolean convert_dbuff(char *call, char *dbuff_, drect *drec)
+static bool convert_dbuff(char *call, char *dbuff_, drect *drec)
 {
-  boolean Result;
+  bool Result;
   dbufft dbuff;
   short x, y;
   char *p;
@@ -873,19 +873,19 @@ static boolean convert_dbuff(char *call, char *dbuff_, drect *drec)
     switch (y) {
 
     case 1:
-      drec->mybbsupd = (long)dbuff[x];
+      drec->mybbsupd = (int32_t)dbuff[x];
       break;
 
     case 2:
-      drec->mybbsupd += (long)dbuff[x] * 256;
+      drec->mybbsupd += (int32_t)dbuff[x] * 256;
       break;
 
     case 3:
-      drec->mybbsupd += (long)dbuff[x] * 65536;
+      drec->mybbsupd += (int32_t)dbuff[x] * 65536;
       break;
 
     case 4:
-      drec->mybbsupd += (long)dbuff[x] * 16777216;
+      drec->mybbsupd += (int32_t)dbuff[x] * 16777216;
       break;
     }
     y++;
@@ -950,13 +950,13 @@ static void conv2(short unr, char *w_)
   char cp[256], p[256], w1[256];
   char idn[256], dn[256];
   short idh, dh;
-  boolean ok;
-  long t, ct;
+  bool ok;
+  int32_t t, ct;
   ibufft ibuff;
   dbufft dbuff;
   irect irec;
   drect drec;
-  long dsize;
+  int32_t dsize;
   userstruct urec;
   char STR1[256];
 
@@ -993,7 +993,7 @@ static void conv2(short unr, char *w_)
 	  dh = sfopen(dn, FO_READ);
 	  if (dh >= 0) {
 	    iwuser(unr, "now converting ");
-	    sprintf(w1, "%ld", dsize / 48);
+	    sprintf(w1, "%d", dsize / 48);
 	    iwuser(unr, w1);
 	    iwlnuser(unr, " user settings");
 
@@ -1050,7 +1050,7 @@ static void conv2(short unr, char *w_)
 	    ok = true;
 	    sfclose(&dh);
 	    wlnuser0(unr);
-	    sprintf(w1, "%ld", ct);
+	    sprintf(w1, "%d", ct);
 	    strcat(w1, " user settings converted");
 	    iwlnuser(unr, w1);
 	  } else
@@ -1085,7 +1085,7 @@ static void conv1(short unr, char *w)
   char f[256];
   DTA dirinfo;
   short result;
-  long t;
+  int32_t t;
   char STR1[256], STR7[256];
 
   if (cverr)
@@ -1130,7 +1130,7 @@ static void conv1(short unr, char *w)
 	"original diebox-maxbull-setting is too high, will insert 200000");
       strcpy(w1, "200000");
     } else
-      sprintf(w1, "%ld", atol(w1) + 10000);
+      sprintf(w1, "%"PRId64, (int64_t)atol(w1) + 10000);
     sprintf(w1, "MAXBULLIDS %s", strcpy(STR7, w1));
     iwlnuser(unr, w1);
     replace_keyline(f, "MAXBULLIDS ", false, w1);
