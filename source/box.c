@@ -11,6 +11,7 @@
 
 #define BOX_G
 #include <ctype.h>
+#include <stdint.h>
 #include "main.h"
 #include "init.h"
 #include "box.h"
@@ -172,7 +173,7 @@ static short in_readby(char *call, char *readby)
 }
 
 
-static void add_readby(short unr, indexstruct *header, boolean add_lt)
+static void add_readby(short unr, indexstruct *header, bool add_lt)
 {
   short	x;
   char	flag;
@@ -282,9 +283,9 @@ static mulsearchtype *gen_mulsearch(short threshold, char *search)
 }
 
 
-static boolean check_search(boolean bidsearch, boolean fwdlist,
-			    boolean wildcardsearch, mulsearchtype *search,
-			    indexstruct header)
+static bool check_search(bool bidsearch, bool fwdlist,
+			 bool wildcardsearch, mulsearchtype *search,
+			 indexstruct header)
 {
   char	hs[256], w[256];
 
@@ -298,12 +299,12 @@ static boolean check_search(boolean bidsearch, boolean fwdlist,
   
   while (search != NULL) {
     if (wildcardsearch) {
-      if (!(wildcardcompare(SHORT_MAX, search->wort, header.absender, w) ||
-	   wildcardcompare(SHORT_MAX, search->wort, hs, w) ||
-	   (bidsearch && wildcardcompare(SHORT_MAX, search->wort, header.id, w)) ||
+      if (!(wildcardcompare(SHRT_MAX, search->wort, header.absender, w) ||
+	   wildcardcompare(SHRT_MAX, search->wort, hs, w) ||
+	   (bidsearch && wildcardcompare(SHRT_MAX, search->wort, header.id, w)) ||
 	   (fwdlist &&
-	    (wildcardcompare(SHORT_MAX, search->wort, header.dest, w) ||
-	     wildcardcompare(SHORT_MAX, search->wort, header.verbreitung, w)))))
+	    (wildcardcompare(SHRT_MAX, search->wort, header.dest, w) ||
+	     wildcardcompare(SHRT_MAX, search->wort, header.verbreitung, w)))))
 	return false;
     } else {
       if (search->threshold < 100) {
@@ -328,9 +329,9 @@ static boolean check_search(boolean bidsearch, boolean fwdlist,
   return true;
 }
 
-static boolean check_logsearch(boolean bidsearch,
-			       boolean wildcardsearch, mulsearchtype *search,
-			       boxlogstruct *header)
+static bool check_logsearch(bool bidsearch,
+			    bool wildcardsearch, mulsearchtype *search,
+			    boxlogstruct *header)
 {
   char	hs[256], w[256];
 
@@ -344,9 +345,9 @@ static boolean check_logsearch(boolean bidsearch,
   
   while (search != NULL) {
     if (wildcardsearch) {
-      if (!(wildcardcompare(SHORT_MAX, search->wort, header->absender, w) ||
-	   wildcardcompare(SHORT_MAX, search->wort, hs, w) ||
-	   (bidsearch && wildcardcompare(SHORT_MAX, search->wort, header->bid, w))))
+      if (!(wildcardcompare(SHRT_MAX, search->wort, header->absender, w) ||
+	   wildcardcompare(SHRT_MAX, search->wort, hs, w) ||
+	   (bidsearch && wildcardcompare(SHRT_MAX, search->wort, header->bid, w))))
 	return false;
     } else {
       if (search->threshold < 100) {
@@ -370,7 +371,7 @@ static boolean check_logsearch(boolean bidsearch,
 }
 
 
-void signalise_readlimit(short unr, boolean today,
+void signalise_readlimit(short unr, bool today,
 			 char *name, short von, short bis)
 {
   char	hs[256];
@@ -382,7 +383,7 @@ void signalise_readlimit(short unr, boolean today,
   }
   if (today) {
     w_btext(unr, 74);
-    sprintf(hs, " %ld \007", user[unr]->maxread_day >> 10);
+    sprintf(hs, " %d \007", user[unr]->maxread_day >> 10);
     wlnuser(unr, hs);
   }
   if (user[unr]->smode)
@@ -400,7 +401,7 @@ void signalise_readlimit(short unr, boolean today,
 }
 
 
-static long calc_readers_size(boolean is_call, indexstruct header)
+static int32_t calc_readers_size(bool is_call, indexstruct header)
 {
   if (is_call) {
     if (*header.readby != '\0')
@@ -412,10 +413,10 @@ static long calc_readers_size(boolean is_call, indexstruct header)
 }
 
 
-static void show_readers(short unr, boolean is_call, unsigned short rc,
-			 char *r, boolean all)
+static void show_readers(short unr, bool is_call, unsigned short rc,
+			 char *r, bool all)
 {
-  boolean	sv;
+  bool		sv;
   short		x;
   char		w[LEN_CALL*2];
   char		hs[256];
@@ -455,7 +456,7 @@ static void show_readers(short unr, boolean is_call, unsigned short rc,
 }
 
 
-void add_readday(short unr, long count)
+void add_readday(short unr, int32_t count)
 {
   short	x;
 
@@ -471,7 +472,7 @@ void add_readday(short unr, long count)
 }
 
 
-static unsigned short ttl_lifetime(short unr, unsigned short lt, long rx)
+static unsigned short ttl_lifetime(short unr, unsigned short lt, int32_t rx)
 {
   short	ttl;
 
@@ -494,11 +495,11 @@ static unsigned short ttl_lifetime(short unr, unsigned short lt, long rx)
 
 /* ---------------------------------------------------------------------------------------- */
 
-short search_by_bid(char *brett, char *bid, boolean hidden)
+short search_by_bid(char *brett, char *bid, bool hidden)
 {
   short		k, mct, lv;
-  boolean	hit;
-  long		isize;
+  bool		hit;
+  int32_t	isize;
   indexstruct	header;
   pathstr	STR1;
 
@@ -537,11 +538,11 @@ short search_by_bid(char *brett, char *bid, boolean hidden)
 #define cpentries       CHECKBLOCKSIZE
 #define cpsize          (cpentries * sizeof(boxlogstruct))
 
-boolean erase_by_bid(boolean reread, char *sbid_, char *eraseabsender_)
+bool erase_by_bid(bool reread, char *sbid_, char *eraseabsender_)
 {
-  boolean	hit, double_;
+  bool		hit, double_;
   short		log, x, list;
-  long		cpstart, seekpos, lognr, lastlog;
+  int32_t	cpstart, seekpos, lognr, lastlog;
   boxlogstruct	logheader, *logptr;
   indexstruct	header;
   char		*ipuffer;
@@ -670,10 +671,10 @@ boolean erase_by_bid(boolean reread, char *sbid_, char *eraseabsender_)
 #undef cpsize
 
 
-void check_remote_erase(long *seekp)
+void check_remote_erase(int32_t *seekp)
 {
   short	k;
-  long	tc;
+  int32_t	tc;
   char	hs[256], absender[256], id1[256], rxfrom[256], id2[256];
 
   tc			= get_cpuusage();
@@ -731,10 +732,10 @@ static void create_erase_message(char *erasebid, char *mbx)
 
 /* wird nur fuer X und T verwendet: */
 
-void delete_brett_by_bid(char *brett, char *sfcall, char *bid, boolean release, boolean hidden)
+void delete_brett_by_bid(char *brett, char *sfcall, char *bid, bool release, bool hidden)
 {
   short		list, k, lv;
-  long		TotalSize;
+  int32_t	TotalSize;
   char		whatc;
   indexstruct	header, *rpointer;
   pathstr	fname;
@@ -791,7 +792,7 @@ static void zeroize_content(indexstruct *header, char *brett)
 {
 #define zerosize 1000
   short handle;
-  long ct, size;
+  int32_t ct, size;
   char zero[zerosize];
   char hs[256];
   
@@ -821,12 +822,12 @@ static void zeroize_content(indexstruct *header, char *brett)
 }
 
 static void erase_brett(short unr, char *name_, short von, short bis, short threshold,
-			char *option_, char *search_, boolean release, boolean kill)
+			char *option_, char *search_, bool release, bool kill)
 {
   short		lv, k, x, list;
-  long		ect;
+  int32_t	ect;
   char		whatc;
-  boolean	valid, e_mode, bidsearch, inrboards, loginsearch, noperm, wcsearch;
+  bool		valid, e_mode, bidsearch, inrboards, loginsearch, noperm, wcsearch;
   mulsearchtype	*mst;
   indexstruct	header;
   boardtype	name;
@@ -848,7 +849,7 @@ static void erase_brett(short unr, char *name_, short von, short bis, short thre
   if (loginsearch) {
     if (release || callsign(name)) {  /*loginsearch nur bei usermails*/
       von		= 1;
-      bis		= SHORT_MAX;
+      bis		= SHRT_MAX;
     } else {
       loginsearch	= false;
       von		= 0;
@@ -1022,9 +1023,9 @@ static void erase_brett(short unr, char *name_, short von, short bis, short thre
 	  w_btext(unr, 18);
       }
       if (ect == 1)
-        sprintf(w, " (%ld message)", ect);
+        sprintf(w, " (%d message)", ect);
       else
-        sprintf(w, " (%ld messages)", ect);
+        sprintf(w, " (%d messages)", ect);
       wlnuser(unr, w);
       return;
     }
@@ -1052,7 +1053,7 @@ static void release_hold(short unr, char *brett, short s, short e, char *option,
 
 static void unerase_users_mails(short unr)
 {
-  boolean	hstat;
+  bool		hstat;
   char		ds[256];
 
   if (!boxrange(unr))
@@ -1061,7 +1062,7 @@ static void unerase_users_mails(short unr)
   *ds			= '\0';
   hstat			= user[unr]->hidden;
   user[unr]->hidden	= true;
-  erase_brett(unr, user[unr]->call, 1, SHORT_MAX, 100, ds, ds, false, false);
+  erase_brett(unr, user[unr]->call, 1, SHRT_MAX, 100, ds, ds, false, false);
   user[unr]->hidden	= hstat;
 }
 
@@ -1169,18 +1170,18 @@ static void unerase_users_mails(short unr)
 
 unsigned short read_brett(short unr, short outch, char *board, short von,
 			  short bis, short threshold, char *option, char *search,
-			  long sfoffset, indexstruct *header)
+			  int32_t sfoffset, indexstruct *header)
 
   /* returns bodychecksum (for pacsat style broadcast)	*/
 
 {
   short			outchan, ct, bbsmode, ki, kx, ka, ko, unpackerr, lv, i, rcount;
-  boolean		ok, sf, sf_pack, valid, sf_ishuff, rheader, loginsearch;
-  boolean		is_binary, bcast, is_call, export, crawler, hidflag;
-  boolean		add_lt, inc_read, fill_readlog, bidsearch, check_readday;
-  boolean		with_readers, only_headers, ack_msg, none_displayed;
-  boolean		check_rcount, readday_ok, wcsearch, ownboard, tpksf;
-  long			hl, bct, rs, hsize, fsize, nsize, bstart, err;
+  bool			ok, sf, sf_pack, valid, sf_ishuff, rheader, loginsearch;
+  bool			is_binary, bcast, is_call, export, hidflag;
+  bool			add_lt, inc_read, fill_readlog, bidsearch, check_readday;
+  bool			with_readers, only_headers, ack_msg, none_displayed;
+  bool			check_rcount, readday_ok, wcsearch, ownboard, tpksf;
+  int32_t		hl, bct, rs, hsize, fsize, nsize, bstart, err;
   unsigned short	bodychecksum, ics;
   mulsearchtype		*mst;
   userstruct		*WITH, uf;
@@ -1201,7 +1202,7 @@ unsigned short read_brett(short unr, short outch, char *board, short von,
 
   rheader		= (strchr(option, '+') != NULL);
   bcast			= (strchr(option, 'B') != NULL);
-  crawler		= (strchr(option, 'C') != NULL);
+//crawler		= (strchr(option, 'C') != NULL);
   bidsearch		= (strchr(option, '$') != NULL);
   with_readers		= (strchr(option, ':') != NULL);
   only_headers		= (strchr(option, '=') != NULL);
@@ -1234,7 +1235,7 @@ unsigned short read_brett(short unr, short outch, char *board, short von,
   loginsearch		= (!bcast && !sf && !tpksf && strchr(option, '!') != NULL);
   if (loginsearch) {
     von			= 1;
-    bis			= SHORT_MAX;
+    bis			= SHRT_MAX;
   }
 
   check_rcount 	= (boxrange(unr) && !bcast && !export && outch < minhandle && (!sf || tpksf));
@@ -1905,10 +1906,10 @@ void list_brett(short unr, char *board, short von, short bis, short threshold,
 		char *option, char *search)
 {
   short			k, ct, x, y, list, lv, pwm, pwh, FORLIM1;
-  boolean		bidsearch, loginsearch, valid, xlist, flist, header_displayed;
-  boolean		fwdlist, no_betreff, ownboard, pw_show, lev_show, mlist;
-  boolean		rset, wcsearch, iscall, lastflag, ufloaded;
-  long			asz;
+  bool			bidsearch, loginsearch, valid, xlist, flist, header_displayed;
+  bool			fwdlist, no_betreff, ownboard, pw_show, lev_show, mlist;
+  bool			rset, wcsearch, iscall, lastflag, ufloaded;
+  int32_t		asz;
   mulsearchtype		*mst;
   indexstruct		header;
   userstruct		uf;
@@ -1953,7 +1954,7 @@ void list_brett(short unr, char *board, short von, short bis, short threshold,
     loginsearch		= (strchr(option, '!') != NULL);
     if (loginsearch) {
       von		= 1;
-      bis		= SHORT_MAX;
+      bis		= SHRT_MAX;
     }
 
     ufloaded		= false;
@@ -2115,7 +2116,7 @@ void list_brett(short unr, char *board, short von, short bis, short threshold,
 	      if (pwm > MAXPWMODE)
 		pwm	= 0;
 	      if (*header.betreff != '\0' || pwm > 1) {
-		sprintf(hs, "%s-%d-%d", header.absender, strlen(header.betreff), pwm);
+		sprintf(hs, "%s-%d-%d", header.absender, (int32_t)strlen(header.betreff), pwm);
 		str2file(&pwh, hs, true);
 	      }
 
@@ -2167,7 +2168,7 @@ void list_brett(short unr, char *board, short von, short bis, short threshold,
 	/*	sprintf(w1, "%ld", header.rxqrg); */ /* geht momentan nicht unter Linux */
 	        strcpy(w1, "?");
 		lspacing(w1, 7);
-		sprintf(hs, "%4d %s %s %s %s %s %s %s %3d %6ld %c",
+		sprintf(hs, "%4d %s %s %s %s %s %s %s %3d %6d %c",
 				k, header.dest, header.rxfrom, w1, header.absender,
 				w, header.verbreitung, header.id,
 				ttl_lifetime(unr, header.txlifetime, header.rxdate),
@@ -2194,7 +2195,7 @@ void list_brett(short unr, char *board, short von, short bis, short threshold,
 		  if (!bidsearch)
 		    cut(ds, 5);
 
-		  sprintf(hs, "%4d %s %s %s%4d%4d %s%4d %s %6ld %3d%%%4d%5d %c",
+		  sprintf(hs, "%4d %s %s %s%4d%4d %s%4d %s %6d %3d%%%4d%5d %c",
 				k, header.absender, header.dest, header.verbreitung,
 				ttl_lifetime(unr, header.lifetime, header.rxdate),
 				ttl_lifetime(unr, header.txlifetime, header.rxdate),
@@ -2273,7 +2274,7 @@ void list_brett(short unr, char *board, short von, short bis, short threshold,
 		  else
 		    sprintf(w, "  %s%s%s", flagins, binins, header.betreff);
 
-		  sprintf(hs, "%4d %s %s%4d %s %6ld %3d%%%s",
+		  sprintf(hs, "%4d %s %s%4d %s %6d %3d%%%s",
 				k, header.absender, header.verbreitung,
 				ttl_lifetime(unr, header.lifetime, header.rxdate),
 				ds, asz,
@@ -2287,7 +2288,7 @@ void list_brett(short unr, char *board, short von, short bis, short threshold,
 		  else
 		    sprintf(w, "  %s%s%s", flagins, binins, header.betreff);
 
-		  sprintf(hs, "%4d %s %s %s %6ld%s",
+		  sprintf(hs, "%4d %s %s %s %6d%s",
 				k, header.absender, ds, zs, asz, w);
 
 		  if (user[unr]->in_begruessung && hs[strlen(hs) - 1] == '>')
@@ -2347,12 +2348,12 @@ void list_brett(short unr, char *board, short von, short bis, short threshold,
 
 static void show_pwuser(short unr)
 {
-  list_brett(unr, "M", 1, SHORT_MAX, 100, "/", "");
+  list_brett(unr, "M", 1, SHRT_MAX, 100, "/", "");
 }
 
 static void show_leveluser(short unr)
 {
-  list_brett(unr, "M", 1, SHORT_MAX, 100, "\\", "");
+  list_brett(unr, "M", 1, SHRT_MAX, 100, "\\", "");
 }
 
 
@@ -2360,7 +2361,7 @@ static void change_mbx(short unr, char *brett, short von, short bis,
 		       char *newmbx_, char *option)
 {
   short		k, list, lv;
-  boolean	forwarding, only_show, disp, valid, userfile;
+  bool		forwarding, only_show, disp, valid, userfile;
   indexstruct	header;
   mbxtype	newmbx, mbx1;
   char		w[256];
@@ -2475,7 +2476,7 @@ static void change_lifetime(short unr, char *brett, short von, short bis, short 
 			    char *newlt_, char *option, char *search)
 {
   short			k, list, lv, lt, xlt;
-  boolean		valid, disp, wcsearch, bidsearch;
+  bool			valid, disp, wcsearch, bidsearch;
   mulsearchtype		*mst;
   indexstruct		header;
   char			newlt[256];
@@ -2491,7 +2492,7 @@ static void change_lifetime(short unr, char *brett, short von, short bis, short 
     return;
   }
 
-  if ((unsigned long)strlen(newlt) >= 32 ||
+  if ((uint32_t)strlen(newlt) >= 32 ||
       ((1L << strlen(newlt)) & 0x1e) == 0) {
     wln_btext(unr, 39);
     return;
@@ -2591,11 +2592,11 @@ static void change_lifetime(short unr, char *brett, short von, short bis, short 
 #define maxcheckc       30000
 #define maxchecks       30000
 
-static long   	      	maxcheck, lastcheck;
+static int32_t   	maxcheck, lastcheck;
 static char   	      	dots[LEN_BOARD+5];
 
   
-void disp_logptr(short unr, long checkct, boolean bidsearch, boxlogstruct *logptr, char *out)
+void disp_logptr(short unr, int32_t checkct, bool bidsearch, boxlogstruct *logptr, char *out)
 {
   char		ns[256], bname[LEN_BOARD+sizeof(dots)+10], datum[256], binins[10];
 
@@ -2614,7 +2615,7 @@ void disp_logptr(short unr, long checkct, boolean bidsearch, boxlogstruct *logpt
 
     unhpath(logptr->verbreitung, logptr->verbreitung);
 
-    sprintf(out, "%-7ld%c%6ld %-*.*s@%-*.*s %-*.*s ",
+    sprintf(out, "%-7d%c%6d %-*.*s@%-*.*s %-*.*s ",
 		logptr->msgnum + MSGNUMOFFSET,
 		logptr->msgtype, logptr->size,
 		LEN_BOARD, LEN_BOARD, logptr->obrett,
@@ -2656,7 +2657,7 @@ void disp_logptr(short unr, long checkct, boolean bidsearch, boxlogstruct *logpt
     else
       cut(logptr->verbreitung, 6);
 
-    sprintf(out, "%5ld %s > %s%s %s %s%6ld %3d %s%s",
+    sprintf(out, "%5d %s > %s%s %s %s%6d %3d %s%s",
 		checkct, logptr->absender, bname, ns, datum, logptr->verbreitung, logptr->size,
 		ttl_lifetime(unr, logptr->lifetime, logptr->date),
 		binins, logptr->betreff);
@@ -2666,8 +2667,8 @@ void disp_logptr(short unr, long checkct, boolean bidsearch, boxlogstruct *logpt
 }
 
 
-static void show_logptr(short unr, long checkct, boolean bidsearch,
-			boxlogstruct *logptr, long *gefunden,
+static void show_logptr(short unr, int32_t checkct, bool bidsearch,
+			boxlogstruct *logptr, int32_t *gefunden,
 			short *sorthandle)
 {
   char		hs[256], ns[256];
@@ -2698,13 +2699,13 @@ static void show_logptr(short unr, long checkct, boolean bidsearch,
 }
 
 
-boolean check_access_ok(short unr, boolean userfiles, boolean nochb, boolean wantchb,
-      	      	      	 boolean wants_distcheck, boolean wants_sendercheck, boxlogstruct *log)
+bool check_access_ok(short unr, bool userfiles, bool nochb, bool wantchb,
+      	      	     bool wants_distcheck, bool wants_sendercheck, boxlogstruct *log)
 {
   static char 	stemp[] = ",TEMP,";
   
   short		acc;
-  boolean	found, found2;
+  bool		found, found2;
   char		msgboard[LEN_BOARD+5], msgdist[LEN_CALL+5];
 
   if ((log->msgtype == 'B') == userfiles)
@@ -2754,7 +2755,7 @@ boolean check_access_ok(short unr, boolean userfiles, boolean nochb, boolean wan
     if (may_sysaccess(unr, log->brett))
       acc	= log->level;
     else
-      acc	= SHORT_MAX;
+      acc	= SHRT_MAX;
   } else
     acc		= log->level;
 
@@ -2776,7 +2777,7 @@ boolean check_access_ok(short unr, boolean userfiles, boolean nochb, boolean wan
 void show_fullcheck(short unr)
 {
   short		handle;
-  long		msgnum, checkct;
+  int32_t	msgnum, checkct;
   boxlogstruct	log;
   char		w[256], w1[256], hs[FTRSTRSIZE+1];
 
@@ -2870,15 +2871,15 @@ void show_sortcheck(short unr)
 #define cpentries       CHECKBLOCKSIZE
 #define cpsize          (cpentries * sizeof(boxlogstruct))
 
-static void check(short unr, char *suche, long von, long bis, short threshold,
-		  boolean userfiles, char *option, char *board,
-		  boolean sorted)
+static void check(short unr, char *suche, int32_t von, int32_t bis, short threshold,
+		  bool userfiles, char *option, char *board,
+		  bool sorted)
 {
 
   short			sorthandle, log, cmode;
-  long			cpstart, seekpos, err, lognr, loganz, checkct, gefunden;
-  boolean		check_end, bidsearch, nochb, wantchb, resumed, wcsearch, first;
-  boolean     	      	wants_distcheck, wants_sendercheck, abort;
+  int32_t		cpstart, seekpos, err, lognr, loganz, checkct, gefunden;
+  bool			check_end, bidsearch, nochb, wantchb, resumed, wcsearch, first;
+  bool     	      	wants_distcheck, wants_sendercheck, abort;
   mulsearchtype		*mst;
   boxlogstruct		*logptr, logheader;
   char			*ipuffer;
@@ -3168,10 +3169,10 @@ static void check(short unr, char *suche, long von, long bis, short threshold,
   if (cmode != 2)
     return;
   w_btext(unr, 42);
-  sprintf(hs, ": %ld ", checkct);
+  sprintf(hs, ": %d ", checkct);
   wuser(unr, hs);
   w_btext(unr, 81);
-  sprintf(hs, " %ld", lastcheck);
+  sprintf(hs, " %d", lastcheck);
   wlnuser(unr, hs);
 }
 
@@ -3192,11 +3193,11 @@ static void form_out(short unr, char *rub, char *lts, short *k)
 }
 
 
-static void show_dir(short unr, boolean with_user, boolean msgcount, boolean lost)
+static void show_dir(short unr, bool with_user, bool msgcount, bool lost)
 {
   short			k, result, ofi, msgct;
   unsigned short	lt, acc;
-  boolean		eofil, ok, first;
+  bool			eofil, ok, first;
   DTA			dirinfo;
   pathstr		ofiname, STR1;
   char			hs[256], hs2[256], rubrik[256], rubrik1[256];
@@ -3224,7 +3225,7 @@ static void show_dir(short unr, boolean with_user, boolean msgcount, boolean los
 	    if (!defined_board(hs))
 	      lower(hs);
 	  }
-	  sprintf(hs2, "%s %ld", hs, dirinfo.d_length);
+	  sprintf(hs2, "%s %d", hs, dirinfo.d_length);
 	  str2file(&ofi, hs2, true);
 	}
 	result	= sfnext(&dirinfo);
@@ -3318,8 +3319,8 @@ static void show_statistik(short unr, char *option)
 {
   short			k, ct, result, ofi, anz, prozent, msgs, dmsgs;
   unsigned short	lt, acc;
-  long			size1, size2, gsize1, gsize2, hsize, gmsgs, gdmsgs;
-  boolean		short_stat, short_user, short_bulls, single_file, first, eofil, take_it;
+  int32_t		size1, size2, gsize1, gsize2, hsize, gmsgs, gdmsgs;
+  bool			short_stat, short_user, short_bulls, single_file, first, eofil, take_it;
   DTA			dirinfo;
   indexstruct		header;
   pathstr		datei, ofiname, STR1;
@@ -3381,7 +3382,7 @@ static void show_statistik(short unr, char *option)
       while (result == 0) {
 	strcpy(hs, dirinfo.d_fname);
 	del_ext(hs);
-	sprintf(hs2, "%s %ld", hs, dirinfo.d_length);
+	sprintf(hs2, "%s %d", hs, dirinfo.d_length);
 	str2file(&ofi, hs2, true);
 	result	= sfnext(&dirinfo);
       }
@@ -3470,7 +3471,7 @@ static void show_statistik(short unr, char *option)
     if (!(acc <= user[unr]->level || user[unr]->console))
       continue;
 
-    sprintf(hs, "%-*s %5d %5d%10ld%10ld   %3d %3d %3d" , LEN_BOARD, hname, msgs, dmsgs,
+    sprintf(hs, "%-*s %5d %5d%10d%10d   %3d %3d %3d" , LEN_BOARD, hname, msgs, dmsgs,
 						    	size1, size2, prozent, lt, acc);
     wlnuser(unr, hs);
   }
@@ -3484,7 +3485,7 @@ static void show_statistik(short unr, char *option)
       cut(hs, 9);
       wuser(unr, hs);
       prozent = calc_prozent(gsize2, gsize1);
-      sprintf(hs, "%5ld %5ld%10ld%10ld   %3d" , gmsgs, gdmsgs, gsize1, gsize2, prozent);
+      sprintf(hs, "%5d %5d%10d%10d   %3d" , gmsgs, gdmsgs, gsize1, gsize2, prozent);
       wlnuser(unr, hs);
       wlnuser0(unr);
     }
@@ -3506,7 +3507,7 @@ void set_forward(short unr, short unr_msg, char *quelle, char *option,
 		 char *lastvias)
 {
   short		list, lv, x;
-  boolean	hit;
+  bool		hit;
   indexstruct	header;
   pathstr	index;
 
@@ -3580,9 +3581,9 @@ void set_forward(short unr, short unr_msg, char *quelle, char *option,
 static void transfer(short unr, char *quelle, short nr, short bis, char *com_)
 {
   short			list, nlist, lv, k, x, l, fidx;
-  long			start, rs, hsize, psize, ct;
+  int32_t		start, rs, hsize, psize, ct;
   unsigned short	new_lt, lt, acc1, acc2, ics;
-  boolean		hit, first_disp, same_board, first, cerr, ok;
+  bool			hit, first_disp, same_board, first, cerr, ok;
   userstruct		*WITH;
   char			*copybuf;
   indexstruct		header;
@@ -3964,7 +3965,7 @@ static void transfer(short unr, char *quelle, short nr, short bis, char *com_)
 #undef blocksize
 
 
-boolean select_file(short unr, char *pfad, char *name, char *titel)
+bool select_file(short unr, char *pfad, char *name, char *titel)
 {
 
   if (user[unr]->console)
@@ -3977,7 +3978,7 @@ boolean select_file(short unr, char *pfad, char *name, char *titel)
 void export_brett(short unr, char *brett, short s, short e, short threshold,
 		  char *option1, char *search, char *fname)
 {
-  boolean	ok, sf;
+  bool		sf;
   short		olda, handle;
   indexstruct	lheader;
   pathstr	exname, pfad, name;
@@ -3986,7 +3987,6 @@ void export_brett(short unr, char *brett, short s, short e, short threshold,
   debug(2, unr, 51, brett);
 
   strcpy(name, fname);
-  ok	= true;
   sf	= user[unr]->f_bbs;
   strcpy(option, option1);
 
@@ -4039,9 +4039,9 @@ void export_brett(short unr, char *brett, short s, short e, short threshold,
   }
 }
 
-static boolean read_for_view(short unr, char *cmd_, char *outfile, indexstruct *header)
+static bool read_for_view(short unr, char *cmd_, char *outfile, indexstruct *header)
 {
-  boolean     	ok;
+  bool     	ok;
   short		nr, handle;
   char		cmd[256], rubrik[256], w1[256], vname[256];
 
@@ -4073,7 +4073,7 @@ static boolean read_for_view(short unr, char *cmd_, char *outfile, indexstruct *
   return (ok && *outfile);
 }
 
-static boolean strip_headers(boolean for_comment, short unr, char *fname, char quotechar, indexstruct *header)
+static bool strip_headers(bool for_comment, short unr, char *fname, char quotechar, indexstruct *header)
 {
   short     k, l;
   char      subject[256];
@@ -4168,7 +4168,7 @@ static boolean strip_headers(boolean for_comment, short unr, char *fname, char q
   return true;
 }
 
-static boolean read_for_reply(boolean for_comment, short unr, char *cmd, char *outfile)
+static bool read_for_reply(bool for_comment, short unr, char *cmd, char *outfile)
 {
   indexstruct header;
   
@@ -4383,7 +4383,7 @@ void begruessung(short unr)
 /* PW wird, anders als ueberall sonst, KOMPLETT abgefordert. Ueber     */
 /* Draht hoert ja "nur" der Verfassungsschutz zu...                    */
 
-static void enter_password(short unr, char *eingabe, boolean last)
+static void enter_password(short unr, char *eingabe, bool last)
 {
   userstruct	*WITH;
 
@@ -4465,9 +4465,9 @@ static void set_debuglevel(short unr, char *w)
 }
 
 
-boolean set_reply_flag(short unr, char *brett, short nr)
+bool set_reply_flag(short unr, char *brett, short nr)
 {
-  boolean	Result;
+  bool		Result;
   short		k, x;
   indexstruct	header;
   pathstr	STR1;
@@ -4498,9 +4498,9 @@ boolean set_reply_flag(short unr, char *brett, short nr)
 }
 
 
-static boolean get_reply_info(short unr, char *eingabe, indexstruct *rep_header)
+static bool get_reply_info(short unr, char *eingabe, indexstruct *rep_header)
 {
-  boolean	direct_reply;
+  bool		direct_reply;
   short		i;
   short		rep_handle;
   userstruct	*WITH;
@@ -4566,11 +4566,10 @@ static void set_reply_flag_directly(short unr, char *eingabe)
 }
 
 
-static boolean set_reply_address(boolean for_comment, short unr,
+static bool set_reply_address(bool for_comment, short unr,
 				 char *eingabe, char *hs, char *msgtype)
 {
-  boolean	Result;
-  userstruct	*WITH;
+  bool		Result;
   indexstruct	rep_header;
   calltype	rep_call;
   boardtype	rep_brett;
@@ -4583,7 +4582,6 @@ static boolean set_reply_address(boolean for_comment, short unr,
   if (!get_reply_info(unr, eingabe, &rep_header))
     return Result;
 
-  WITH = user[unr];
   strcpy(rep_call, rep_header.absender);
   strcpy(rep_brett, rep_header.dest);
   strcpy(rep_title2, rep_header.betreff);
@@ -4633,7 +4631,7 @@ static boolean set_reply_address(boolean for_comment, short unr,
   return true;
 }
 
-static void xreply(boolean for_comment, short unr, char *eingabe)
+static void xreply(bool for_comment, short unr, char *eingabe)
 {
   indexstruct	header;
   char	hs[256], w[256], crcs[256+40];
@@ -4643,7 +4641,7 @@ static void xreply(boolean for_comment, short unr, char *eingabe)
   snprintf(hs, 255, "%s %d", user[unr]->reply_brett, user[unr]->reply_nr);
   if (!read_for_reply(for_comment, unr, hs, w)) return;
   snprintf(hs, 255, "%s %s", xeditor, w);
-  snprintf(crcs, 256+39, "%s CRC:%d %ld", w, file_crc(0, w, 0xFFFF, 0, 0), sfsize(w));
+  snprintf(crcs, 256+39, "%s CRC:%d %d", w, file_crc(0, w, 0xFFFF, 0, 0), sfsize(w));
   add_zombie(my_exec(hs), crcs, 1); /* this imports the tmp file after exit of editor */
   wuser(unr, "OK, started X-editor with file ");
   wlnuser(unr, w);
@@ -4814,7 +4812,7 @@ static void set_selection(short unr, char *hs)
 }
 
 
-static boolean find_env(char *w)
+static bool find_env(char *w)
 {
   char	res[256];
 
@@ -4856,7 +4854,7 @@ static boolean find_env(char *w)
 }
 
 
-static void do_checkboards(short unr, boolean want, char *w)
+static void do_checkboards(short unr, bool want, char *w)
 {
   char		cb[LEN_CHECKBOARDS+1];
   userstruct	*WITH;
@@ -4907,20 +4905,20 @@ static void do_checkboards(short unr, boolean want, char *w)
 
 }
 
-static boolean may_invoke_xeditor(unr)
+static bool may_invoke_xeditor(short unr)
 {
   if (!boxrange(unr)) return false;
   return (user[unr]->pchan == 0 && user[unr]->supervisor
       	  && user[unr]->umode == UM_USER && *xeditor);
 }
 
-boolean analyse_boxcommand(short unr, char *eingabe, char *voll, boolean return_)
+bool analyse_boxcommand(short unr, char *eingabe, char *voll, bool return_)
 {
   short			x, threshold, cnr, TEMP;
-  long			s, e;
+  int32_t		s, e;
   unsigned short	lt, a;
-  boolean		plus, auto7ptmp, Result, valid_command, valid_command2, resumed;
-  boolean		onlysys, rep_ok;
+  bool			plus, auto7ptmp, Result, valid_command, valid_command2, resumed;
+  bool			onlysys, rep_ok;
   userstruct		*WITH;
   indexstruct		lheader;
   char	      	      	*sp;
@@ -5020,7 +5018,7 @@ boolean analyse_boxcommand(short unr, char *eingabe, char *voll, boolean return_
 	cnr		= 104;   /* DIR SENT -> CS < call */
         WITH->brett[0]	= '\0';
 	s		= 1;
-	e		= LONG_MAX;
+	e		= INT32_MAX;
 	strcpy(search, WITH->call);
       } else if (compare(w, "USERS")) {
 	if (*eingabe != '\0') {
@@ -5230,7 +5228,7 @@ boolean analyse_boxcommand(short unr, char *eingabe, char *voll, boolean return_
       
     /* HOLD */
     case 31:
-      show_hold(unr, SHORT_MAX);
+      show_hold(unr, SHRT_MAX);
       break;
 
     /* *CHECK / *CS */
@@ -5732,7 +5730,7 @@ boolean analyse_boxcommand(short unr, char *eingabe, char *voll, boolean return_
 	upper(w2);
 	if ((callsign(w2) || !strcmp(w2, "NIL")) &&
 	    (w1[0] == 'S' || w1[0] == 'P' || w1[0] == 'B' || w1[0] == 'A'))
-	  change_sfentries(1, SHORT_MAX, w, w1[0], w2);
+	  change_sfentries(1, SHRT_MAX, w, w1[0], w2);
 	else
 	  wln_btext(unr, 3);
       } else {
@@ -6406,7 +6404,7 @@ boolean analyse_boxcommand(short unr, char *eingabe, char *voll, boolean return_
 static void run_batch(short unr, char *cmd_)
 {
   short		inf;
-  boolean	ok;
+  bool		ok;
   char		cmd[256], pfad[256], name[256], hs[256];
 
   strcpy(cmd, cmd_);
@@ -6456,10 +6454,10 @@ void run_sysbatch(char *name)
 }
 
 
-void box_command_fract(short unr, char *command, boolean return_)
+void box_command_fract(short unr, char *command, bool return_)
 {
   short		x;
-  boolean	ret2, nop, v;
+  bool		ret2, nop, v;
   userstruct	*WITH;
   char		teil[256], voll[256], STR7[256];
 
