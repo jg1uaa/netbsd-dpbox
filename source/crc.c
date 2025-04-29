@@ -4,7 +4,7 @@
 typedef unsigned short crctabtype[256];
 
 #ifdef WITHCRC32
-typedef unsigned long crc32tabtype[256];
+typedef uint32_t crc32tabtype[256];
 #endif
 
 static crctabtype crc16_table = {
@@ -137,7 +137,7 @@ void crc_16(unsigned char Data, unsigned short *crc)
 }
 
 
-void crc_16_buf(unsigned char *adr, long size, unsigned short *crc)
+void crc_16_buf(unsigned char *adr, size_t size, unsigned short *crc)
 {
   while (size-- > 0)
     *crc = ((*crc) >> 8) ^ crc16_table[((*crc) ^ *adr++) & 0xff];
@@ -150,7 +150,7 @@ void crcfcs(unsigned char Data, unsigned short *crc)
 }
 
 
-void crcfcs_buf(unsigned char *adr, long size, unsigned short *crc)
+void crcfcs_buf(unsigned char *adr, size_t size, unsigned short *crc)
 {
   while (size-- > 0)
     *crc = ((*crc) >> 8) ^ ccitt_table[((*crc) ^ *adr++) & 0xff];
@@ -163,7 +163,7 @@ void crcthp(unsigned char Data, unsigned short *crc)
 }
 
 
-void crcthp_buf(unsigned char *adr, long size, unsigned short *crc)
+void crcthp_buf(unsigned char *adr, size_t size, unsigned short *crc)
 {
   while (size-- > 0)
     *crc = ((*crc) << 8) ^ *adr++ ^ ccitt_table[(*crc) >> 8];
@@ -176,14 +176,14 @@ void crcfbb(unsigned char Data, unsigned short *crc)
 }
 
 
-void crcfbb_buf(unsigned char *adr, long size, unsigned short *crc)
+void crcfbb_buf(unsigned char *adr, size_t size, unsigned short *crc)
 {
   while (size-- > 0)
     *crc = ((*crc) << 8) ^ ccitt_table[((*crc) >> 8) ^ *adr++];
 }
 
 #ifdef WITHCRC32
-void crc_32_buf(unsigned char *adr, long size, unsigned long *crc)
+void crc_32_buf(unsigned char *adr, size_t size, uint32_t *crc)
 {
   while (size-- > 0)
     *crc = crc32_table[((int)*crc ^ (*adr++)) & 0xff] ^ (*crc >> 8);
@@ -197,7 +197,7 @@ void checksum16(unsigned char Data, unsigned short *crc)
 }
 
 
-void checksum16_buf(unsigned char *adr, long size, unsigned short *crc)
+void checksum16_buf(unsigned char *adr, size_t size, unsigned short *crc)
 {
   while (size-- > 0)
     *crc += *adr++;
@@ -210,7 +210,7 @@ void checksum8(unsigned char Data, unsigned short *crc)
 }
 
 
-void checksum8_buf(unsigned char *adr, long size, unsigned short *crc)
+void checksum8_buf(unsigned char *adr, size_t size, unsigned short *crc)
 {
   while (size-- > 0)
     *crc += *adr++;

@@ -1,6 +1,8 @@
 #ifndef CRC_H
 #define CRC_H
 
+#include <stddef.h>
+#include <stdint.h>
 
 /* Vier verschiedene CRC-Verfahren:
 
@@ -18,14 +20,14 @@ extern void crcfbb(unsigned char Data, unsigned short *crc);
 extern void checksum8(unsigned char Data, unsigned short *crc);
 extern void checksum16(unsigned char Data, unsigned short *crc);
 
-extern void crc_16_buf(unsigned char *adr, long size, unsigned short *crc);
-extern void crcfcs_buf(unsigned char *adr, long size, unsigned short *crc);
-extern void crcthp_buf(unsigned char *adr, long size, unsigned short *crc);
-extern void crcfbb_buf(unsigned char *adr, long size, unsigned short *crc);
+extern void crc_16_buf(unsigned char *adr, size_t size, unsigned short *crc);
+extern void crcfcs_buf(unsigned char *adr, size_t size, unsigned short *crc);
+extern void crcthp_buf(unsigned char *adr, size_t size, unsigned short *crc);
+extern void crcfbb_buf(unsigned char *adr, size_t size, unsigned short *crc);
 #ifdef WITHCRC32
-extern void crc_32_buf(unsigned char *adr, long size, unsigned long *crc);
+extern void crc_32_buf(unsigned char *adr, size_t size, uint32_t *crc);
 #endif
-extern void checksum8_buf(unsigned char *adr, long size, unsigned short *crc);
-extern void checksum16_buf(unsigned char *adr, long size, unsigned short *crc);
+extern void checksum8_buf(unsigned char *adr, size_t size, unsigned short *crc);
+extern void checksum16_buf(unsigned char *adr, size_t size, unsigned short *crc);
 
 #endif /*CRC_H*/
