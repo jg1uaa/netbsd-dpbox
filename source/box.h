@@ -8,39 +8,39 @@
 #include "boxlocal.h"
 
 
-extern void signalise_readlimit(short unr, bool today,
+void signalise_readlimit(short unr, bool today,
 				char *name, short von, short bis);
-extern void add_readday(short unr, int32_t count);
-extern void begruessung(short unr);
-extern void box_command_fract(short unr, char *command, bool return_);
-extern void show_sortcheck(short unr);
-extern void show_fullcheck(short unr);
-extern bool erase_by_bid(bool reread, char *sbid, char *eraseabsender);
-extern void set_forward(short unr, short unr_msg, char *quelle, char *option,
+void add_readday(short unr, int32_t count);
+void begruessung(short unr);
+void box_command_fract(short unr, char *command, bool return_);
+void show_sortcheck(short unr);
+void show_fullcheck(short unr);
+bool erase_by_bid(bool reread, char *sbid, char *eraseabsender);
+void set_forward(short unr, short unr_msg, char *quelle, char *option,
 			short nr, short bis, char *to_box, char *from_box,
 			char *lastvias);
-extern void check_remote_erase(int32_t *seekp);
-extern void add_remote_erase(char *absender, char *id1, char *rxfrom, char *id2);
-extern void delete_brett_by_bid(char *brett, char *sfcall, char *bid,
+void check_remote_erase(int32_t *seekp);
+void add_remote_erase(char *absender, char *id1, char *rxfrom, char *id2);
+void delete_brett_by_bid(char *brett, char *sfcall, char *bid,
 				bool release, bool hidden);
-extern bool select_file(short unr, char *pfad, char *name, char *titel);
-extern bool analyse_boxcommand(short unr, char *eingabe, char *voll, bool return_);
-extern short search_by_bid(char *brett, char *bid, bool hidden);
-extern unsigned short read_brett(short unr, short outch, char *board,
+bool select_file(short unr, char *pfad, char *name, char *titel);
+bool analyse_boxcommand(short unr, char *eingabe, char *voll, bool return_);
+short search_by_bid(char *brett, char *bid, bool hidden);
+unsigned short read_brett(short unr, short outch, char *board,
   short von, short bis, short threshold, char *option, char *search, int32_t sfoffset,
   indexstruct *header);
-extern unsigned short read_for_bcast(char *rubrik, short nr, char *vname, indexstruct *header);
-extern void list_brett(short unr, char *board, short von, short bis, short threshold,
+unsigned short read_for_bcast(char *rubrik, short nr, char *vname, indexstruct *header);
+void list_brett(short unr, char *board, short von, short bis, short threshold,
 		       char *option, char *search);
-extern void run_sysbatch(char *name);
-extern void disp_logptr(short unr, int32_t checkct, bool bidsearch,
+void run_sysbatch(char *name);
+void disp_logptr(short unr, int32_t checkct, bool bidsearch,
 			boxlogstruct *logptr, char *hs);
-extern bool check_access_ok(short unr, bool userfiles, bool nochb, bool wantchb,
+bool check_access_ok(short unr, bool userfiles, bool nochb, bool wantchb,
 			    bool wants_distcheck, bool wants_sendercheck, boxlogstruct *log);
-extern void export_brett(short unr, char *brett, short s, short e, short threshold,
+void export_brett(short unr, char *brett, short s, short e, short threshold,
 			 char *option1, char *search, char *fname);
-extern bool set_reply_flag(short unr, char *brett, short nr);
-extern void add_eraseby(char *call, indexstruct *header);
+bool set_reply_flag(short unr, char *brett, short nr);
+void add_eraseby(char *call, indexstruct *header);
 
 #endif /*BOX_H*/
 
