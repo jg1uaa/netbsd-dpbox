@@ -19,9 +19,9 @@ typedef struct {
   unsigned char buffer[64];                         /* input buffer */
 } MD5_CTX;
 
-extern void MD5Init(MD5_CTX *context);
-extern void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputLen);
-extern void MD5Final(unsigned char digest[16], MD5_CTX *context);
+void MD5Init(MD5_CTX *context);
+void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputLen);
+void MD5Final(unsigned char digest[16], MD5_CTX *context);
 
 typedef char MD2barr16[16];
 
@@ -32,8 +32,8 @@ typedef struct MD2_CTX {
 } MD2_CTX;
 
 
-extern void MD2Init(MD2_CTX *context);
-extern void MD2Update(MD2_CTX *context, char *input, int32_t inputLen);
-extern void MD2Final(char *digest, MD2_CTX *context);
+void MD2Init(MD2_CTX *context);
+void MD2Update(MD2_CTX *context, char *input, int32_t inputLen);
+void MD2Final(char *digest, MD2_CTX *context);
 
 #endif
