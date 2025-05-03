@@ -3659,16 +3659,16 @@ static bool sort_new_mail3(short unr, char *pattern_, char *rcall1_)
 	cuttyp = boxheader(status);
 
 
-      if (((1L << ((int32_t)cuttyp)) & ((1L << ((int32_t)W0RLI_USER)) |
-	     (1L << ((int32_t)AA4RE_USER)) | (1L << ((int32_t)F6FBB_USER)) |
-	     (1L << ((int32_t)F6FBB_USER_514)) | (1L << ((int32_t)RAW_IMPORT)))) != 0) {
+      if (((1 << cuttyp) & ((1 << W0RLI_USER) |
+	     (1 << AA4RE_USER) | (1 << F6FBB_USER) |
+	     (1 << F6FBB_USER_514) | (1 << RAW_IMPORT))) != 0) {
 	hlz = lesezeiger;
 	get_line(puffer, &lesezeiger, bct, z1);
 	get_line(puffer, &lesezeiger, bct, z2);
 	get_line(puffer, &lesezeiger, bct, z3);
 	get_line(puffer, &lesezeiger, bct, z4);
-	if (((1L << ((int32_t)cuttyp)) & ((1L << ((int32_t)F6FBB_USER_514)) |
-				       (1L << ((int32_t)RAW_IMPORT)))) != 0) {
+	if (((1 << cuttyp) & ((1 << F6FBB_USER_514) |
+				       (1 << RAW_IMPORT))) != 0) {
 	  get_line(puffer, &lesezeiger, bct, z5);
 	  get_line(puffer, &lesezeiger, bct, z6);
 	} else {
@@ -3860,7 +3860,7 @@ static bool sort_new_mail3(short unr, char *pattern_, char *rcall1_)
 
 void sort_new_mail4(void)
 {
-  int32_t	ticks;
+  int64_t	ticks;
   newmailtype	*hp;
 
   ticks		= get_cpuusage();

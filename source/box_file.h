@@ -7,41 +7,41 @@
 #include "yapp.h"
 #include "boxlocal.h"
 
-extern void check_disk_full(void);
-extern short open_index(char *brett, short mode, bool cache, bool vorwaerts);
-extern void close_index(short *handle);
-extern void read_index(short handle, short nr, indexstruct *ibuf);
-extern short write_index(short handle, short nr, indexstruct *ibuf);
-extern void read_log(short handle, int32_t nr, boxlogstruct *ibuf);
-extern void write_log(short handle, int32_t nr, boxlogstruct *ibuf);
-extern void write_log_and_bid(char *brett1, short nummer, indexstruct header);
-extern void show_all_user_at(short unr, char *call, bool del, bool del2,
+void check_disk_full(void);
+short open_index(char *brett, short mode, bool cache, bool vorwaerts);
+void close_index(short *handle);
+void read_index(short handle, short nr, indexstruct *ibuf);
+short write_index(short handle, short nr, indexstruct *ibuf);
+void read_log(short handle, int32_t nr, boxlogstruct *ibuf);
+void write_log(short handle, int32_t nr, boxlogstruct *ibuf);
+void write_log_and_bid(char *brett1, short nummer, indexstruct header);
+void show_all_user_at(short unr, char *call, bool del, bool del2,
 			     bool only_count, char *all_count);
-extern void dispose_mptr(void);
-extern void load_mptr(void);
-extern bool update_mybbsfile(bool by_usercommand, char *call, time_t *updatetime,
+void dispose_mptr(void);
+void load_mptr(void);
+bool update_mybbsfile(bool by_usercommand, char *call, time_t *updatetime,
 				char *mybbs, char *mybbsmode);
-extern void init_ufcache(void);
-extern void clear_uf_cache(char *call);
-extern void convert_ufil(bool with_ext_strings, indexstruct header,
+void init_ufcache(void);
+void clear_uf_cache(char *call);
+void convert_ufil(bool with_ext_strings, indexstruct header,
 			 userstruct *rec);
-extern void code_ufil(userstruct *rec, indexstruct *header);
-extern void load_userfile(bool only_m, bool with_ext_strings,
+void code_ufil(userstruct *rec, indexstruct *header);
+void load_userfile(bool only_m, bool with_ext_strings,
 			  char *calls, userstruct *rec);
-extern void save_userfile(userstruct *rec);
-extern void user_mybbs(char *call, char *mbx);
-extern short last_valid(short unr, char *brett);
-extern void alter_fwd(char what, char *bid, int32_t new_msgnum, char *new_board, char *sfcall);
-extern bool recompile_fwd(void);
-extern void alter_log(bool onram, int32_t msgnumber, unsigned short msgflags, char what, char *info);
-extern void recompile_log(short unr);
-extern short boxcheck(bool all, char *callx);
-extern short check_held_messages(short unr, short display_if_less_than);
-extern void show_hold(short unr, short disp_if_less);
-extern void send_tcpip_protocol_frame(short unr);
-extern void load_userinfo_for_change(bool only_m, char *callx, userstruct *ufil);
-extern void sort_new_mail4(void);
-extern void sort_new_mail2(short unr, char *pattern, char *rcall1);
+void save_userfile(userstruct *rec);
+void user_mybbs(char *call, char *mbx);
+short last_valid(short unr, char *brett);
+void alter_fwd(char what, char *bid, int32_t new_msgnum, char *new_board, char *sfcall);
+bool recompile_fwd(void);
+void alter_log(bool onram, int32_t msgnumber, unsigned short msgflags, char what, char *info);
+void recompile_log(short unr);
+short boxcheck(bool all, char *callx);
+short check_held_messages(short unr, short display_if_less_than);
+void show_hold(short unr, short disp_if_less);
+void send_tcpip_protocol_frame(short unr);
+void load_userinfo_for_change(bool only_m, char *callx, userstruct *ufil);
+void sort_new_mail4(void);
+void sort_new_mail2(short unr, char *pattern, char *rcall1);
 
 
 
