@@ -124,9 +124,9 @@ bool positive_arg(char *s)
 /* Ruft den Watchdog auf     */
 void dp_watchdog(short what, short value)
 {
-  static int32_t	lastwdreset	= 0;
+  static time_t	lastwdreset	= 0;
 
-  int32_t	t;
+  time_t	t;
 
   if (what == 2) {  /*reset angefordert*/
     t			= statclock();
@@ -231,11 +231,11 @@ short mempacker(bool gzip, bool encode, char *mem, int32_t size, char **rmem,
 }
 
 
-static int32_t cpuspeed = 0, cpuspeed2, cattime, cpudd;
+static int64_t cpuspeed = 0, cpuspeed2, cattime, cpudd;
 
 void quick_speed(void)
 {
-  int32_t	x, z, erg;
+  int64_t	x, z, erg;
 
   erg	= get_cpuusage();
   z	= 0;
@@ -250,7 +250,7 @@ static void utc_clock_test(void);
 
 static void calc_speed(void)
 {
-  int32_t		x, z, erg;
+  int64_t		x, z, erg;
 
   erg		= get_cpuusage();
   z		= 0;
@@ -269,7 +269,7 @@ static void calc_speed(void)
   cpudd		= z;	/* this prevents the compiler from skipping the loop (hopefully) */
 }
 
-int32_t get_cpu_speed(short mode)
+int64_t get_cpu_speed(short mode)
 {
   if (cpuspeed == 0 || clock_.ixtime - cattime > SECPERDAY / 4)
     calc_speed();
@@ -444,7 +444,7 @@ bool give_cookie(short x, fdoutproctype outproc, char *fname)
 
 void calc_ixsecs_to_string(time_t l, char *hs)
 {
-  int32_t d, h, m, s;
+  int64_t d, h, m, s;
 
   d = l / SECPERDAY;
   l -= d * SECPERDAY;
@@ -452,7 +452,7 @@ void calc_ixsecs_to_string(time_t l, char *hs)
   l -= h * 3600;
   m = l / 60;
   s = l - m * 60;
-  sprintf(hs, "%dd, %.2d:%.2d:%.2d", d, h, m, s);
+  sprintf(hs, "%"PRId64"d, %.2"PRId64":%.2"PRId64":%.2"PRId64, d, h, m, s);
 }
 
 
@@ -502,28 +502,6 @@ void file_delete(short x, char *cmd, fdoutproctype outproc)
       outproc(x, dn);
 }
 
-
-#ifdef HAS_NO_STRCASECMP
-bool useq(char *s1, char *s2)
-/* stolen from p2c.c of David Gillespie */
-{
-    char c1, c2;
-
-    while (*s1) {
-	if (*s1++ != *s2++) {
-	    if (!s2[-1])
-		return false;
-	    c1 = upcase_(s1[-1]);
-	    c2 = upcase_(s2[-1]);
-	    if (c1 != c2)
-		return false;
-	}
-    }
-    if (*s2)
-	return false;
-    return true;
-}
-#endif
 
 short uspos(char *s1, char *s2)
 {
