@@ -28,9 +28,9 @@ typedef struct yapptype {
   char			yappdir[256];
 } yapptype;
 
-extern bool yapp_upload(bool init, bool abort, yapptype *yapp,
+bool yapp_upload(bool init, bool abort, yapptype *yapp,
 			   char *buffp, int32_t blen);
-extern bool yapp_download(bool init, bool abort, yapptype *yapp,
+bool yapp_download(bool init, bool abort, yapptype *yapp,
 			     char *buffp, int32_t blen);
 
 
