@@ -4,9 +4,9 @@
 
 #include "pastrix.h"
 
-extern void gnusort(char *name, char *options1, char *options2);
-extern void sort_file(char *name, bool single);
-extern void sort_mem(char *start, int32_t *size, bool single);
+void gnusort(char *name, char *options1, char *options2);
+void sort_file(char *name, bool single);
+void sort_mem(char *start, int32_t *size, bool single);
 
 #endif /*SORT_H*/
 
