@@ -105,7 +105,7 @@ static void spps(char *s, char *p, char *r)
   spp2(hs);
 }
 
-int32_t get_sysruntime(void)
+time_t get_sysruntime(void)
 {
   static time_t lastsysrunt	= 0;
   static time_t lastsysrunres	= 0;
@@ -464,9 +464,9 @@ void get_status(bool sysop, char **p, int32_t *sz)
   sprintf(hs, "bogomips         : %s", STR1);
   pl(hs);
 */
-  sprintf(hs, "cpu speed index1 : %d%% (68000/8Mhz = 100%%)", get_cpu_speed(1));
+  sprintf(hs, "cpu speed index1 : %"PRId64"%% (68000/8Mhz = 100%%)", (int64_t)get_cpu_speed(1));
   pl(hs);
-  sprintf(hs, "cpu speed index2 : %d%% (68000/8Mhz = 100%%)", get_cpu_speed(2));
+  sprintf(hs, "cpu speed index2 : %"PRId64"%% (68000/8Mhz = 100%%)", (int64_t)get_cpu_speed(2));
   pl(hs);
   get_linpack(w);
   if (*w) {

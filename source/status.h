@@ -4,14 +4,14 @@
 
 #include "pastrix.h"
 
-extern void free_statp(char **p);
-extern int32_t get_sysruntime(void);
-extern void get_status(bool sysop, char **p, int32_t *sz);
-extern void get_cpuinf(char *cpu, char *mips);
-extern void get_sysload(char *s);
-extern void get_lastsysload(char *s);
-extern void get_sysversion(char *s);
-extern void get_linpack(char *s);
+void free_statp(char **p);
+time_t get_sysruntime(void);
+void get_status(bool sysop, char **p, int32_t *sz);
+void get_cpuinf(char *cpu, char *mips);
+void get_sysload(char *s);
+void get_lastsysload(char *s);
+void get_sysversion(char *s);
+void get_linpack(char *s);
 
 #endif
 
