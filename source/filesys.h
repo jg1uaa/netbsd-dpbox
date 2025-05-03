@@ -57,8 +57,8 @@ typedef struct DTA {
 
 typedef DTA mysearchrec;
 
-extern int dup(int fd);
-extern void mktemp(char *name);
+int dup(int fd);
+void mktemp(char *name);
 
 #endif /* of __macos__ */
 
@@ -117,7 +117,7 @@ typedef struct DTA {
 typedef DTA mysearchrec;
 
 /* only for linux version. called at programs end */
-extern void delete_dirlist();
+void delete_dirlist();
 
 #endif /* of __linux__ */
 
@@ -136,54 +136,53 @@ typedef void (*dispfilelistproc)(const short x, const char *s);
 
 /* these ones are coded different */
 
-extern int32_t Diskfree(int dummy);
-extern int32_t DFree(char *mount);
-extern bool exist(char *name);
-extern int32_t sfsize(char *name);
-extern short sfrename(char *oldname, char *newname);
-extern short sfgetdatime(char *name, unsigned short *date,
+int32_t Diskfree(int dummy);
+int32_t DFree(char *mount);
+bool exist(char *name);
+int32_t sfsize(char *name);
+short sfrename(char *oldname, char *newname);
+short sfgetdatime(char *name, unsigned short *date,
 			 unsigned short *time);
-extern short sfsetdatime(char *name, unsigned short *date,
+short sfsetdatime(char *name, unsigned short *date,
 			 unsigned short *time);
-extern short sffirst(char *pfad, short attr, DTA *dirr);
-extern short sfnext(DTA *dirr);
-extern void sfgetdir(short d, char *p);
-extern short sfchdir(char *p);
-extern short sfmakedir(char *name);
-extern short sfremovedir(char *name);
-extern void del_ext(char *s);
-extern void get_ext(char *s, char *sext);
-extern void new_ext(char *s, char *ext);
-extern void get_path(char *s);
-extern void del_path(char *s);
-extern void del_blanks(char *s);
-extern bool myeof(short handle);
+short sffirst(char *pfad, short attr, DTA *dirr);
+short sfnext(DTA *dirr);
+void sfgetdir(short d, char *p);
+short sfchdir(char *p);
+short sfmakedir(char *name);
+short sfremovedir(char *name);
+void del_ext(char *s);
+void get_ext(char *s, char *sext);
+void new_ext(char *s, char *ext);
+void get_path(char *s);
+void del_path(char *s);
+void del_blanks(char *s);
 
 /* these ones are coded common */
 
-extern void del_dir(char *name);
-extern void app_file2(char *filea, short k2, int32_t ab, bool del_source);
-extern void validate(char *name);
-extern void str2file(short *handle, const char *line, bool crlf);
-extern bool file2lstr2(short handle, char *line, int32_t maxlen, bool *eol);
-extern bool file2lstr(short handle, char *line, int32_t maxlen);
-extern int32_t append(char *name, char *zeile, bool crlf);
-extern void handle2name(short handle, char *name);
-extern short dpsyscreate(char *fname, int flags, int mode);
-extern short open_locked(bool create, char *name, short mode);
-extern int32_t sfseek(int32_t count, short handle, short mode);
-extern int32_t sfread(short handle, int32_t count, char *buf);
-extern int32_t sfwrite(short handle, int32_t count, const char *buf);
-extern void sfclose_x(short *handle, bool delete_it);
-extern void sfdelfile(char *name);
-extern void sfdispfilelist(short x, dispfilelistproc outproc);
-extern void chkopenfiles(time_t maxopen, char *fn); /* maxopen in sekunden */
-extern short fmv_x(char *filea, char *fileb, bool delete_source,
+void del_dir(char *name);
+void app_file2(char *filea, short k2, int32_t ab, bool del_source);
+void validate(char *name);
+void str2file(short *handle, const char *line, bool crlf);
+bool file2lstr2(short handle, char *line, int32_t maxlen, bool *eol);
+bool file2lstr(short handle, char *line, int32_t maxlen);
+int32_t append(char *name, char *zeile, bool crlf);
+void handle2name(short handle, char *name);
+short dpsyscreate(char *fname, int flags, int mode);
+short open_locked(bool create, char *name, short mode);
+int32_t sfseek(int32_t count, short handle, short mode);
+int32_t sfread(short handle, int32_t count, char *buf);
+int32_t sfwrite(short handle, int32_t count, const char *buf);
+void sfclose_x(short *handle, bool delete_it);
+void sfdelfile(char *name);
+void sfdispfilelist(short x, dispfilelistproc outproc);
+void chkopenfiles(time_t maxopen, char *fn); /* maxopen in sekunden */
+short fmv_x(char *filea, char *fileb, bool delete_source,
 		       int32_t start, int32_t size, bool was_rename);
-extern bool tas_lockfile(int32_t waittime, int32_t oldtime, char *name);
-extern bool create_dirpath(char *dirpath);
-extern bool mymktemp(char *name);
-extern char *mytmpnam(char *name);
+bool tas_lockfile(time_t waittime, time_t oldtime, char *name);
+bool create_dirpath(char *dirpath);
+bool mymktemp(char *name);
+char *mytmpnam(char *name);
 
 #define app_file(filea, k2, del_source) app_file2(filea, k2, 0, del_source)
 #define drv2num(c) 0

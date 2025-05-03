@@ -38,6 +38,11 @@
 
 
 
+static int32_t filesize_limit(off_t filesize)
+{
+	return (filesize > INT32_MAX) ? -1 : filesize;
+}
+
 #ifdef __macos__
 
 /* this is the macintosh localisation for file/folder/path - resolving  */
@@ -48,7 +53,6 @@
 /* execution time                                                       */
 
 static short myVolume;
-static int32_t myWorkDir;
 static char apName[256];
 static short apRefNum;
 
@@ -62,19 +66,9 @@ void StartupFilesysInit(void)
 
 
 
-#define DiskFreeDefault 80000000L
-
 int32_t Diskfree(int dummy)
 {
-  short retVId;
-  int32_t retval;
-  char hs[256];
-  
-  if (GetVInfo(myVolume, &hs, &retVId, &retval) < 0)
-    return DiskFreeDefault;
-  if (retVId != myVolume)
-    return DiskFreeDefault;
-  return retval;
+  return 80000000;
 }
 
 int32_t DFree(char *mount)
@@ -127,7 +121,7 @@ short sffirst(char *pfad, short attr, DTA *dirr)
     strcpy(dirr->d_fname,actptr->filename);
     sprintf(tempstr,"%s%s",dirstr,actptr->filename);
     stat(tempstr,&buf);
-    dirr->d_length = buf.st_size;
+    dirr->d_length = filesize_limit(buf.st_size);
     nextptr = actptr->next;
     free(actptr);
     switch (buf.st_mode & S_IFMT) {
@@ -165,7 +159,7 @@ short sfnext(DTA *dirr)
     strcpy(dirr->d_fname,actptr->filename);
     sprintf(tempstr,"%s%s",dirstr,actptr->filename);
     stat(tempstr,&buf);
-    dirr->d_length = buf.st_size;
+    dirr->d_length = filesize_limit(buf.st_size);
     nextptr = actptr->next;
     free(actptr);
     switch (buf.st_mode & S_IFMT) {
@@ -274,23 +268,6 @@ void get_path(char *s)
 
 
 
-/* sind wir am Ende der Datei ? */
-
-bool myeof(short handle)
-{
-  int32_t apos;
-
-  if (handle < minhandle)
-    return true;
-  apos = sfseek(0, handle, SFSEEKCUR);
-  if (sfseek(1, handle, SFSEEKCUR) > apos) {
-    sfseek(-1, handle, SFSEEKCUR);
-    return false;
-  }
-  return true;
-}
-
-
 short sfgetdatime(char *name, unsigned short *date, unsigned short *time)
 {
   time_t ixt;
@@ -328,7 +305,7 @@ int32_t sfsize(char *name)
   if (stat(name,&buf) != 0) {
     return 0;
   }
-  return buf.st_size;
+  return filesize_limit(buf.st_size);
 }
 
 
@@ -413,24 +390,12 @@ short sfremovedir(char *name)
 
 int32_t Diskfree(int dummy)
 {
-  return 80000000L;
+  return 80000000;
 }
 
 int32_t DFree(char *mount)
 {
-#if defined(__linux__) || (defined(__NetBSD__) && (__NetBSD_Version__ < 299000900))
-  struct statfs mystatfs;
-  
-  statfs(mount, &mystatfs);
-#else
-  struct statvfs mystatfs;
-
-  statvfs(mount, &mystatfs);
-#endif
-  if (mystatfs.f_bsize % 1024 == 0)
-    return (mystatfs.f_bsize / 1024) * mystatfs.f_bavail;
-  else
-    return mystatfs.f_bsize * (mystatfs.f_bavail / 1024);
+  return Diskfree(0) / 1024;
 }
 
 
@@ -531,7 +496,7 @@ short sffirst(char *pfad, short attr, DTA *dirr)
     strcpy(dirr->d_fname, actptr->filename);
     sprintf(tempstr, "%s%s", dirstr, actptr->filename);
     stat(tempstr, &buf);
-    dirr->d_length = buf.st_size;
+    dirr->d_length = filesize_limit(buf.st_size);
     nextptr = actptr->next;
     free(actptr);
     switch (buf.st_mode & S_IFMT) {
@@ -567,7 +532,7 @@ short sfnext(DTA *dirr)
     strcpy(dirr->d_fname, actptr->filename);
     sprintf(tempstr,"%s%s", dirstr, actptr->filename);
     stat(tempstr, &buf);
-    dirr->d_length = buf.st_size;
+    dirr->d_length = filesize_limit(buf.st_size);
     nextptr = actptr->next;
     free(actptr);
     switch (buf.st_mode & S_IFMT) {
@@ -658,23 +623,6 @@ void get_path(char *s)
   cut(s, x);
 }
 
-/* sind wir am Ende der Datei ? */
-
-bool myeof(short handle)
-{
-  int32_t apos;
-
-  if (handle < minhandle)
-    return true;
-  apos = sfseek(0, handle, SFSEEKCUR);
-  if (sfseek(1, handle, SFSEEKCUR) > apos) {
-    sfseek(-1, handle, SFSEEKCUR);
-    return false;
-  }
-  return true;
-}
-
-
 short sfgetdatime(char *name, unsigned short *date, unsigned short *time)
 {
   struct stat buf;
@@ -706,7 +654,7 @@ int32_t sfsize(char *name)
   if (stat(name, &buf) != 0) {
     return 0;
   }
-  return buf.st_size;
+  return filesize_limit(buf.st_size);
 }
 
 
@@ -1300,7 +1248,7 @@ static flocktype *valid_handle(short handle)
 int32_t sfseek(int32_t count, short handle, short mode)
 { 
   if (valid_handle(handle) != NULL)
-    return lseek(handle, count, mode);
+    return filesize_limit(lseek(handle, count, mode));
   else
     return -1;
 }
@@ -1403,7 +1351,7 @@ void chkopenfiles(time_t maxopen, char *fn)
   }
 }
 
-bool tas_lockfile(int32_t waittime, int32_t oldtime, char *name)
+bool tas_lockfile(time_t waittime, time_t oldtime, char *name)
 {
   time_t ixt, time1;
   struct stat buf;
