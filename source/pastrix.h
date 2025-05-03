@@ -28,6 +28,10 @@
 #include <sys/limits.h>
 #endif
 
+#ifndef TIME_MAX
+#define TIME_MAX ((((time_t)1 << (sizeof(time_t) * 8 - 2)) - 1) * 2 + 1)
+#endif
+
 
 /* end of needed p2c.h definitions */
 
@@ -71,90 +75,68 @@
 #define DP_WNOHANG 6
 #endif
 
-extern short dp_randomize(short low, short hiw);
-extern int32_t searchbyte(char what, char *start, int32_t size);
-extern int32_t maxavail__(void);
-extern void RESETA(void);
-extern void RESTART(void);
-extern void WATCHDOG(short mode, short timer);
-extern void VBLTIMER(short mode);
-extern int32_t GETVBLTIMER(void);
-extern void NOCRITIC(bool on);
-extern char RAM_INIT(unsigned short size);
-extern void RAM_EXIT(void);
-extern void klang(short nr);
-extern int32_t statclock(void);
-extern void mtpause(void);
-
+short dp_randomize(short low, short hiw);
+int64_t statclock(void);
 #ifdef __macos__
-extern int fork();
-extern int kill(pid_t pid, int signal);
-extern void setsid();
-extern int waitpid(pid_t pid, int *res, int flag);
+int fork();
+int kill(pid_t pid, int signal);
+void setsid();
+int waitpid(pid_t pid, int *res, int flag);
 #endif
 
-extern char *mymemmem(char *haystack, int32_t haystacksize,
-      	      	      char *needle, int32_t needlesize);
-extern char *strsub(char *ret, char *s, int pos, int len);
-extern int strpos2(char *s, char *pat, int pos);
-extern void strdelete(char *s, int pos, int len);
-extern void strinsert(char *src, char *dst, int pos);
-extern void del_allblanks(char *s);
-extern void del_leadblanks(char *s);
-extern void del_lastblanks(char *s);
-extern void lspacing(char *txt, short l);
-extern void rspacing(char *txt, short l);
-extern char upcase_(char ch);
-extern char lowcase(char ch);
-extern void upper(char *s);
-extern void lower(char *s);
-extern void strcpyupper(char *outs, char *ins);
-extern void strcpylower(char *outs, char *ins);
-extern bool zahl(char *s);
-extern bool azahl(char *s);
-extern bool rzahl(char *s);
-extern int32_t hatoi(char *s);
-extern int32_t batoi(char *s);
-extern void int2hstr(int32_t i, char *s);
-extern void int2hchar(short i, char *c1, char *c2);
-extern void hstr2str(char *h, char *s);
-extern void str2hstr(char *s, char *h);
-extern void del_mulblanks(char *s);
-extern short count_words(char *s);
-extern void get_quoted(char *inp, char *outp);
-extern void get_pquoted(char **inp, char *outp);
-extern void get_word(char *inp, char *outp);
-extern void get_pword(char **inp, char *outp);
-extern char *del_comment(char *z, char c);
-extern void get_lline(char *buf, int32_t *posi, int32_t ende, char *zeile, short maxlen);
+char *strsub(char *ret, char *s, int pos, int len);
+int strpos2(char *s, char *pat, int pos);
+void strdelete(char *s, int pos, int len);
+void strinsert(char *src, char *dst, int pos);
+void del_allblanks(char *s);
+void del_leadblanks(char *s);
+void del_lastblanks(char *s);
+void lspacing(char *txt, short l);
+void rspacing(char *txt, short l);
+char upcase_(char ch);
+char lowcase(char ch);
+void upper(char *s);
+void lower(char *s);
+void strcpyupper(char *outs, char *ins);
+void strcpylower(char *outs, char *ins);
+bool zahl(char *s);
+bool azahl(char *s);
+bool rzahl(char *s);
+int32_t hatoi(char *s);
+void int2hstr(int32_t i, char *s);
+void int2hchar(short i, char *c1, char *c2);
+void hstr2str(char *h, char *s);
+void str2hstr(char *s, char *h);
+void del_mulblanks(char *s);
+short count_words(char *s);
+void get_quoted(char *inp, char *outp);
+void get_pquoted(char **inp, char *outp);
+void get_word(char *inp, char *outp);
+void get_pword(char **inp, char *outp);
+char *del_comment(char *z, char c);
+void get_lline(char *buf, int32_t *posi, int32_t ende, char *zeile, short maxlen);
 #define get_line(a, b, c, d) get_lline(a, b, c, d, 255)
-extern void next_line(char *buf, int32_t *posi, int32_t ende);
-extern void prev_line(char *buf, int32_t *posi);
-extern void put_line(char *buf, int32_t *posi, const char *zeile);
-extern void umlaut1(char *txt);
-extern void umlaut2(char *txt);
-extern void ersetze(char *oldstr, char *newstr, char *txt);
-extern void gkdeutsch(char *name);
-extern void sfbread(bool aslongaspossible, char *name, char **puffer, int32_t *size);
+void next_line(char *buf, int32_t *posi, int32_t ende);
+void prev_line(char *buf, int32_t *posi);
+void put_line(char *buf, int32_t *posi, const char *zeile);
+void umlaut1(char *txt);
+void umlaut2(char *txt);
+void ersetze(char *oldstr, char *newstr, char *txt);
+void gkdeutsch(char *name);
+void sfbread(bool aslongaspossible, char *name, char **puffer, int32_t *size);
 
 #define cut(string, size) string[size] = '\0'
 #define nstrcpy(a, b, n) if (strncpy(a, b, n) != NULL) a[n] = '\0'
 #define nstrcat(a, b, n) if (strncat(a, b, n) != NULL) a[n] = '\0'
-#define maxram() 0x7fffffffL
-#ifdef __macos__
-extern int32_t memavail__(void);
-#else
-#define memavail__() 8000000L
-#define maxavail__() 8000000L
-#endif
+#define maxram() 0x7fffffff
+#define memavail__() 8000000
+#define maxavail__() 8000000
 #define move_b(quelle, ziel, size) memmove(ziel, quelle, size)
 
 #if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
-extern int32_t get_cpuusage(void);
-extern int32_t get_memusage(void);
+int64_t get_cpuusage(void);
 #else
 #define get_cpuusage() statclock()
-#define get_memusage() 0
 #endif
 
 #endif

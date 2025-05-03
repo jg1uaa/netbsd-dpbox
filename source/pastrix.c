@@ -31,26 +31,6 @@
 #include <timer.h>
 #endif
 
-#ifdef __macos__
-int32_t memavail__(void)
-{
-  int32_t total, cont;
-  
-  PurgeSpace(&total, &cont);
-  return(total);
-}
-
-int32_t maxavail__(void)
-{
-  int32_t total, cont;
-  
-  PurgeSpace(&total, &cont);
-  return(cont);
-}  
-#endif
-
-
-
 /* Fragt einen 200Hz-Systemzaehler ab. Der absolute Betrag ist unerheblich,  */
 /* DP bildet immer die Differenz aus zwei Werten. Wird fuer die Box ge-      */
 /* braucht, um die CPU-Time des Benutzers zu ermitteln.                      */
@@ -60,7 +40,7 @@ int32_t maxavail__(void)
 /* Mittlerweile ist das oben geschriebene obsolet. Abgefragt wird ein 1MHZ-  */
 /* Zähler, das Ergebnis wird in TICKSPERSEC Hz angegeben.		     */
 
-int32_t statclock(void)
+int64_t statclock(void)
 {
 #ifdef __macos__
   struct UnsignedWide microTickCount;
@@ -75,73 +55,27 @@ int32_t statclock(void)
   struct timezone tz;
 
   gettimeofday(&tv,&tz);
-  return(((tv.tv_sec % ((INT32_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
+  return(((tv.tv_sec % ((TIME_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
 	+ (tv.tv_usec / (1000000 / TICKSPERSEC)));
 #endif
 }
 
 #if defined(__linux__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
 
-int32_t get_cpuusage(void)
+int64_t get_cpuusage(void)
 {
   struct rusage usage;
 
   if (!getrusage(RUSAGE_SELF, &usage))
-    return (((usage.ru_utime.tv_sec % ((INT32_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
+    return (((usage.ru_utime.tv_sec % ((TIME_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
 	   + (usage.ru_utime.tv_usec / (1000000 / TICKSPERSEC))
-    	  + ((usage.ru_stime.tv_sec % ((INT32_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
+	   + ((usage.ru_stime.tv_sec % ((TIME_MAX / TICKSPERSEC)-1)) * TICKSPERSEC)
 	   + (usage.ru_stime.tv_usec / (1000000 / TICKSPERSEC)));
   else
     return statclock();
 }
 
-
-int32_t get_memusage(void)
-{
-  struct rusage usage;
-
-  if (!getrusage(RUSAGE_SELF, &usage))
-    return (usage.ru_ixrss + usage.ru_idrss + usage.ru_isrss);
-  else
-    return 0;
-}
-
 #endif
-
-
-void mtpause(void)
-{
-  /* hier koennte sich der prozess ein wenig schlafenlegen	*/
-  /* wird aber im Source nicht verwendet			*/
-  /* usleep(100);						*/
-}
-
-
-int32_t searchbyte(char what, char *p, int32_t size)
-{
-#ifdef HAS_MEMCHR
-
-  char *p2;
-
-  p2 = memchr(p, what, size);
-  if (p2 == NULL) return 0;
-  else return (p2-p);
-
-#else
-
-  int32_t z = 0;
-
-  if (p == NULL)
-    return 0;
-
-  while (z++ < size && *p++ != what);
-
-  if (z >= size)
-    return 0;
-  return --z;
-
-#endif
-}
 
 
 void ersetze(char *oldstr, char *newstr, char *txt)
@@ -312,27 +246,6 @@ void sfbread(bool aslongaspossible, char *name, char **puffer, int32_t *size)
 
   sfclose(&k);
 }
-
-/* the memmem function is broken in most linux libs. Here´s my own version  */
-/* (limitation: needle may not contain zero bytes)    	      	      	    */
-
-char *mymemmem(char *haystack, int32_t haystacksize,
-      	      	char *needle, int32_t needlesize)
-{
-  char	*ret;
-
-  if (needlesize <= 0 || haystacksize < needlesize) return (NULL);
-  while ((ret = memchr(haystack, *needle, haystacksize)) != NULL) {
-    haystacksize -= ((intptr_t)ret - (intptr_t)haystack);
-    if (haystacksize < needlesize) return (NULL);
-    haystacksize--;
-    haystack = ret;
-    haystack++;
-    if (!strncmp(ret, needle, needlesize)) return (ret);
-  }
-  return (NULL);
-}
-
 
 /* Common string functions, taken from p2c.c of Dave Gillespie: */
 
@@ -712,23 +625,6 @@ int32_t hatoi(char *s)
     s++;
   while (*s)
     erg = (erg << 4) + makehexdigit(*s++);
-  return erg;
-}
-
-
-int32_t batoi(char *s)
-{
-  /* "Bin-String to Integer", String wird unbedingt als Bin-Zahl interpretiert */
-  int32_t erg;
-
-  erg = 0;
-  if (*s == '%')
-    s++;
-  while (*s) {
-    erg <<= 1;
-    if (*s++ != '0')
-      erg++;
-  }
   return erg;
 }
 
