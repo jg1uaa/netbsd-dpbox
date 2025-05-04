@@ -6,11 +6,11 @@
 
 typedef void (*cbbproc)(const short unr, const char *s);
 
-extern void load_boxbcastparms(char *name);
-extern void free_boxbcastdesc(void);
-extern void boxbcasttxtimer(void);
-extern void show_bcastactivity(short unr, cbbproc outputproc);
-extern void bccallback(int32_t l);
+void load_boxbcastparms(char *name);
+void free_boxbcastdesc(void);
+void boxbcasttxtimer(void);
+void show_bcastactivity(short unr, cbbproc outputproc);
+void bccallback(int32_t l);
 
 #endif /*BOXBCAST_H*/
 
