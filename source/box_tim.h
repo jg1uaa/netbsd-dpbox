@@ -7,25 +7,25 @@
 
 typedef void (*dpuaproc)(const short unr, const char *s);
 
-extern void do_quit(short unr, bool abort, bool verbose);
-extern void end_boxconnect(short unr);
-extern void spoolendcheck(short unr);
-extern void tell_command(char *call, char *bid, char *frage);
-extern void stop_tell(short unr);
-extern bool tell_processing(char *tellfile);
-extern void tell_check(void);
-extern void timeout_check(short unr);
-extern void show_mailbeacon(void);
-extern void balise_check(void);
-extern void add_zombie(pid_t pid, char *fname, short exitaction);
-extern void kill_zombies(void);
-extern void box_timing2(int64_t tct);
-extern void start_mailbeacon_manually(short unr);
-extern void start_crawl(short unr, char *par);
-extern void query_crawl(short unr, char *query);
-extern void get_dpboxusage(short *u1, short *u5, short *u15);
-extern void print_dpboxusage(short unr, dpuaproc outputproc);
-extern void block_mailbox(bool block, char *reason);
+void do_quit(short unr, bool abort, bool verbose);
+void end_boxconnect(short unr);
+void spoolendcheck(short unr);
+void tell_command(char *call, char *bid, char *frage);
+void stop_tell(short unr);
+bool tell_processing(char *tellfile);
+void tell_check(void);
+void timeout_check(short unr);
+void show_mailbeacon(void);
+void balise_check(void);
+void add_zombie(pid_t pid, char *fname, short exitaction);
+void kill_zombies(void);
+void box_timing2(int64_t tct);
+void start_mailbeacon_manually(short unr);
+void start_crawl(short unr, char *par);
+void query_crawl(short unr, char *query);
+void get_dpboxusage(short *u1, short *u5, short *u15);
+void print_dpboxusage(short unr, dpuaproc outputproc);
+void block_mailbox(bool block, char *reason);
 
 #endif /*BOX_TIM_H*/
 

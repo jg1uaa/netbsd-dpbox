@@ -987,7 +987,7 @@ void print_dpboxusage(short unr, dpuaproc outputproc)
 
 void get_dpboxusage(short *u1, short *u5, short *u15)
 {
-  int32_t	m1, m5, m15, last;
+  int64_t	m1, m5, m15, last;
 
   if (dpboxcpufilled == false) {
     *u1		= 100;
