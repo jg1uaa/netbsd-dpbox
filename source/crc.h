@@ -13,21 +13,21 @@
 
   */
 
-extern void crc_16(unsigned char Data, unsigned short *crc);
-extern void crcfcs(unsigned char Data, unsigned short *crc);
-extern void crcthp(unsigned char Data, unsigned short *crc);
-extern void crcfbb(unsigned char Data, unsigned short *crc);
-extern void checksum8(unsigned char Data, unsigned short *crc);
-extern void checksum16(unsigned char Data, unsigned short *crc);
+void crc_16(unsigned char Data, unsigned short *crc);
+void crcfcs(unsigned char Data, unsigned short *crc);
+void crcthp(unsigned char Data, unsigned short *crc);
+void crcfbb(unsigned char Data, unsigned short *crc);
+void checksum8(unsigned char Data, unsigned short *crc);
+void checksum16(unsigned char Data, unsigned short *crc);
 
-extern void crc_16_buf(unsigned char *adr, size_t size, unsigned short *crc);
-extern void crcfcs_buf(unsigned char *adr, size_t size, unsigned short *crc);
-extern void crcthp_buf(unsigned char *adr, size_t size, unsigned short *crc);
-extern void crcfbb_buf(unsigned char *adr, size_t size, unsigned short *crc);
+void crc_16_buf(unsigned char *adr, size_t size, unsigned short *crc);
+void crcfcs_buf(unsigned char *adr, size_t size, unsigned short *crc);
+void crcthp_buf(unsigned char *adr, size_t size, unsigned short *crc);
+void crcfbb_buf(unsigned char *adr, size_t size, unsigned short *crc);
 #ifdef WITHCRC32
-extern void crc_32_buf(unsigned char *adr, size_t size, uint32_t *crc);
+void crc_32_buf(unsigned char *adr, size_t size, uint32_t *crc);
 #endif
-extern void checksum8_buf(unsigned char *adr, size_t size, unsigned short *crc);
-extern void checksum16_buf(unsigned char *adr, size_t size, unsigned short *crc);
+void checksum8_buf(unsigned char *adr, size_t size, unsigned short *crc);
+void checksum16_buf(unsigned char *adr, size_t size, unsigned short *crc);
 
 #endif /*CRC_H*/
