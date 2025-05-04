@@ -1317,9 +1317,9 @@ static void calc_linktable(routingtype *sfp, bool clear)
 
 /* here we get single results of linktests, no matter */
 /* how often and for how many data    	      	      */
-void calc_linkspeed(routingtype *sfp, int32_t starttime, int32_t size)
+void calc_linkspeed(routingtype *sfp, int64_t starttime, int32_t size)
 {
-  int32_t ticks;
+  int64_t ticks;
 
   debug0(3, 0, 230);
   if (sfp == NULL) return;

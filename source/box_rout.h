@@ -21,7 +21,7 @@ extern bool add_wprot_box(char *hpath, time_t update,
 extern short scan_hierarchicals(char *from1, char *puffer, int32_t size,
   time_t *txdate, bool sfpartner, char msgtyp, char *lastvias);
 extern bool add_wprot_routing(char *call, char *rxfrom, time_t timestamp, uint32_t quality, short hops);
-extern void calc_linkspeed(routingtype *sfp, int32_t starttime, int32_t size);
+extern void calc_linkspeed(routingtype *sfp, int64_t starttime, int32_t size);
 extern void init_linkspeeds(sfdeftype *sfp, bool file_forward);
 extern bool get_routing_table(short unr);
 extern routingtype *find_routtable(char *call);

@@ -3915,7 +3915,7 @@ void fbbpack2(short unr, unsigned short infosize, unsigned short *infstart, char
 {
   short       	  ct, hx, hy, hlen, oinfs;
   unsigned short  hsize;
-  int32_t	  count;
+  int64_t	  count;
   binsftyp    	  *WITH;
 
   debug0(4, unr, 83);
@@ -4126,7 +4126,7 @@ void fbb2pack2(short unr, unsigned short infosize, unsigned short *infstart, cha
 {
   short       	  oinfs, mode;
   unsigned short  isize;
-  int32_t	  count;
+  int64_t	  count;
   binsftyp    	  *WITH;
 
   debug0(4, unr, 84);

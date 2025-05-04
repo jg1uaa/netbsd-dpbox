@@ -872,7 +872,7 @@ typedef struct userstruct {
   pid_t			wait_pid;	/* pid of child process			*/
   pathstr		wait_file;	/* output file of child process		*/
   char			conpath[81];
-  int32_t      	      	sfspeedtime; /* in TICKSPERSEC */
+  int64_t      	      	sfspeedtime; /* in TICKSPERSEC */
   int32_t      	      	sfspeedsize;
   short       	      	sfspeedprops;
   bool	     	      	direct_sf;
@@ -899,7 +899,7 @@ vextern bool		wd_active;
 vextern bool		ende;
 vextern char		laufwerk;
 vextern bool		dpboxcpufilled;
-vextern int32_t		dpboxcpu[DPBOXCPUARRSIZE];
+vextern int64_t		dpboxcpu[DPBOXCPUARRSIZE];
 vextern short		dpboxuserct[DPBOXCPUARRSIZE];
 vextern indexcachetype	*indexcacheroot;
 vextern zombietype	*zombieroot;

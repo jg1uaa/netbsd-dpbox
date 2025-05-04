@@ -1065,7 +1065,7 @@ void handle2name(short handle, char *name)
 
 static void flockp2s(flocktype *hp, char *hs)
 {
-  time_t t2;
+  int64_t t2;
   char c;
 
   if (hp == NULL) {
@@ -1330,7 +1330,7 @@ void chkopenfiles(time_t maxopen, char *fn)
 {
   /* maxopen in sekunden */
   flocktype *hp;
-  time_t t2, ta;
+  int64_t t2, ta;
   short handle;
   char hs[256];
 

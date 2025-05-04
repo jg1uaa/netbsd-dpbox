@@ -1045,21 +1045,21 @@ static bool test_correct_clock(void)
 
 /* tct is a counter with TICKSPERSEC Hz (at least 200)	*/
 
-void box_timing2(time_t tct)
+void box_timing2(int64_t tct)
 {
   static short		lastbatchhour	= -1;
-  static int32_t	ltc1		= 0;
-  static int32_t	ltc2		= 0;
-  static int32_t	ltc3		= 0;
-  static int32_t	ltc4		= 0;
-  static int32_t	ltc5		= 0;
-  static int32_t	ltc6		= 0;
+  static int64_t	ltc1		= 0;
+  static int64_t	ltc2		= 0;
+  static int64_t	ltc3		= 0;
+  static int64_t	ltc4		= 0;
+  static int64_t	ltc5		= 0;
+  static int64_t	ltc6		= 0;
   static bool		startup		= true;
 
   short			unr, x;
   pid_t			ret;
   int			status;
-  time_t      	      	tt;
+  int64_t_t    	      	tt;
   char			w[256];
 
   clock_.ticks = tct;

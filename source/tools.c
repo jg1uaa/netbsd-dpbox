@@ -124,9 +124,9 @@ bool positive_arg(char *s)
 /* Ruft den Watchdog auf     */
 void dp_watchdog(short what, short value)
 {
-  static time_t	lastwdreset	= 0;
+  static int64_t	lastwdreset	= 0;
 
-  time_t	t;
+  int64_t	t;
 
   if (what == 2) {  /*reset angefordert*/
     t			= statclock();
