@@ -470,7 +470,7 @@ static char s_on[]	= " ON";
 static char s_off[]	= " OFF";
 static char s_dash[]	= "-";
 
-static void p_ix(short unr, int32_t time, char *ts)
+static void p_ix(short unr, time_t time, char *ts)
 {
   char	hs[256];
 
@@ -880,7 +880,7 @@ void show_user(short unr, char *call, char *option)
 void set_password(short unr, bool superv, char *eingabe_)
 {
   short		x;
-  int32_t	t2;
+  time_t	t2;
   short		l1;
   userstruct	ufil;
   char		eingabe[256], w[256], hs[256], STR1[32];
