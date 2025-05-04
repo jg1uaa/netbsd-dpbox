@@ -92,21 +92,21 @@ typedef struct wprottype {
 } wprottype;
 
 typedef void (*rsoutputproc)(const short unr, const char *s);
-extern void cleanup_routing_stat(short days);
-extern void show_routing_stat(short unr, char *call, char *options, rsoutputproc out);
-extern void sf_rx_emt(short unr, char *eingabe);
-extern void do_emt(int32_t *seekp);
-extern void sf_rx_emt1(char *eingabe, char *actwpfilesender);
-extern void write_routes(char *call, char *rxfrom, time_t timestamp, uint32_t quality, short hops);
-extern void add_wprotline(wprottype *wpb, bool meta);
-extern void add_wpline(char *call, char *bbs, time_t time, char *from,
+void cleanup_routing_stat(short days);
+void show_routing_stat(short unr, char *call, char *options, rsoutputproc out);
+void sf_rx_emt(short unr, char *eingabe);
+void do_emt(int32_t *seekp);
+void sf_rx_emt1(char *eingabe, char *actwpfilesender);
+void write_routes(char *call, char *rxfrom, time_t timestamp, uint32_t quality, short hops);
+void add_wprotline(wprottype *wpb, bool meta);
+void add_wpline(char *call, char *bbs, time_t time, char *from,
 		       char *zip, char *name, char *qth, bool is_wp);
-extern void generate_wprot_files(void);
-extern void generate_wp_files(void);
-extern bool in_wpservers(char *call);
-extern short process_wprotline(char *hs, char *actsender, bool meta);
-extern short process_wpline(char *hs, char *actsender);
-extern void create_own_routing_broadcasts(void);
-extern void init_wp_timers(void);
+void generate_wprot_files(void);
+void generate_wp_files(void);
+bool in_wpservers(char *call);
+short process_wprotline(char *hs, char *actsender, bool meta);
+short process_wpline(char *hs, char *actsender);
+void create_own_routing_broadcasts(void);
+void init_wp_timers(void);
 
 #endif
