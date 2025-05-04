@@ -69,8 +69,8 @@
 #define DEF_BOX_SOCKET "socket"
 #define DEF_DPBOX_USER ""
 
-int box_paclen;
-char dpbox_initfile[256];
+extern int box_paclen;
+extern char dpbox_initfile[256];
 
 int read_init_file(int argc,char *argv[]);
 void init_watch(void);
