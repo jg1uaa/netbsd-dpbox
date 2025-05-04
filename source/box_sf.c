@@ -886,7 +886,7 @@ bool resend_userfile(bool redirect, char *brett, char *newmbx)
 }
 
 
-static bool not_while_connected(char *absender, char *ziel, int32_t date)
+static bool not_while_connected(char *absender, char *ziel, time_t date)
 {
   short	y;
 
@@ -1053,7 +1053,7 @@ static void setbinlt(indexstruct *hpointer, char *rubrik)
 static bool conv_to_7plus(short unr, char *board, char *bid)
 {
   short		lv2, x, y, k;
-  int32_t	pid;
+  pid_t		pid;
   indexstruct	header;
   pathstr	fname, STR1;
   char		w[256], w1[256], hs1[256];

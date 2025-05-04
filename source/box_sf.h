@@ -7,61 +7,61 @@
 #include "yapp.h"
 #include "boxlocal.h"
 
-extern void del_emblocks(short unr, unsigned short undelete);
-extern void reset_laterflag(short unr);
-extern void del_resume_list(void);
-extern void kill_resume(void);
-extern void load_resume(void);
-extern short bbs_pack(short unr);
-extern void send_pfbbram(short mode, short unr, char *puffer, int32_t size,
+void del_emblocks(short unr, unsigned short undelete);
+void reset_laterflag(short unr);
+void del_resume_list(void);
+void kill_resume(void);
+void load_resume(void);
+short bbs_pack(short unr);
+void send_pfbbram(short mode, short unr, char *puffer, int32_t size,
 			 int32_t offset, char *betreff);
-extern void send_pfbbdisk(short mode, short unr, int32_t offset, char *tempname,
+void send_pfbbdisk(short mode, short unr, int32_t offset, char *tempname,
 			  char *betreff);
-extern bool resend_userfile(bool redirect, char *brett, char *newmbx);
-extern void change_sfentries(short von, short bis, char *forcall, char typ,
+bool resend_userfile(bool redirect, char *brett, char *newmbx);
+void change_sfentries(short von, short bis, char *forcall, char typ,
 			     char *newcall);
-extern void look_for_mail(short unr, bool not_last, bool immediate);
-extern void ok_sf_sending(short unr, short prop, int32_t offset);
-extern void send_fbb_proposals(short unr, bool disc_if_none);
-extern void prepare_for_next_fbb(short unr);
-extern bool check_prop_crc(short unr, char *eingabe);
-extern void send_fbb_answer(short unr);
-extern void analyse_fbb_answer(short unr, char *eingabe);
-extern void set_packsf(short unr);
-extern void fbbpack2(short unr, unsigned short infosize,
+void look_for_mail(short unr, bool not_last, bool immediate);
+void ok_sf_sending(short unr, short prop, int32_t offset);
+void send_fbb_proposals(short unr, bool disc_if_none);
+void prepare_for_next_fbb(short unr);
+bool check_prop_crc(short unr, char *eingabe);
+void send_fbb_answer(short unr);
+void analyse_fbb_answer(short unr, char *eingabe);
+void set_packsf(short unr);
+void fbbpack2(short unr, unsigned short infosize,
 		     unsigned short *infstart, char *info);
-extern void fbb2pack2(short unr, unsigned short infosize,
+void fbb2pack2(short unr, unsigned short infosize,
 		      unsigned short *infstart, char *info);
-extern void check_frag_sf(short unr);
-extern void abort_sf(short unr, bool immediate, char *txt);
-extern void sfproterr(short unr);
-extern sfdeftype *find_sf_pointer(char *call);
-extern bool in_real_sf(char *call);
-extern void abort_routing(char *call);
-extern void kill_all_routing_flags(void);
-extern void close_filesf_output(short unr);
-extern void close_filesf_input(short unr);
-extern void do_filesf_input(short unr);
-extern void start_sf(short unr, char *call, char *parameter);
-extern void check_sftimer(void);
-extern void set_sftimer(char *box, short min, short stnc, short sfcase,
+void check_frag_sf(short unr);
+void abort_sf(short unr, bool immediate, char *txt);
+void sfproterr(short unr);
+sfdeftype *find_sf_pointer(char *call);
+bool in_real_sf(char *call);
+void abort_routing(char *call);
+void kill_all_routing_flags(void);
+void close_filesf_output(short unr);
+void close_filesf_input(short unr);
+void do_filesf_input(short unr);
+void start_sf(short unr, char *call, char *parameter);
+void check_sftimer(void);
+void set_sftimer(char *box, short min, short stnc, short sfcase,
 			int32_t maxb, int32_t maxu, int32_t maxp, int32_t pifnone,
 			int32_t sutc, int32_t eutc);
-extern void set_sfparms(char *box, char *hs);
-extern void show_sfparms(short unr, char *box);
-extern void dispose_sfinfos(void);
-extern void load_sfinfos(void);
-extern bool forward_ok(char *box, char *rubrik, char *hiermbx, char *frombox, char *bid,
+void set_sfparms(char *box, char *hs);
+void show_sfparms(short unr, char *box);
+void dispose_sfinfos(void);
+void load_sfinfos(void);
+bool forward_ok(char *box, char *rubrik, char *hiermbx, char *frombox, char *bid,
 		       bool splus, bool bin);
-extern unsigned short vermerke_sf(short unr_msg, bool routtest,
+unsigned short vermerke_sf(short unr_msg, bool routtest,
   char *rubrik, char *from_box, char *to_box, indexstruct header1,
   char *lastvias);
-extern bool gen_sftest2(short unr, char *board, char *mbx);
-extern bool gen_sftest(short unr, char *eingabe);
-extern void analyse_sf_command(short unr, char *eingabe, bool return_);
-extern void create_my_sid(char *sid, char *password);
-extern void analyse_sid(bool request, short unr, char *w);
-extern void check_routing_timeouts(void);
+bool gen_sftest2(short unr, char *board, char *mbx);
+bool gen_sftest(short unr, char *eingabe);
+void analyse_sf_command(short unr, char *eingabe, bool return_);
+void create_my_sid(char *sid, char *password);
+void analyse_sid(bool request, short unr, char *w);
+void check_routing_timeouts(void);
 
 #define in_sfp(call) (find_sf_pointer(call) != NULL)
 
