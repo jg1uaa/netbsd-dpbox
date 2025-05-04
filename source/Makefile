@@ -14,8 +14,9 @@
 # source tree.	      	      	      	      	      	      	      	      #
 #                                                                             #
 # Uncomment NOSHELL if you don´t want a shell access from within dpbox	      #
+# (NOSHELL as default for security)   	      	      	      	      	      #
 #                                                                             #
-#NOSHELL	= -DNO_SHELL
+NOSHELL	= -DNO_SHELL
 #                                                                             #
 # That's all you have to configure                                            #
 #     	      	      	      	      	      	      	      	      	      #
