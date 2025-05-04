@@ -9,24 +9,18 @@
 
 #include "pastrix.h"
 
-#ifdef MAIN_G
- #define vextern
-#else
- #define vextern extern
-#endif
-
-vextern void linux_watchdog(short what, short value);
-vextern short statusconvert(int status);
-vextern void bootinf(char *s);
-vextern void list_ifaceusage(short unr);
-vextern void list_qrgs(short unr);
-vextern void connect_from_box(short unr,char *eingabe);
-vextern void tnt_command(short unr,char *eingabe);
-vextern int find_socket(char *qrg, short *socket);
-vextern void blocking_on(void);
-vextern void blocking_off(void);
-vextern void boxisbusy(bool busy);
-vextern bool bcast_file(char stnc,char sport,char *qrg,
+void linux_watchdog(short what, short value);
+short statusconvert(int status);
+void bootinf(char *s);
+void list_ifaceusage(short unr);
+void list_qrgs(short unr);
+void connect_from_box(short unr,char *eingabe);
+void tnt_command(short unr,char *eingabe);
+int find_socket(char *qrg, short *socket);
+void blocking_on(void);
+void blocking_off(void);
+void boxisbusy(bool busy);
+bool bcast_file(char stnc,char sport,char *qrg,
                    int32_t fid,unsigned short ftype,
                    char *name1,char *adress,char *bbs_source,
                    char *bbs_destination,char *bbs_ax25uploader,
@@ -34,8 +28,6 @@ vextern bool bcast_file(char stnc,char sport,char *qrg,
                    char bbs_compression,char *bbs_bid,char bbs_msgtype,
                    char *bbs_title,char *bbs_fheader,
                    unsigned short bodychecksum,bool delete_after_tx);
-
-#undef vextern
 
 #endif /* MAIN_H */
 

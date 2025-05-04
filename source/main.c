@@ -2099,7 +2099,7 @@ static void queue_iface_cmd(short usernr, char *cmdbuffer, int cmdlen)
 void write_iface_timeout()
 {
   short i;
-  int32_t timeout;
+  time_t timeout;
   
   for(i=1;i<=MAXUSER;i++) {
     if (iface_user[i].active) {
@@ -2730,13 +2730,13 @@ void init_funcs()
   boxnodessid=iboxnodessid;
 }
 
-extern void _box_init();
-extern void _box_file_init();
-extern void _box_sub_init();
-extern void _box_sys_init();
-extern void _box_tim_init();
-extern void _boxlocal_init();
-extern void _filesys_init();
+void _box_init(void);
+void _box_file_init(void);
+void _box_sub_init(void);
+void _box_sys_init(void);
+void _box_tim_init(void);
+void _boxlocal_init(void);
+void _filesys_init(void);
 
 void init_modules()
 {
