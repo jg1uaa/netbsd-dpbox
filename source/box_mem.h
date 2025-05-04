@@ -8,25 +8,25 @@
 #include "yapp.h"
 #include "boxlocal.h"
 
-extern int32_t bidhash_active(void);
-extern int32_t hboxhash_active(void);
-extern void disp_bidhash(short unr);
-extern void disp_hboxhash(short unr);
-extern void clear_bidhash(void);
-extern void clear_hboxhash(void);
-extern void load_initial_hbox(void);
-extern void add_bptr(char *call, int32_t bpos);
-extern int32_t load_hbox(short hboxhandle, char *call, hboxtyp *hbox);
-extern int32_t get_binstart(char *puffer, int32_t size, char *fname);
-extern void add_line_to_buff(char **buf1, int32_t *size1, int32_t inspos,
+int32_t bidhash_active(void);
+int32_t hboxhash_active(void);
+void disp_bidhash(short unr);
+void disp_hboxhash(short unr);
+void clear_bidhash(void);
+void clear_hboxhash(void);
+void load_initial_hbox(void);
+void add_bptr(char *call, int32_t bpos);
+int32_t load_hbox(short hboxhandle, char *call, hboxtyp *hbox);
+int32_t get_binstart(char *puffer, int32_t size, char *fname);
+void add_line_to_buff(char **buf1, int32_t *size1, int32_t inspos,
 			     char *srline);
-extern void write_msgid(int32_t nr, char *ibuf);
-extern bool check_double(char *new_id);
-extern int32_t bull_mem(char *new_id, bool delet);
-extern void multiple_bullcheck(short ct, bidchecktype bidcheck,
+void write_msgid(int32_t nr, char *ibuf);
+bool check_double(char *new_id);
+int32_t bull_mem(char *new_id, bool delet);
+void multiple_bullcheck(short ct, bidchecktype bidcheck,
 			       bidarrtype bidarr);
-extern void pack_entry(char **puffer, int32_t *size, short *pmode);
-extern int32_t true_bin(char *zeile);
+void pack_entry(char **puffer, int32_t *size, short *pmode);
+int32_t true_bin(char *zeile);
 
 #endif /*BOX_MEM_H*/
 
