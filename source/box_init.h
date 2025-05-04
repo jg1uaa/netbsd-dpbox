@@ -6,11 +6,11 @@
 #include "boxglobl.h"
 #include "boxlocal.h"
 
-extern void check_bullidseek(void);
-extern void create_all_msgnums(bool recalc);
-extern void load_tcpipbuf(void);
-extern void load_all_parms(short unr);
-extern void init_boxvars(void);
-extern void exit_boxvars(void);
+void check_bullidseek(void);
+void create_all_msgnums(bool recalc);
+void load_tcpipbuf(void);
+void load_all_parms(short unr);
+void init_boxvars(void);
+void exit_boxvars(void);
 
 #endif /*BOX_INIT_H*/
