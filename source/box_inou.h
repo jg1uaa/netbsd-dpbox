@@ -8,37 +8,37 @@
 
 typedef char pcalltype[10][10];
 
-extern short create_outfile2(short unr);
+short create_outfile2(short unr);
 #define create_outfile(unr) if (user[unr] != NULL \
 	&& (user[unr]->umode == UM_FILEOUT || user[unr]->umode == UM_SINGLEREQ)) \
 	create_outfile2(unr)
-extern void close_outfile2(short unr);
+void close_outfile2(short unr);
 #define close_outfile(unr) if (user[unr] != NULL \
 	&& (user[unr]->umode == UM_FILEOUT || user[unr]->umode == UM_SINGLEREQ)) \
 	close_outfile2(unr)
-extern void abort_useroutput(short unr);
-extern void x_show_puffer(short unr, char *base, int32_t size, bool in_trace, bool transparent);
+void abort_useroutput(short unr);
+void x_show_puffer(short unr, char *base, int32_t size, bool in_trace, bool transparent);
 #define show_puffer(unr, base, size) x_show_puffer(unr, base, size, false, false)
 #define trans_show_puffer(unr, base, size) x_show_puffer(unr, base, size, false, true)
-extern void wuser(const short unr, const char *s);
-extern void wlnuser(const short unr, const char *s);
-extern void wlnuser0(const short unr);
-extern void chwuser(const short unr, char c);
-extern void lwuser(const short unr, const int32_t value);
-extern void swuser(const short unr, const short value);
-extern void box_rawinput(short unr, unsigned short infosize, unsigned short *infstart, char *info);
-extern void fbbpack(short unr, unsigned short infosize, unsigned short *infstart, char *info);
-extern void fbb2pack(short unr, unsigned short infosize, unsigned short *infstart, char *info);
-extern void sort_new_mail(short unr, char *pattern, char *rcall);
-extern void box_timing(int64_t tct);
-extern void melde_user_ab(short unr, bool sav);
-extern void abort_box(short unr, bool save);
-extern short melde_user_an(char *calls1, short cons, short chan, short mode, bool reconnect);
-extern void box_get_next_input(void);
-extern void clear_immediately_input(short unr);
-extern void box_input(short unr, bool inbegruessung, char *cmd, bool return_);
-extern void trace_string(bool userinp, short unr, short trace, const char *s1, bool cr);
-extern void raw_unproto_request(short pid, short callcount, short heardfrom,
+void wuser(const short unr, const char *s);
+void wlnuser(const short unr, const char *s);
+void wlnuser0(const short unr);
+void chwuser(const short unr, char c);
+void lwuser(const short unr, const int32_t value);
+void swuser(const short unr, const short value);
+void box_rawinput(short unr, unsigned short infosize, unsigned short *infstart, char *info);
+void fbbpack(short unr, unsigned short infosize, unsigned short *infstart, char *info);
+void fbb2pack(short unr, unsigned short infosize, unsigned short *infstart, char *info);
+void sort_new_mail(short unr, char *pattern, char *rcall);
+void box_timing(int64_t tct);
+void melde_user_ab(short unr, bool sav);
+void abort_box(short unr, bool save);
+short melde_user_an(char *calls1, short cons, short chan, short mode, bool reconnect);
+void box_get_next_input(void);
+void clear_immediately_input(short unr);
+void box_input(short unr, bool inbegruessung, char *cmd, bool return_);
+void trace_string(bool userinp, short unr, short trace, const char *s1, bool cr);
+void raw_unproto_request(short pid, short callcount, short heardfrom,
   char *port, char (*calls)[10], int32_t len, char *buf);
 
 
