@@ -700,7 +700,7 @@ typedef struct clocktype {
   time_t		korrektur;	/* diff between system clock and utc (0 with linux) */
   time_t		daystart;     	/* ixtime of current day 00:00:00     	      	    */
   short			weekday;	/* 1..7 -> Monday..Sunday	      	      	    */
-  int32_t      	      	ticks;	      	/* 200 Hz counter     	      	      	      	    */
+  int64_t      	      	ticks;	      	/* 200 Hz counter     	      	      	      	    */
   char			zeit[9];      	/* 23:59:59   	      	      	      	      	    */
   char			datum[9];     	/* 17.01.99   	      	      	      	      	    */
   char			datum4[11];   	/* 17.01.1999 	      	      	      	      	    */
