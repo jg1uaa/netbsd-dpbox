@@ -775,7 +775,7 @@ typedef struct userstruct {
   bool			rsysop;
   bool			ttl;
   bool			undef;
-  time_t		processtime;
+  int64_t		processtime;
   int32_t		rbytes;
   int32_t		sbytes;
   short			pchan;
@@ -839,7 +839,7 @@ typedef struct userstruct {
   short			fileout_handle;
   char			*fileout_name;
   boxintype		*inputroot;	/* pseudo multitasking administration	*/
-  int32_t		cputime;	/*   "                                  */
+  int64_t		cputime;	/*   "                                  */
   int32_t		lastprocnumber;	/*   "                                  */
   int32_t		lastprocnumber2; /*  "                                  */
   int32_t		lastprocnumber3; /*  "                                  */

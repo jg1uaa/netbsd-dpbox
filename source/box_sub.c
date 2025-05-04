@@ -845,7 +845,7 @@ short actual_connects(void)
 
 int32_t cpu_usage(short unr)
 {
-  int32_t ll;
+  int64_t ll;
   
   if (!boxrange(unr)) return 0;
   if (user[unr]->cputime <= 0) ll = 0;
@@ -1712,8 +1712,8 @@ bool boxrange(short unr)
 }
 
 
-void upd_statistik(short unr, int32_t txbytes, int32_t rxbytes, int32_t start,
-		   int32_t stop)
+void upd_statistik(short unr, int32_t txbytes, int32_t rxbytes, int64_t start,
+		   int64_t stop)
 {
   userstruct *WITH;
 

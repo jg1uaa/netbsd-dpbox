@@ -613,7 +613,7 @@ static void convert_sfw(short unr, char *sfw)
 static void conv3(short unr, char *w)
 {
   /* SF-Definitionen konvertieren */
-  int32_t t;
+  int64_t t;
   char cp[256];
 
   if (cverr)
@@ -655,7 +655,8 @@ static void conv3(short unr, char *w)
 static void conv4(short unr, char *improotdir)
 {
   short ifn;
-  int32_t t, tctu, tctb;
+  int64_t t;
+  int32_t tctu, tctb;
   char cp[256], pu[256], pi[256], ww[256];
   char w[256], hs[256], STR7[256];
 
@@ -1024,7 +1025,8 @@ static void conv2(short unr, char *p_)
   char dn[256];
   short dh;
   bool ok, linuxbcm;
-  int32_t t, ct;
+  int64_t t;
+  int32_t ct;
   dbufft1 dbuff1;
   dbufft2 dbuff2;
   dbufft3 dbuff3;
@@ -1147,7 +1149,7 @@ static void conv1(short unr, char *ipath)
   char f[256], hs[256];
   DTA dirinfo;
   short result, ifn, ofn;
-  int32_t t;
+  int64_t t;
   char STR1[256], STR7[256];
 
   if (cverr)

@@ -383,7 +383,7 @@ void abort_box(short unr, bool save)
 }
 
 
-void box_timing(int32_t tct)
+void box_timing(int64_t tct)
 {
   box_timing2(tct);
 }
@@ -964,7 +964,7 @@ short melde_user_an(char *calls1, short cons, short chan, short mode,
   short x, y, z, newchan;
   bool double_;
   short dct;
-  int32_t count;
+  int64_t count;
   char calls[256];
   char hs[256], path[256];
   char lan[256];

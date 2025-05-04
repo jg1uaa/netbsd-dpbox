@@ -368,7 +368,8 @@ static void conv5(short unr, char *w_)
 {
   /* BIDs draufhauen */
   char w[256];
-  int32_t t, tct, bs;
+  int64_t t;
+  int32_t tct, bs;
   char cp[256], p[256], hs[256], ww[256], w1[256], w2[256];
   short ih, oh;
   char STR1[256], STR7[256];
@@ -643,7 +644,7 @@ static void convert_sfw(short unr, char *p, char *sfw)
 static void conv3(short unr, char *w)
 {
   /* SFW konvertieren */
-  int32_t t;
+  int64_t t;
   char cp[256], p[256];
   DTA dirinfo;
   short result;
@@ -695,7 +696,8 @@ static void conv3(short unr, char *w)
 
 static void conv4(short unr, char *w)
 {
-  int32_t t, tctu, tctb;
+  int64_t t;
+  int32_t tctu, tctb;
   char cp[256], p[256], sb[256], ww[256];
   char STR7[256];
 
@@ -951,7 +953,8 @@ static void conv2(short unr, char *w_)
   char idn[256], dn[256];
   short idh, dh;
   bool ok;
-  int32_t t, ct;
+  int64_t t;
+  int32_t ct;
   ibufft ibuff;
   dbufft dbuff;
   irect irec;
@@ -1085,7 +1088,7 @@ static void conv1(short unr, char *w)
   char f[256];
   DTA dirinfo;
   short result;
-  int32_t t;
+  int64_t t;
   char STR1[256], STR7[256];
 
   if (cverr)

@@ -854,7 +854,7 @@ void add_wprotline(wprottype *wpb, bool meta)
 /* this is the background function that processes the formerly received infos */
 void do_emt(int32_t *seekp)
 {
-  int32_t	tc;
+  int64_t	tc;
   short		k;
   pathstr	fn;
   char		hs[1000], w1[1000];

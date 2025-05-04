@@ -1059,7 +1059,7 @@ void box_timing2(int64_t tct)
   short			unr, x;
   pid_t			ret;
   int			status;
-  int64_t_t    	      	tt;
+  int64_t    	      	tt;
   char			w[256];
 
   clock_.ticks = tct;

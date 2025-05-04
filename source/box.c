@@ -674,7 +674,7 @@ bool erase_by_bid(bool reread, char *sbid_, char *eraseabsender_)
 void check_remote_erase(int32_t *seekp)
 {
   short	k;
-  int32_t	tc;
+  int64_t	tc;
   char	hs[256], absender[256], id1[256], rxfrom[256], id2[256];
 
   tc			= get_cpuusage();

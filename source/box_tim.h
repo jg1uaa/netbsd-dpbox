@@ -19,7 +19,7 @@ extern void show_mailbeacon(void);
 extern void balise_check(void);
 extern void add_zombie(pid_t pid, char *fname, short exitaction);
 extern void kill_zombies(void);
-extern void box_timing2(time_t tct);
+extern void box_timing2(int64_t tct);
 extern void start_mailbeacon_manually(short unr);
 extern void start_crawl(short unr, char *par);
 extern void query_crawl(short unr, char *query);

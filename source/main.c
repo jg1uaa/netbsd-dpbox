@@ -324,7 +324,7 @@ void abin_rcv(short usernr,unsigned short *pos,unsigned short len,char *buf)
   short unr;
   char ans_str[80];
   char binheader[256];
-  int32_t stc;
+  int64_t stc;
   int32_t filelen;
   int error;
   char binheadrest[259];

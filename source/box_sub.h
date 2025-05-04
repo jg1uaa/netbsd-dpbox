@@ -39,8 +39,8 @@ extern void create_hcs(indexstruct *h);
 extern bool check_hcs(indexstruct h);
 extern cutboxtyp boxheader(char *zeile);
 extern bool boxrange(short unr);
-extern void upd_statistik(short unr, int32_t txbytes, int32_t rxbytes, int32_t start,
-			  int32_t stop);
+extern void upd_statistik(short unr, int32_t txbytes, int32_t rxbytes, int64_t start,
+			  int64_t stop);
 extern void get_btext(short unr, short nr, char *s);
 extern void x_w_btext(short unr, short nr, bool lf);
 extern void no_files(short unr, char *name);

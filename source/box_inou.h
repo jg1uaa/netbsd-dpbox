@@ -30,7 +30,7 @@ extern void box_rawinput(short unr, unsigned short infosize, unsigned short *inf
 extern void fbbpack(short unr, unsigned short infosize, unsigned short *infstart, char *info);
 extern void fbb2pack(short unr, unsigned short infosize, unsigned short *infstart, char *info);
 extern void sort_new_mail(short unr, char *pattern, char *rcall);
-extern void box_timing(int32_t tct);
+extern void box_timing(int64_t tct);
 extern void melde_user_ab(short unr, bool sav);
 extern void abort_box(short unr, bool save);
 extern short melde_user_an(char *calls1, short cons, short chan, short mode, bool reconnect);
