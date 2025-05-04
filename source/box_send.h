@@ -5,17 +5,17 @@
 #include "pastrix.h"
 #include "boxglobl.h"
 
-extern short box_s_chan(short unr);
-extern void send_text3(short unr, bool first, char *eingabe,
+short box_s_chan(short unr);
+void send_text3(short unr, bool first, char *eingabe,
 		       bool return_);
-extern void enter_lifetime(short unr, char *eingabe);
-extern void box_txt2(bool first, short unr, char *betreff1);
-extern void send_check(short unr, char *eingabe, bool is_user,
+void enter_lifetime(short unr, char *eingabe);
+void box_txt2(bool first, short unr, char *betreff1);
+void send_check(short unr, char *eingabe, bool is_user,
 		       char msgtype);
-extern void send_file0(short unr, bool in_send, char *fname);
-extern bool send_file1(short unr, short *kanal, bool in_send,
+void send_file0(short unr, bool in_send, char *fname);
+bool send_file1(short unr, short *kanal, bool in_send,
 			  short force_bin);
-extern void send_sysmsg(char *tocall, char *tobbs, char *betreff, char *msg,
+void send_sysmsg(char *tocall, char *tobbs, char *betreff, char *msg,
 			short lt, char msgtype, short binmsg);
 
 #endif /*BOX_SEND_H*/
