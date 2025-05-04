@@ -5,8 +5,8 @@
 #include "pastrix.h"
 #include "boxglobl.h"
 
-extern void cbbtboard(char *s);
+void cbbtboard(char *s);
 /* hier holt sich new_entry() den transferierten brettnamen her */
-extern void conv_baybox(short unr, char *eingabe);
+void conv_baybox(short unr, char *eingabe);
 
 #endif

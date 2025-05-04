@@ -890,19 +890,19 @@ static bool convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
       switch (y) {
 
       case 1:
-        drec->lastboxlogin = (int32_t)dbuff1[x];
+        drec->lastboxlogin = (time_t)dbuff1[x];
         break;
 
       case 2:
-        drec->lastboxlogin += (int32_t)dbuff1[x] * 256;
+        drec->lastboxlogin += (time_t)dbuff1[x] * 256;
         break;
 
       case 3:
-        drec->lastboxlogin += (int32_t)dbuff1[x] * 65536;
+        drec->lastboxlogin += (time_t)dbuff1[x] * 65536;
         break;
 
       case 4:
-        drec->lastboxlogin += (int32_t)dbuff1[x] * 16777216;
+        drec->lastboxlogin += (time_t)dbuff1[x] * 16777216;
         break;
       }
       y++;
@@ -912,19 +912,19 @@ static bool convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
       switch (y) {
 
       case 1:
-        drec->lastboxlogin = (int32_t)dbuff2[x];
+        drec->lastboxlogin = (time_t)dbuff2[x];
         break;
 
       case 2:
-        drec->lastboxlogin += (int32_t)dbuff2[x] * 256;
+        drec->lastboxlogin += (time_t)dbuff2[x] * 256;
         break;
 
       case 3:
-        drec->lastboxlogin += (int32_t)dbuff2[x] * 65536;
+        drec->lastboxlogin += (time_t)dbuff2[x] * 65536;
         break;
 
       case 4:
-        drec->lastboxlogin += (int32_t)dbuff2[x] * 16777216;
+        drec->lastboxlogin += (time_t)dbuff2[x] * 16777216;
         break;
       }
       y++;
@@ -949,19 +949,19 @@ static bool convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
       switch (y) {
 
       case 1:
-        drec->mybbstime = (int32_t)dbuff1[x];
+        drec->mybbstime = (time_t)dbuff1[x];
         break;
 
       case 2:
-        drec->mybbstime += (int32_t)dbuff1[x] * 256;
+        drec->mybbstime += (time_t)dbuff1[x] * 256;
         break;
 
       case 3:
-        drec->mybbstime += (int32_t)dbuff1[x] * 65536;
+        drec->mybbstime += (time_t)dbuff1[x] * 65536;
         break;
 
       case 4:
-        drec->mybbstime += (int32_t)dbuff1[x] * 16777216;
+        drec->mybbstime += (time_t)dbuff1[x] * 16777216;
         break;
       }
       y++;
@@ -971,19 +971,19 @@ static bool convert_dbuff(short unr, char *dbuff1_, char *dbuff2_,
       switch (y) {
 
       case 1:
-        drec->mybbstime = (int32_t)dbuff3[x];
+        drec->mybbstime = (time_t)dbuff3[x];
         break;
 
       case 2:
-        drec->mybbstime += (int32_t)dbuff3[x] * 256;
+        drec->mybbstime += (time_t)dbuff3[x] * 256;
         break;
 
       case 3:
-        drec->mybbstime += (int32_t)dbuff3[x] * 65536;
+        drec->mybbstime += (time_t)dbuff3[x] * 65536;
         break;
 
       case 4:
-        drec->mybbstime += (int32_t)dbuff3[x] * 16777216;
+        drec->mybbstime += (time_t)dbuff3[x] * 16777216;
         break;
       }
       y++;
